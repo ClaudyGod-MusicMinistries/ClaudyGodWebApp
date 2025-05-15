@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Log } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import StreamingModal from './StreamingModel'; // Fixed typo in component name
 import {
   faUser,
   faMusic,
@@ -22,6 +23,7 @@ import {
 export const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -90,20 +92,17 @@ export const NavBar: React.FC = () => {
 
         {/* Right Section - Listen Button & Mobile Menu Toggle */}
         <div className="flex items-center justify-end mr-12 gap-4">
-          <div className="hidden lg:flex">
-            <button className="bg-purple-900 cursor-pointer hover:bg-purple-800 text-white px-6 py-2.5 rounded-full text-sm raleway-slider flex items-center transition duration-150 ease-in-out">
-              <FontAwesomeIcon icon={faHeadset} className="mr-3 text-base" />
-              <span>Listen Now</span>
-            </button>
-          </div>
-          <button 
-            onClick={toggleMenu}
-            className="lg:hidden text-purple-900 p-2 hover:text-purple-800"
-          >
-            <FontAwesomeIcon icon={faBars} className="h-6 w-6" />
-          </button>
+         
+
+         <StreamingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
         </div>
       </div>
+
+      {/* Streaming Modal */}
+   
 
       {/* Mobile Menu */}
       <div className={`lg:hidden fixed inset-0 bg-white z-50 transition-transform duration-300 ${
@@ -152,8 +151,14 @@ export const NavBar: React.FC = () => {
             ))}
           </ul>
 
-          <div className="mt-8 navbarFont">
-            <button className="w-full bg-purple-900 hover:bg-purple-800 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center justify-center transition duration-150 ease-in-out">
+          <div className="mt-8">
+            <button 
+              onClick={() => {
+                setIsModalOpen(true);
+                closeMenu();
+              }}
+              className="w-full bg-purple-900 hover:bg-purple-800 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center justify-center transition duration-150 ease-in-out"
+            >
               <FontAwesomeIcon icon={faHeadset} className="mr-2" />
               Listen Now
             </button>
