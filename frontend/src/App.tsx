@@ -10,6 +10,8 @@ import { Biography } from './pages/Bio';
 import { MusicData } from './pages/Music';
 import { VideosData } from './pages/Videos';
 import { Booking } from './pages/Bookings';
+import { ContactData } from './pages/Contact';
+
 
 
 
@@ -26,6 +28,7 @@ function App() {
           <Route path='/music' element={<MusicData />} />
           <Route path='/videos' element={<VideosData />} />
          <Route path='/bookings' element={<Booking />} />
+         <Route path='/contact' element={<ContactData />} />
            <Route path="*" element={<div>404 Not Found</div>} />
        </Route>
      
