@@ -1,246 +1,362 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-// import { HeroSection } from '../components/Herosection';
-import { Back3, AudioMack } from '../assets/'; // Make sure to import your Audiomack logo
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faPlay, 
-  faExternalLinkAlt 
-} from '@fortawesome/free-solid-svg-icons';
-import { 
-  faSpotify, 
-  faApple, 
-  faYoutube, 
-  faDeezer, 
-  faAmazon,
-} from '@fortawesome/free-brands-svg-icons';
+import React, { useState } from 'react';
+import { Herosection } from '../components/Herosection';
+import { VideoBanner2 } from '../assets/'
 import { NewsletterForm } from '../components/Newsletter';
 
-// Updated music platforms
-const musicPlatforms = [
-    { 
-      name: 'Spotify', 
-      url: '#', 
-      icon: faSpotify,
-      bgColor: 'bg-[#1DB954]',
-      textColor: 'text-white'
-    },
-    { 
-      name: 'Apple Music', 
-      url: '#', 
-      icon: faApple,
-      bgColor: 'bg-[#000]',
-      textColor: 'text-white'
-    },
-    { 
-      name: 'YouTube Music', 
-      url: '#', 
-      icon: faYoutube,
-      bgColor: 'bg-[#FF0000]',
-      textColor: 'text-white'
-    },
-    { 
-      name: 'Deezer', 
-      url: '#', 
-      icon: faDeezer,
-      bgColor: 'bg-[#FEAA2D]',
-      textColor: 'text-black'
-    },
-    { 
-      name: 'Amazon Music', 
-      url: '#', 
-      icon: faAmazon,
-      bgColor: 'bg-[#FF9900]',
-      textColor: 'text-black'
+export const Booking: React.FC = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    countryCode: 'US',
+    organization: '',
+    orgType: '',
+    eventType: '',
+    day: '',
+    month: '',
+    year: '',
+    eventDetails: '',
+    address1: '',
+    address2: '',
+    country: '',
+    state: '',
+    city: '',
+    zipCode: '',
+    agreeTerms: false
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+    alert('Booking request submitted successfully! We will contact you shortly.');
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    
+    if (type === 'checkbox') {
+      const checked = (e.target as HTMLInputElement).checked;
+      setFormData(prev => ({ ...prev, [name]: checked }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
     }
-  ];
+  };
 
-
-const albums = [
-  {
-    id: 1,
-    title: 'Album Title 1',
-    year: '2023',
-    image: Back3,
-    tracks: [
-      { id: 1, title: 'Amazing Grace', duration: '3:45' },
-      { id: 2, title: 'Heavenly Joy', duration: '4:20' },
-      { id: 3, title: 'Soul Revival', duration: '5:15' },
-      { id: 4, title: 'Worship Medley', duration: '3:30' }
-    ]
-  }
-];
-
-export const MusicData: React.FC = () => {
   return (
-    <div className="bg-white">
-      {/* Hero Section */}
-      {/* <div className="relative">
+    <div className="bg-white min-h-screen overflow-y-auto">
+      <div className="relative">
         <div className="absolute inset-0 bg-black/50 z-10"></div>
-        <HeroSection 
-          title="ClaudyGod Music & Ministry / Music"
-          backgroundImage={Back3}
+        <Herosection 
+          title="ClaudyGod Music & Ministries / Bookings"
+          backgroundImage={VideoBanner2}
           className="relative z-0"
         />
-      </div> */}
+      </div>
 
-      {/* Music Intro Section */}
-      <section className="pt-32 pb-20 bg-purple-900 text-white">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-4xl md:text-5xl roboto-condensed mb-6">Music</h1>
-            <div className="w-20 h-1 bg-white mb-8"></div>
-            <p className="text-xl max-w-2xl robotoMedium text-20">Experience the inspirational sound of ClaudyGod's gospel music – a unique blend of American Gospel and African Soul.</p>
-          </motion.div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4 roboto-condensed text-30">ClaudyGod Music Ministry</h2>
+          <div className="h-1 w-16 bg-purple-900 mb-3"></div>
+          <p className="text-gray-700 mb-2 robotoMedium text-20">
+            To book ClaudyGod for an event, fill out the form below. The ClaudyGod Team will review your information.
+          </p>
+          <p className="text-gray-700 robotoMedium text-20">
+            Thank you in advance for your gracious invitation to be a part of your event.
+          </p>
         </div>
-      </section>
 
-      {/* Streaming Platforms */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="roboto-condensed text-40">Available On All Platforms</h2>
-            <p className="text-gray-600 mt-2 robotoMedium text-30">Stream ClaudyGod's music everywhere, Anytime, Anyday, Anywhere.</p>
-          </div>
-          <div className="flex flex-wrap justify-center gap-4">
-  {musicPlatforms.map((platform, index) => (
-    <motion.a
-      key={index}
-      href={platform.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`flex items-center px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-shadow ${platform.bgColor} ${platform.textColor}`}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.1 * index }}
-    >
-      <FontAwesomeIcon 
-        icon={platform.icon} 
-        className="mr-2 text-lg"
-      />
-      <span>{platform.name}</span>
-    </motion.a>
-  ))}
-</div>
-        </div>
-      </section>
-
-      {/* Latest Release */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl roboto-condensed text-35 font-bold mb-12 text-center">Latest Release: You Are My Everything</h2>
-          <div className="space-y-10">
-            {albums.map((album) => (
-              <motion.div
-                key={album.id}
-                className="grid md:grid-cols-3 gap-8 items-start"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-              >
-                <div className="md:col-span-1">
-                  <div className="bg-white p-4 rounded-lg shadow-lg">
-                    <img 
-                      src={album.image} 
-                      alt={album.title} 
-                      className="w-full h-auto rounded object-cover"
-                    />
-                  </div>
-                </div>
-                
-                <div className="md:col-span-2">
-                  <h3 className="text-2xl font-bold mb-2 robotoMedium">{album.title}</h3>
-                  <p className="text-gray-600 mb-6 slider-font">Released: {album.year}</p>
-                  
-                  <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div className="p-4 bg-gray-50 border-b flex justify-between items-center">
-                      <span className="slider-font">Tracks</span>
-                      <button className="text-purple-800 hover:text-purple-900 slider-font flex items-center gap-1">
-                        <FontAwesomeIcon icon={faPlay} className="text-sm" />
-                        <span>Play All</span>
-                      </button>
-                    </div>
-                    
-                    <div className="divide-y">
-                      {album.tracks.map((track) => (
-                        <div key={track.id} className="p-4 flex justify-between items-center hover:bg-gray-50">
-                          <div className="flex items-center">
-                            <button className="mr-3 text-purple-800 hover:text-purple-900">
-                              <FontAwesomeIcon icon={faPlay} className="text-sm" />
-                            </button>
-                            <span>{track.title}</span>
-                          </div>
-                          <span className="text-gray-500">{track.duration}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    {musicPlatforms.slice(0, 3).map((platform, i) => (
-                      <a 
-                        key={i}
-                        href={platform.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-sm px-3 py-1 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-50"
-                      >
-                        <span>Listen on {platform.name}</span>
-                        <FontAwesomeIcon 
-                          icon={faExternalLinkAlt} 
-                          className="ml-1 text-xs"
-                        />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Audiomack Section */}
-      <section className="py-16 bg-purple-50">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            className="max-w-4xl mx-auto text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="mb-5 inline-block p-4 bg-white rounded-full shadow-lg">
-              <img 
-                src={AudioMack} 
-                alt="Audiomack Logo" 
-                className="w-[150px] h-[150px] object-contain" 
+        <form onSubmit={handleSubmit} className="bg-purple-900 p-8 rounded-lg shadow-md text-white mb-8">
+          {/* Personal Information */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+              <label htmlFor="firstName" className="block text-sm font-medium mb-1">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
               />
             </div>
-            <h2 className="text-3xl md:text-4xl roboto-condensed font-bold mb-4">
-              ClaudyGod Music is Now on AudioMack
-            </h2>
-            <p className="text-xl text-gray-600 mb-8 slider-font">
-              Listen • Stream • Play
+            <div>
+              <label htmlFor="lastName" className="block text-sm font-medium mb-1">Last Name</label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="email" className="block text-sm font-medium mb-1">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              required
+            />
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="phone" className="block text-sm font-medium mb-1">Contact Number</label>
+            <div className="flex">
+              <select
+                name="countryCode"
+                value={formData.countryCode}
+                onChange={handleInputChange}
+                className="px-3 py-2 border border-purple-700 rounded-l-md bg-purple-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              >
+                <option value="US">US</option>
+                <option value="CA">CA</option>
+                <option value="UK">UK</option>
+              </select>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                className="flex-1 px-3 py-2 border border-purple-700 border-l-0 rounded-r-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
+              />
+            </div>
+          </div>
+
+          {/* Event Information */}
+          <h3 className="text-xl font-bold mt-8 mb-4 uppercase">Event Information</h3>
+
+          <div className="mb-6">
+            <label htmlFor="organization" className="block text-sm font-medium mb-1">Organization Name/Host</label>
+            <input
+              type="text"
+              id="organization"
+              name="organization"
+              value={formData.organization}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Enter Name of Organization or Host Here"
+              required
+            />
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-sm font-medium mb-1">Type Of Organization</label>
+            <div className="flex flex-wrap gap-4">
+              {['Church', 'Promoter', 'Non Profit', 'Others'].map((type) => (
+                <label key={type} className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="orgType"
+                    value={type}
+                    checked={formData.orgType === type}
+                    onChange={handleInputChange}
+                    className="form-radio text-purple-500"
+                  />
+                  <span className="ml-2">{type}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-sm font-medium mb-1">Type Of Event/Program</label>
+            <div className="flex flex-wrap gap-4">
+              {['Worship Evening', 'Concert', 'Others'].map((type) => (
+                <label key={type} className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="eventType"
+                    value={type}
+                    checked={formData.eventType === type}
+                    onChange={handleInputChange}
+                    className="form-radio text-purple-500"
+                  />
+                  <span className="ml-2">{type}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-sm font-medium mb-1">Date Of Event</label>
+            <div className="grid grid-cols-3 gap-2">
+              <select
+                name="day"
+                value={formData.day}
+                onChange={handleInputChange}
+                className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
+              >
+                <option value="">DD</option>
+                {Array.from({ length: 31 }, (_, i) => (
+                  <option key={i + 1} value={i + 1}>{i + 1}</option>
+                ))}
+              </select>
+              <select
+                name="month"
+                value={formData.month}
+                onChange={handleInputChange}
+                className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
+              >
+                <option value="">MM</option>
+                {Array.from({ length: 12 }, (_, i) => (
+                  <option key={i + 1} value={i + 1}>{i + 1}</option>
+                ))}
+              </select>
+              <select
+                name="year"
+                value={formData.year}
+                onChange={handleInputChange}
+                className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
+              >
+                <option value="">YYYY</option>
+                {Array.from({ length: 10 }, (_, i) => {
+                  const year = new Date().getFullYear() + i;
+                  return <option key={year} value={year}>{year}</option>;
+                })}
+              </select>
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="eventDetails" className="block text-sm font-medium mb-1">Share Event Details</label>
+            <textarea
+              id="eventDetails"
+              name="eventDetails"
+              value={formData.eventDetails}
+              onChange={handleInputChange}
+              rows={5}
+              className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              required
+            ></textarea>
+          </div>
+
+          {/* Event Location */}
+          <h3 className="text-xl font-bold mt-8 mb-4 uppercase">Event Location</h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+              <label htmlFor="address1" className="block text-sm font-medium mb-1">Address 1</label>
+              <input
+                type="text"
+                id="address1"
+                name="address1"
+                value={formData.address1}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="address2" className="block text-sm font-medium mb-1">Address 2</label>
+              <input
+                type="text"
+                id="address2"
+                name="address2"
+                value={formData.address2}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-sm font-medium mb-1">Location</label>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+              <select
+                name="country"
+                value={formData.country}
+                onChange={handleInputChange}
+                className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
+              >
+                <option value="">Country</option>
+                <option value="United States">United States</option>
+                <option value="Canada">Canada</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="Nigeria">Nigeria</option>
+              </select>
+              <select
+                name="state"
+                value={formData.state}
+                onChange={handleInputChange}
+                className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
+              >
+                <option value="">State</option>
+                <option value="California">California</option>
+                <option value="Texas">Texas</option>
+                <option value="New York">New York</option>
+              </select>
+              <select
+                name="city"
+                value={formData.city}
+                onChange={handleInputChange}
+                className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
+              >
+                <option value="">City</option>
+                <option value="San Ramon">San Ramon</option>
+                <option value="Los Angeles">Los Angeles</option>
+                <option value="San Francisco">San Francisco</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="zipCode" className="block text-sm font-medium mb-1">ZIP Code</label>
+            <input
+              type="text"
+              id="zipCode"
+              name="zipCode"
+              value={formData.zipCode}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              required
+            />
+          </div>
+
+          <div className="mb-8 text-sm">
+            <p className="mb-4">
+              By submitting this Request Form, you acknowledge that you will receive emails from the ClaudyGod Team.
+              This submission is only a request and does not guarantee participation in the event. Request information
+              is needed for processing, and a team member of ClaudyGod will contact you after review.
             </p>
-            <motion.a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-8 py-3 bg-purple-800 text-white rounded-full hover:bg-purple-900 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <FontAwesomeIcon icon={faExternalLinkAlt} className="mr-2" />
-              <span className="robotoMedium">Stream Now on Audiomack</span>
-            </motion.a>
-          </motion.div>
-        </div>
-      </section>
+            <label className="inline-flex items-center">
+              <input
+                type="checkbox"
+                name="agreeTerms"
+                checked={formData.agreeTerms}
+                onChange={handleInputChange}
+                className="form-checkbox text-purple-500"
+                required
+              />
+              <span className="ml-2">By proceeding, you agree to our Terms of Use and Services.</span>
+            </label>
+          </div>
+
+          <button 
+            type="submit" 
+            className="w-full md:w-auto bg-purple-800 hover:bg-purple-700 text-white font-medium py-3 px-8 rounded-md transition duration-150 ease-in-out"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+      <hr className="my-8 border-purple-900" />
       <NewsletterForm />
     </div>
   );
