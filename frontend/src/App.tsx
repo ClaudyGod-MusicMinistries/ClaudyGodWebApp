@@ -1,21 +1,30 @@
 import React from 'react';
+import {AnimatePresence} from 'framer-motion';
 import './App.css';
 import {  Routes, Route ,useLocation} from 'react-router-dom';
 
+
+import  Layout  from './components/Layout/Mainlayout';
 import { Home } from './pages/Home';
+import { Biography } from './pages/Bio';
+
 
 function App() {
   const location = useLocation();
 
   return (
-    <div>
-     <h2>Welcome </h2>
+    <AnimatePresence mode="wait"> 
+
     <Routes location={location} key={location.pathname}>
-       
+         <Route path="/" element={<Layout />}>
          <Route index element={<Home />} />
-       
+         <Route path='/biography' element={<Biography />} />
+           <Route path="*" element={<div>404 Not Found</div>} />
+       </Route>
+     
         </Routes>
-        </div>
+      
+</AnimatePresence>
   )
 }
 

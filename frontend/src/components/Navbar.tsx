@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Log } from '../../assets/Img';
+import { Log } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUser,
@@ -19,7 +19,7 @@ import {
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
-export const Navbar: React.FC = () => {
+export const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -62,7 +62,7 @@ export const Navbar: React.FC = () => {
 <nav className="hidden lg:flex justify-center items-center space-x-4 xl:space-x-8 navbarFont">
   {[
     { to: "/", name: "Home", icon: faHouse },
-    { to: "/biography", name: "About" },
+    { to: "/Biography", name: "About" },
     { to: "/music", name: "Music" },
     { to: "/videos", name: "Videos" },
     { to: "/bookings", name: "Bookings" },
