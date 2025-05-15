@@ -52,13 +52,13 @@ export const NavBar: React.FC = () => {
             <img src={Log} alt="Logo" />
           </div>
           <div className="ml-2">
-            <span className="text-purple-900 font-bold text-lg navbarFont">ClaudyGod</span>
-            <span className="text-gray-700 text-xs block -mt-1 navbarFont">Music & Ministry</span>
+            <span className="text-purple-900 font-bold text-lg roboto-condensed">ClaudyGod</span>
+            <span className="text-gray-700 text-xs block -mt-1 raleway-slider">Music & Ministry</span>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex justify-center items-center space-x-4 xl:space-x-8 navbarFont">
+        <nav className="hidden lg:flex justify-center items-center space-x-4 xl:space-x-8 raleway-slider">
           {[
             { to: "/", name: "Home", icon: faHouse },
             { to: "/biography", name: "About" },
@@ -89,9 +89,9 @@ export const NavBar: React.FC = () => {
         </nav>
 
         {/* Right Section - Listen Button & Mobile Menu Toggle */}
-        <div className="flex items-center justify-end gap-4">
+        <div className="flex items-center justify-end mr-12 gap-4">
           <div className="hidden lg:flex">
-            <button className="bg-purple-900 hover:bg-purple-800 text-white px-6 py-2.5 rounded-full text-sm font-medium flex items-center transition duration-150 ease-in-out">
+            <button className="bg-purple-900 cursor-pointer hover:bg-purple-800 text-white px-6 py-2.5 rounded-full text-sm raleway-slider flex items-center transition duration-150 ease-in-out">
               <FontAwesomeIcon icon={faHeadset} className="mr-3 text-base" />
               <span>Listen Now</span>
             </button>

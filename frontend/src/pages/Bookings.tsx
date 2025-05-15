@@ -56,12 +56,12 @@ export const Booking: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4 roboto-condensed text-30">ClaudyGod Music Ministry</h2>
+          <h2 className=" text-gray-900 mb-2 roboto-condensed text-40">ClaudyGod Music Ministry</h2>
           <div className="h-1 w-16 bg-purple-900 mb-3"></div>
-          <p className="text-gray-700 mb-2 robotoMedium text-20">
+          <p className="text-gray-700 mb-2 robotoMedium text-18">
             To book ClaudyGod for an event, fill out the form below. The ClaudyGod Team will review your information.
           </p>
-          <p className="text-gray-700 robotoMedium text-20">
+          <p className="text-gray-700 robotoMedium text-18">
             Thank you in advance for your gracious invitation to be a part of your event.
           </p>
         </div>
@@ -70,7 +70,7 @@ export const Booking: React.FC = () => {
           {/* Personal Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div>
-              <label htmlFor="firstName" className="block text-sm font-medium mb-1">First Name</label>
+              <label htmlFor="firstName" className="block text-sm robotoMedium mb-1">First Name</label>
               <input
                 type="text"
                 id="firstName"
@@ -82,7 +82,7 @@ export const Booking: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="lastName" className="block text-sm font-medium mb-1">Last Name</label>
+              <label htmlFor="lastName" className="block text-sm robotoMedium mb-1">Last Name</label>
               <input
                 type="text"
                 id="lastName"
@@ -96,7 +96,7 @@ export const Booking: React.FC = () => {
           </div>
 
           <div className="mb-6">
-            <label htmlFor="email" className="block text-sm font-medium mb-1">Email Address</label>
+            <label htmlFor="email" className="block text-sm robotoMedium mb-1">Email Address</label>
             <input
               type="email"
               id="email"
@@ -109,7 +109,7 @@ export const Booking: React.FC = () => {
           </div>
 
           <div className="mb-6">
-            <label htmlFor="phone" className="block text-sm font-medium mb-1">Contact Number</label>
+            <label htmlFor="phone" className="block text-sm robotoMedium mb-1">Contact Number</label>
             <div className="flex">
               <select
                 name="countryCode"
@@ -134,10 +134,10 @@ export const Booking: React.FC = () => {
           </div>
 
           {/* Event Information */}
-          <h3 className="text-xl font-bold mt-8 mb-4 uppercase">Event Information</h3>
+          <h3 className="text-xl font-bold mt-8 mb-4 roboto-condensed uppercase">Event Information</h3>
 
           <div className="mb-6">
-            <label htmlFor="organization" className="block text-sm font-medium mb-1">Organization Name/Host</label>
+            <label htmlFor="organization" className="block text-sm robotoMedium mb-1">Organization Name/Host</label>
             <input
               type="text"
               id="organization"
@@ -151,10 +151,10 @@ export const Booking: React.FC = () => {
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-medium mb-1">Type Of Organization</label>
+            <label className="block text-sm robotoMedium mb-1">Type Of Organization</label>
             <div className="flex flex-wrap gap-4">
               {['Church', 'Promoter', 'Non Profit', 'Others'].map((type) => (
-                <label key={type} className="inline-flex items-center">
+                <label key={type} className="inline-flex items-center raleway-slider">
                   <input
                     type="radio"
                     name="orgType"
@@ -170,10 +170,10 @@ export const Booking: React.FC = () => {
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-medium mb-1">Type Of Event/Program</label>
+            <label className="block text-sm robotoMedium mb-1">Type Of Event/Program</label>
             <div className="flex flex-wrap gap-4">
               {['Worship Evening', 'Concert', 'Others'].map((type) => (
-                <label key={type} className="inline-flex items-center">
+                <label key={type} className="inline-flex items-center raleway-slider">
                   <input
                     type="radio"
                     name="eventType"
@@ -189,7 +189,7 @@ export const Booking: React.FC = () => {
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-medium mb-1">Date Of Event</label>
+            <label className="block text-sm robotoMedium mb-1">Date Of Event</label>
             <div className="grid grid-cols-3 gap-2">
               <select
                 name="day"
@@ -198,7 +198,7 @@ export const Booking: React.FC = () => {
                 className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
               >
-                <option value="">DD</option>
+                <option value="" className='raleway-slider'>DD</option>
                 {Array.from({ length: 31 }, (_, i) => (
                   <option key={i + 1} value={i + 1}>{i + 1}</option>
                 ))}
@@ -210,7 +210,7 @@ export const Booking: React.FC = () => {
                 className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
               >
-                <option value="">MM</option>
+                <option value="" className='raleway-slider'>MM</option>
                 {Array.from({ length: 12 }, (_, i) => (
                   <option key={i + 1} value={i + 1}>{i + 1}</option>
                 ))}
@@ -222,7 +222,7 @@ export const Booking: React.FC = () => {
                 className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
               >
-                <option value="">YYYY</option>
+                <option value="" className='raleway-slider'>YYYY</option>
                 {Array.from({ length: 10 }, (_, i) => {
                   const year = new Date().getFullYear() + i;
                   return <option key={year} value={year}>{year}</option>;
@@ -232,7 +232,7 @@ export const Booking: React.FC = () => {
           </div>
 
           <div className="mb-6">
-            <label htmlFor="eventDetails" className="block text-sm font-medium mb-1">Share Event Details</label>
+            <label htmlFor="eventDetails" className="block text-sm robotoMedium mb-1">Share Event Details</label>
             <textarea
               id="eventDetails"
               name="eventDetails"
@@ -245,7 +245,7 @@ export const Booking: React.FC = () => {
           </div>
 
           {/* Event Location */}
-          <h3 className="text-xl font-bold mt-8 mb-4 uppercase">Event Location</h3>
+          <h3 className="text-xl robotoMedium mt-8 mb-4 uppercase">Event Location</h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div>
@@ -261,7 +261,7 @@ export const Booking: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="address2" className="block text-sm font-medium mb-1">Address 2</label>
+              <label htmlFor="address2" className="block text-sm robotoMedium mb-1">Address 2</label>
               <input
                 type="text"
                 id="address2"
@@ -274,7 +274,7 @@ export const Booking: React.FC = () => {
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-medium mb-1">Location</label>
+            <label className="block text-sm robotoMedium mb-1">Location</label>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
               <select
                 name="country"
@@ -283,11 +283,11 @@ export const Booking: React.FC = () => {
                 className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
               >
-                <option value="">Country</option>
-                <option value="United States">United States</option>
-                <option value="Canada">Canada</option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="Nigeria">Nigeria</option>
+                <option value=""className='raleway-slider'>Country</option>
+                <option value="United States" className='raleway-slider'>United States</option>
+                <option value="Canada" className='raleway-slider'>Canada</option>
+                <option value="United Kingdom" className='raleway-slider'>United Kingdom</option>
+                <option value="Nigeria" className='raleway-slider'>Nigeria</option>
               </select>
               <select
                 name="state"
@@ -296,10 +296,10 @@ export const Booking: React.FC = () => {
                 className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
               >
-                <option value="">State</option>
-                <option value="California">California</option>
-                <option value="Texas">Texas</option>
-                <option value="New York">New York</option>
+                <option value="" className='raleway-slider'>State</option>
+                <option value="California" className='raleway-slider'>California</option>
+                <option value="Texas" className='raleway-slider'>Texas</option>
+                <option value="New York" className='raleway-slider'>New York</option>
               </select>
               <select
                 name="city"
@@ -308,10 +308,10 @@ export const Booking: React.FC = () => {
                 className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
               >
-                <option value="">City</option>
-                <option value="San Ramon">San Ramon</option>
-                <option value="Los Angeles">Los Angeles</option>
-                <option value="San Francisco">San Francisco</option>
+                <option value="" className='raleway-slider'>City</option>
+                <option value="San Ramon" className='raleway-slider'>San Ramon</option>
+                <option value="Los Angeles" className='raleway-slider'>Los Angeles</option>
+                <option value="San Francisco" className='raleway-slider'>San Francisco</option>
               </select>
             </div>
           </div>
@@ -330,7 +330,7 @@ export const Booking: React.FC = () => {
           </div>
 
           <div className="mb-8 text-sm">
-            <p className="mb-4">
+            <p className="mb-4 robotoMedium">
               By submitting this Request Form, you acknowledge that you will receive emails from the ClaudyGod Team.
               This submission is only a request and does not guarantee participation in the event. Request information
               is needed for processing, and a team member of ClaudyGod will contact you after review.
@@ -344,13 +344,13 @@ export const Booking: React.FC = () => {
                 className="form-checkbox text-purple-500"
                 required
               />
-              <span className="ml-2">By proceeding, you agree to our Terms of Use and Services.</span>
+              <span className="ml-2 robotoMedium">By proceeding, you agree to our Terms of Use and Services.</span>
             </label>
           </div>
 
           <button 
             type="submit" 
-            className="w-full md:w-auto bg-purple-800 hover:bg-purple-700 text-white font-medium py-3 px-8 rounded-md transition duration-150 ease-in-out"
+            className="w-full md:w-auto bg-purple-800 hover:bg-purple-700 roboto-condensed border-1 cursor-pointer border-white text-white font-medium py-3 px-8 rounded-md transition duration-150 ease-in-out"
           >
             Submit
           </button>

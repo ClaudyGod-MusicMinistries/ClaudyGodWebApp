@@ -33,13 +33,13 @@ export const Herosection: React.FC<HeroSectionProps> = ({ title, backgroundImage
           animate={{ opacity: 1, x: 0 }}
           className="md:w-1/2 w-full text-white mr-60 mb-20"
         >
-          <h1 className="text-30 md:text-5xl roboto-condensed mb-6 leading-tight">
+          <h1 className="text-40 text-white md:text-5xl roboto-condensed mb-6 leading-tight">
             {title}
           </h1>
           <div className="border-l-4 border-white pl-4">
-            <p className="text-lg md:text-xl opacity-90 robotoMedium">
-              Experience the divine fusion of American Gospel and African Soul through ClaudyGod's inspirational journey
-            </p>
+            <p className="text-gray-400 text-lg md:text-xl opacity-90 robotoMedium">
+  Experience the divine fusion of American Gospel and African Soul through ClaudyGod's inspirational journey
+</p>
           </div>
         </motion.div>
       </div>

@@ -115,13 +115,13 @@ const VideoCard: React.FC<{
       </div>
     </figure>
     <div className="mt-4 space-y-2">
-      <h3 className="text-lg font-semibold text-gray-800">{content.title}</h3>
-      <p className="text-sm text-purple-600 font-medium">{content.scripture}</p>
-      <div className="flex justify-between text-sm text-gray-500">
+      <h3 className="text-lg roboto-condensed text-gray-800">{content.title}</h3>
+      <p className="text-sm text-purple-600 robotoMedium ">{content.scripture}</p>
+      <div className="flex justify-between raleway-slider text-sm text-gray-500">
         <span>{content.duration}</span>
         <span>{content.date}</span>
       </div>
-      <p className="text-sm font-medium text-gray-500">{content.teacher}</p>
+      <p className="text-sm raleway-Light text-gray-700">{content.teacher}</p>
     </div>
   </div>
 );
@@ -133,11 +133,11 @@ const ContentSection: React.FC<{
 }> = ({ title, description, contents }) => (
   <div className="mt-16 space-y-8 px-4 max-w-7xl mx-auto">
     <div className="text-left">
-      <h2 className="text-3xl md:text-4xl font-bold text-purple-900">
+      <h2 className=" md:text-4xl roboto-condensed text-40 text-purple-900">
         {title}
       </h2>
       <div className="w-[150px] h-2 bg-purple-900 my-4"></div>
-      <p className="text-gray-600 font-medium text-lg max-w-2xl">
+      <p className="text-gray-600 robotoMedium text-lg max-w-2xl">
         {description}
       </p>
     </div>
