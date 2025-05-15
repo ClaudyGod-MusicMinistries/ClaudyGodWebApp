@@ -58,50 +58,55 @@ export const NavBar: React.FC = () => {
         </Link>
 
         {/* Desktop Navigation */}
-{/* Desktop Navigation */}
-<nav className="hidden lg:flex justify-center items-center space-x-4 xl:space-x-8 navbarFont">
-  {[
-    { to: "/", name: "Home", icon: faHouse },
-    { to: "/Biography", name: "About" },
-    { to: "/music", name: "Music" },
-    { to: "/videos", name: "Videos" },
-    { to: "/bookings", name: "Bookings" },
-    { to: "/blogs", name: "Blogs" }, // Changed from Blogspost to match route
-    { to: "/ministry", name: "Ministry" },
-    { to: "/store", name: "Store" },
-    { to: "/contact", name: "Contact" },
-    { to: "/donate", name: "Donate" },
-    { to: "/help", name: "Help" },
-  ].map((link) => (
-    <NavLink
-      key={link.to}
-      to={link.to}
-      end  // Add this for exact matching on root route
-      className={({ isActive }) => `flex items-center text-sm font-medium transition-colors hover:text-primary-light ${
-        scrolled 
-          ? (isActive ? 'text-primary' : 'text-purple-900') 
-          : 'text-gray-900 hover:text-purple-900 cursor-pointer'
-      }`}
-    >
-      {link.icon && <FontAwesomeIcon icon={link.icon} className={`${link.name === 'Home' ? 'mr-2' : 'mr-1'} text-sm`} />}
-      <span>{link.name}</span>
-    </NavLink>
-  ))}
-</nav>
-  
-  {/* Listen Now Button - Right Aligned */}
-  <div className="hidden lg:flex justify-end mr-15">
-  <button className="bg-purple-900 cursor-pointer hover:bg-purple-800 text-white px-6 py-2.5 rounded-full text-sm font-medium flex items-center justify-center transition duration-150 ease-in-out">
-            <FontAwesomeIcon icon={faHeadset} className="mr-3 text-base" />
-            <span>Listen Now</span>
+        <nav className="hidden lg:flex justify-center items-center space-x-4 xl:space-x-8 navbarFont">
+          {[
+            { to: "/", name: "Home", icon: faHouse },
+            { to: "/biography", name: "About" },
+            { to: "/music", name: "Music" },
+            { to: "/videos", name: "Videos" },
+            { to: "/bookings", name: "Bookings" },
+            { to: "/blogs", name: "Blogs" },
+            { to: "/ministry", name: "Ministry" },
+            { to: "/store", name: "Store" },
+            { to: "/contact", name: "Contact" },
+            { to: "/donate", name: "Donate" },
+            { to: "/help", name: "Help" },
+          ].map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end
+              className={({ isActive }) => `flex items-center text-sm font-medium transition-colors hover:text-primary-light ${
+                scrolled 
+                  ? (isActive ? 'text-primary' : 'text-purple-900') 
+                  : 'text-gray-900 hover:text-purple-900 cursor-pointer'
+              }`}
+            >
+              {link.icon && <FontAwesomeIcon icon={link.icon} className={`${link.name === 'Home' ? 'mr-2' : 'mr-1'} text-sm`} />}
+              <span>{link.name}</span>
+            </NavLink>
+          ))}
+        </nav>
+
+        {/* Right Section - Listen Button & Mobile Menu Toggle */}
+        <div className="flex items-center justify-end gap-4">
+          <div className="hidden lg:flex">
+            <button className="bg-purple-900 hover:bg-purple-800 text-white px-6 py-2.5 rounded-full text-sm font-medium flex items-center transition duration-150 ease-in-out">
+              <FontAwesomeIcon icon={faHeadset} className="mr-3 text-base" />
+              <span>Listen Now</span>
+            </button>
+          </div>
+          <button 
+            onClick={toggleMenu}
+            className="lg:hidden text-purple-900 p-2 hover:text-purple-800"
+          >
+            <FontAwesomeIcon icon={faBars} className="h-6 w-6" />
           </button>
         </div>
       </div>
-  
-      
 
       {/* Mobile Menu */}
-      <div className={`lg:hidden fixed inset-0 bg-white z-40 transition-transform duration-300 ${
+      <div className={`lg:hidden fixed inset-0 bg-white z-50 transition-transform duration-300 ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}>
         <div className="flex justify-between items-center p-4 border-b">
@@ -123,16 +128,16 @@ export const NavBar: React.FC = () => {
           <ul className="space-y-4">
             {[
               { to: "/", name: "Home", icon: faHouse },
-              { to: "/Biography", name: "About", icon: faUser },
-              { to: "/Music", name: "Music", icon: faMusic },
-              { to: "/Videos", name: "Videos", icon: faVideo },
-              { to: "/News", name: "News", icon: faNewspaper },
-              { to: "/Blogs", name: "Blogs", icon: faBlog },
-              { to: "/Bookings", name: "Bookings", icon: faCalendar },
-              { to: "/Store", name: "Store", icon: faStore },
-              { to: "/Ministry", name: "Ministry", icon: faHandsPraying },
-              { to: "/Donate", name: "Donate", icon: faHandHoldingDollar },
-              { to: "/Contact", name: "Contact", icon: faEnvelope },
+              { to: "/biography", name: "About", icon: faUser },
+              { to: "/music", name: "Music", icon: faMusic },
+              { to: "/videos", name: "Videos", icon: faVideo },
+              { to: "/news", name: "News", icon: faNewspaper },
+              { to: "/blogs", name: "Blogs", icon: faBlog },
+              { to: "/bookings", name: "Bookings", icon: faCalendar },
+              { to: "/store", name: "Store", icon: faStore },
+              { to: "/ministry", name: "Ministry", icon: faHandsPraying },
+              { to: "/donate", name: "Donate", icon: faHandHoldingDollar },
+              { to: "/contact", name: "Contact", icon: faEnvelope },
             ].map((link) => (
               <li key={link.to}>
                 <NavLink
@@ -148,7 +153,7 @@ export const NavBar: React.FC = () => {
           </ul>
 
           <div className="mt-8 navbarFont">
-            <button className="w-full navbarFont bg-purple-900 hover:bg-purple-800 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center justify-center transition duration-150 ease-in-out">
+            <button className="w-full bg-purple-900 hover:bg-purple-800 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center justify-center transition duration-150 ease-in-out">
               <FontAwesomeIcon icon={faHeadset} className="mr-2" />
               Listen Now
             </button>

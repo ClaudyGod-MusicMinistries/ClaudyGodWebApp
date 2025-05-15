@@ -11,6 +11,10 @@ import { MusicData } from './pages/Music';
 import { VideosData } from './pages/Videos';
 import { Booking } from './pages/Bookings';
 import { ContactData } from './pages/Contact';
+import { DonateData } from './pages/Donate';
+import { StoreData } from './pages/Store';
+import { Blogs } from './pages/Blogpost';
+import { MinistryData } from './pages/Ministry';
 
 
 
@@ -29,6 +33,10 @@ function App() {
           <Route path='/videos' element={<VideosData />} />
          <Route path='/bookings' element={<Booking />} />
          <Route path='/contact' element={<ContactData />} />
+          <Route path='/donate' element={<DonateData />} />
+          <Route path='/store' element={<StoreData />} />
+          <Route path='/blogs' element={<Blogs />} />
+          <Route path='/ministry' element={<MinistryData />} />
            <Route path="*" element={<div>404 Not Found</div>} />
        </Route>
      
