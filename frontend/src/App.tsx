@@ -3,10 +3,12 @@ import {AnimatePresence} from 'framer-motion';
 import './App.css';
 import {  Routes, Route ,useLocation} from 'react-router-dom';
 
-
+// Pages
 import  Layout  from './components/Layout/Mainlayout';
 import { Home } from './pages/Home';
 import { Biography } from './pages/Bio';
+import { MusicData } from './pages/Music';
+
 
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
          <Route path="/" element={<Layout />}>
          <Route index element={<Home />} />
          <Route path='/biography' element={<Biography />} />
+          <Route path='/music' element={<MusicData />} />
            <Route path="*" element={<div>404 Not Found</div>} />
        </Route>
      
