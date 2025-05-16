@@ -32,6 +32,28 @@ import MusicBan5 from './MusicBanner5.jpg'
 import MusicBan6 from './MusicBanner6.jpg'
 import MusicBan7 from './MusicBanner7.jpg'
 import MusicBan8 from './MusicBanner8.jpg'
+import Ministry1 from './ministry1.jpg'
+import ministry2 from './Ministry2.jpg';
+import ministry3 from './Ministry3.jpg';
+import ministry4 from './Ministry4.jpg';
+import ministry5 from './Ministry5.jpg';    
+import ministry6 from './Ministry6.jpg';
+import ministry7 from './Ministry7.jpg';
+import ministry8 from './Ministry8.jpg';
+import ministry9 from './Ministry9.jpg';
+import ministry10 from './Ministry10.jpg';
+import ministry11 from './Ministry11.jpg';
+import ministry12 from './Ministry12.jpg';
+import ministry13 from './Ministry13.jpg';
+import ministry14 from './Ministry14.jpg';
+
+import ministry15 from './Ministry15.jpg';
+import ministry16 from './Ministry16.jpg';
+import ministry17 from './Minsitry17.jpg';  
+import ministry18 from './Ministry18.jpg';
+import ministry19 from './Ministry19.jpg';
+import ministry20 from './Ministry20.jpg';
+
 
 
 
@@ -39,4 +61,7 @@ export {Log, Back1, Back2, Back3,  Back4, About1,
     About2, Cover, Shop1, Shop2,Shop3, Donate1 , Donate2,
     Shop4, VideoBanner1, VideoBanner2, VideoBanner3,StoreBanner, product1,
 product2, product3, product4,Aud1, Aud2, AudioMack , MusicBan1, MusicBan2,
- MusicBan3, MusicBan4, MusicBan5, MusicBan6, MusicBan7, MusicBan8}
+ MusicBan3, MusicBan4, MusicBan5, MusicBan6, MusicBan7, MusicBan8 , Ministry1, ministry2, ministry3, ministry4,
+  ministry5, ministry6, ministry7, ministry8, ministry9, ministry10, ministry11,
+   ministry12, ministry13, ministry14, ministry15,
+    ministry16, ministry17, ministry18, ministry19, ministry20}

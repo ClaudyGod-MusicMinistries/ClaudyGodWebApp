@@ -5,6 +5,7 @@ import { NewsletterForm } from '../components/Newsletter';
 import { product1, product2, product3, product4, Aud1, Aud2} from '../assets/'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 type ProductType = {
   id: number;
@@ -149,9 +150,11 @@ export const StoreData: React.FC = () => {
                     <p className="text-gray-600 text-sm mb-4 flex-grow robotoMedium">{product.description}</p>
                     <div className="flex justify-between items-center">
                       <p className="font-bold text-lg robotoMedium text-15">${product.price}</p>
-                      <button className="bg-purple-900 hover:bg-purple-800 text-white px-4 py-2 rounded-md text-sm slider-font transition-colors">
-                        Add to Cart
-                      </button>
+                    <Link to="/cart">
+  <button className="bg-purple-900 hover:bg-purple-800 text-white px-4 py-2 rounded-md text-sm slider-font transition-colors">
+    Add to Cart
+  </button>
+</Link>
                     </div>
                   </div>
                 </div>

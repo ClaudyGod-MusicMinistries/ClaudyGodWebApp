@@ -16,6 +16,8 @@ import { StoreData } from './pages/Store';
 import { Blogs } from './pages/Blogpost';
 import { MinistryData } from './pages/Ministry';
 
+// Store Section
+import { Cart } from './components/Cart';
 
 
 
@@ -38,6 +40,7 @@ function App() {
           <Route path='/blogs' element={<Blogs />} />
           <Route path='/ministry' element={<MinistryData />} />
            <Route path="*" element={<div>404 Not Found</div>} />
+      <Route path="/cart" element={<Cart />} />
        </Route>
      
         </Routes>
