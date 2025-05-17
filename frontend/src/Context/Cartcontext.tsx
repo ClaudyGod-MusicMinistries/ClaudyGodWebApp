@@ -1,38 +1,41 @@
-// contexts/CartContext.tsx
 import { createContext, useContext, useState, ReactNode } from 'react';
 
-interface CartItem {
+export interface CartItem {
   id: number;
   name: string;
   price: number;
-  quantity: number;
   image: string;
+  quantity: number;
 }
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (product: ProductType) => void;
+  addToCart: (item: CartItem) => void;
   removeFromCart: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
+  cartTotal: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  
+  const cartTotal = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
 
-  const addToCart = (product: ProductType) => {
+  const addToCart = (item: CartItem) => {
     setCartItems(prev => {
-      const existing = prev.find(item => item.id === product.id);
+      const existing = prev.find(i => i.id === item.id);
       if (existing) {
-        return prev.map(item =>
-          item.id === product.id 
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+        return prev.map(i => 
+          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
         );
       }
-      return [...prev, { ...product, quantity: 1 }];
+      return [...prev, { ...item, quantity: 1 }];
     });
   };
 
@@ -43,7 +46,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const updateQuantity = (productId: number, quantity: number) => {
     if (quantity < 1) return;
     setCartItems(prev =>
-      prev.map(item =>
+      prev.map(item => 
         item.id === productId ? { ...item, quantity } : item
       )
     );
@@ -53,7 +56,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <CartContext.Provider 
-      value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart }}
+      value={{ 
+        cartItems, 
+        addToCart, 
+        removeFromCart, 
+        updateQuantity, 
+        clearCart,
+        cartTotal
+      }}
     >
       {children}
     </CartContext.Provider>

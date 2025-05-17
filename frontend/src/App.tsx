@@ -1,10 +1,14 @@
+// App.tsx
 import React from 'react';
-import {AnimatePresence} from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
+import { Routes, Route, useLocation, BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-import {  Routes, Route ,useLocation} from 'react-router-dom';
+
+// Components
+import Layout from './components/Layout/Mainlayout';
+import { CartProvider } from './Context/Cartcontext';
 
 // Pages
-import  Layout  from './components/Layout/Mainlayout';
 import { Home } from './pages/Home';
 import { Biography } from './pages/Bio';
 import { MusicData } from './pages/Music';
@@ -15,38 +19,41 @@ import { DonateData } from './pages/Donate';
 import { StoreData } from './pages/Store';
 import { Blogs } from './pages/Blogpost';
 import { MinistryData } from './pages/Ministry';
-
-// Store Section
 import { Cart } from './components/Cart';
+import { Payment } from './components/Payment';
 
-
-
-function App() {
+function AppRoutes() {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait"> 
-
-    <Routes location={location} key={location.pathname}>
-         <Route path="/" element={<Layout />}>
-         <Route index element={<Home />} />
-         <Route path='/biography' element={<Biography />} />
-          <Route path='/music' element={<MusicData />} />
-          <Route path='/videos' element={<VideosData />} />
-         <Route path='/bookings' element={<Booking />} />
-         <Route path='/contact' element={<ContactData />} />
-          <Route path='/donate' element={<DonateData />} />
-          <Route path='/store' element={<StoreData />} />
-          <Route path='/blogs' element={<Blogs />} />
-          <Route path='/ministry' element={<MinistryData />} />
-           <Route path="*" element={<div>404 Not Found</div>} />
-      <Route path="/cart" element={<Cart />} />
-       </Route>
-     
-        </Routes>
-      
-</AnimatePresence>
-  )
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.key}>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="biography" element={<Biography />} />
+          <Route path="music" element={<MusicData />} />
+          <Route path="videos" element={<VideosData />} />
+          <Route path="bookings" element={<Booking />} />
+          <Route path="contact" element={<ContactData />} />
+          <Route path="donate" element={<DonateData />} />
+          <Route path="store" element={<StoreData />} />
+          <Route path="blogs" element={<Blogs />} />
+          <Route path="ministry" element={<MinistryData />} />
+           <Route path="cart" element={<Cart />} />
+          <Route path="payment" element={<Payment />} />
+          <Route path="*" element={<div>404 Not Found</div>} />
+        </Route>
+      </Routes>
+    </AnimatePresence>
+  );
 }
 
-export default App
+export default function Root() {
+  return (
+    <Router>
+      <CartProvider>
+        <AppRoutes />
+      </CartProvider>
+    </Router>
+  );
+}

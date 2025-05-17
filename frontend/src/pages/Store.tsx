@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Herosection } from '../components/Herosection';
-import { StoreBanner } from '../assets/'
+import { StoreBanner } from '../assets/';
 import { NewsletterForm } from '../components/Newsletter';
-import { product1, product2, product3, product4, Aud1, Aud2} from '../assets/'
+import { product1, product2, product3, product4, Aud1, Aud2 } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useCart } from '../Context/Cartcontext';
 
 type ProductType = {
   id: number;
@@ -18,7 +19,8 @@ type ProductType = {
 
 export const StoreData: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
-  
+  const { addToCart } = useCart();
+
   const products: ProductType[] = [
     {
       id: 1,
@@ -35,7 +37,8 @@ export const StoreData: React.FC = () => {
       price: 30,
       category: 'clothing',
       description: 'Comfortable cotton t-shirt featuring the ClaudyGod logo.'
-    },    {
+    },
+    {
       id: 3,
       name: 'ClaudyGod Premium Mug',
       image: product2,
@@ -83,8 +86,6 @@ export const StoreData: React.FC = () => {
       category: 'clothing',
       description: 'Comfortable cotton t-shirt featuring the ClaudyGod logo.'
     }
-
-    // ... keep all other product objects the same
   ];
 
   const categories = ['all', 'clothing', 'accessories', 'music'];
@@ -146,34 +147,53 @@ export const StoreData: React.FC = () => {
                     />
                   </div>
                   <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="font-semibold text-lg text-purple-900 mb-2 roboto-condensed">{product.name}</h3>
-                    <p className="text-gray-600 text-sm mb-4 flex-grow robotoMedium">{product.description}</p>
+                    <h3 className="font-semibold text-lg text-purple-900 mb-2 roboto-condensed">
+                      {product.name}
+                    </h3>
+                    <p className="text-gray-600 text-sm mb-4 flex-grow robotoMedium">
+                      {product.description}
+                    </p>
                     <div className="flex justify-between items-center">
-                      <p className="font-bold text-lg robotoMedium text-15">${product.price}</p>
-                    <Link to="/cart">
-  <button className="bg-purple-900 hover:bg-purple-800 text-white px-4 py-2 rounded-md text-sm slider-font transition-colors">
+                      <p className="font-bold text-lg robotoMedium text-15">
+                        ${product.price}
+                      </p>
+
+  <button 
+    onClick={() => {
+      console.log('Adding to cart:', product);
+      addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        quantity: 1
+      });
+    }}
+    className="bg-purple-900 hover:bg-purple-800 text-white px-4 py-2 rounded-md text-sm slider-font transition-colors"
+  >
     Add to Cart
   </button>
-</Link>
                     </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          <div className="flex justify-center mt-15">
-          <button className="bg-purple-900 w-70 h-15 text-white px-6 py-3 rounded-full cursor-pointer roboto-condensed shadow-lg transition transform duration-300 hover:scale-105 hover:bg-purple-900 flex items-center justify-center gap-2">
-  <FontAwesomeIcon icon={faShoppingBag} className='text-shadow-gray-700 text-20'  />
-  Shop More
-</button>
 
-</div>
+          <div className="flex justify-center mt-12">
+            <Link 
+              to="/store"
+              className="bg-purple-900 w-70 h-15 text-white px-6 py-3 rounded-full cursor-pointer roboto-condensed shadow-lg transition transform duration-300 hover:scale-105 hover:bg-purple-800 flex items-center justify-center gap-2"
+            >
+              <FontAwesomeIcon icon={faShoppingBag} className='text-shadow-gray-700 text-20' />
+              Shop More
+            </Link>
+          </div>
         </div>
       </div>
+      
       <hr className="my-8 border-purple-900" />
       <NewsletterForm />
     </div>
-
-      
   );
 };
