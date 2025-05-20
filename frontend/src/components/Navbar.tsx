@@ -60,7 +60,7 @@ export const Navbar: React.FC = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex justify-center items-center space-x-4 xl:space-x-8 raleway-slider">
+        <nav className="hidden lg:flex justify-center items-center space-x-4 xl:space-x-8 work-sans">
           {[
             { to: "/", name: "Home", icon: faHouse },
             { to: "/biography", name: "About" },

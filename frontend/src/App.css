@@ -1,5 +1,51 @@
-/* Add these styles to your App.css */
-.cart-container {
+Add these styles to your App
+
+/* Fonts Used */
+.roboto-condensed {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+.robotoMedium{
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+.roboto-condensed {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+.work-sans {
+  font-family: "Work Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+/* Text Sizes */
+text-sm-10{ font-size: 10px;}
+text-md-15{font-size: 15px;}
+text-md-20{ font-size: 20px;}
+text-lg-25{font-size: 25px;}
+text-lg-30{ font-size: 30px;}
+text-lg-35{ font-size: 35px;}
+text-lg-40{ font-size: 40px;}
+text-lg-45{font-size: 45px;}
+text-lg-50{ font-size: 50px;}
+text-lg-55{ font-size: 55px;}
+text-lg-60{ font-size: 60px;}
+
+/* .cart-container {
   padding: 2rem;
 }
 
@@ -43,4 +89,4 @@
 
 .checkout-button:hover {
   background-color: #4338ca;
-}
+} */

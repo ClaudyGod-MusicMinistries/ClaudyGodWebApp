@@ -20,7 +20,7 @@ export const Herosection: React.FC<HeroSectionProps> = ({ title, backgroundImage
         >
           <div className="max-w-2xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              <span className="bg-gradient-to-r from-purple-300 to-white bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple-300 to-white bg-clip-text text-transparent roboto-condensed text-30">
                 {title}
               </span>
             </h1>

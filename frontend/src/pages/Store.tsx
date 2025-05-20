@@ -124,9 +124,9 @@ export const StoreData: React.FC = () => {
       </div>
 
       {/* Introduction Banner */}
-      <section className="bg-purple-900 text-white py-16">
+      <section className="bg-purple-900 h-50 text-white py-16">
         <div className="container mx-auto px-4 md:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-roboto-condensed mb-4">
+          <h1 className="text-4xl md:text-5xl font-roboto-condensed ">
             Store
           </h1>
           <div className="w-20 h-1 bg-accent-gold mx-auto mb-6" />

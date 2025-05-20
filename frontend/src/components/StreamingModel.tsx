@@ -17,7 +17,11 @@ export default function StreamingModal() {
     <div className="hidden lg:flex">
       <button 
         onClick={() => setIsModalOpen(true)}
-        className="bg-purple-900 cursor-pointer hover:bg-purple-800 text-white px-6 py-2.5 rounded-full text-sm raleway-slider flex items-center transition duration-150 ease-in-out"
+         className="hidden lg:flex bg-purple-900 position  justify-end bottom-10
+          hover:bg-purple-800 text-white px-6 
+         py-2.5 rounded-full 
+         text-sm work-sans items-center 
+         transition duration-150 ease-in-out cursor-pointer"
       >
         <FontAwesomeIcon icon={faHeadset} className="mr-3 text-base" />
         <span>Listen Now</span>
