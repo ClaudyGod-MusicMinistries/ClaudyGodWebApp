@@ -1,93 +1,94 @@
-import { useCart } from '../Context/Cartcontext';
+import React from 'react';
+import { useCartStore } from '../Context/Cartcontext';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart, faPlus, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-export const Cart = () => {
-  const { 
-    cartItems, 
-    removeFromCart, 
-    updateQuantity, 
-    cartTotal 
-  } = useCart();
+interface CartProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const CartHandler: React.FC<CartProps> = ({ isOpen, onClose }) => {
+  const { items, removeItem, updateQuantity, total } = useCartStore();
+
+  if (!isOpen) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center mb-8">
-          <Link to="/" className="text-purple-900 hover:text-purple-800">
-            Continue Shopping
-          </Link>
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
+      <div className="absolute right-0 top-0 h-full w-full md:w-96 bg-white shadow-lg">
+        <div className="p-4 flex justify-between items-center border-b">
+          <h2 className="text-xl font-semibold flex items-center">
+            <FontAwesomeIcon icon={faShoppingCart} className="mr-2" /> Shopping Cart
+          </h2>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+            <FontAwesomeIcon icon={faTimes} className="h-6 w-6" />
+          </button>
         </div>
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Shopping Cart</h1>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              {cartItems.length === 0 ? (
-                <p className="text-gray-500">Your cart is empty</p>
-              ) : (
-                <div className="space-y-6">
-                  {cartItems.map((item) => (
-                    <div key={item.id} className="flex flex-col sm:flex-row items-center gap-4 pb-6 border-b">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-32 h-32 object-cover rounded-lg"
-                      />
-                      <div className="flex-1">
-                        <h3 className="text-lg font-medium text-gray-900">{item.name}</h3>
-                        <p className="text-gray-500">${item.price.toFixed(2)}</p>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center border rounded-lg">
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="px-3 py-1 text-gray-600 hover:bg-gray-100"
-                          >
-                            -
-                          </button>
-                          <span className="px-3 py-1">{item.quantity}</span>
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="px-3 py-1 text-gray-600 hover:bg-gray-100"
-                          >
-                            +
-                          </button>
-                        </div>
-                        <p className="w-24 text-right font-medium">
-                          ${(item.price * item.quantity).toFixed(2)}
-                        </p>
-                        <button
-                          onClick={() => removeFromCart(item.id)}
-                          className="text-gray-400 hover:text-red-500"
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+        <div className="p-4 h-[calc(100vh-200px)] overflow-y-auto">
+          {items.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-gray-500">Your cart is empty</p>
             </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-md p-6 h-fit">
-            <h2 className="text-lg font-bold text-gray-900 mb-4">Order Summary</h2>
+          ) : (
             <div className="space-y-4">
-              <div className="flex justify-between">
-                <span>Subtotal</span>
-                <span>${cartTotal.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between border-t pt-4">
-                <span className="font-bold">Total</span>
-                <span className="font-bold">${cartTotal.toFixed(2)}</span>
-              </div>
+              {items.map((item) => (
+                <div key={item.id} className="flex items-center space-x-4 border-b pb-4">
+                  <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded" />
+                  <div className="flex-1">
+                    <h3 className="font-medium">{item.name}</h3>
+                    <p className="text-purple-900 font-semibold">${item.price}</p>
+                    <div className="flex items-center space-x-2 mt-2">
+                      <button
+                        onClick={() => updateQuantity(item.id, Math.max(0, item.quantity - 1))}
+                        className="p-1 rounded-full bg-gray-100 hover:bg-gray-200"
+                      >
+                        <FontAwesomeIcon icon={faMinus} className="h-4 w-4" />
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        className="p-1 rounded-full bg-gray-100 hover:bg-gray-200"
+                      >
+                        <FontAwesomeIcon icon={faPlus} className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => removeItem(item.id)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    <FontAwesomeIcon icon={faTimes} className="h-5 w-5" />
+                  </button>
+                </div>
+              ))}
             </div>
+          )}
+        </div>
+
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t bg-white">
+          <div className="flex justify-between items-center mb-4">
+            <span className="font-semibold">Total:</span>
+            <span className="text-xl font-bold text-purple-900">${total.toFixed(2)}</span>
+          </div>
+          <div className="space-y-2">
             <Link
-              to="/payment"
-              className="w-full bg-purple-900 hover:bg-purple-800 text-white py-3 rounded-lg mt-6 transition-colors block text-center"
+              to="/cart"
+              className="w-full bg-purple-900 text-white py-3 px-4 rounded-md text-center font-semibold hover:bg-purple-800 block"
+              onClick={onClose}
             >
-              Proceed to Checkout
+              View Cart
+            </Link>
+            <Link
+              to="/checkout"
+              className={`w-full border border-purple-900 text-purple-900 py-3 px-4 rounded-md text-center font-semibold hover:bg-purple-50 block ${
+                items.length === 0 ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+              onClick={onClose}
+              style={{ pointerEvents: items.length === 0 ? 'none' : 'auto' }}
+            >
+              Checkout
             </Link>
           </div>
         </div>
@@ -95,3 +96,4 @@ export const Cart = () => {
     </div>
   );
 };
+

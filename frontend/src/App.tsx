@@ -3,12 +3,9 @@ import React from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Routes, Route, useLocation, BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-
-// Components
 import Layout from './components/Layout/Mainlayout';
-import { CartProvider } from './Context/Cartcontext';
 
-// Pages
+// Import components
 import { Home } from './pages/Home';
 import { Biography } from './pages/Bio';
 import { MusicData } from './pages/Music';
@@ -19,8 +16,10 @@ import { DonateData } from './pages/Donate';
 import { StoreData } from './pages/Store';
 import { Blogs } from './pages/Blogpost';
 import { MinistryData } from './pages/Ministry';
-import { Cart } from './components/Cart';
-import { Payment } from './components/Payment';
+import { CheckoutPage } from './pages/CheckoutPage';
+import { CartPage } from './pages/CartPage';
+
+
 
 function AppRoutes() {
   const location = useLocation();
@@ -39,8 +38,9 @@ function AppRoutes() {
           <Route path="store" element={<StoreData />} />
           <Route path="blogs" element={<Blogs />} />
           <Route path="ministry" element={<MinistryData />} />
-           <Route path="cart" element={<Cart />} />
-          <Route path="payment" element={<Payment />} />
+      <Route path="checkout" element={<CheckoutPage />} />
+      <Route path="cart" element={<CartPage />} />
+
           <Route path="*" element={<div>404 Not Found</div>} />
         </Route>
       </Routes>
@@ -51,9 +51,7 @@ function AppRoutes() {
 export default function Root() {
   return (
     <Router>
-      <CartProvider>
-        <AppRoutes />
-      </CartProvider>
+      <AppRoutes />
     </Router>
   );
 }

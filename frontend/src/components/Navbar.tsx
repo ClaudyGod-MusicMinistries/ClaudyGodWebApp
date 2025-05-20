@@ -20,7 +20,7 @@ import {
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
-export const NavBar: React.FC = () => {
+export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
