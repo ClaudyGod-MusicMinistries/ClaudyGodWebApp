@@ -47,7 +47,8 @@ export const Navbar: React.FC = () => {
       scrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
     }`}>
       {/* Desktop Header */}
-      <div className="container-custom grid grid-cols-3 items-center gap-4">
+      <div className="container-custom grid grid-cols-3 
+      items-center gap-4">
         {/* Logo */}
         <Link to="/" onClick={closeMenu} className="flex items-center justify-start">
           <div className="h-10 w-10 flex items-center justify-center">
@@ -91,20 +92,28 @@ export const Navbar: React.FC = () => {
         </nav>
 
         {/* Right Section - Listen Button & Mobile Menu Toggle */}
-        <div className="flex items-center justify-end mr-12 gap-4">
-         
-
+        <div className="flex items-center justify-end gap-4">
          <StreamingModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
+            <div className="lg:hidden flex justify-end flex-1 cursor-pointer">
+        <button
+          onClick={toggleMenu}
+          className="text-white p-3 bg-purple-900 hover:bg-purple-600 rounded-lg shadow-sm cursor-pointer transition-colors"
+        >
+          <FontAwesomeIcon 
+            icon={isOpen ? faTimes : faBars} 
+            className="h-6 w-6" 
+          />
+        </button>
+      </div>
         </div>
       </div>
 
-      {/* Streaming Modal */}
    
-
-      {/* Mobile Menu */}
+   
+ {/* Mobile Menu */}
       <div className={`lg:hidden fixed inset-0 bg-white z-50 transition-transform duration-300 ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}>
@@ -118,19 +127,26 @@ export const Navbar: React.FC = () => {
               <span className="text-gray-700 text-xs block -mt-1">Music & Ministry</span>
             </div>
           </Link>
-          <button onClick={toggleMenu} className="text-purple-900 hover:text-purple-800 p-2">
-            <FontAwesomeIcon icon={faTimes} className="h-6 w-6" />
-          </button>
+          <div className="lg:hidden flex justify-end flex-1 ">
+  <button
+    onClick={toggleMenu}
+    className="lg:hidden text-white p-3 bg-purple-900 hover:bg-purple-400 cursor-pointer rounded-lg shadow-sm"
+  >
+    <FontAwesomeIcon 
+      icon={isOpen ? faTimes : faBars} 
+      className="h-6 w-6" 
+    />
+  </button>
+</div>
         </div>
 
-        <nav className="p-4">
+        <nav className="p-4 h-[calc(100vh-80px)] overflow-y-auto">
           <ul className="space-y-4">
             {[
               { to: "/", name: "Home", icon: faHouse },
               { to: "/biography", name: "About", icon: faUser },
               { to: "/music", name: "Music", icon: faMusic },
               { to: "/videos", name: "Videos", icon: faVideo },
-              { to: "/news", name: "News", icon: faNewspaper },
               { to: "/blogs", name: "Blogs", icon: faBlog },
               { to: "/bookings", name: "Bookings", icon: faCalendar },
               { to: "/store", name: "Store", icon: faStore },
@@ -141,7 +157,9 @@ export const Navbar: React.FC = () => {
               <li key={link.to}>
                 <NavLink
                   to={link.to}
-                  className="flex items-center p-2 text-gray-700 hover:bg-gray-50 rounded-md"
+                  className={({ isActive }) => `flex items-center p-2 ${
+                    isActive ? 'bg-purple-50 text-purple-900' : 'text-purple-900'
+                  } hover:bg-purple-800 hover:text-white rounded-md`}
                   onClick={closeMenu}
                 >
                   <FontAwesomeIcon icon={link.icon} className="mr-3 w-5" />
@@ -150,19 +168,25 @@ export const Navbar: React.FC = () => {
               </li>
             ))}
           </ul>
+<div className="mt-8">
+  {/* Listen Now Button */}
+  <button 
+    onClick={() => {
+      setIsModalOpen(true);
+      closeMenu();
+    }}
+    className="w-full bg-purple-900 hover:bg-purple-800 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center justify-center transition duration-150 ease-in-out"
+  >
+    <FontAwesomeIcon icon={faHeadset} className="mr-2" />
+    Listen Now
+  </button>
 
-          <div className="mt-8">
-            <button 
-              onClick={() => {
-                setIsModalOpen(true);
-                closeMenu();
-              }}
-              className="w-full bg-purple-900 hover:bg-purple-800 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center justify-center transition duration-150 ease-in-out"
-            >
-              <FontAwesomeIcon icon={faHeadset} className="mr-2" />
-              Listen Now
-            </button>
-          </div>
+  {/* Streaming Modal - Should be outside the button but in the same component */}
+  <StreamingModal
+    isOpen={isModalOpen}
+    onClose={() => setIsModalOpen(false)}
+  />
+</div>
         </nav>
       </div>
     </header>
