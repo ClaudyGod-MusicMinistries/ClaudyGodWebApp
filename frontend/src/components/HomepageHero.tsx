@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import { Back1, Back2, Back3, Back4 } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { LatestRelease } from '../components/HomePage/latestRelease'
+
+
 import {
   faPlayCircle,
   faMusic,
@@ -115,7 +116,7 @@ const heroSlides: HeroSlide[] = [
   };
 
   return (
-    <section className="relative h-[90vh] min-h-[600px] overflow-hidden">
+    <section className="relative h-[90vh] min-h-[500px] overflow-hidden">
       <AnimatePresence initial={false} custom={direction}>
         {heroSlides.map((slide, index) => 
           index === currentSlide && (
@@ -126,53 +127,45 @@ const heroSlides: HeroSlide[] = [
               initial="enter"
               animate="center"
               exit="exit"
-              className="absolute inset-0 w-full h-full roboto-condensed text-40"
+              className="absolute inset-0 w-full  h-full "
             >
-              {/* Image Section */}
+        
             <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-green-900/90 via-black/50 to-transparent">
                 <img
                   src={slide.imageUrl}
                   alt=""
                   className="w-full h-full object-cover object-center mix-blend-multiply opacity-90"
                   loading="eager"
-                  style={{ transform: 'translateZ(0)' }}
+                  style={{ transform: 'translateZ(0) ,backgroundSize: 800% auto, backgroundPosition:top center, backgroundRepeat:no-repeat' }}
                 />
               </div> 
-                {/* <section 
-                className="relative py-16 min-h-[750px] flex items-center overflow-hidden"
-                style={{ 
-                  backgroundImage: `url(${Back1})`,
-                  backgroundSize: '100% auto',  // Reduced width size
-                  backgroundPosition: 'top center',
-                  backgroundRepeat: 'no-repeat',
-                }}
-              ></section> */}
+          
 
               {/* Darker Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-purple-900/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t  from-black/100 via-purple-900/50 to-transparent" />
 
               {/* Content Section */}
-              <div className="container-custom h-full flex flex-col justify-center items-center text-white relative z-10">
+              <div className="container-custom h-full flex flex-col justify-center  items-center text-white relative z-10">
                 {slide.type === 'quote' && (
                   <div className="flex flex-col w-full items-start gap-8 min-h-[60vh] md:min-h-0">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 5, ease: 'easeInOut' }}
-                      className="flex flex-col gap-6 max-w-2xl bg-transparent md:bg-white/10 md:backdrop-blur-sm md:border md:border-white/10 shadow-lg md:shadow-black/10 pl-8 pr-8 md:pl-12 md:pr-12 py-4 md:py-8 rounded-lg md:rounded-xl mt-auto md:mt-0"
-                    >
+                <motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5, ease: 'easeInOut' }} // Reduced duration from 5s to 0.5s
+  className="flex flex-col gap-6 max-w-2xl  ml-20 roboto-condensed text-2xl mt-50" // Changed mt-auto to mt-8, added md:mt-16
+>
                       <div className="flex flex-col gap-4">
-                        <h1 className="text-1xl md:text-1xl lg:text-1xl leading-tight md:leading-normal text-bold">
+                        <h1 className="text-1xl md:text-1xl lg:text-1xl leading-tight md:leading-normal ">
                           {slide.content?.quote}
                         </h1>
                         {slide.content?.reference && (
-                          <p className="text-accent text-lg md:text-xl">
+                          <p className="text-accent text-lg md:text-xl work-sans">
                             {slide.content.reference}
                           </p>
                         )}
                       </div>
 
-                      <div className="w-[70px] h-[10px] bg-white my-4" aria-hidden="true" />
+                      <div className="w-[70px] h-[10px] bg-white  my-4" aria-hidden="true" />
 
                       <div className="flex items-center -ml-4 md:-ml-4 -mt-4">
                         <a
@@ -196,7 +189,7 @@ const heroSlides: HeroSlide[] = [
                     animate={{ opacity: 1 }}
                     className="text-center max-w-4xl"
                   >
-                    <h2 className="text-3xl md:text-4xl font-serif mb-8 text-bold">
+                    <h2 className="text-3xl md:text-4xl  mb-8 roboto-condensed">
                       Stream Our Music On Various Platforms
                     </h2>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -204,7 +197,7 @@ const heroSlides: HeroSlide[] = [
                         <a
                           key={platform.name}
                           href={platform.url}
-                          className="flex flex-col items-center p-6 text-bold bg-white/10 backdrop-blur-sm rounded-xl hover:bg-white/20 transition-all"
+                          className="flex flex-col items-center p-6 raleway-medium bg-white/10 backdrop-blur-sm rounded-xl hover:bg-white/20 transition-all"
                         >
                           <FontAwesomeIcon 
                             icon={platform.icon} 
@@ -223,7 +216,7 @@ const heroSlides: HeroSlide[] = [
                     animate={{ scale: 1, opacity: 1 }}
                     className="w-full max-w-md bg-white/10 backdrop-blur-sm p-8 rounded-xl"
                   >
-                    <h2 className="text-2xl md:text-3xl font-serif mb-6 text-bold">
+                    <h2 className="text-2xl md:text-3xl mb-6 roboto-condensed">
                       {slide.content?.formTitle}
                     </h2>
                     <form className="space-y-4">
@@ -231,7 +224,7 @@ const heroSlides: HeroSlide[] = [
                         <input
                           type="text"
                           placeholder="Your Name"
-                          className="w-full p-3 bg-white/20 rounded-lg placeholder-white/70"
+                          className="w-full p-3 bg-white/20 rounded-lg work-sans placeholder-white/70"
                         />
                       </div>
                       <div>
@@ -249,7 +242,7 @@ const heroSlides: HeroSlide[] = [
                       </div>
                       <button
                         type="submit"
-                        className="w-full bg-purple-900 hover:bg-primary-dark py-3 rounded-lg transition-colors"
+                        className="w-full bg-purple-900 hover:bg-primary-dark roboto-condensed py-3 rounded-lg transition-colors"
                       >
                         Submit Request
                       </button>

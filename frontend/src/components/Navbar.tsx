@@ -44,7 +44,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className={`sticky top-0 z-50 h-20 transition-all duration-300 ${
-      scrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
+      scrolled ? ' shadow-md py-2' : 'bg-transparent py-4'
     }`}>
       {/* Desktop Header */}
       <div className="container-custom grid grid-cols-3 

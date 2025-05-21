@@ -18,7 +18,7 @@ export const Home = () => {
       <LatestRelease />
    <AudioMackComponent />
       <FeaturedVideos />
-      <hr className="border-1 border-purple-900 shadow-lg shadow-purple-200/50" />
+      {/* <hr className="border-1 border-purple-900 shadow-lg shadow-purple-200/50" /> */}
           <NewsletterForm />
       </div>
   );
