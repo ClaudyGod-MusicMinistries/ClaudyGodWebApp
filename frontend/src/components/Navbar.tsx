@@ -43,7 +43,7 @@ export const Navbar: React.FC = () => {
   }, [location]);
 
   return (
-    <header className={`sticky top-0 z-50 h-20 transition-all duration-300 ${
+    <header className={`sticky top-0 z-50 h-20 transition-all bg-white duration-300 ${
       scrolled ? ' shadow-md py-2' : 'bg-transparent py-4'
     }`}>
       {/* Desktop Header */}
