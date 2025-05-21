@@ -46,7 +46,7 @@ import ministry11 from './Ministry11.jpg';
 import ministry12 from './Ministry12.jpg';
 import ministry13 from './Ministry13.jpg';
 import ministry14 from './Ministry14.jpg';
-
+import backUp from './abt_bck.jpg'
 import ministry15 from './Ministry15.jpg';
 import ministry16 from './Ministry16.jpg';
 import ministry17 from './Minsitry17.jpg';  
@@ -62,6 +62,6 @@ export {Log, Back1, Back2, Back3,  Back4, About1,
     Shop4, VideoBanner1, VideoBanner2, VideoBanner3,StoreBanner, product1,
 product2, product3, product4,Aud1, Aud2, AudioMack , MusicBan1, MusicBan2,
  MusicBan3, MusicBan4, MusicBan5, MusicBan6, MusicBan7, MusicBan8 , Ministry1, ministry2, ministry3, ministry4,
-  ministry5, ministry6, ministry7, ministry8, ministry9, ministry10, ministry11,
+  ministry5, ministry6, backUp, ministry7, ministry8, ministry9, ministry10, ministry11,
    ministry12, ministry13, ministry14, ministry15,
     ministry16, ministry17, ministry18, ministry19, ministry20}

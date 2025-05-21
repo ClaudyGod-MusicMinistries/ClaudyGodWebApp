@@ -129,7 +129,7 @@ const heroSlides: HeroSlide[] = [
               className="absolute inset-0 w-full h-full roboto-condensed text-40"
             >
               {/* Image Section */}
-              <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-green-900/90 via-black/50 to-transparent">
+            <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-green-900/90 via-black/50 to-transparent">
                 <img
                   src={slide.imageUrl}
                   alt=""
@@ -137,7 +137,16 @@ const heroSlides: HeroSlide[] = [
                   loading="eager"
                   style={{ transform: 'translateZ(0)' }}
                 />
-              </div>
+              </div> 
+                {/* <section 
+                className="relative py-16 min-h-[750px] flex items-center overflow-hidden"
+                style={{ 
+                  backgroundImage: `url(${Back1})`,
+                  backgroundSize: '100% auto',  // Reduced width size
+                  backgroundPosition: 'top center',
+                  backgroundRepeat: 'no-repeat',
+                }}
+              ></section> */}
 
               {/* Darker Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-purple-900/50 to-transparent" />

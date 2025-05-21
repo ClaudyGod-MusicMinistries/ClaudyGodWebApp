@@ -1,9 +1,11 @@
 import React from 'react';
 import { Hero } from '../components/HomepageHero';
 import LatestRelease from '../components/latestRelease';
-// import { FeaturedVideos } from '../components/Featuredvideos';
+import { FeaturedVideos } from '../components/Featuredvideos';
 import { ShopPreview } from '../components/ShopPreview';
 import { NewsletterForm } from '../components/Newsletter';
+import { AudioMackComponent } from '../components/audioMack';
+
 
 
 
@@ -11,9 +13,11 @@ export const Home = () => {
   return (
     <div>
       <Hero />
+        <ShopPreview />
+    
       <LatestRelease />
-      <ShopPreview />
-      {/* <FeaturedVideos /> */}
+   <AudioMackComponent />
+      <FeaturedVideos />
       <hr className="border-1 border-purple-900 shadow-lg shadow-purple-200/50" />
           <NewsletterForm />
       </div>
