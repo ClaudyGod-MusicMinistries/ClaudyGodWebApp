@@ -42,8 +42,8 @@ const ProductCard: React.FC<ProductProps> = ({ id, name, price, imageUrl }) => {
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
           </div>
           <div className="w-full mt-2 px-1 text-center">
-            <h3 className="text-base font-medium text-gray-800 mb-0.5">{name}</h3>
-            <p className="text-sm text-primary-dark font-semibold">${price}</p>
+            <h3 className="text-base roboto-flex text-gray-800 mb-0.5">{name}</h3>
+            <p className="text-sm text-primary-dark roboto-condensed">${price}</p>
           </div>
         </div>
       </Link>
@@ -102,11 +102,10 @@ export const ShopPreview: React.FC = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
-        >
-          <h2 className="roboto-condensed text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6 text-gray-900">
+        ><h2 className="roboto-condensed md:text-xl lg:text-5xl xl:text-5xl mb-4 md:mt-12 text-gray-900">
             SHOP EXCLUSIVE CLAUDYGOD STORE
           </h2>
-          <div className="h-2 w-32 bg-purple-900 mb-8 md:mb-12" />
+          <div className=" h-2 sm:w-20 md:w-10 lg:w-30 bg-purple-900 mb-30 md:mb-5" />
         </motion.div>
 
         {/* Mobile Carousel */}
@@ -136,7 +135,7 @@ export const ShopPreview: React.FC = () => {
   className="inline-flex items-center bg-purple-900 text-white px-6 py-3 rounded-lg text-base md:text-lg font-medium hover:bg-purple-800 transition-colors duration-300 shadow-lg hover:shadow-xl gap-3"
 >
   <FontAwesomeIcon icon={faShoppingBag} className="w-5 h-5" />
-  <span>Shop More</span>
+  <span className='roboto-condensed'>Shop More</span>
 </Link>
         </motion.div>
       </div>

@@ -52,7 +52,7 @@ const LatestRelease: React.FC = () => {
 
               {/* Content Column */}
               <motion.div 
-  className="w-3/5 flex flex-col justify-center items-center mb-20"
+  className="w-3/5 flex flex-col justify-center  items-center mb-20"
   initial={{ opacity: 0, y: 20 }}
   whileInView={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.6 }}
@@ -64,11 +64,14 @@ const LatestRelease: React.FC = () => {
     transition={{ duration: 0.6, delay: 0.1 }}
     className="text-center"
   >
-    <p className="text-[20px] font-medium slider-font  text-red-100 mb-1">Latest Release</p>
-    <h2 className="text-[30px]  roboto-condensed font-serif text-white leading-tight">
+
+    <p className=" text-sm work-sans  text-red-100 mb-1">Latest Release</p>
+    <h2 className=" text-2xl roboto-condensed text-white leading-tight">
       YOU ARE OUR EVERYTHING
     </h2>
-    <h3 className="text-[15px] font-medium text-light text-red-50 mt-1">CLAUDYGOD</h3>
+    <h3 className="text-[15px] raleway-medium text-sm text-red-50 mt-1">CLAUDYGOD</h3>
+   
+
   </motion.div>
 
   <motion.div
@@ -84,7 +87,7 @@ const LatestRelease: React.FC = () => {
       className="mt-2 mx-auto inline-flex items-center medium-font bg-purple-900 text-white px-2 py-1 rounded-full gap-1 backdrop-blur-sm border border-white/10"
       style={{ fontSize: '12px' }}
     >
-      <span className='w-[150px] p-2 text-center '>STREAM NOW</span>
+      <span className='w-[150px] p-2 text-center raleway-medium '>STREAM NOW</span>
     
     </a>
   </motion.div>

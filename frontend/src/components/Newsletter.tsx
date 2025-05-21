@@ -16,11 +16,11 @@ export const NewsletterForm: React.FC = () => {
     <div className="bg-white py-24 px-4"> {/* Increased vertical padding */}
       <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div className="text-center mb-12"> {/* Increased bottom margin */}
-          <h3 className="text-3xl font-bold text-gray-900 mb-4 roboto-condensed"> {/* Larger text and spacing */}
+          <h3 className=" md:text-3xl lg:text-5xl xl:text-5xl text-gray-900 mb-4 roboto-condensed"> {/* Larger text and spacing */}
             Stay Up To Date
           </h3>
-          <div className="h-1 w-24 bg-purple-900 mx-auto mb-6"></div> {/* Larger divider */}
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto slider-font "> {/* Larger text and max-width */}
+          <div className="h-1 w-12 sm:w-16 md:w-20 lg:w-24 bg-purple-900 mx-auto mb-6"></div>
+          <p className="md:text-base lg:text-5xl xl:text-base mx-auto raleway-light "> {/* Larger text and max-width */}
             Sign up for the newsletter and get the latest updates delivered right to your inbox.
           </p>
         </div>
@@ -36,7 +36,7 @@ export const NewsletterForm: React.FC = () => {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 slider-font text-15 focus:ring-purple-500"
+                className="w-full px-4 py-3 border work-sans border-gray-300 rounded-lg focus:outline-none focus:ring-2 slider-font text-15 focus:ring-purple-500"
                 placeholder="Your Name"
                 required
               />
@@ -50,7 +50,7 @@ export const NewsletterForm: React.FC = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border slider-font text-15 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full px-4 py-3 border work-sans text-15 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 placeholder="your.email@example.com"
                 required
               />

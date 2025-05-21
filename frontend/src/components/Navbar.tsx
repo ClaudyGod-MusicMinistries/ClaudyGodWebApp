@@ -43,7 +43,7 @@ export const Navbar: React.FC = () => {
   }, [location]);
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${
+    <header className={`sticky top-0 z-50 h-20 transition-all duration-300 ${
       scrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
     }`}>
       {/* Desktop Header */}
@@ -51,17 +51,17 @@ export const Navbar: React.FC = () => {
       items-center gap-4">
         {/* Logo */}
         <Link to="/" onClick={closeMenu} className="flex items-center justify-start">
-          <div className="h-10 w-10 flex items-center justify-center">
+          <div className="h-15 w-15 ml-5 flex items-center justify-center">
             <img src={Log} alt="Logo" />
           </div>
           <div className="ml-2">
-            <span className="text-purple-900 font-bold text-lg roboto-condensed">ClaudyGod</span>
-            <span className="text-gray-700 text-xs block -mt-1 raleway-slider">Music & Ministry</span>
+            <span className="text-purple-900  text-lg roboto-condensed">ClaudyGod</span>
+            <span className="text-gray-700 text-xs block -mt-1 raleway-light">Music & Ministry</span>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex justify-center items-center space-x-4 xl:space-x-8 work-sans">
+        <nav className="hidden lg:flex justify-center  items-center space-x-4 xl:space-x-8 work-sans">
           {[
             { to: "/", name: "Home", icon: faHouse },
             { to: "/biography", name: "About" },
@@ -79,13 +79,13 @@ export const Navbar: React.FC = () => {
               key={link.to}
               to={link.to}
               end
-              className={({ isActive }) => `flex items-center text-sm font-medium transition-colors hover:text-primary-light ${
+              className={({ isActive }) => `flex items-center text-xs font-medium transition-colors hover:text-primary-light ${
                 scrolled 
                   ? (isActive ? 'text-primary' : 'text-purple-900') 
                   : 'text-gray-900 hover:text-purple-900 cursor-pointer'
               }`}
             >
-              {link.icon && <FontAwesomeIcon icon={link.icon} className={`${link.name === 'Home' ? 'mr-2' : 'mr-1'} text-sm`} />}
+              {link.icon && <FontAwesomeIcon icon={link.icon} className={`${link.name === 'Home' ? 'mr-2' : 'mr-1'} text-xs`} />}
               <span>{link.name}</span>
             </NavLink>
           ))}
@@ -175,17 +175,13 @@ export const Navbar: React.FC = () => {
       setIsModalOpen(true);
       closeMenu();
     }}
-    className="w-full bg-purple-900 hover:bg-purple-800 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center justify-center transition duration-150 ease-in-out"
+    className="w-full bg-purple-900 hover:bg-purple-800 text-white px-4 py-2 rounded-full text-sm cursor-pointer font-medium flex items-center justify-center transition duration-150 ease-in-out"
   >
-    <FontAwesomeIcon icon={faHeadset} className="mr-2" />
-    Listen Now
+    <FontAwesomeIcon icon={faHouse} className="mr-2" />
+  Back to Homepage
   </button>
 
-  {/* Streaming Modal - Should be outside the button but in the same component */}
-  <StreamingModal
-    isOpen={isModalOpen}
-    onClose={() => setIsModalOpen(false)}
-  />
+
 </div>
         </nav>
       </div>

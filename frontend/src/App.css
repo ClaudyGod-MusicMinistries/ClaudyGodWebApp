@@ -1,92 +1,81 @@
-Add these styles to your App
+/* Add this to your main CSS file */
+:root {
+  /* Font Families */
+  --font-roboto: "Roboto", sans-serif;
+  --font-roboto-condensed: "Roboto Condensed", sans-serif;
+  --font-work-sans: "Work Sans", sans-serif;
+  --font-raleway: "Raleway", sans-serif;
+  
+  /* Base Font Size */
+  --base-font-size: 16px;
+  
+  /* Fluid Typography */
+  --min-font-size: 16px;
+  --max-font-size: 20px;
+}
 
-/* Fonts Used */
+/* Responsive Base Font Size */
+@media (min-width: 640px) { :root { --base-font-size: 17px; } }
+@media (min-width: 1024px) { :root { --base-font-size: 18px; } }
+@media (min-width: 1280px) { :root { --base-font-size: 20px; } }
+
+/* Font Classes */
 .roboto-condensed {
-  font-family: "Roboto", sans-serif;
-  font-optical-sizing: auto;
+  font-family: var(--font-roboto-condensed);
   font-weight: 900;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
 }
-.robotoMedium{
-  font-family: "Roboto", sans-serif;
-  font-optical-sizing: auto;
+
+.roboto-medium {
+  font-family: var(--font-roboto);
   font-weight: 500;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
-}
-.roboto-condensed {
-  font-family: "Roboto", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 900;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
 }
 
 .work-sans {
-  font-family: "Work Sans", sans-serif;
-  font-optical-sizing: auto;
+  font-family: var(--font-work-sans);
   font-weight: 400;
-  font-style: normal;
-}
-/* Text Sizes */
-text-sm-10{ font-size: 10px;}
-text-md-15{font-size: 15px;}
-text-md-20{ font-size: 20px;}
-text-lg-25{font-size: 25px;}
-text-lg-30{ font-size: 30px;}
-text-lg-35{ font-size: 35px;}
-text-lg-40{ font-size: 40px;}
-text-lg-45{font-size: 45px;}
-text-lg-50{ font-size: 50px;}
-text-lg-55{ font-size: 55px;}
-text-lg-60{ font-size: 60px;}
-
-/* .cart-container {
-  padding: 2rem;
 }
 
-.cart-item {
-  display: flex;
-  gap: 1rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid #e5e7eb;
+.raleway-medium {
+  font-family: var(--font-raleway);
+  font-weight: 400;
 }
 
-.cart-item img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 0.5rem;
+.raleway-light {
+  font-family: var(--font-raleway);
+  font-weight: 300;
 }
 
-.quantity-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 0.5rem 0;
+/* Responsive Text Sizes */
+.text-scale {
+  font-size: clamp(
+    var(--min-font-size),
+    calc(1rem + 0.5vw),
+    var(--max-font-size)
+  );
 }
 
-.quantity-controls button {
-  padding: 0.25rem 0.5rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.25rem;
+.text-xs { font-size: calc(var(--base-font-size) * 0.75); }
+.text-sm { font-size: calc(var(--base-font-size) * 0.875); }
+.text-base { font-size: var(--base-font-size); }
+.text-lg { font-size: calc(var(--base-font-size) * 1.125); }
+.text-xl { font-size: calc(var(--base-font-size) * 1.25); }
+.text-2xl { font-size: calc(var(--base-font-size) * 1.5); }
+.text-3xl { font-size: calc(var(--base-font-size) * 1.875); }
+.text-4xl { font-size: calc(var(--base-font-size) * 2.25); }
+.text-5xl { font-size: calc(var(--base-font-size) * 3); }
+
+/* Device-specific Overrides */
+@media (max-width: 640px) {
+  .mobile-text-lg { font-size: calc(var(--base-font-size) * 1.25); }
+  .mobile-font { font-family: var(--font-work-sans); }
 }
 
-.checkout-button {
-  display: block;
-  margin-top: 1rem;
-  padding: 1rem;
-  background-color: #4f46e5;
-  color: white;
-  text-align: center;
-  border-radius: 0.5rem;
-  transition: background-color 0.3s;
+@media (min-width: 641px) and (max-width: 1024px) {
+  .tablet-text-xl { font-size: calc(var(--base-font-size) * 1.5); }
+  .tablet-font { font-family: var(--font-raleway); }
 }
 
-.checkout-button:hover {
-  background-color: #4338ca;
-} */
+@media (min-width: 1025px) {
+  .desktop-text-2xl { font-size: calc(var(--base-font-size) * 2); }
+  .desktop-font { font-family: var(--font-roboto-condensed); }
+}
