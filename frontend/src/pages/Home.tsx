@@ -8,6 +8,7 @@ import { ShopPreview } from '../components/ShopPreview';
 import { NewsletterForm } from '../components/Newsletter';
 import { AudioMackComponent } from '../components/audioMack';
 import { ScrollToTop } from '../components/ScrollToTop';
+import { Welcome } from '../components/welcome';
 
 const ScrollAnimationWrapper = ({ children }) => {
   const [ref, inView] = useInView({
@@ -35,7 +36,9 @@ export const Home = () => {
       <ScrollAnimationWrapper>
         <Hero />
       </ScrollAnimationWrapper>
-
+    <ScrollAnimationWrapper>
+       <Welcome />
+      </ScrollAnimationWrapper>
       <ScrollAnimationWrapper>
         <ShopPreview />
       </ScrollAnimationWrapper>
