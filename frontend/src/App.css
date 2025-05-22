@@ -42,7 +42,7 @@
 
 .raleway-light {
   font-family: var(--font-raleway);
-  font-weight: 300;
+  font-weight: 200;
 }
 
 /* Responsive Text Sizes */
@@ -54,6 +54,7 @@
   );
 }
 
+.text-xx { font-size: calc(var(--base-font-size) * 0.5); }
 .text-xs { font-size: calc(var(--base-font-size) * 0.75); }
 .text-sm { font-size: calc(var(--base-font-size) * 0.875); }
 .text-base { font-size: var(--base-font-size); }

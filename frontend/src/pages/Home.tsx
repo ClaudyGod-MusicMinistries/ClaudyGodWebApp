@@ -10,6 +10,7 @@ import { AudioMackComponent } from '../components/audioMack';
 import { ScrollToTop } from '../components/ScrollToTop';
 import { Welcome } from '../components/welcome';
 
+
 const ScrollAnimationWrapper = ({ children }) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -31,21 +32,23 @@ const ScrollAnimationWrapper = ({ children }) => {
 export const Home = () => {
   return (
     <div className="overflow-x-hidden">
-      <ScrollToTop />
       
+      <ScrollToTop />
+ 
       <ScrollAnimationWrapper>
         <Hero />
       </ScrollAnimationWrapper>
     <ScrollAnimationWrapper>
        <Welcome />
       </ScrollAnimationWrapper>
+           <ScrollAnimationWrapper>
+        <LatestRelease />
+      </ScrollAnimationWrapper>
       <ScrollAnimationWrapper>
         <ShopPreview />
       </ScrollAnimationWrapper>
 
-      <ScrollAnimationWrapper>
-        <LatestRelease />
-      </ScrollAnimationWrapper>
+ 
 
       <ScrollAnimationWrapper>
         <AudioMackComponent />
