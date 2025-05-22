@@ -105,7 +105,7 @@ export const ShopPreview: React.FC = () => {
         ><h2 className="roboto-condensed md:text-xl lg:text-5xl xl:text-5xl mb-4 md:mt-12 text-gray-900">
             SHOP EXCLUSIVE CLAUDYGOD STORE
           </h2>
-          <div className=" h-2 sm:w-20 md:w-10 lg:w-30 bg-purple-900 mb-30 md:mb-5" />
+      <div className="h-2 w-20 lg:w-40 bg-purple-900 mb-8 md:mb-5" />
         </motion.div>
 
         {/* Mobile Carousel */}
@@ -132,7 +132,7 @@ export const ShopPreview: React.FC = () => {
         >
          <Link
   to="/store" // Changed from '/shop' to '/store'
-  className="inline-flex items-center bg-purple-900 text-white px-6 py-3 rounded-lg text-base md:text-lg font-medium hover:bg-purple-800 transition-colors duration-300 shadow-lg hover:shadow-xl gap-3"
+  className="inline-flex items-center bg-purple-900 text-white px-6 py-3 rounded-lg text-base md:text-lg raleway-medium hover:bg-purple-800 transition-colors duration-300 shadow-lg hover:shadow-xl gap-3"
 >
   <FontAwesomeIcon icon={faShoppingBag} className="w-5 h-5" />
   <span className='roboto-condensed'>Shop More</span>
