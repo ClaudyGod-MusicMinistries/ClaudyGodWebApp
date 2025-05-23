@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useCartStore } from '../Context/Cartcontext';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Herosection } from '../components/Herosection';
 import { VideoBanner2 } from '../assets/'
 import { NewsletterForm } from '../components/Newsletter';

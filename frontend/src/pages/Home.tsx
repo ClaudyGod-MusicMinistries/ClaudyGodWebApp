@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Hero } from '../components/HomepageHero';
@@ -11,7 +11,7 @@ import { ScrollToTop } from '../components/ScrollToTop';
 import { Welcome } from '../components/welcome';
 
 
-const ScrollAnimationWrapper = ({ children }) => {
+const ScrollAnimationWrapper = ({ children }: { children: React.ReactNode }) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     rootMargin: '-100px 0px',

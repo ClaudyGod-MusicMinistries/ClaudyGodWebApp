@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Log } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,6 +19,8 @@ import {
   faBars,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
+
+
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -82,26 +84,26 @@ export const Navbar: React.FC = () => {
             { to: "/donate", name: "Donate" },
             { to: "/help", name: "Help" },
           ].map((link) => (
-           <NavLink
-  key={link.to}
-  to={link.to}
-  end
-  className={({ isActive }) => `flex items-center text-xs work-sans transition-colors ${
-    scrolled 
-      ? (isActive 
-          ? 'text-purple-800 roboto-condensed underline underline-offset-4' 
-          : 'text-purple-900 hover:text-purple-700') 
-      : (isActive 
-          ? 'text-purple-900 roboto-condensed ' 
-          : 'text-gray-700 hover:text-amber-500')
-  }`}
->
-             {link.icon && <FontAwesomeIcon 
-    icon={link.icon} 
-    className={`${link.name === 'Home' ? 'mr-2' : 'mr-1'} text-sm`} 
-  />}
-  <span>{link.name}</span>
-</NavLink>
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end
+              className={({ isActive }) => `flex items-center text-xs work-sans transition-colors ${
+                scrolled 
+                  ? (isActive 
+                      ? 'text-purple-800 roboto-condensed underline underline-offset-4' 
+                      : 'text-purple-900 hover:text-purple-700') 
+                  : (isActive 
+                      ? 'text-purple-900 roboto-condensed ' 
+                      : 'text-gray-700 hover:text-amber-500')
+              }`}
+            >
+              {link.icon && <FontAwesomeIcon 
+                icon={link.icon} 
+                className={`${link.name === 'Home' ? 'mr-2' : 'mr-1'} text-sm`} 
+              />}
+              <span>{link.name}</span>
+            </NavLink>
           ))}
         </nav>
 
@@ -111,7 +113,7 @@ export const Navbar: React.FC = () => {
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
           />
-          <div className="lg:hidden flex justify-end   flex-1">
+          <div className="lg:hidden flex justify-end flex-1">
             <button
               onClick={toggleMenu}
               className="p-3 bg-purple-900 hover:bg-purple-800 text-white rounded-lg shadow-sm transition-colors"

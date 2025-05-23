@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+
 import { motion, AnimatePresence } from 'framer-motion';
 import { Resize5, Back3, Resize3, Resize4 } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -50,10 +51,11 @@ const heroSlides: HeroSlide[] = [
         { name: 'Spotify', icon: faMusic, url: 'https://open.spotify.com/album/2MY5xlrYfuvKXaYfdB5v2A?referral=labelaffiliate&utm_source=1101lBmnzTP8&utm_medium=Indie_CDBaby&utm_campaign=labelaffiliate' },
         { name: 'Apple Music', icon: faPodcast, url: 'https://music.apple.com/ng/album/very-glorious/1789665669' },
         { name: 'YouTube Music', icon: faVideo, url: 'https://youtube.com/@claudygodministries?si=6Ne99tTC48Ihv44s' },
-                { name: 'Itunes', icon: faVideo, url: 'https://music.apple.com/ng/album/very-glorious/1789665669' },
+       // Fix the array syntax in your platform list:
+    { name: 'Itunes', icon: faVideo, url: 'https://music.apple.com/ng/album/very-glorious/1789665669' },
         { name: 'Deezer', icon: faNewspaper, url: 'https://www.deezer.com/us/album/695949191' },
          { name: 'Foundit', icon: faNewspaper, url: 'https://found.ee/gPjnZa' },
-       { name: 'Amazon', icon: faNewspaper, url: 'https://music.amazon.com/albums/B0DSM7QGLF?tag=fndcmpgns-20' }
+       { name: 'Amazon', icon: faNewspaper, url: 'https://music.amazon.com/albums/B0DSM7QGLF?tag=fndcmpgns-20' },
       ]
     }
   },

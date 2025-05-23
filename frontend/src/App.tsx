@@ -1,5 +1,5 @@
 // App.tsx
-import React from 'react';
+
 import { AnimatePresence } from 'framer-motion';
 import { Routes, Route, useLocation, BrowserRouter as Router } from 'react-router-dom';
 import './App.css';

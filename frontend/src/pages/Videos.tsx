@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { motion } from 'framer-motion';
 import { NewsletterForm } from '../components/Newsletter';
 import { MusicBan1, MusicBan2,
@@ -364,7 +364,7 @@ const PaginationControls: React.FC<{
 };
 
 export const VideosData: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<'all' | 'music' | 'Concerts' | 'Live Recordings'>('all');
+ const [activeCategory] = useState<'all' | 'music' | 'Concerts' | 'Live Recordings'>('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
 

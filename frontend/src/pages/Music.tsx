@@ -1,8 +1,8 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import { AudioMackComponent } from '../components/audioMack';
 
-import { Back3, AudioMack } from '../assets/'; // Make sure to import your Audiomack logo
+import { Back3} from '../assets/'; // Make sure to import your Audiomack logo
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faPlay, 

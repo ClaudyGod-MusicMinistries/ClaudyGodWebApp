@@ -1,13 +1,15 @@
-// components/HeroSection.tsx
-import React from 'react';
+
 import { motion } from 'framer-motion';
 
 interface HeroSectionProps {
   title: string;
   backgroundImage: string;
+  className?: string; // Add this line
+  children?: React.ReactNode;
 }
 
 export const Herosection: React.FC<HeroSectionProps> = ({ title, backgroundImage }) => {
+  
   return (
     <section className="relative w-full bg-black h-[500px] overflow-hidden">
       <div className="container mx-auto h-full flex flex-col lg:flex-row items-center justify-center gap-8 px-4 sm:px-6">

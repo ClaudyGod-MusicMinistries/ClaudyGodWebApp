@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Herosection } from '../components/Herosection';
 import { Log} from '../assets/';
 

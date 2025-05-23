@@ -1,5 +1,4 @@
 
-import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { TopBanner } from '../Topbanner'
 import { Navbar } from '../Navbar'

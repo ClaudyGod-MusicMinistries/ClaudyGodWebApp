@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Herosection } from '../components/Herosection';
 import { useCartStore } from '../Context/Cartcontext';
 import StoreBanner from '../assets/StoreBanner.jpg';
 import { NewsletterForm } from '../components/Newsletter';
+// In Store.tsx, ensure you have these imports:
+// In Store.tsx, ensure you have these imports:
+
+
 import {
   product1,
   product2,
@@ -12,7 +16,7 @@ import {
   Aud2,
 } from '../assets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faShoppingBag, faXmark, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faXmark,faShoppingBag, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { CartHandler } from '../components/Cart';
 
@@ -30,7 +34,7 @@ export const StoreData: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [dialogProduct, setDialogProduct] = useState<ProductType | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { items, addItem } = useCartStore();
+  const { addItem } = useCartStore();
 
   const products: ProductType[] = [
     { id: 1, name: 'ClaudyGod Plain Mug', image: product1, price: 30, category: 'accessories', description: 'High-quality plain mug featuring the ClaudyGod logo.' },

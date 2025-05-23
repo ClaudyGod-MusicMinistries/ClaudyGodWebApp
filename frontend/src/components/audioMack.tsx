@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import {  faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { AudioMack } from '../assets/'; // Make sure to import your Audiomack logo

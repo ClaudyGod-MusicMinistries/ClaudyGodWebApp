@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Herosection } from '../components/Herosection';
 import { Log } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

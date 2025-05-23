@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { About2 ,Cover , MusicBan5, 
@@ -155,7 +155,7 @@ useEffect(() => {
   }, []);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+   let interval: number;
     if (autoPlay) {
       interval = setInterval(() => {
         handleNext();
