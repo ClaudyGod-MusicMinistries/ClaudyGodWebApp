@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +11,7 @@ const containerVariants = {
     transition: { staggerChildren: 0.2, when: "beforeChildren" }
   }
 };
+
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -30,12 +32,13 @@ const columnVariants = {
 };
 
 export const Welcome = () => {
+      const navigate = useNavigate();
   return (
     <motion.div 
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="min-h-[60vh] grid grid-cols-1 md:grid-cols-2 overflow-hidden"
+      className="min-h-[50vh] grid grid-cols-1 md:grid-cols-2 overflow-hidden"
     >
       {/* Left Column - Purple Background */}
       <motion.div 
@@ -55,7 +58,7 @@ export const Welcome = () => {
           
           <motion.p 
             variants={itemVariants}
-            className="text-base md:text-lg italic mb-3"
+            className="text-base md:text-lg italic work-sans mb-3"
           >
             "From the rising of the sun to its going down,
             The Lord's name is to be praised."
@@ -63,7 +66,7 @@ export const Welcome = () => {
           
           <motion.p 
             variants={itemVariants}
-            className="text-sm md:text-base font-semibold"
+            className="text-sm md:text-base raleway-medium"
           >
             - Psalm 113:3 (NKJV)
           </motion.p>
@@ -88,22 +91,23 @@ export const Welcome = () => {
           
           <motion.p 
             variants={itemVariants}
-            className="text-gray-600 text-sm md:text-base leading-relaxed"
+            className="text-gray-600 text-sm md:text-base work-sans leading-relaxed"
           >
             ClaudyGod is an anointed worship leader and gospel artist dedicated to 
             spreading God's love through music. Combining contemporary praise and 
             traditional worship styles to create divine encounters.
           </motion.p>
           
-          <motion.button 
-            variants={itemVariants}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-4 bg-purple-900 text-white px-6 py-2 rounded-full flex items-center gap-2 text-sm md:text-base"
-          >
-            Read More
-            <FontAwesomeIcon icon={faArrowRight} className="ml-2 text-xs md:text-sm" />
-          </motion.button>
+            <motion.button 
+      variants={itemVariants}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={() => navigate('/biography')} // Add this line
+      className="mt-4 cursor-pointer bg-purple-900 text-white px-6 raleway-light py-2 rounded-full flex items-center gap-2 text-sm md:text-base"
+    >
+      Read More
+      <FontAwesomeIcon icon={faArrowRight} className="ml-2 text-xs md:text-sm" />
+    </motion.button>
         </motion.div>
       </motion.div>
     </motion.div>
