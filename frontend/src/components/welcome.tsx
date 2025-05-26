@@ -68,7 +68,7 @@ export const Welcome = () => {
             variants={itemVariants}
             className="text-sm md:text-base raleway-medium"
           >
-            - Psalm 113:3 (NKJV)
+            - Psalm 113:3
           </motion.p>
         </motion.div>
       </motion.div>
