@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { Resize5, Back3, Resize3, Resize4 } from '../assets/';
+import { Resize5, Back3, Resize3, Resize4 , Resize_4 } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faPlayCircle, 
@@ -61,7 +61,7 @@ const heroSlides: HeroSlide[] = [
   },
   { 
     id: 4, 
-    imageUrl: Resize3, 
+    imageUrl: Resize_4, 
     type: 'quote', 
     content: { 
       quote: 'Praise the Lord Most High', 
@@ -133,7 +133,7 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative h-[120vh] w-full overflow-hidden">
+     <section className="relative h-[100vh] md:h-[120vh] w-full overflow-hidden">
       <AnimatePresence initial={false} custom={direction}>
         {heroSlides.map((slide, index) => index === currentSlide && (
           <motion.div
@@ -161,7 +161,7 @@ export const Hero: React.FC = () => {
             </motion.div>
 
             {/* Content Container */}
-            <div className="container ml-10 mt-10 relative mx-auto flex h-full items-center px-4">
+            <div className="container ml-4 md:ml-10 mt-6 md:mt-10 relative mx-auto flex h-full items-center px-4">
               <motion.div
                 initial="hidden"
                 animate="visible"
@@ -172,114 +172,251 @@ export const Hero: React.FC = () => {
                     transition: { staggerChildren: 0.2 }
                   }
                 }}
-                className="max-w-4xl  text-white"
+                className="max-w-4xl text-white "
               >
                 {slide.type === 'quote' && (
                   <>
-                    <motion.h1 
-                      variants={textVariants}
-                      className="mb-6 text-5xl roboto-condensed leading-tight md:text-6xl roboto-condensed text-left"
-                    >
-                      {slide.content?.quote}
-                    </motion.h1>
-                    <motion.p 
-                      variants={textVariants}
-                      className="text-xl italic text-purple-300 md:text-2xl text-left mb-8"
-                    >
-                      {slide.content?.reference}
-                    </motion.p>
+<motion.h1 
+  variants={textVariants}
+  className="
+    /* Mobile-first styles (default) */
+sm:text-xl
+    sm:leading-4 
+  relative
+    top-20
+    w-full 
+    px-4 
+    text-white
+    text-left 
+    roboto-condensed
 
-               {slide.id === 1 && (
+    /* Desktop styles override from md and above */
+    md:text-5xl
+    md:leading-tight 
+    md:mb-6 
+    md:px-0
+
+
+    md:text-white"
+>
+  {slide.content?.quote}
+</motion.h1>
+
+
+                    <motion.p 
+  variants={textVariants}
+  className="
+    /* Mobile-first styles */
+    text-base 
+    italic 
+    text-green-500 
+    text-left 
+    relative 
+   top-22
+   left-5
+
+    /* Desktop overrides */
+    md:text-2xl 
+    md:text-purple-300 
+    md:top-20
+  "
+>
+  {slide.content?.reference}
+</motion.p>
+
+
+{slide.id === 1 && (
   <motion.div 
     variants={textVariants}
-    className="flex items-center gap-6"
+    className="
+      /* Desktop layout */
+      md:flex md:flex-row md:items-center md:gap-6
+      
+      /* Mobile layout */
+      max-md:flex max-md:flex-col
+       max-md:items-center max-md:gap-4
+    "
   >
-    {/* Vertical line */}
-    <div className="w-[2px] h-[50px] bg-white/40"></div>
+
     
-    {/* Button + text group */}
-    <div className="flex items-center gap-4">
+    {/* Button & Text Container */}
+    <div className="
+      /* Desktop styling */
+      md:flex md:flex-col  md:mt-25 md:items-center md:gap-2
+      
+      /* Mobile styling */
+      max-md:flex max-md:flex-col  max-md:mt-25 max-md:mr-90 max-md:items-center max-md:gap-3
+    ">
       <motion.button
         whileHover={{ scale: 1.1 }}
-        className="rounded-full bg-white/20 p-4 backdrop-blur-sm hover:bg-white/30 transition-all"
+        className="
+          /* Desktop button */
+          md:rounded-full md:bg-white/20 md:p-4 md:backdrop-blur-sm
+          
+          /* Mobile button */
+          max-md:rounded-full max-md:bg-white/20 max-md:p-3 max-md:backdrop-blur-sm
+          
+          /* Shared hover */
+          hover:bg-white/30 transition-all
+        "
       >
         <FontAwesomeIcon 
           icon={faPlayCircle} 
-          className="text-3xl text-purple-400" 
+          className=" cursor-pointer
+            /* Desktop icon */
+            md:text-3xl md:text-purple-400
+            
+            /* Mobile icon */
+            max-md:text-2xl max-md:text-purple-400
+          " 
         />
       </motion.button>
-      <h3 className="text-white font-medium tracking-wider text-lg">
+      
+      <h3 className="
+        /* Desktop text */
+        md:text-lg md:text-white md:font-medium md:tracking-wider
+        
+        /* Mobile text */
+        max-md:text-base max-md:text-white max-md:font-medium max-md:tracking-normal
+      ">
         Play Now
       </h3>
     </div>
   </motion.div>
 )}
+
                   </>
                 )}
 
-                {slide.type === 'cta' && (
-                  <>
-                    <motion.div
-                      variants={textVariants}
-                      className="flex flex-wrap items-center gap-3 mb-8"
-                    >
-                      <span className="px-4 py-2 text-5xl md:text-5xl roboto-condensed leading-tight">
-                        Want to Bring 
-                      </span>
-                      <span className="text-purple-400 px-3 py-2 text-5xl md:text-5xl leading-tight">
-                        ClaudyGod Live In Concert
-                      </span>
-                      <span className="text-5xl md:text-5xl px-3 py-2 text-white leading-tight">
-                        To your City?
-                      </span>
-                    </motion.div>
-                    <motion.button
-                      variants={textVariants}
-                      whileHover={{ 
-                        scale: 1.05, 
-                        boxShadow: '0px 4px 20px rgba(128, 0, 255, 0.3)',
-                      }}
-                      whileTap={{ 
-                        scale: 0.95,
-                        backgroundColor: 'rgba(76, 29, 149, 0.9)',
-                      }}
-                      onClick={() => navigate('/contact')}
-                      className="relative rounded-full bg-purple-900 px-10 py-5 cursor-pointer text-xl md:text-2xl font-semibold overflow-hidden"
-                    >
-                      <motion.span
-                        className="absolute inset-0 bg-white/20 opacity-0 rounded-full"
-                        initial={{ scale: 0 }}
-                        whileTap={{
-                          opacity: 1,
-                          scale: 2,
-                          transition: { duration: 0.6 }
-                        }}
-                      />
-                      <span className="relative z-10">Contact Us</span>
-                    </motion.button>
-                  </>
-                )}
+{slide.type === 'cta' && (
+  <>
+    {/* Text Container */}
+   <motion.div
+  variants={textVariants}
+  className="
+    /* Mobile styling */
+    max-md:flex max-md:flex-col  
+    max-md:items-start max-md:gap-2  
+    max-md:mb-6
+
+    /* Desktop styling */
+    md:flex md:flex-col md:items-start md:gap-4 
+    md:mb-12 roboto-condensed
+  "
+>
+      <span className="
+        /* Mobile */
+        max-md:text-3xl raleway-medium max-md:leading-tight
+        
+        /* Desktop */
+        md:text-6xl roboto-condensed md:leading-tighter lg:text-7xl
+      ">
+        Want to Bring 
+      </span>
+      
+      <span className="
+        /* Mobile */
+        max-md:text-purple-400 max-md:text-3xl max-md:leading-tight
+        
+        /* Desktop */
+        md:text-purple-400 work-sans md:text-6xl md:leading-tighter lg:text-7xl
+      ">
+        ClaudyGod Live
+      </span>
+      
+      <span className="
+        /* Mobile */
+        max-md:text-white max-md:text-3xl max-md:leading-tight roboto-condensed
+        
+        /* Desktop */
+        md:text-white  md:text-6xl md:leading-tighter lg:text-7xl raleway-medium
+      ">
+        To your City?
+      </span>
+    </motion.div>
+
+    {/* Button */}
+    <motion.button
+      variants={textVariants}
+      whileHover={{ 
+        /* Mobile hover remains default */
+        scale: 1.05, 
+        /* Desktop-enhanced hover */
+        boxShadow: '0px 4px 30px rgba(128, 0, 255, 0.4)'
+      }}
+      whileTap={{ 
+        scale: 0.95,
+        backgroundColor: 'rgba(76, 29, 149, 0.9)',
+      }}
+      onClick={() => navigate('/contact')}
+      className="
+        /* Mobile styling */
+        max-md:relative max-md:rounded-full max-md:bg-purple-900 
+        max-md:px-6 max-md:py-3 max-md:text-lg work-sans
+        
+        /* Desktop styling */
+        md:relative md:rounded-full md:bg-purple-900 
+        md:px-14 md:py-6 md:text-3xl
+      "
+    >
+      <motion.span
+        className="absolute inset-0 bg-white/20 opacity-0 rounded-full"
+        initial={{ scale: 0 }}
+        whileTap={{
+          opacity: 1,
+          scale: 2,
+          transition: { duration: 0.6 }
+        }}
+      />
+      <span className="relative z-10">Contact Us</span>
+    </motion.button>
+  </>
+)}
 
                 {slide.type === 'music' && (
-                  <div className="space-y-8 w-full">
+                  <div className="space-y-6 md:space-y-8 w-full">
                     <motion.h2 
-                      variants={textVariants}
-                      className="text-5xl md:text-6xl font-bold roboto-condensed mb-8"
-                    >
-                      MUSIC
-                    </motion.h2>
+  variants={textVariants}
+  className="
+    /* Mobile styling */
+    max-md:text-4xl max-md:font-bold max-md:raleway-medium 
+    max-md:mb-6 max-md:leading-tight max-md:mt-30
+    
+    /* Desktop styling */
+    md:text-6xl md:font-bold md:roboto-condensed 
+    md:mb-8 md:leading-tighter
+  "
+>
+  MUSIC
+</motion.h2>
 
-                    <div className="flex flex-col gap-8">
+                     <div className="flex flex-col gap-6 md:gap-8">
                       <motion.div 
                         variants={textVariants}
                         className="space-y-6"
                       >
-                        <h3 className="text-3xl md:text-4xl font-light italic text-purple-300">
-                          {slide.content?.listenText}
-                        </h3>
-                        <p className="text-xl text-white/80 max-w-2xl">
-                          Dive into spiritual worship through sacred melodies that uplift the soul and glorify His name
-                        </p>
+                        <h3 className="
+  /* Mobile styling */
+  max-md:text-2xl max-md:font-normal max-md:italic max-md:text-purple-300
+  max-md:mb-3
+  
+  /* Desktop styling */
+  md:text-4xl md:font-light md:italic md:text-purple-300 md:mb-4
+">
+  {slide.content?.listenText}
+</h3>
+
+<p className="
+  /* Mobile styling */
+  max-md:text-base max-md:text-white/80 max-md:max-w-md
+  max-md:leading-relaxed
+  
+  /* Desktop styling */
+  md:text-xl md:text-white/80 md:max-w-2xl
+  md:leading-snug
+">
+  Dive into spiritual worship through sacred melodies that uplift the soul and glorify His name
+</p>
                       </motion.div>
 
                       <motion.div 
@@ -311,29 +448,33 @@ export const Hero: React.FC = () => {
                     </div>
 
                     <motion.div 
-                      variants={textVariants}
-                      className="space-y-6 mt-12"
-                    >
-                      <h5 className="text-2xl font-semibold text-purple-300 roboto-condensed">
-                        STREAM ACROSS ALL PLATFORMS
-                      </h5>
-                      <div className="flex flex-wrap gap-6">
-                        {slide.content?.streamingPlatforms?.map((platform) => (
-                          <motion.a
-                            key={platform.name}
-                            href={platform.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ y: -5 }}
-                            className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors"
-                          >
-                            <FontAwesomeIcon 
-                              icon={platform.icon} 
-                              className="text-2xl text-purple-400" 
-                            />
-                            <span className="text-lg font-medium">{platform.name}</span>
-                          </motion.a>
-                        ))}
+                        variants={textVariants}
+                        className="space-y-4 md:space-y-6 mt-8 md:mt-12"
+                      >
+                        <h5 className="text-xl md:text-2xl font-semibold text-purple-300 roboto-condensed">
+                          STREAM EVERYWHERE
+                        </h5>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+<div className="grid grid-cols-3 md:grid-cols-2 mb-10 gap-4 md:gap-6 pb-4 md:pb-6">
+  {slide.content?.streamingPlatforms?.map((platform) => (
+    <motion.a
+      key={platform.name}
+      href={platform.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      whileHover={{ y: -5 }}
+      className="flex items-center gap-2 px-1 py-1 md:px-6 md:py-1 text-sm md:text-lg"
+    >
+      <FontAwesomeIcon 
+        icon={platform.icon} 
+        className="text-lg md:text-2xl" 
+      />
+      <span>{platform.name}</span>
+    </motion.a>
+  ))}
+</div>
+
+
                       </div>
                     </motion.div>
                   </div>
@@ -342,8 +483,7 @@ export const Hero: React.FC = () => {
             </div>
 
             {/* Pagination Dots */}
-            <div className="absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2">
-              <div className="absolute h-px w-full bg-white/20" />
+                   <div className="absolute bottom-4 md:bottom-8 left-1/2 z-30 flex -translate-x-1/2 items-center gap-1 md:gap-2">
               {heroSlides.map((_, i) => (
                 <motion.div
                   key={i}
@@ -352,10 +492,10 @@ export const Hero: React.FC = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                 >
-                  <motion.div
-                    className="h-1 rounded-full bg-white/30"
+                   <motion.div
+                    className="h-1 rounded-full"
                     animate={{
-                      width: i === currentSlide ? '2rem' : '1rem',
+                      width: i === currentSlide ? '1.5rem' : '0.75rem',
                       backgroundColor: i === currentSlide ? '#fff' : 'rgba(255,255,255,0.3)'
                     }}
                     transition={{ type: 'spring', stiffness: 300 }}

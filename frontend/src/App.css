@@ -80,3 +80,17 @@
   .desktop-text-2xl { font-size: calc(var(--base-font-size) * 2); }
   .desktop-font { font-family: var(--font-roboto-condensed); }
 }
+/* Improve mobile typography */
+@media (max-width: 640px) {
+  .roboto-condensed {
+    line-height: 1.2 !important;
+  }
+  
+  .leading-snug {
+    line-height: 1.3 !important;
+  }
+  
+  .text-4xl {
+    font-size: 2rem !important;
+  }
+}

@@ -27,6 +27,7 @@ import Resize1  from './resize_abt.jpg'
 import Resize2 from './resize_bg1.jpg'
 import Resize3 from './resize_bg3.jpg'
 import Resize4 from './/resize_abt2.jpg'
+import Resize_4  from './resize_bg4.jpg'
 import Resize5 from './resize_bg2.jpg'
 import AudioMack from './audioLogo.png'
 import MusicBan1 from './MusicBanner1.webp'
@@ -65,7 +66,7 @@ import ministry20 from './Ministry20.jpg';
 export {Log, Back1, Back2, Back3,  Back4, About1, 
     About2, Cover, Shop1, Shop2,Shop3, Donate1 , Donate2,
     Shop4, VideoBanner1, VideoBanner2, VideoBanner3,StoreBanner, product1,
-product2, product3, Resize4,Resize5,Resize1, Resize2, product4,Aud1, Aud2, AudioMack , MusicBan1, MusicBan2,
+product2, product3, Resize_4, Resize4,Resize5,Resize1, Resize2, product4,Aud1, Aud2, AudioMack , MusicBan1, MusicBan2,
  MusicBan3, MusicBan4, Resize3, MusicBan5, MusicBan6, MusicBan7, MusicBan8 , Ministry1, ministry2, ministry3, ministry4,
   ministry5, ministry6, backUp, ministry7, ministry8, ministry9, ministry10, ministry11,
    ministry12, ministry13, ministry14, ministry15,
