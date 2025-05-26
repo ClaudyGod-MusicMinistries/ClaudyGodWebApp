@@ -13,6 +13,14 @@
   --min-font-size: 16px;
   --max-font-size: 20px;
 }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
 /* Responsive Base Font Size */
 @media (min-width: 640px) { :root { --base-font-size: 17px; } }
