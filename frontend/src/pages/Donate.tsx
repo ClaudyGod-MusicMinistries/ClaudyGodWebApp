@@ -130,10 +130,10 @@ export const DonateData: React.FC = () => {
 
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-16">
-            <p className="text-lg text-gray-700 mb-4 leading-relaxed robotoMedium">
+            <p className="text-lg text-gray-700 mb-4 leading-relaxed work-sans">
               "Remember this: Whoever sows sparingly will also reap sparingly, and whoever sows generously will also reap generously. Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver. And God is able to bless you abundantly, so that in all things at all times, having all that you need, you will abound in every good work." - 2nd Corinthians 9:6-8
             </p>
-            <p className="text-lg text-gray-700 robotoMedium">
+            <p className="text-lg text-gray-700 work-sans">
               All donations are greatly appreciated and will support spreading the gospel of Jesus Christ to a world in need and maintaining online platforms
             </p>
           </div>

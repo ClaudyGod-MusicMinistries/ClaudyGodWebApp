@@ -395,7 +395,7 @@ export const VideosData: React.FC = () => {
             >
               <h1 className="text-4xl md:text-5xl roboto-condensed mb-6">Videos</h1>
               <div className="w-20 h-1 bg-white mb-8"></div>
-              <p className="text-xl max-w-2xl robotoMedium text-20">Watch our Latest Music Videos, Live Recordings and Concerts </p>
+              <p className="text-xl max-w-2xl raleway-medium text-20">Watch our Latest Music Videos, Live Recordings and Concerts </p>
             </motion.div>
           </div>
         </section>

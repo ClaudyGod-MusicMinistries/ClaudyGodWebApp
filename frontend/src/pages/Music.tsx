@@ -95,7 +95,7 @@ export const MusicData: React.FC = () => {
           >
             <h1 className="text-4xl md:text-5xl roboto-condensed mb-6">Music</h1>
             <div className="w-20 h-1 bg-white mb-8"></div>
-            <p className="text-xl max-w-2xl robotoMedium text-20">Experience the inspirational sound of ClaudyGod's gospel music – a unique blend of American Gospel and African Soul.</p>
+            <p className="text-xl max-w-2xl raleway-medium text-20">Experience the inspirational sound of ClaudyGod's gospel music – with a unique blend of American Gospel and Afro-gospel.</p>
           </motion.div>
         </div>
       </section>
@@ -105,7 +105,7 @@ export const MusicData: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
             <h2 className="roboto-condensed text-40">Available On All Platforms</h2>
-            <p className="text-gray-600 mt-2 robotoMedium text-30">Stream ClaudyGod's music everywhere, Anytime, Anyday, Anywhere.</p>
+            <p className="text-gray-600 mt-2 raleway-medium md:text-2xl max-md:text-xm">Stream ClaudyGod's music everywhere, Anytime, Anyday, Anywhere.</p>
           </div>
           <div className="flex flex-wrap justify-center gap-4">
   {musicPlatforms.map((platform, index) => (
@@ -133,7 +133,8 @@ export const MusicData: React.FC = () => {
       {/* Latest Release */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl roboto-condensed text-35 font-bold mb-12 text-center">Latest Release: You Are My Everything</h2>
+   
+          <h2 className=" bg-purple-900 p-10 text-white max-md:text-2xl md:text-5xl roboto-condensed mb-12 max-md:text-center">Latest Release: You Are My Everything</h2>
           <div className="space-y-10">
             {albums.map((album) => (
               <motion.div
