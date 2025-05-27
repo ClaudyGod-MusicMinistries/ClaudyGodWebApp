@@ -33,7 +33,7 @@ export const blogPosts: BlogPost[] = [
   },
   
   {
-    id: '2',
+    id: '3',
     title: 'Three things that will lead up to the antichrist being revealed  ',
     content: `1. Apostasy of church
 2. Sin on earth climaxed
@@ -44,7 +44,7 @@ This 4th one is more before Christ’s return but as Christians we should be par
     image: Log
   },
   {
-    id: '3',
+    id: '4',
     title: `Who can stand what's coming upon the earth? `,
     content: `These days the church is full of God's agenda and flesh's agenda at the same time. May God's fire consume all of our human agenda such that our lives and works will rise to Him as a sweet smelling aroma.`,
     date: '06/21/2024',
@@ -52,7 +52,7 @@ This 4th one is more before Christ’s return but as Christians we should be par
   }
   ,
   {
-    id: '2',
+    id: '5',
     title: 'Is God okay with a combination of agendas?',
     content: `Jesus Christ rescues us from the coming wrath. Get intimate with Jesus. 
 (1st Thessalonian 1:10)
@@ -77,7 +77,7 @@ righteous judgment of God,`,
 
   ,
   {
-    id: '3',
+    id: '6',
     title: 'Is God okay with a combination of agendas? ',
     content: `These days the church is full of God's agenda and flesh's agenda at the same time. 
     May God's fire consume all of our human agenda such that our lives and works will rise to Him as a sweet smelling aroma. `,
@@ -86,7 +86,7 @@ righteous judgment of God,`,
   }
  ,
   {
-    id: '4',
+    id: '7',
     title: `Who owns the whole earth? What's going to happen to the world at the end? `,
     content: `Kings will surrender their crowns at the end of days because the crowns belong to Jesus anyways. 
     God will destroy the earth because it’s His earth and if He doesn’t like how it’s going, He can choose to destroy and re-create it. And He will also destroy its perpetrators. We all understand ownership. Note that
@@ -96,7 +96,7 @@ righteous judgment of God,`,
   }
    ,
   {
-    id: '5',
+    id: '8',
     title: 'What will happen at the End of Days, at the Coming of the Lord?   ',
     content: `The below scriptures give a summary of the two major occurrences to expect at the coming of the Lord Jesus; there are two categories of people:
 
@@ -116,7 +116,7 @@ Then we who are alive and remain will be caught up together with them in the clo
   }
    ,
   {
-    id: '6',
+    id: '9',
     title: 'Is God okay with a combination of agendas? ',
     content: `Grumbling and complaining don’t have as much to do with what you are dealing with than the carnal nature in you. However thankfulness and contentment are fruits of the Spirit.
 
@@ -136,7 +136,7 @@ And the people complained in the hearing of the Lord about their misfortunes, an
   }
    ,
   {
-    id: '7',
+    id: '10',
     title: 'Does God want me to stay in an unhappy marriage?   ',
     content: `God’s not happy or rejoicing that your marriage is unhappy. But He may need you to stay there to learn to love your enemy; to learn to persevere (develop endurance); to learn humility; to learn to be slow to speak; to learn to trust Him to fight your battles; to learn to love unconditionally; to learn to fight on your knees and many other spiritual & character 
     lessons for what He may have a great task lined up for your future. God can choose to use your unfortunate, miserable & uncomfortable situation as a training ground for you. Lemonade comes from squeezing lemons. 
@@ -146,7 +146,7 @@ And the people complained in the hearing of the Lord about their misfortunes, an
   }
    ,
   {
-    id: '8',
+    id: '11',
     title: 'One way to understand if you are dealing with a demon spirit in your relationships  ',
     content: `If you are admonishing somebody and 
     they are unable to change, high chance you are 
@@ -158,7 +158,7 @@ And the people complained in the hearing of the Lord about their misfortunes, an
   }
    ,
   {
-    id: '9',
+    id: '12',
     title: `Do we ever stop to think about the reality of life? What's most important in life?   `,
     content: `Surely every man walks about like a shadow; surely they busy themselves in vain. He heaps up riches, and does not know who will gather them (after He's gone)
 Psalm 39:6
@@ -166,21 +166,16 @@ Psalm 39:6
 Many fuss, quarrel, fight, step on others to benefit from this life. Some even think, at whatever cost I must succeed. Is life really all of that and worth stepping on someone else? God will hold us accountable for how we live whether for Him or stuff. He will also check if we truly loved others both friend or stranger. Life is like a shadow, but a vapor. Lets live purposefully. Lets dedicate our lives to God and walk in the love of God with others. `,
     date: '05/21/2024',
     image: Log
-  }
-   ,
+  } ,
   {
-    id: '10',
+    id: '13',
     title: `God owns everything on this planet except.... `,
     content: `God is the one who truly owns everything you think you own. The only thing that’s really yours is YOUR FREEWILL meaning, your ability to choose!`,
     date: '05/20/2024',
     image: Log
-  }
-
-
-
-   ,
+  },
   {
-    id: '11',
+    id: '14',
     title: 'Why we should walk in love  ',
     content: `The devil will use anyone in the flesh to tempt you. That’s why we shouldn’t be in the flesh ourselves, so we don’t tempt others. 
     Walk in love ALWAYS!`,
@@ -189,7 +184,7 @@ Many fuss, quarrel, fight, step on others to benefit from this life. Some even t
   }
    ,
   {
-    id: '12',
+    id: '15',
     title: 'Is your confidence in your GOOD or GOD? ',
     content: `Many People are okay with GOOD but they are not okay with GOD. Because wholly embracing God implies dying to self and living holy unto and as Christ. 
     GOOD without GOD is nice on earth but will not lead you anywhere into His presence but Hell unfortunately. However Embracing GOD means life eternal in His glorious presence.`,
@@ -198,7 +193,7 @@ Many fuss, quarrel, fight, step on others to benefit from this life. Some even t
   }
    ,
   {
-    id: '13',
+    id: '16',
     title: 'Is your confidence in your GOOD or GOD?  ',
     content: `Many People are okay with GOOD but they are not okay with GOD. Because wholly embracing God implies dying to self and living holy unto and as Christ.
      GOOD without GOD is nice on earth but will not lead you anywhere into His presence but Hell unfortunately. However Embracing GOD means life eternal in His glorious presence. `,
@@ -207,7 +202,7 @@ Many fuss, quarrel, fight, step on others to benefit from this life. Some even t
   }
    ,
   {
-    id: '14',
+    id: '17',
     title: 'What is going to happen to those who do not respond to God? ',
     content: `“So I also will choose harsh treatment for them and will bring on them what they dread. For when I called, no one answered, when I spoke, no one listened. They did evil in my sight and chose what displeases me.”
 
@@ -219,7 +214,7 @@ Repentance and accepting Christ into our lives is how we can turn to God. After 
     image: Log
   },
   {
-    id: '15',
+    id: '18',
     title: 'Why do bad things happen? ',
     content: `It is right to blame the devil for 
     EVERY bad thing that has happened to any human being. The demons have confessed this themselves so are we going to take away the bad from them? Yes people leave open doors through sin, disobedience to God, rebellion and generational curses/evil choices of our ancestors. Those doors give access to the wicked one. He capitalized on your carnal and weak choice and your lack of reverence and trust for God. 
@@ -232,7 +227,7 @@ darkness. They are now confessing more than ever before in deliverance services 
   }
   ,
   {
-    id: '16',
+    id: '19',
     title: 'You are doing a lot spiritually by waiting patiently for God.  ',
     content: `In the spirit realm WAITING is a “very special thing”.  It is an active and very valuable spiritual activity. 
     It is part of the spiritual warfare. You can WAIT successfully by patience and a great attitude, then your victory will be certain!`,
@@ -240,7 +235,7 @@ darkness. They are now confessing more than ever before in deliverance services 
     image: Log
   },
   {
-    id: '17',
+    id: '20',
     title: `Why doesn't God destroy all our enemies one time?`,
     content: `Scripture: And the Lord your God will drive out those nations before you little by little; you will be unable to destroy them all at once, lest the beasts of the field become too numerous for you.
 The" Beast of the field" can represent your undisciplined flesh when life’s perfect for you. If all enemies are destroyed and everything is perfect in our lives, we will not have any need for God and our flesh will take dominance. Pressure refines people.
@@ -250,7 +245,7 @@ The" Beast of the field" can represent your undisciplined flesh when life’s pe
   }
   ,
   {
-    id: '18',
+    id: '21',
     title: 'Why are people often fixed on their ways and reject truth.  ',
     content: `eople are usually very fixed on their ways.
 
@@ -365,7 +360,7 @@ Go for your deliverance.`,
     image: Log
   },
   {
-    id: '25',
+    id: '26',
     title: 'Do you sense a spiritual warfare? ',
     content: `We are in an intense spiritual warfare. 
     However the enemy has put many under spiritual anesthesia including church people. I’m indeed concerned that people may wake up when it’s too late to defend themselves against him. May we therefore pray intently for an awakening for the body of Christ and those
@@ -374,14 +369,14 @@ Go for your deliverance.`,
     image: Log
   },
   {
-    id: '26',
+    id: '27',
     title: 'Worrying about what others think.',
     content: `What people think of us is overrated. Focus on what God thinks of you. Get into the Word.`,
     date: '09/30/2023',
     image: Log
   },
   {
-    id: '27',
+    id: '28',
     title: 'Did you know? ',
     content: `That Satan is so subtle that he can allow a person hear the Word, know the Word, preach the Word, even defend the Word just as long as you don’t DO THE WORD.
  `,
@@ -389,14 +384,14 @@ Go for your deliverance.`,
     image: Log
   },
   {
-    id: '28',
+    id: '29',
     title: 'Why will God allow Christians to encounter the Antichrist? ',
     content: `Antichrist will wake  up some sleeping Christians. Sadly some will not wake up at all. They will sign up with Antichrist. They will take his mark. `,
     date: '09/15/2023',
     image: Log
   },
   {
-    id: '29',
+    id: '30',
     title: 'Why are we so desperate for man’s opinion? ',
     content: `It’s when we are not solid with God that we become desperate to have approval from man. 
 Work on your relationship with God!`,
@@ -404,7 +399,7 @@ Work on your relationship with God!`,
     image: Log
   },
   {
-    id: '30',
+    id: '31',
     title: 'What are our motives for making videos/calling out others?',
     content: `Factors to consider:
 1. Did God tell you to?
@@ -418,7 +413,7 @@ Work on your relationship with God!`,
     image: Log
   },
   {
-    id: '31',
+    id: '32',
     title: 'Why you are so harassed by the devil ',
     content: `If you are harassed so much by the enemy, note that the kingdom of darkness knows who’s going to trouble their kingdom and they are threatened by you. 
     They will try so hard to weaken, distract and discourage you. Don’t be surprised if your hardships tempt you toward feeling either or all three of these listed. 
@@ -427,7 +422,7 @@ Nonetheless be strong in the Lord and in the power of His might, remain focused 
     image: Log
   },
   {
-    id: '32',
+    id: '33',
     title: 'How does FAITH work? ',
     content: `Faith is NOW does not mean results and outcome are now. Have faith at the moment and nurture (protect and develop) it. God will bring results when He deems best. But your part is to know He has heard you and received your faith and so in the spirit realm, it is done!  It will manifest in the natural when He judges is best for you. 
 
@@ -440,7 +435,7 @@ b. But without faith it is impossible to please Him: for he that cometh to God m
     image: Log
   },
   {
-    id: '33',
+    id: '34',
     title: 'Has your phone become an idol? ',
     content: `You know our phones are like wood. You can use wood for fire or furniture to sit on or cabinets to put stuff in OR you can carve them into an idol and bow down to them as gods and worship them with your heart, soul, emotions and lots of your time. This is similar to when your life depends on your phone and its your go-to and solves “all your problems” and you give it all the time and attention you should give Almighty God. So you take it into every private space you have including dinning & bathroom. You make it last to look at and connect with before going to bed and first to say good morning to when you wake up. 
 People you are treading on dangerous grounds!
@@ -451,7 +446,7 @@ Our choices and actions have consequences before God. Let’s wake up! `,
     image: Log
   },
   {
-    id: '34',
+    id: '35',
     title: `Is God's voice the loudest to you?   `,
     content: `God’s voice had to be louder and God’s essence bigger to Moses than the murmuring complaining discouraging words and behaviors of the multitudes of the children of Israel. 
 
@@ -462,7 +457,7 @@ Jesus said, “My sheep hear my voice and they listen”. Bible scriptural text 
     image: Log
   },
   {
-    id: '35',
+    id: '36',
     title: 'Human Behavioral Patterns to be expected and seen in the Last Days',
     content: `Are we in the End of Days? What are some of the patterns of human behaviors that help us spell out what kind of times we find ourselves in? Why are a prevalent number of people behaving a certain patterned way? Is there a possibility that a certain spirit is unleashed that compels and influences  people to behave and respond in a certain way distinctly different than what we may call back-in-the-day? Please take a listen as we unpack some of these answers which are already very well laid out for us in the scriptures.
 
@@ -501,14 +496,14 @@ Scriptural text: 2nd Timothy 3:1-14
     image: Log
   },
    {
-    id: '36',
+    id: '37',
     title: 'How do we align ourselves rightly with God? ',
     content: `First we choose to set our minds and hearts 100% on Him. Secondly we refine our character by His presence in worship, word study, prayer and walking in love. Lastly we choose to prayerfully obey His word completely, not picking and choosing as we so please. We continually ask for His grace to obey His word, even the toughest ones for us. His grace is sufficient to help us in our weaknesses. 2nd Corinthians 12:9.`,
     date: '08/18/2023',
     image: Log
   },
    {
-    id: '37',
+    id: '38',
     title: 'Why will a loving God send anyone to hell? ',
     content: `For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord. Romans 6:23. Hell was designed for God's enemies namely Satan and his demons. 
     When people align/side with the devil in their hearts, they inherit his punishment. One may also ask:  Why do some people in sin die early and some others appear to have a longer time to continue to sin?  Sometimes people are judged instantly by the Lord and they may die before their time. I believe its because they are in a place where their hearts are already totally sold out to the devil that is they are already sealed to Satan and no amount of preaching will cause them to change their hearts. God knows the hearts of men and He judges accordingly. He is a righteous judge. Let all men by liars and God alone be true. If God sees that a man’s heart will turn to Him, He will find a way to lead them to deliverance.`,
@@ -516,7 +511,7 @@ Scriptural text: 2nd Timothy 3:1-14
     image: Log
   },
    {
-    id: '38',
+    id: '39',
     title: 'Can a Christian be cursed? ',
     content: `You are not cursable (made up word) except involved in sin!
 
@@ -529,7 +524,7 @@ Lastly we can look at the story of Judas Iscariot where he was beguiled by Satan
     image: Log
   },
    {
-    id: '39',
+    id: '40',
     title: 'The Mark of the Beast is here already? ',
     content: `Yes, many already have the MARK OF THE BEAST - the Spiritual version. If you honor Satan knowingly or unknowingly, you have it. One day that spiritual mark  would be upgraded to the physical mark if there is no genuine repentance.  (I believe per scripture that the mark of the beast will wind up as a physical mark visible by the physical eyes and distinct to everyone who’s on whichever side). This would be at the time the ANTICHRIST would be revealed and he would insist on it for those carrying his spiritual mark and would also deceive lukewarm Christians into taking his mark (Revelation 13). You will only be able to resist that mark if you are passionately on fire for God meaning your name is written in the Lamb’s book of life and you are sold out for God not caring about losing your life. And note that at the point of physical mark, once you take it, it  cannot and will not be reversed. This is it!
 Good news is that right now the spiritual mark can be removed!  This happens when you receive Jesus Christ into your life and receive His Holy Spirit and you then remain grounded in Him! 
@@ -538,7 +533,7 @@ Therefore, this is the right time! (NOW is the day of salvation!!) as there will
     image: Log
   },
    {
-    id: '40',
+    id: '41',
     title: ' What is God asking you to give up? ',
     content: `Four things that cloud people’s minds and keep them bound in a mindset even when the Lord has asked us to lay this down:
 
@@ -551,7 +546,7 @@ Therefore, this is the right time! (NOW is the day of salvation!!) as there will
     image: Log
   },
    {
-    id: '41',
+    id: '42',
     title: 'The value of Praise-giving',
     content: `God simply loves a heart of worship.
 Let us quickly review some verses of Psalm 147 as seen below-

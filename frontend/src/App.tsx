@@ -14,10 +14,13 @@ import { Booking } from './pages/Bookings';
 import { ContactData } from './pages/Contact';
 import { DonateData } from './pages/Donate';
 import { StoreData } from './pages/Store';
-import { Blogs } from './pages/Blogpost';
+import { Blog } from './pages/Blogpost';
 import { MinistryData } from './pages/Ministry';
 import { CheckoutPage } from './pages/CheckoutPage';
 import { CartPage } from './pages/CartPage';
+
+
+
 
 
 
@@ -36,7 +39,7 @@ function AppRoutes() {
           <Route path="contact" element={<ContactData />} />
           <Route path="donate" element={<DonateData />} />
           <Route path="store" element={<StoreData />} />
-          <Route path="blogs" element={<Blogs />} />
+          <Route path="blogs" element={<Blog />} />
           <Route path="ministry" element={<MinistryData />} />
       <Route path="checkout" element={<CheckoutPage />} />
       <Route path="cart" element={<CartPage />} />
