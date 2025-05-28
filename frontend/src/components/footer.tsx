@@ -59,7 +59,7 @@ export const Footer: React.FC = () => {
   </div>
 
       {/* Rest of the footer remains the same */}
-        <div className="w-full border-t border-purple-800" />
+        <div className="w-full border-t border-gray-500" />
 
     <div className="max-w-5xl mx-auto py-8 px-2 sm:px-6 lg:px-8 text-center">
     <h3 className="text-xl font-bold mb-6 px-4 roboto-condensed">STREAM ACROSS ALL PLATFORMS</h3>
@@ -67,10 +67,15 @@ export const Footer: React.FC = () => {
       <Streaming />
     </div>
   </div>
+  {/* <div className="w-full border-t border-gray-500" /> */}
+  <div className="mt-4 mb-6 text-left text-sm work-sans text-gray-300 px-6 md:px-12 lg:px-50 py-4">
+  <p>
+    © 2025 CLAUDYGOD. All rights reserved. This website and its content are the intellectual property of CLAUDYGOD. Unauthorized use, reproduction, 
+    or distribution of any materials without prior written consent is strictly prohibited. For inquiries, collaborations, or support, please contact us via the Contact Page or email: support@claudygod.com
+  </p>
+</div>
 
-  <div className="mt-4 mb-6 text-center text-sm work-sans text-gray-300 px-4 py-2">
-    © 2025 CLAUDYGOD. All Rights Reserved. Built & Maintained by Peter4tech.
-  </div>
+
 </footer>
   );
 };

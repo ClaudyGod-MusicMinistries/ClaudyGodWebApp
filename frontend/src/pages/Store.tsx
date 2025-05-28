@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Herosection } from '../components/Herosection';
 import { useCartStore } from '../Context/Cartcontext';
-import StoreBanner from '../assets/StoreBanner.jpg';
+import { Back3 } from '../assets';
 import { NewsletterForm } from '../components/Newsletter';
 // In Store.tsx, ensure you have these imports:
 // In Store.tsx, ensure you have these imports:
@@ -75,7 +75,7 @@ export const StoreData: React.FC = () => {
         <div className="absolute inset-0 bg-black/50 z-10" />
         <Herosection
           title="ClaudyGod Music & Ministries / Store"
-          backgroundImage={StoreBanner}
+          backgroundImage={Back3}
           className="relative z-0"
         />
       </div>

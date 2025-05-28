@@ -134,7 +134,7 @@ export const MusicData: React.FC = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
    
-          <h2 className=" bg-purple-900 p-10 text-white max-md:text-2xl md:text-5xl roboto-condensed mb-12 max-md:text-center">Latest Release: You Are My Everything</h2>
+          <h2 className=" bg-purple-900 p-10 text-white max-md:text-2xl md:text-5xl roboto-condensed mb-12 max-md:text-center">Latest Release: You Are Our Everything</h2>
           <div className="space-y-10">
             {albums.map((album) => (
               <motion.div

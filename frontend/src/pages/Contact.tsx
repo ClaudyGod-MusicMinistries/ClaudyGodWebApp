@@ -46,7 +46,7 @@ export const ContactData: React.FC = () => {
           </h2>
           <p className="text-gray-700 robotoMedium mt-4 max-w-2xl mx-auto">
             Whether prayer request, testimony, or personal experience with ClaudyGod, we would love to hear from you. 
-            Kingdom work is our duty! Thank you for reaching out & growing in study with you & hear your testimony. 
+           Thank you for reaching out & growing in study with you & hear your testimony. 
             We are here for you!
           </p>
         </div>

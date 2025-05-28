@@ -21,7 +21,7 @@ export const Biography: React.FC = () => {
     
           {/* Title with Better Mobile Line-height */}
          <h2 className=" max-md:text-2xl md:text-5xl lg:text-45 text-purple-900 text-left roboto-condensed px-2 leading-tight sm:leading-snug md:leading-normal">
-  ClaudyGod: American Gospel, African Soul - A Californian Melody of Faith
+  ClaudyGod: American Gospel, Afro Singer - A Californian Melody of Faith
 </h2>
 
           {/* First Section with Optimized Image Ratios */}
