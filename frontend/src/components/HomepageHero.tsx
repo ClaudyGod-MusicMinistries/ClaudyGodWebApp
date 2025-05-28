@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { Resize5, Back3, Resize3, Resize4 , Resize_4 } from '../assets/';
+import { Resize5, Back3, Resize4 , Resize_4 } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faPlayCircle, 

@@ -85,7 +85,7 @@ const DonateHeroSlider: React.FC = () => {
       </div>
 
       {/* Desktop Version */}
-      <div className="hidden md:block relative h-[60vh] min-h-[700px] w-full overflow-hidden">
+      <div className="hidden md:block relative h-[52vh] min-h-[200px] w-full overflow-hidden">
         {images.map((img, index) => (
           <div
             key={index}

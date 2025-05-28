@@ -8,7 +8,7 @@ export const Heroblog: React.FC = () => {
           Our Blog
         </h1>
         <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-10">
-          Discover the latest insights, tutorials, and opinions from our team of experts
+          Feel free to share your 
         </p>
         <div className="relative max-w-lg w-full">
           <input
