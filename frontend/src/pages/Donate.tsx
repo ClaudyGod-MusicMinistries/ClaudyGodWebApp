@@ -75,7 +75,7 @@ const DonateHeroSlider: React.FC = () => {
               <p className="text-white text-sm mb-6 text-center px-4">
                 Experience the divine fusion of American gospel artist
               </p>
-              <button className="bg-purple-900 hover:bg-transparent hover:border-2 hover:border-purple-400 hover:text-purple-400 text-white font-semibold py-2 px-6 rounded-md transition-all duration-300 flex items-center gap-2">
+              <button className="bg-purple-900 hover:bg-transparent cursor-pointer hover:border-2 hover:border-purple-400 hover:text-purple-400 text-white roboto-condensed py-2 px-6 rounded-md transition-all duration-300 flex items-center gap-2">
                 <FontAwesomeIcon icon={faWallet} className="h-5 w-5" />
                 Donate Now
               </button>
@@ -123,17 +123,17 @@ export const DonateData: React.FC = () => {
     <div className="min-h-screen">
       <DonateHeroSlider />
       
-      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
-        <h2 className="roboto-condensed text-4xl text-center">
+      <div className="max-w-7xl  mx-auto px-4 py-8 md:py-12">
+        <h2 className="roboto-condensed mt-10 text-4xl text-center">
           Support Our Ministry
         </h2>
 
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-16">
-            <p className="text-lg text-gray-700 mb-4 leading-relaxed work-sans">
+            <p className="text-lg text-gray-700 mb-4 text-left work-sans">
               "Remember this: Whoever sows sparingly will also reap sparingly, and whoever sows generously will also reap generously. Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver. And God is able to bless you abundantly, so that in all things at all times, having all that you need, you will abound in every good work." - 2nd Corinthians 9:6-8
             </p>
-            <p className="text-lg text-gray-700 work-sans">
+            <p className="text-lg text-left text-gray-700 work-sans">
               All donations are greatly appreciated and will support spreading the gospel of Jesus Christ to a world in need and maintaining online platforms
             </p>
           </div>

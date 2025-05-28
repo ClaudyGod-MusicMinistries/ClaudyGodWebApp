@@ -64,17 +64,17 @@ export const BlogPost: React.FC<BlogPostProps> = ({
         />
       </div>
       
-      <h2 className="text-xl font-bold text-purple-900 mb-3">{title}</h2>
+      <h2 className="text-xl roboto-condensed text-purple-900 mb-3">{title}</h2>
       
       <div className="flex-grow">
-        <p className={`text-gray-700 mb-3 whitespace-pre-wrap transition-all duration-300 ${
+        <p className={`text-gray-700 mb-3 whitespace-pre-wrap  work-sans transition-all duration-300 ${
           isExpanded ? 'max-h-full' : 'max-h-20 overflow-hidden'
         }`}>
           {content}
         </p>
         
         <button
-          className="text-purple-600 font-medium text-sm mb-4 hover:text-purple-800 transition"
+          className="text-purple-600 raleway-medium text-sm mb-4  hover:text-purple-800 transition"
           onClick={() => setIsExpanded(!isExpanded)}
         >
           {isExpanded ? 'Show Less' : 'Read More'}
@@ -83,11 +83,11 @@ export const BlogPost: React.FC<BlogPostProps> = ({
 
       <div className="border-t pt-3 mt-2">
         <div className="flex justify-between items-center text-sm text-gray-600">
-          <span>{date}</span>
+          <span className='work-sans'>{date}</span>
           <div className="flex space-x-4 relative">
             <button
               onClick={() => setShowReactions(!showReactions)}
-              className="hover:text-purple-700 transition"
+              className="hover:text-purple-700 raleway-medium  transition"
               aria-label="React"
             >
               <FontAwesomeIcon icon={faFaceSmile} />
@@ -95,7 +95,7 @@ export const BlogPost: React.FC<BlogPostProps> = ({
             
             <button
               onClick={() => setShowCommentInput(!showCommentInput)}
-              className="hover:text-purple-700 transition"
+              className="hover:text-purple-700 raleway-medium transition"
               aria-label="Comment"
             >
               <FontAwesomeIcon icon={faComment} />
@@ -103,7 +103,7 @@ export const BlogPost: React.FC<BlogPostProps> = ({
             
             <button
               onClick={onShare}
-              className="hover:text-purple-700 transition"
+              className="hover:text-purple-700  raleway-medium transition"
               aria-label="Share"
             >
               <FontAwesomeIcon icon={faShare} />
@@ -152,13 +152,13 @@ export const BlogPost: React.FC<BlogPostProps> = ({
             <div className="flex justify-end space-x-2 mt-2">
               <button
                 onClick={handleCommentSubmit}
-                className="bg-purple-600 text-white px-3 py-1 rounded text-sm transition hover:bg-purple-700"
+                className="bg-purple-600 text-white px-3 py-1 rounded text-sm transition raleway-medium hover:bg-purple-700"
               >
                 Submit
               </button>
               <button
                 onClick={() => setShowCommentInput(false)}
-                className="text-gray-500 text-sm hover:text-gray-700"
+                className="text-gray-500 text-sm raleway-medium hover:text-gray-700"
               >
                 Cancel
               </button>
@@ -168,11 +168,11 @@ export const BlogPost: React.FC<BlogPostProps> = ({
 
         {comments.length > 0 && (
           <div className="mt-3">
-            <h4 className="font-medium text-sm text-gray-700 mb-2">Comments</h4>
+            <h4 className="raleway-medium text-sm text-gray-700 mb-2">Comments</h4>
             <ul className="space-y-2">
               {comments.map(comment => (
                 <li key={comment.id} className="bg-gray-50 p-2 rounded text-sm">
-                  <p className="text-gray-800">{comment.text}</p>
+                  <p className="text-gray-800  raleway-light ">{comment.text}</p>
                   <span className="text-xs text-gray-500">
                     {new Date(comment.date).toLocaleDateString(undefined, { 
                       year: 'numeric', 
