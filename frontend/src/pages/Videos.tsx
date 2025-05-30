@@ -1,18 +1,23 @@
 import  { useState } from 'react';
 import { motion } from 'framer-motion';
-import { NewsletterForm } from '../components/Newsletter';
-import { MusicBan1, 
-   AudioMack,  MusicBan8, Back3,
-   MusicBan5, VideoArt,
-    MusicBan6, MusicBan7 , 
-    VideoBanner1, VideoBanner2, 
-    VideoBanner3, Back1, About1,
-    Back2,
-    Back4
-  } from '../assets/';
-  import { AudioMackComponent } from '../components/audioMack';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faChevronLeft,faVideo, faChevronRight , faTimes, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+   MusicBan1, 
+  VideoArt,
+  MusicBan7 , 
+  } from '../assets/';
+  import { faPlay,
+   faChevronLeft,
+   faVideo,
+    faChevronRight , 
+    faTimes
+   } from '@fortawesome/free-solid-svg-icons';
+
+
+  import { NewsletterForm } from '../components/Newsletter';
+  import { AudioMackComponent } from '../components/audioMack';
+
+
 
 type VideoType = {
   id: number;
