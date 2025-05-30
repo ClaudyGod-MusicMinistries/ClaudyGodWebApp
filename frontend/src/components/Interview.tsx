@@ -109,7 +109,7 @@ const Interview = () => {
                       </div>
                     </div>
                     <div className="p-4 bg-white">
-                      <h3 className="raleway-light text-gray-900 group-hover:text-purple-700 transition-colors">
+                      <h3 className="work-sans text-xs text-gray-900 group-hover:text-purple-700 transition-colors">
                         {video.title}
                       </h3>
                     </div>
