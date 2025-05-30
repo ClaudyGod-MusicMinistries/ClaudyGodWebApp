@@ -23,6 +23,7 @@ import product3 from './Product3.png'
 import product4 from './Product4.png'
 import Aud1 from './aud1.webp'
 import Aud2 from './aud2.webp'
+import Isr from './Israel.jpg'
 import Resize1  from './resize_abt.jpg'
 import Resize2 from './resize_bg1.jpg'
 import Resize3 from './resize_bg3.jpg'
@@ -69,7 +70,7 @@ import VideoArt from './videoCoverArt.jpg'
 
 
 
-export {Log, Back1, Back2, Back3,  Back4, About1, 
+export {Log, Back1, Isr, Back2, Back3,  Back4, About1, 
     About2, Cover, Shop1, Shop2,Shop3, Donate1 , Donate2,
     Shop4, VideoBanner1, VideoBanner2, VideoBanner3,StoreBanner, product1,
 product2, product3, musicCover2, musicCover3,musicCover4,musicCover5,Resize_4, Resize4,Resize5,Resize1, Resize2, product4,Aud1, Aud2, AudioMack , MusicBan1, MusicBan2,

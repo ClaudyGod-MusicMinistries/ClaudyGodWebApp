@@ -348,14 +348,14 @@ sm:text-xl
         scale: 0.95,
         backgroundColor: 'rgba(76, 29, 149, 0.9)',
       }}
-      onClick={() => navigate('/contact')}
+      onClick={() => navigate('/bookings')}
       className="
         /* Mobile styling */
         max-md:relative max-md:rounded-full max-md:bg-purple-900 
-        max-md:px-6 max-md:py-3 max-md:text-lg work-sans
+        max-md:px-6 cursor-pointer max-md:py-3 max-md:text-lg work-sans
         
         /* Desktop styling */
-        md:relative md:rounded-full md:bg-purple-900 
+        md:relative cursor-pointer md:rounded-full md:bg-purple-900 
         md:px-14 md:py-6 md:text-3xl
       "
     >

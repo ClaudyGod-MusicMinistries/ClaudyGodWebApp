@@ -31,7 +31,7 @@ export const AudioMackComponent = () => {
               Listen • Stream • Play
             </p>
             <motion.a
-              href="#"
+              href="https://audiomack.com/ClaudyGodMusic"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-8 py-3 bg-purple-800 text-white rounded-full hover:bg-purple-900 transition-colors"

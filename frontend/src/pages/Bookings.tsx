@@ -203,6 +203,7 @@ export const Booking: React.FC = () => {
                 <option value="US">US</option>
                 <option value="CA">CA</option>
                 <option value="UK">UK</option>
+                 <option value="NG">UK</option>
               </select>
               <input
                 type="tel"

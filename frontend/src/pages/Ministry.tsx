@@ -1,10 +1,10 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Herosection } from '../components/Herosection';
 import { NewsletterForm } from '../components/Newsletter';
 import { About1, ministry10, ministry11, ministry12, ministry13, ministry14, ministry15, ministry16, ministry18, ministry19, ministry20, ministry9 } from '../assets/';
-import { Ministry1, ministry2, ministry3, ministry4, ministry17, ministry5, ministry6, ministry7, ministry8 } from '../assets/';
+import { Ministry1, ministry2, Isr,ministry3, ministry4, ministry17, ministry5, ministry6, ministry7, ministry8 } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 type TeachingType = {
   id: number;
@@ -12,7 +12,6 @@ type TeachingType = {
   thumbnail: string;
   youtubeId: string;
   scripture: string;
-  duration: string;
   teacher: string;
   date: string;
 };
@@ -22,9 +21,8 @@ const teachingsData: TeachingType[] = [
     id: 1,
     title: "Reviewing the signs of the lord",
     thumbnail: Ministry1,
-    youtubeId: 'abc123',
+    youtubeId: '0e-JsLgoa00',
     scripture: "Teens Teachings Series",
-    duration: "45:30",
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -36,9 +34,8 @@ const teachingsData: TeachingType[] = [
     id: 2,
     title: "Reviewing the signs of the lord",
     thumbnail: ministry2,
-    youtubeId: 'def456',
+    youtubeId: 'U_Is76egy9I',
     scripture: "Abraham's Kind of Faith",
-    duration: "32:15",
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -48,11 +45,10 @@ const teachingsData: TeachingType[] = [
   },
   {
     id: 3,
-    title: "Approach God By our human effort",
+    title: "BE FOUND WITHOUT SPOT!",
     thumbnail: ministry5,
-    youtubeId: 'ghi789',
+    youtubeId: '25ar_CFNwjY',
     scripture: "Being a Good Person is not a guarantee",
-    duration: "38:45",
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -64,9 +60,8 @@ const teachingsData: TeachingType[] = [
     id: 4,
     title: "Who do you turn to when in Distress",
     thumbnail: ministry6,
-    youtubeId: 'ghi789',
+    youtubeId: 'brS0nkWGYa4',
     scripture: "Why is God Silent in certain Times and Season of our lives",
-    duration: "38:45",
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -78,9 +73,8 @@ const teachingsData: TeachingType[] = [
     id: 5,
     title: "Don't just be a hearer only",
     thumbnail: ministry7,
-    youtubeId: 'ghi789',
-    scripture: "Nuggets for your gr",
-    duration: "38:45",
+    youtubeId: 't4lD9Hhk6HI',
+    scripture: "Nuggets for your Spiritual Growth",
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -92,9 +86,9 @@ const teachingsData: TeachingType[] = [
     id: 6,
     title: "All Kinds of Sin Deplease God",
     thumbnail: ministry3,
-    youtubeId: 'ghi789',
+    youtubeId: 'cOd7zhSN44s',
     scripture: "Nuggets for your Spiritual Growth",
-    duration: "38:45",
+
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -106,9 +100,9 @@ const teachingsData: TeachingType[] = [
     id: 7,
     title: "Are you a Wheat or a Weed",
     thumbnail: ministry4,
-    youtubeId: 'ghi789',
+    youtubeId: 'hw1aHaGlT-k',
     scripture: "Nuggets for your growth",
-    duration: "38:45",
+    
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -120,9 +114,8 @@ const teachingsData: TeachingType[] = [
     id: 8,
     title: "Following the Lord's Guidiance",
     thumbnail: ministry8,
-    youtubeId: 'ghi789',
+    youtubeId: '-Ocy0Y6MHzY',
     scripture: "Nuggets for your Spiritual Growth",
-    duration: "38:45",
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -134,9 +127,9 @@ const teachingsData: TeachingType[] = [
     id: 9,
     title: "God Knows how to Defy the normal ",
     thumbnail: ministry9,
-    youtubeId: 'ghi789',
+    youtubeId: 'DmGi7BVtS8U',
     scripture: "Nuggets for your Spiritual Growth",
-    duration: "38:45",
+    
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -146,11 +139,10 @@ const teachingsData: TeachingType[] = [
   },
     {
     id: 10,
-    title: "Holiness: Jesus Expects Holiness from his body, Body of Christ ",
+    title: "The love of money is the root of all evil (examining the life of Judas Iscariot)",
     thumbnail: ministry10,
-    youtubeId: 'ghi789',
+    youtubeId: 'mA_NKjX9aNg',
     scripture: "Nuggets for your Spiritual Growth",
-    duration: "38:45",
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -162,9 +154,8 @@ const teachingsData: TeachingType[] = [
     id: 11,
     title: "How the Lord Expect us to Behave ",
     thumbnail: ministry11,
-    youtubeId: 'ghi789',
+    youtubeId: '9VlbbmHlzFc',
     scripture: "Nuggets for your Spiritual Growth",
-    duration: "38:45",
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -174,11 +165,10 @@ const teachingsData: TeachingType[] = [
   },
   {
     id: 12,
-    title: "How to indentify false Prophets",
+    title: "Harkening to the Voice of the Holy Spirit at such a time as this",
     thumbnail: ministry12,
-    youtubeId: 'ghi789',
+    youtubeId: '-Ocy0Y6MHzY',
     scripture: "Nuggets for your Spiritual Growth",
-    duration: "38:45",
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -188,11 +178,10 @@ const teachingsData: TeachingType[] = [
   },
   {
     id: 13,
-    title: "How to Start Living a Holy Life",
+    title: "The love of this world is hostility to God. James 4:4",
     thumbnail: ministry13,
-    youtubeId: 'ghi789',
+    youtubeId: 'Tm8b1ZP-P5g',
     scripture: "Nuggets for your Spiritual Growth",
-    duration: "38:45",
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -202,11 +191,10 @@ const teachingsData: TeachingType[] = [
   },
     {
     id: 14,
-    title: "Are we more concerned about our reputation or that we evangelize so that people can get a chance to repent",
+    title: "How do we get to God? (Nimrod’s attempted journey to heaven)",
     thumbnail: ministry14,
-    youtubeId: 'ghi789',
+    youtubeId: 'OEoYf8Wk5Ic',
     scripture: "Nuggets for your Spiritual Growth",
-    duration: "38:45",
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -218,9 +206,8 @@ const teachingsData: TeachingType[] = [
     id: 15,
     title: "The Day of the Lord - According to the Book of Malachi",
     thumbnail: ministry15,
-    youtubeId: 'ghi789',
+    youtubeId: '95N205rkScs',
     scripture: "Nuggets for your Spiritual Growth",
-    duration: "38:45",
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -230,11 +217,11 @@ const teachingsData: TeachingType[] = [
   },
      {
     id: 16,
-    title: "The Lord calls his people to come out of Babylon",
+    title: "The Lord is a Jealous God",
     thumbnail: ministry16,
-    youtubeId: 'ghi789',
+    youtubeId: 'VDPSqmpFRs8',
     scripture: "Help Series",
-    duration: "38:45",
+  
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -244,11 +231,11 @@ const teachingsData: TeachingType[] = [
   },
      {
     id: 17,
-    title: "The truth you know will set you free",
+    title: "How the Lord expects us to behave",
     thumbnail: ministry17,
-    youtubeId: 'ghi789',
+    youtubeId: 'FlHxLnpwyNk',
     scripture: "Truth Series",
-    duration: "38:45",
+  
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -260,10 +247,9 @@ const teachingsData: TeachingType[] = [
     id: 18,
     title: "What's your Motive for Asking God for help?",
     thumbnail: ministry18,
-    youtubeId: 'ghi789',
+    youtubeId: 'hishWNwR1v8',
     scripture: "Help Series",
-    duration: "38:45",
-    teacher: "ClaudyGodTeachings",
+      teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -272,11 +258,11 @@ const teachingsData: TeachingType[] = [
   },
      {
     id: 19,
-    title: "Who is Your Helper?",
+    title: "WWhy God blesses us (ClaudyGod's Nugget of Truth)",
     thumbnail: ministry19,
-    youtubeId: 'ghi789',
+    youtubeId: 'qrruANQhLKI',
     scripture: "Help Series",
-    duration: "38:45",
+
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -286,11 +272,26 @@ const teachingsData: TeachingType[] = [
   },
      {
     id: 20,
-    title: "Why is God Silent in certain Times and Season of our lives",
+    title: "What kind of relationship do you have with God - a Mary or Martha kind?",
     thumbnail: ministry20,
-    youtubeId: 'ghi789',
+    youtubeId: 'PhVKzo1IKrU',
     scripture: "Nuggets for your Spiritual Growth",
-    duration: "38:45",
+
+    teacher: "ClaudyGodTeachings",
+    date: new Date().toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })
+  }
+  ,
+     {
+    id: 21,
+    title: "Understanding God's Endtime plan for Isreal",
+    thumbnail: Isr,
+    youtubeId: '/swOlMakN570',
+    scripture: "Nuggets for your Spiritual Growth",
+
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -300,15 +301,13 @@ const teachingsData: TeachingType[] = [
   }
 ];
 
+
 const VideoCard: React.FC<{
   content: TeachingType;
-  isSelected: boolean;
   onClick: () => void;
-}> = ({ content, isSelected, onClick }) => (
+}> = ({ content, onClick }) => (
   <div 
-    className={`relative cursor-pointer group transition-all duration-300 ${
-      isSelected ? 'ring-4 ring-purple-500' : ''
-    }`}
+    className="relative cursor-pointer group transition-all duration-300 hover:shadow-lg"
     onClick={onClick}
   >
     <figure className="relative aspect-video overflow-hidden rounded-lg">
@@ -328,13 +327,49 @@ const VideoCard: React.FC<{
       <h3 className="text-lg roboto-condensed text-gray-800">{content.title}</h3>
       <p className="text-sm text-purple-600 robotoMedium">{content.scripture}</p>
       <div className="flex justify-between raleway-slider text-sm text-gray-500">
-        <span>{content.duration}</span>
+        <span>{content.teacher}</span>
         <span>{content.date}</span>
       </div>
-      <p className="text-sm raleway-Light text-gray-700">{content.teacher}</p>
     </div>
   </div>
 );
+
+const VideoModal: React.FC<{
+  videoId: string | null;
+  onClose: () => void;
+}> = ({ videoId, onClose }) => {
+  if (!videoId) return null;
+
+  return (
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div 
+        className="relative w-full max-w-4xl"
+        onClick={e => e.stopPropagation()}
+      >
+        <button
+          className="cursor-pointer absolute -top-12 right-0 text-white text-2xl z-10 hover:text-purple-300 transition-colors"
+          onClick={onClose}
+        >
+          <FontAwesomeIcon icon={faTimes} size="lg" />
+        </button>
+        
+        <div className="aspect-video w-full">
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+            className="w-full h-full"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title="YouTube video player"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const ContentSection: React.FC<{
   title: string;
@@ -343,15 +378,16 @@ const ContentSection: React.FC<{
 }> = ({ title, description, contents }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
-        setItemsPerPage(3); // Desktop
+        setItemsPerPage(3);
       } else if (window.innerWidth >= 768) {
-        setItemsPerPage(2); // Tablet
+        setItemsPerPage(2);
       } else {
-        setItemsPerPage(1); // Mobile
+        setItemsPerPage(1);
       }
     };
 
@@ -371,11 +407,16 @@ const ContentSection: React.FC<{
   );
 
   return (
-    <div className="mt-16 space-y-8 px-4 max-w-7xl mx-auto">
+        <div className="mt-16 space-y-8 px-4 max-w-7xl mx-auto">
+      <VideoModal 
+        videoId={selectedVideo} 
+        onClose={() => setSelectedVideo(null)} 
+      />
+      
       <div className="text-left">
-        <h2 className="text-2xl md:text-4xl roboto-condensed text-purple-900">{title}</h2>
+        <h2 className="text-2xl md:text-xl roboto-condensed text-purple-900">{title}</h2>
         <div className="w-[150px] h-2 bg-purple-900 my-4"></div>
-        <p className="text-gray-600 robotoMedium text-base md:text-lg max-w-2xl">{description}</p>
+        <p className="text-gray-600 work-sans  md:text-base max-md:text-xx  max-w-2xl">{description}</p>
       </div>
 
       <div className="relative">
@@ -384,58 +425,60 @@ const ContentSection: React.FC<{
             <div key={content.id} className="w-full">
               <VideoCard
                 content={content}
-                isSelected={false}
-                onClick={() => {}}
+                onClick={() => setSelectedVideo(content.youtubeId)}
               />
             </div>
           ))}
         </div>
 
-        {/* Navigation Controls */}
-          <div className="flex items-center  p-3 justify-between mt-6 md:mt-8">
-          {/* Hide dots on mobile */}
-          <div className="hidden   md:flex cursor-pointer justify-center w-full absolute left-0">
-              <div className="flex space-x-2 ">
-            {Array.from({ length: totalSlides }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`h-2 w-6 md:w-8 cursor-pointer rounded-full transition-colors ${
-                  index === currentSlide ? 'bg-purple-900' : 'bg-gray-300'
-                }`}
-              />
-            ))}
-          </div>
-          </div>
+       
 
-          <div className="flex items-center space-x-3 md:space-x-4">
-            <button
-              onClick={prevSlide}
-              className="bg-purple-900 text-white p-1.5 cursor-pointer md:p-2 rounded-full hover:bg-purple-800 transition-colors"
-              disabled={currentSlide === 0}
-            >
-              <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            
-            <span className="text-sm md:text-base text-gray-600">
-              {currentSlide + 1} / {totalSlides}
-            </span>
+         <div className="flex items-center p-3 justify-between mt-6 md:mt-8">
+  {/* Moved button group to left side */}
+  <div className="flex items-center space-x-3 md:space-x-4">
+    <button
+      onClick={prevSlide}
+      className="bg-purple-900 text-white p-1.5 md:p-2 rounded-full hover:bg-purple-800 transition-colors"
+      disabled={currentSlide === 0}
+    >
+      <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+    
+    <span className="text-sm md:text-base text-gray-600">
+      {currentSlide + 1} / {totalSlides}
+    </span>
 
-            <button
-              onClick={nextSlide}
-              className="bg-purple-900 text-white p-1.5 md:p-2 rounded-full cursor-pointer  hover:bg-purple-800 transition-colors"
-              disabled={currentSlide === totalSlides - 1}
-            >
-              <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
+    <button
+      onClick={nextSlide}
+      className="bg-purple-900 text-white p-1.5 md:p-2 rounded-full hover:bg-purple-800 transition-colors"
+      disabled={currentSlide === totalSlides - 1}
+    >
+      <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+
+  {/* Pagination indicators remain centered */}
+  <div className="hidden md:flex justify-center w-full absolute left-0">
+    <div className="flex space-x-2">
+      {Array.from({ length: totalSlides }).map((_, index) => (
+        <button
+          key={index}
+          onClick={() => setCurrentSlide(index)}
+          className={`h-2 w-6 md:w-8 rounded-full transition-colors ${
+            index === currentSlide ? 'bg-purple-900' : 'bg-gray-300'
+          }`}
+        />
+      ))}
+    </div>
+  </div>
+</div>
         </div>
       </div>
-    </div>
+
   );
 };
 
@@ -453,6 +496,7 @@ export const MinistryData: React.FC = () => {
       
       <ContentSection
         title="ClaudyGod Teachings"
+       
         description="Claudy's enthusiasm for sharing the Gospel is evident in both her written and spoken communications. She is a skilled author and remains active in speaking engagements at conferences, Claudy has also guest-hosted on national television programs such as Breakfast In Bed, The Sunday Show"
         contents={teachingsData}
       />
