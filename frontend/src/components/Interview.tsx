@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import YouTube from 'react-youtube';
+import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesDown, faPlay } from '@fortawesome/free-solid-svg-icons';
 import UpdateModal from '../components/updateModel'; // Import the modal component
@@ -25,10 +26,17 @@ const Interview = () => {
     },
   };
 
-  const handleVideoClick = (videoId) => {
-    setCurrentVideo(videoId);
-    setShowPlayer(true);
-  };
+const handleVideoClick = (videoId) => {
+  setCurrentVideo(videoId);
+  setShowPlayer(true);
+
+  setTimeout(() => {
+    const videoSection = document.getElementById('video-section');
+    if (videoSection) {
+      videoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, 100); // slight delay to ensure video player mounts before scroll
+};
 
   const scrollToVideos = () => {
     const videoSection = document.getElementById('video-section');
@@ -68,14 +76,28 @@ const Interview = () => {
       {/* Video Player Section */}
       <div id="video-section" className="mb-16">
         {showPlayer ? (
-          <div className="mb-10 rounded-xl overflow-hidden shadow-xl">
-            <YouTube videoId={currentVideo} opts={playerOptions} />
-          </div>
-        ) : (
-          <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-96 flex items-center justify-center text-gray-500">
-            Click a video below to play
-          </div>
-        )}
+  <motion.div 
+    className="mb-10 rounded-xl overflow-hidden shadow-xl"
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, ease: "easeOut" }}
+  >
+    <YouTube videoId={currentVideo} opts={playerOptions} />
+  </motion.div>
+) : (
+ <div className="bg-gray-200 raleway-light border-2 border-dashed rounded-xl w-full h-96 flex flex-col items-center justify-center text-gray-500 space-y-4">
+  <h2 className="text-xl">Video Will Play Here</h2>
+  <div className="w-18 h-18 p-5 rounded-2xl cursor-pointer bg-red-600 flex items-center justify-center">
+    <FontAwesomeIcon 
+      icon={faPlay} 
+      className="text-white text-xl" 
+    />
+  </div>
+</div>
+
+)}
+
+
 
         {/* Video Slider */}
         <div className="mt-12">
