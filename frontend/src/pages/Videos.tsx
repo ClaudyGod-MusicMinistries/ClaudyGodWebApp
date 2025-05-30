@@ -1,10 +1,9 @@
 import  { useState } from 'react';
 import { motion } from 'framer-motion';
 import { NewsletterForm } from '../components/Newsletter';
-import { MusicBan1, MusicBan2,
-   AudioMack, MusicBan3,
-  MusicBan8, Back3,
-   MusicBan5, MusicBan4,
+import { MusicBan1, 
+   AudioMack,  MusicBan8, Back3,
+   MusicBan5, VideoArt,
     MusicBan6, MusicBan7 , 
     VideoBanner1, VideoBanner2, 
     VideoBanner3, Back1, About1,
@@ -27,9 +26,9 @@ type VideoType = {
 const videos: VideoType[] = [
   {
     id: 1,
-    title: 'Lover of my soul',
+    title: 'Lover of my soul Album',
     thumbnail: MusicBan1,
-    youtubeId: 'UZPaupINXYI',
+    youtubeId: 'ivj5gVeTCJQ',
     category: 'music',
     description: 'Official music video for "You Are Our Everything"',
     date: new Date().toLocaleDateString('en-US', { 
@@ -41,8 +40,8 @@ const videos: VideoType[] = [
   {
     id: 2,
     title: 'Step Aside - Lover of my soul(Album)',
-    thumbnail: MusicBan2,
-    youtubeId: 'dQw4w9WgXcQ',
+    thumbnail: MusicBan1,
+    youtubeId: 'CSrgybysweE',
     category: 'music',
     description: 'Live worship performance of "In His Presence"',
     date: new Date().toLocaleDateString('en-US', { 
@@ -53,9 +52,9 @@ const videos: VideoType[] = [
   },
   {
     id: 3,
-    title: 'Alleluia Chorus',
-    thumbnail: MusicBan3,
-    youtubeId: 'GgUSNW7dpH4',
+    title: 'Yahweh is King - Lover of my soul(Album)',
+    thumbnail: MusicBan1,
+    youtubeId: 'VGjSUaUq3F8',
     category: 'music',
     description: 'Official music video for "Affirmation"',
     date: new Date().toLocaleDateString('en-US', { 
@@ -66,9 +65,9 @@ const videos: VideoType[] = [
   },
   {
     id: 4,
-    title: 'You Are Our Everything',
-    thumbnail: MusicBan4,
-    youtubeId: 'jkl012',
+    title: 'Love Me So Much - Lover of my soul(Album)',
+    thumbnail: MusicBan1,
+    youtubeId: 'YPJj0HonZb0',
     category: 'Concerts',
     description: 'Full Sunday worship service with special ministry',
     date: new Date().toLocaleDateString('en-US', { 
@@ -79,9 +78,9 @@ const videos: VideoType[] = [
   },
   {
     id: 5,
-    title: 'My Testimony',
-    thumbnail: MusicBan7,
-    youtubeId: 'mno345',
+    title: 'Thank You (Midnight Cry) - Lover of my soul(Album)',
+    thumbnail: MusicBan1,
+    youtubeId: '4i97iBmNnUA',
     category: 'Live Recordings',
     description: 'Personal testimony about God\'s grace and mercy',
     date: new Date().toLocaleDateString('en-US', { 
@@ -92,9 +91,9 @@ const videos: VideoType[] = [
   },
   {
     id: 6,
-    title: 'Worship Experience',
-    thumbnail: MusicBan6,
-    youtubeId: 'pqr678',
+    title: 'I Love You Lord - Lover of my Soul',
+    thumbnail: MusicBan1,
+    youtubeId: 'JCLMwST1lSg',
     category: 'Live Recordings',
     description: 'Worship Experience',
     date: new Date().toLocaleDateString('en-US', { 
@@ -105,9 +104,9 @@ const videos: VideoType[] = [
   },
   {
     id: 7,
-    title: 'Lover of my soul',
-    thumbnail: MusicBan5,
-    youtubeId: 'UZPaupINXYI',
+    title: 'King of Heaven - King of Heaven Album',
+    thumbnail: VideoArt,
+    youtubeId: 'W_Gfia-R3Ec',
     category: 'music',
     description: 'Official music video for "You Are Our Everything"',
     date: new Date().toLocaleDateString('en-US', { 
@@ -118,9 +117,9 @@ const videos: VideoType[] = [
   },
   {
     id: 8,
-    title: 'Love of My Heart - Lover of my soul(Album)',
-    thumbnail: MusicBan8,
-    youtubeId: 'dQw4w9WgXcQ',
+    title: 'There All the Time - King of Heaven Album',
+    thumbnail: VideoArt,
+    youtubeId: 'ZxOV4PVLc1U',
     category: 'music',
     description: 'Live worship performance of "In His Presence"',
     date: new Date().toLocaleDateString('en-US', { 
@@ -131,9 +130,9 @@ const videos: VideoType[] = [
   },
   {
     id: 9,
-    title: 'Worship Experience - 1.0',
-    thumbnail: Back3,
-    youtubeId: 'GgUSNW7dpH4',
+    title: 'Good To Me - King of heaven Album',
+    thumbnail: VideoArt,
+    youtubeId: 'NmKvR1hVc5M',
     category: 'music',
     description: 'Live Worship Session with ClaudyGod',
     date: new Date().toLocaleDateString('en-US', { 
@@ -144,9 +143,9 @@ const videos: VideoType[] = [
   },
   {
     id: 10,
-    title: 'You Are Our Everything',
-    thumbnail: VideoBanner1,
-    youtubeId: 'jkl012',
+    title: 'King of the Nations - King of Heaven Album',
+    thumbnail: VideoArt,
+    youtubeId: 'WfiL2fUF-8g',
     category: 'Concerts',
     description: 'Full Sunday worship service with special ministry',
     date: new Date().toLocaleDateString('en-US', { 
@@ -157,9 +156,9 @@ const videos: VideoType[] = [
   },
   {
     id: 11,
-    title: 'My Testimony',
-    thumbnail: VideoBanner2,
-    youtubeId: 'mno345',
+    title: 'Forever God (Dwelling Place) - King of Heaven Album',
+    thumbnail: VideoArt,
+    youtubeId: '1PjlO2sNyKk',
     category: 'Live Recordings',
     description: 'Personal testimony about God\'s grace and mercy',
     date: new Date().toLocaleDateString('en-US', { 
@@ -170,9 +169,9 @@ const videos: VideoType[] = [
   },
   {
     id: 12,
-    title: 'Worship Experience',
-    thumbnail: VideoBanner3,
-    youtubeId: 'pqr678',
+    title: 'Good Lord(Job Tell me) - King of Heavens Album',
+    thumbnail: VideoArt,
+    youtubeId: 'pjCP5bOzbm4',
     category: 'Live Recordings',
     description: 'Worship Experience',
     date: new Date().toLocaleDateString('en-US', { 
@@ -183,9 +182,9 @@ const videos: VideoType[] = [
   },
   {
     id: 13,
-    title: 'Lover of my soul',
-    thumbnail: Back1,
-    youtubeId: 'UZPaupINXYI',
+    title: 'Affirmation - Affirmation Album',
+    thumbnail: MusicBan7,
+    youtubeId: 'elAVI2DDGCM',
     category: 'music',
     description: 'Official music video for "You Are Our Everything"',
     date: new Date().toLocaleDateString('en-US', { 
@@ -196,9 +195,9 @@ const videos: VideoType[] = [
   },
   {
     id: 14,
-    title: 'Step Aside - Lover of my soul(Album)',
-    thumbnail: Back2,
-    youtubeId: 'dQw4w9WgXcQ',
+    title: 'We would Reign - LWe would Reign Album (Album)',
+    thumbnail: MusicBan7,
+    youtubeId: 's7XLwfhVSC0',
     category: 'music',
     description: 'Live worship performance of "In His Presence"',
     date: new Date().toLocaleDateString('en-US', { 
@@ -209,9 +208,9 @@ const videos: VideoType[] = [
   },
   {
     id: 15,
-    title: 'Alleluia Chorus',
-    thumbnail: Back4,
-    youtubeId: 'GgUSNW7dpH4',
+    title: 'Spirit Born Thanks - Spirit Born Album',
+    thumbnail: MusicBan7,
+    youtubeId: 'ZQvvu4Dt9LA',
     category: 'music',
     description: 'Official music video for "Affirmation"',
     date: new Date().toLocaleDateString('en-US', { 
@@ -222,9 +221,9 @@ const videos: VideoType[] = [
   },
   {
     id: 16,
-    title: 'You Are Our Everything',
-    thumbnail: About1,
-    youtubeId: 'jkl012',
+    title: 'You Are Our Everything - You are our Everything Album',
+    thumbnail: MusicBan7,
+    youtubeId: 'fK_tCBcnqGs',
     category: 'Concerts',
     description: 'Full Sunday worship service with special ministry',
     date: new Date().toLocaleDateString('en-US', { 
@@ -235,9 +234,9 @@ const videos: VideoType[] = [
   },
   {
     id: 17,
-    title: 'My Testimony',
+    title: 'I SEE YA - Gospel Rhyme',
     thumbnail: MusicBan7,
-    youtubeId: 'mno345',
+    youtubeId: 'Y-U4IvvnNTo',
     category: 'Live Recordings',
     description: 'Personal testimony about God\'s grace and mercy',
     date: new Date().toLocaleDateString('en-US', { 
@@ -248,9 +247,9 @@ const videos: VideoType[] = [
   },
   {
     id: 18,
-    title: 'Worship Experience',
-    thumbnail: MusicBan6,
-    youtubeId: 'pqr678',
+    title: 'O Holy Night - Claudy God Album',
+    thumbnail: MusicBan7,
+    youtubeId: 'oBRS1Uod3X8',
     category: 'Live Recordings',
     description: 'Worship Experience',
     date: new Date().toLocaleDateString('en-US', { 
