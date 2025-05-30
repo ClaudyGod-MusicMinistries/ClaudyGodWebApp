@@ -28,7 +28,7 @@ export const Herosection: React.FC<HeroSectionProps> = ({ title, backgroundImage
             </h1>
             <div className="border-l-4 border-white pl-4">
               <p className="text-gray-300 text-lg md:text-xl leading-relaxed">
-                Experience the divine fusion of American Gospel and African Soul through ClaudyGod's inspirational journey
+                Experience the divine fusion of American Gospel and Afro-gospel through ClaudyGod's inspirational journey
               </p>
             </div>
           </div>
