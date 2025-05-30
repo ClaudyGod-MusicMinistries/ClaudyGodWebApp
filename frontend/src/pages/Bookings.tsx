@@ -3,33 +3,87 @@ import { Herosection } from '../components/Herosection';
 import { VideoBanner2 } from '../assets/'
 import { NewsletterForm } from '../components/Newsletter';
 
-export const Booking: React.FC = () => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    countryCode: 'US',
-    organization: '',
-    orgType: '',
-    eventType: '',
-    day: '',
-    month: '',
-    year: '',
-    eventDetails: '',
-    address1: '',
-    address2: '',
-    country: '',
-    state: '',
-    city: '',
-    zipCode: '',
-    agreeTerms: false
-  });
+// API endpoint - change in production to your actual domain
+const API_URL = 'http://localhost:5000/api/bookings';
 
-  const handleSubmit = (e: React.FormEvent) => {
+// Initial form state for resetting
+const initialFormState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  countryCode: 'US',
+  organization: '',
+  orgType: '',
+  eventType: '',
+  day: '',
+  month: '',
+  year: '',
+  eventDetails: '',
+  address1: '',
+  address2: '',
+  country: '',
+  state: '',
+  city: '',
+  zipCode: '',
+  agreeTerms: false
+};
+
+export const Booking: React.FC = () => {
+  const [formData, setFormData] = useState(initialFormState);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Booking request submitted successfully! We will contact you shortly.');
+    
+    // Structure data for backend
+    const bookingData = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      phone: formData.phone,
+      countryCode: formData.countryCode,
+      organization: formData.organization,
+      orgType: formData.orgType,
+      eventType: formData.eventType,
+      eventDate: {
+        day: formData.day,
+        month: formData.month,
+        year: formData.year
+      },
+      eventDetails: formData.eventDetails,
+      address1: formData.address1,
+      address2: formData.address2,
+      country: formData.country,
+      state: formData.state,
+      city: formData.city,
+      zipCode: formData.zipCode,
+      agreeTerms: formData.agreeTerms
+    };
+    
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(bookingData)
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Submission failed');
+      }
+      
+      const result = await response.json();
+      alert(result.message);
+      
+      // Reset form after successful submission
+      setFormData(initialFormState);
+      
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert(error.message || 'Failed to submit booking. Please try again.');
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
