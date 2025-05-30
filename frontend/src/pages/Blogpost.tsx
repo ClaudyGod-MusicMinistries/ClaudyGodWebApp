@@ -5,6 +5,7 @@ import { blogPosts } from '../components/blogsData';
 import Pagination from '../components/pagination';
 import { Chatbot } from '../components/Chatbot';
 import { NewsletterForm } from '../components/Newsletter';
+import Interview from '../components/Interview';
 
 interface Comment {
   id: string;
@@ -123,9 +124,9 @@ export const Blog: React.FC = () => {
           onPageChange={handlePageChange}
         />
       </div>
-      
+      <Interview />
       <Chatbot />
-      <hr className='bg-purple-900'/>
+      {/* <hr className='bg-purple-900'/> */}
       <NewsletterForm />
     </div>
   );
