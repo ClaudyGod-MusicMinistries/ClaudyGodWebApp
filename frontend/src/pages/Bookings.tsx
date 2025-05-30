@@ -2,6 +2,7 @@ import  { useState } from 'react';
 import { Herosection } from '../components/Herosection';
 import { VideoBanner2 } from '../assets/'
 import { NewsletterForm } from '../components/Newsletter';
+import { Modal } from '../components/Modal';
 
 // API endpoint - change in production to your actual domain
 const API_URL = 'http://localhost:5000/api/bookings';
@@ -31,6 +32,10 @@ const initialFormState = {
 
 export const Booking: React.FC = () => {
   const [formData, setFormData] = useState(initialFormState);
+ const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalContent, setModalContent] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,14 +80,23 @@ export const Booking: React.FC = () => {
       }
       
       const result = await response.json();
-      alert(result.message);
+      // Show success modal
+      setModalTitle('Success!');
+      setModalContent(result.message);
+      setIsModalOpen(true);
+      
+      // Reset form
+      setFormData(initialFormState);
       
       // Reset form after successful submission
       setFormData(initialFormState);
       
-    } catch (error) {
-      console.error('Submission error:', error);
-      alert(error.message || 'Failed to submit booking. Please try again.');
+    } catch (error: any) {
+       setModalTitle('Error');
+      setModalContent(error.message || 'Failed to submit booking. Please try again.');
+      setIsModalOpen(true);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -99,6 +113,21 @@ export const Booking: React.FC = () => {
 
   return (
     <div className="bg-white min-h-screen overflow-y-auto">
+      <Modal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={modalTitle}
+      >
+        <div className="text-gray-700 mb-4">{modalContent}</div>
+        <div className="flex justify-end">
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="px-4 py-2 bg-purple-800 text-white rounded-md hover:bg-purple-700 transition"
+          >
+            Close
+          </button>
+        </div>
+      </Modal>
       <div className="relative">
         <div className="absolute inset-0 bg-black/50 z-10"></div>
         <Herosection 
@@ -402,12 +431,17 @@ export const Booking: React.FC = () => {
             </label>
           </div>
 
-          <button 
-            type="submit" 
-            className="w-full md:w-auto bg-purple-800 hover:bg-purple-700 roboto-condensed border-1 cursor-pointer border-white text-white font-medium py-3 px-8 rounded-md transition duration-150 ease-in-out"
-          >
-            Submit
-          </button>
+            <button 
+        type="submit" 
+        disabled={isSubmitting}
+        className={`w-full md:w-auto roboto-condensed border-1 cursor-pointer border-white text-white font-medium py-3 px-8 rounded-md transition duration-150 ease-in-out ${
+          isSubmitting 
+            ? 'bg-gray-500 cursor-not-allowed' 
+            : 'bg-purple-800 hover:bg-purple-700'
+        }`}
+      >
+        {isSubmitting ? 'Submitting...' : 'Submit'}
+      </button>
         </form>
       </div>
       <hr className="my-8 border-purple-900" />
