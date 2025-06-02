@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { AudioMackComponent } from '../components/audioMack';
-import { Back3, Back1 } from '../assets/';
+import { Cover } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faExternalLinkAlt,
   faShieldAlt,
   faInfoCircle,
-  faTimes
+  faTimes, 
+  faMusic, 
+  faArrowDown,
+  faSpinner
 } from '@fortawesome/free-solid-svg-icons';
 import { 
   faSpotify, 
@@ -71,8 +74,8 @@ const albums = [
   {
     id: 1,
     title: 'You Are Our Everything',
-    year: '2023',
-    image: Back3,
+    year: '2025',
+    image: Cover,
     tracks: [
       { id: 1, title: 'Amazing Grace', duration: '3:45' },
       { id: 2, title: 'Heavenly Joy', duration: '4:20' },
@@ -80,7 +83,6 @@ const albums = [
       { id: 4, title: 'Worship Medley', duration: '3:30' }
     ]
   },
- 
 ];
 
 // Security utility functions
@@ -115,6 +117,86 @@ const TRUSTED_DOMAINS = [
   'deezer.com',
   'amazon.com'
 ];
+
+// SecureStreamButton Component
+const SecureStreamButton = () => {
+  const [streamUrl, setStreamUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchStreamLink = async () => {
+      try {
+        const response = await fetch('/api/stream-links/primary');
+        if (!response.ok) {
+          throw new Error('Failed to fetch stream link');
+        }
+        
+        const data = await response.json();
+        const url = data.url;
+        
+        // Security validation
+        if (!isValidUrl(url)) {
+          throw new Error('Invalid stream URL');
+        }
+        
+        setStreamUrl(url);
+      } catch (err) {
+        setError('Failed to load streaming link');
+        console.error('Stream link fetch error:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStreamLink();
+  }, []);
+
+  // URL validation helper
+  const isValidUrl = (url: string) => {
+    try {
+      const parsed = new URL(url);
+      return ['https:', 'http:'].includes(parsed.protocol);
+    } catch {
+      return false;
+    }
+  };
+
+  if (loading) {
+    return (
+      <button 
+        disabled
+        className="bg-blue-400 text-white font-medium py-2 px-6 rounded-full inline-flex items-center"
+      >
+        <FontAwesomeIcon icon={faSpinner} className="animate-spin mr-2" />
+        Loading...
+      </button>
+    );
+  }
+
+  if (error || !streamUrl) {
+    return (
+      <button 
+        disabled
+        className="bg-gray-400 text-white font-medium py-2 px-6 rounded-full"
+      >
+        Stream Unavailable
+      </button>
+    );
+  }
+
+  return (
+    <a 
+      href={streamUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition duration-300 inline-flex items-center shadow-lg transform hover:scale-105"
+    >
+      <FontAwesomeIcon icon={faMusic} className="mr-2" />
+      Stream Now
+    </a>
+  );
+};
 
 export const MusicData = () => {
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
@@ -249,10 +331,6 @@ export const MusicData = () => {
             <p className="text-gray-600 mt-2  md:text-xl max-md:text-sm work-sans">
               Stream ClaudyGod's music everywhere, Anytime, Anyday, Anywhere.
             </p>
-            {/* <div className="mt-4 text-sm text-gray-500 flex items-center justify-center">
-              <FontAwesomeIcon icon={faShieldAlt} className="mr-2 text-green-500" />
-              <span>All links are secured with our protection system</span>
-            </div> */}
           </div>
           
           <div className="flex flex-wrap raleway-medium justify-center gap-4">
@@ -289,7 +367,7 @@ export const MusicData = () => {
                 transition={{ delay: 0.2 }}
               >
                 <div className="md:col-span-1">
-                  <div className="bg-purple-200 p-4 rounded-lg shadow-lg">
+                  <div className="bg-gray-200 p-3  shadow-lg">
                     <img 
                       src={album.image} 
                       alt={album.title} 
@@ -302,50 +380,50 @@ export const MusicData = () => {
                   <h3 className="text-2xl roboto-condensed mb-2">{album.title}</h3>
                   <p className="text-gray-600 work-sans mb-6">Released: {album.year}</p>
                   
-                  <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div className="p-4 bg-gray-50 border-b">
-                      <span className="font-medium">Tracks</span>
-                    </div>
+                  <div className="mt-8 text-center flex flex-col items-center">
+                    <p className="text-gray-700 work-sans mb-4 italic max-w-md mx-auto">
+                      Now available on all major streaming platforms
+                    </p>
                     
-                    <div className="divide-y">
-                      {album.tracks.map((track) => (
-                        <div 
-                          key={track.id} 
-                          className="p-4 flex justify-between items-center"
-                        >
-                          <div className="flex items-center">
-                            <span className="text-gray-800 raleway-light">{track.title}</span>
-                          </div>
-                          {/* <span className="text-gray-500">{track.duration}</span> */}
-                        </div>
-                      ))}
+                    <div className="flex flex-col items-center">
+                      <FontAwesomeIcon 
+                        icon={faArrowDown} 
+                        className="text-blue-500 mb-3 text-xl animate-bounce" 
+                      />
+                      <SecureStreamButton />
                     </div>
                   </div>
                   
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    {securedMusicPlatforms.slice(0, 3).map((platform, i) => {
-                      const sanitizedUrl = SecurityUtils.sanitizeUrl(platform.url);
-                      const isTrusted = SecurityUtils.isTrustedDomain(sanitizedUrl, TRUSTED_DOMAINS);
-                      
-                      return (
-                        <a 
-                          key={i}
-                          href={sanitizedUrl}
-                          onClick={(e) => handleLinkClick(platform.url, e)}
-                          className={`inline-flex items-center text-sm px-3 py-1 border rounded-full ${
-                            isTrusted 
-                              ? 'border-gray-300 text-gray-700 hover:bg-gray-50' 
-                              : 'border-red-300 text-red-700 hover:bg-red-50'
-                          }`}
-                        >
-                          <span>Listen on {platform.name}</span>
-                          <FontAwesomeIcon 
-                            icon={faExternalLinkAlt} 
-                            className="ml-1 text-xs"
-                          />
-                        </a>
-                      );
-                    })}
+                  <div className="mt-6">
+                    <h3 className="text-xl font-bold mb-4 text-center text-gray-800 roboto-condensed">
+                      Experience the Sound - Stream Now!
+                    </h3>
+                    
+                    <div className="flex flex-wrap gap-3 justify-center">
+                      {securedMusicPlatforms.slice(0, 3).map((platform, i) => {
+                        const sanitizedUrl = SecurityUtils.sanitizeUrl(platform.url);
+                        const isTrusted = SecurityUtils.isTrustedDomain(sanitizedUrl, TRUSTED_DOMAINS);
+                        
+                        return (
+                          <a 
+                            key={i}
+                            href={sanitizedUrl}
+                            onClick={(e) => handleLinkClick(platform.url, e)}
+                            className={`inline-flex items-center text-sm px-4 py-2 border rounded-full transition-all ${
+                              isTrusted 
+                                ? 'border-blue-300 text-blue-700 hover:bg-blue-50 hover:shadow-sm' 
+                                : 'border-red-300 text-red-700 hover:bg-red-50'
+                            }`}
+                          >
+                            <span className="font-medium">Play on {platform.name}</span>
+                            <FontAwesomeIcon 
+                              icon={faExternalLinkAlt} 
+                              className="ml-2 text-xs"
+                            />
+                          </a>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </motion.div>

@@ -21,16 +21,17 @@ export const Biography: React.FC = () => {
     
           {/* Title with Better Mobile Line-height */}
          <h2 className=" max-md:text-2xl md:text-5xl lg:text-45 text-purple-900 text-left roboto-condensed px-2 leading-tight sm:leading-snug md:leading-normal">
-  ClaudyGod: American Gospel, Afro Singer - A Californian Melody of Faith
+  ClaudyGod: American Contemporary Christian music and Afro-Gospel Songs
 </h2>
 
           {/* First Section with Optimized Image Ratios */}
           <div className="flex flex-col md:flex-row gap-4 xs:gap-5 sm:gap-6 md:gap-8 lg:gap-10">
             <div className="md:w-2/3 space-y-3 xs:space-y-4 sm:space-y-5">
               <p className="text-gray-700 text-[15px] work-sans xs:text-base sm:text-[17px] md:text-lg leading-relaxed md:leading-loose">
-                ClaudyGod is a California-based American Gospel artist of Nigerian and Sierra-Leonian descent. 
+                ClaudyGod is an American born, California-based 
+                Christian &  Gospel music artist of both a Nigerian and Sierra-Leonian ancestry.
                 Developing her passion for music through choral activities in Nigeria during middle and high school, 
-                she received a divine message in 2003 during worship in Nashville: "I love your worship." This 
+                she received a divine message from the lord in 2003 during worship in Nashville: "I love your worship." This 
                 pivotal moment led to her ministerial calling.
               </p>
               
@@ -61,7 +62,7 @@ export const Biography: React.FC = () => {
           <div className="flex flex-col md:flex-row-reverse gap-4 xs:gap-5 sm:gap-6 md:gap-8 lg:gap-10 mt-6 sm:mt-8 md:mt-12">
             <div className="md:w-2/3 space-y-3 xs:space-y-4 sm:space-y-5">
               <p className="text-gray-700 text-[15px] work-sans xs:text-base sm:text-[17px] md:text-lg leading-relaxed md:leading-loose">
-                A multifaceted minister, ClaudyGod excels as a songwriter, evangelist, and worship leader. 
+               Minister ClaudyGod excels as a songwriter, evangelist, and worship leader. 
                 Her music spans Contemporary Christian, Afro-gospel, Southern Gospel, and hymn arrangements. 
                 Each composition shares personal testimonies and divine encounters, creating what she calls 
                 "God-breathed art for spiritual connection."

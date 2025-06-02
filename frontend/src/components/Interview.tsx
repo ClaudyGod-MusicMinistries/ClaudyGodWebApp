@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import YouTube from 'react-youtube';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesDown, faPlay } from '@fortawesome/free-solid-svg-icons';
-import UpdateModal from '../components/updateModel'; // Import the modal component
+import UpdateModal from '../components/updateModel';
+
+// Define type for video objects
+interface VideoItem {
+  id: string;
+  title: string;
+}
 
 const Interview = () => {
-  const [currentVideo, setCurrentVideo] = useState('Eom1qlm4ork');
-  const [showPlayer, setShowPlayer] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [currentVideo, setCurrentVideo] = useState<string>('Eom1qlm4ork');
+  const [showPlayer, setShowPlayer] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
-  const videos = [
+  const videos: VideoItem[] = [
     { id: 'Eom1qlm4ork', title: 'ClaudyGod Interview - NTA10-Lagos' },
     { id: 'rGVHMpPIkY8', title: 'ClaudyGod Interview - Rhythm Station' },
     { id: 'jeY9ULX3wtY', title: 'ClaudyGod Interview - Rhema Station' },
@@ -26,17 +32,18 @@ const Interview = () => {
     },
   };
 
-const handleVideoClick = (videoId) => {
-  setCurrentVideo(videoId);
-  setShowPlayer(true);
+  // Fixed type for videoId parameter
+  const handleVideoClick = (videoId: string) => {
+    setCurrentVideo(videoId);
+    setShowPlayer(true);
 
-  setTimeout(() => {
-    const videoSection = document.getElementById('video-section');
-    if (videoSection) {
-      videoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, 100); // slight delay to ensure video player mounts before scroll
-};
+    setTimeout(() => {
+      const videoSection = document.getElementById('video-section');
+      if (videoSection) {
+        videoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
 
   const scrollToVideos = () => {
     const videoSection = document.getElementById('video-section');
@@ -76,28 +83,25 @@ const handleVideoClick = (videoId) => {
       {/* Video Player Section */}
       <div id="video-section" className="mb-16">
         {showPlayer ? (
-  <motion.div 
-    className="mb-10 rounded-xl overflow-hidden shadow-xl"
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, ease: "easeOut" }}
-  >
-    <YouTube videoId={currentVideo} opts={playerOptions} />
-  </motion.div>
-) : (
- <div className="bg-gray-200 raleway-light border-2 border-dashed rounded-xl w-full h-96 flex flex-col items-center justify-center text-gray-500 space-y-4">
-  <h2 className="text-xl">Video Will Play Here</h2>
-  <div className="w-18 h-18 p-5 rounded-2xl cursor-pointer bg-red-600 flex items-center justify-center">
-    <FontAwesomeIcon 
-      icon={faPlay} 
-      className="text-white text-xl" 
-    />
-  </div>
-</div>
-
-)}
-
-
+          <motion.div 
+            className="mb-10 rounded-xl overflow-hidden shadow-xl"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <YouTube videoId={currentVideo} opts={playerOptions} />
+          </motion.div>
+        ) : (
+          <div className="bg-gray-200 raleway-light border-2 border-dashed rounded-xl w-full h-96 flex flex-col items-center justify-center text-gray-500 space-y-4">
+            <h2 className="text-xl">Video Will Play Here</h2>
+            <div className="w-18 h-18 p-5 rounded-2xl cursor-pointer bg-red-600 flex items-center justify-center">
+              <FontAwesomeIcon 
+                icon={faPlay} 
+                className="text-white text-xl" 
+              />
+            </div>
+          </div>
+        )}
 
         {/* Video Slider */}
         <div className="mt-12">

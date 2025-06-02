@@ -79,6 +79,7 @@ export const Navbar: React.FC = () => {
             { to: "/bookings", name: "Bookings" },
             { to: "/blogs", name: "Blogs" },
             { to: "/ministry", name: "Ministry" },
+            { to: "/news", name: "News" },
             { to: "/store", name: "Store" },
             { to: "/contact", name: "Contact" },
             { to: "/donate", name: "Donate" },

@@ -59,20 +59,22 @@ import ministry12 from './Ministry12.jpg';
 import ministry13 from './Ministry13.jpg';
 import ministry14 from './Ministry14.jpg';
 import backUp from './abt_bck.jpg'
+import bgresize from './bgResize.jpg'
 import ministry15 from './Ministry15.jpg';
 import ministry16 from './Ministry16.jpg';
 import ministry17 from './Minsitry17.jpg';  
 import ministry18 from './Ministry18.jpg';
 import ministry19 from './Ministry19.jpg';
 import ministry20 from './Ministry20.jpg';
-import VideoArt from './videoCoverArt.jpg'
+import VideoArt from './videoCoverArt.jpg';
+import newsBanner from './newsBanner.jpg'
 
 
 
 
 export {Log, Back1, Isr, Back2, Back3,  Back4, About1, 
     About2, Cover, Shop1, Shop2,Shop3, Donate1 , Donate2,
-    Shop4, VideoBanner1, VideoBanner2, VideoBanner3,StoreBanner, product1,
+    Shop4, bgresize, VideoBanner1, VideoBanner2,newsBanner, VideoBanner3,StoreBanner, product1,
 product2, product3, musicCover2, musicCover3,musicCover4,musicCover5,Resize_4, Resize4,Resize5,Resize1, Resize2, product4,Aud1, Aud2, AudioMack , MusicBan1, MusicBan2,
  MusicBan3, MusicBan4, musicCover1,Resize3, MusicBan5, MusicBan6, MusicBan7, MusicBan8 , Ministry1, ministry2, ministry3, ministry4,
   ministry5, ministry6, backUp, ministry7, ministry8, ministry9, ministry10, ministry11,

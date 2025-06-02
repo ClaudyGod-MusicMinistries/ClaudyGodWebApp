@@ -18,6 +18,7 @@ import { Blog } from './pages/Blogpost';
 import { MinistryData } from './pages/Ministry';
 import { CheckoutPage } from './pages/CheckoutPage';
 import { CartPage } from './pages/CartPage';
+ import { News } from './pages/News';
 
 
 
@@ -41,6 +42,7 @@ function AppRoutes() {
           <Route path="store" element={<StoreData />} />
           <Route path="blogs" element={<Blog />} />
           <Route path="ministry" element={<MinistryData />} />
+           <Route path="news" element={<News />} />
       <Route path="checkout" element={<CheckoutPage />} />
       <Route path="cart" element={<CartPage />} />
 

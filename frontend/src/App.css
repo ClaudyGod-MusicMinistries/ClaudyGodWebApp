@@ -61,6 +61,14 @@
     var(--max-font-size)
   );
 }
+/* Tailwind doesn't have native perspective, so we define it here */
+.perspective {
+  perspective: 1500px;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
 
 .text-xx { font-size: calc(var(--base-font-size) * 0.5); }
 .text-xs { font-size: calc(var(--base-font-size) * 0.75); }

@@ -1,77 +1,153 @@
-import  { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { Herosection } from '../components/Herosection';
 import { VideoBanner2 } from '../assets/'
 import { NewsletterForm } from '../components/Newsletter';
 import { Modal } from '../components/Modal';
 
-// API endpoint - change in production to your actual domain
 const API_URL = 'http://localhost:5000/api/bookings';
 
-// Initial form state for resetting
-const initialFormState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  countryCode: 'US',
-  organization: '',
-  orgType: '',
-  eventType: '',
-  day: '',
-  month: '',
-  year: '',
-  eventDetails: '',
-  address1: '',
-  address2: '',
-  country: '',
-  state: '',
-  city: '',
-  zipCode: '',
-  agreeTerms: false
+// Country-state-city data structure
+const COUNTRY_STATE_CITY_DATA = {
+  US: {
+    phonePattern: /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/,
+    states: {
+      California: ['San Ramon', 'Los Angeles', 'San Francisco'],
+      Texas: ['Houston', 'Austin', 'Dallas'],
+      'New York': ['New York City', 'Buffalo', 'Rochester']
+    }
+  },
+  CA: {
+    phonePattern: /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/,
+    states: {
+      Ontario: ['Toronto', 'Ottawa'],
+      Quebec: ['Montreal', 'Quebec City']
+    }
+  },
+  UK: {
+    phonePattern: /^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/,
+    states: {
+      England: ['London', 'Manchester'],
+      Scotland: ['Edinburgh', 'Glasgow']
+    }
+  },
+  NG: {
+    phonePattern: /^(\+234|0)[7-9][01]\d{8}$/,
+    states: {
+      Lagos: ['Lagos City', 'Ikeja'],
+      Abuja: ['Abuja City', 'Garki']
+    }
+  }
 };
 
+// Month names
+const MONTHS = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+// Validation schema
+const schema = yup.object().shape({
+  firstName: yup.string().required('First name is required'),
+  lastName: yup.string().required('Last name is required'),
+  email: yup.string().email('Invalid email').required('Email is required'),
+  phone: yup.string()
+    .required('Phone is required')
+    .test('phone-format', 'Invalid phone format', function(value) {
+      const countryCode = this.parent.countryCode;
+      return COUNTRY_STATE_CITY_DATA[countryCode]?.phonePattern.test(value);
+    }),
+  countryCode: yup.string().required(),
+  organization: yup.string().required('Organization is required'),
+  orgType: yup.string().required('Organization type is required'),
+  eventType: yup.string().required('Event type is required'),
+  day: yup.number()
+    .required('Day is required')
+    .min(1, 'Invalid day')
+    .max(31, 'Invalid day'),
+  month: yup.string().required('Month is required'),
+  year: yup.number()
+    .required('Year is required')
+    .min(new Date().getFullYear(), 'Year must be current or future'),
+  eventDetails: yup.string().required('Event details are required'),
+  address1: yup.string().required('Address is required'),
+  country: yup.string().required('Country is required'),
+  state: yup.string().required('State is required'),
+  city: yup.string().required('City is required'),
+  zipCode: yup.string().required('ZIP code is required'),
+  agreeTerms: yup.boolean()
+    .oneOf([true], 'You must agree to the terms')
+    .required()
+});
+
 export const Booking: React.FC = () => {
-  const [formData, setFormData] = useState(initialFormState);
- const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalContent, setModalContent] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [states, setStates] = useState<string[]>([]);
+  const [cities, setCities] = useState<string[]>([]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Structure data for backend
-    const bookingData = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-      phone: formData.phone,
-      countryCode: formData.countryCode,
-      organization: formData.organization,
-      orgType: formData.orgType,
-      eventType: formData.eventType,
-      eventDate: {
-        day: formData.day,
-        month: formData.month,
-        year: formData.year
-      },
-      eventDetails: formData.eventDetails,
-      address1: formData.address1,
-      address2: formData.address2,
-      country: formData.country,
-      state: formData.state,
-      city: formData.city,
-      zipCode: formData.zipCode,
-      agreeTerms: formData.agreeTerms
-    };
-    
+  const { 
+    register, 
+    handleSubmit, 
+    control,
+    watch,
+    setValue,
+    reset,
+    formState: { errors, isSubmitting } 
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      countryCode: 'US',
+      agreeTerms: false
+    }
+  });
+
+  const country = watch('country');
+  const state = watch('state');
+  const countryCode = watch('countryCode');
+
+  // Update states when country changes
+  useEffect(() => {
+    if (country && COUNTRY_STATE_CITY_DATA[country]) {
+      const countryStates = Object.keys(COUNTRY_STATE_CITY_DATA[country].states);
+      setStates(countryStates);
+      setValue('state', '');
+      setValue('city', '');
+    } else {
+      setStates([]);
+      setCities([]);
+    }
+  }, [country, setValue]);
+
+  // Update cities when state changes
+  useEffect(() => {
+    if (country && state && COUNTRY_STATE_CITY_DATA[country]) {
+      const stateCities = COUNTRY_STATE_CITY_DATA[country].states[state] || [];
+      setCities(stateCities);
+      setValue('city', '');
+    } else {
+      setCities([]);
+    }
+  }, [country, state, setValue]);
+
+  const onSubmit = async (data: any) => {
     try {
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(bookingData)
+        body: JSON.stringify({
+          ...data,
+          eventDate: {
+            day: data.day,
+            month: data.month,
+            year: data.year
+          }
+        })
       });
       
       if (!response.ok) {
@@ -80,34 +156,14 @@ export const Booking: React.FC = () => {
       }
       
       const result = await response.json();
-      // Show success modal
       setModalTitle('Success!');
       setModalContent(result.message);
       setIsModalOpen(true);
-      
-      // Reset form
-      setFormData(initialFormState);
-      
-      // Reset form after successful submission
-      setFormData(initialFormState);
-      
+      reset();
     } catch (error: any) {
-       setModalTitle('Error');
+      setModalTitle('Error');
       setModalContent(error.message || 'Failed to submit booking. Please try again.');
       setIsModalOpen(true);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target;
-    
-    if (type === 'checkbox') {
-      const checked = (e.target as HTMLInputElement).checked;
-      setFormData(prev => ({ ...prev, [name]: checked }));
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
     }
   };
 
@@ -128,6 +184,7 @@ export const Booking: React.FC = () => {
           </button>
         </div>
       </Modal>
+      
       <div className="relative">
         <div className="absolute inset-0 bg-black/50 z-10"></div>
         <Herosection 
@@ -139,7 +196,7 @@ export const Booking: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-12">
-          <h2 className=" text-gray-900 mb-2 roboto-condensed text-40">ClaudyGod Music Ministry</h2>
+          <h2 className="text-gray-900 mb-2 roboto-condensed text-40">ClaudyGod Music Ministry</h2>
           <div className="h-1 w-16 bg-purple-900 mb-3"></div>
           <p className="text-gray-700 mb-2 robotoMedium text-18">
             To book ClaudyGod for an event, fill out the form below. The ClaudyGod Team will review your information.
@@ -149,72 +206,65 @@ export const Booking: React.FC = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-purple-900 p-8 rounded-lg shadow-md text-white mb-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="bg-purple-900 p-8 rounded-lg shadow-md text-white mb-8">
           {/* Personal Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div>
               <label htmlFor="firstName" className="block text-sm robotoMedium mb-1">First Name</label>
               <input
-                type="text"
                 id="firstName"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleInputChange}
+                {...register('firstName')}
                 className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
               />
+              {errors.firstName && <p className="text-red-400 text-xs mt-1">{errors.firstName.message}</p>}
             </div>
             <div>
               <label htmlFor="lastName" className="block text-sm robotoMedium mb-1">Last Name</label>
               <input
-                type="text"
                 id="lastName"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
+                {...register('lastName')}
                 className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
               />
+              {errors.lastName && <p className="text-red-400 text-xs mt-1">{errors.lastName.message}</p>}
             </div>
           </div>
 
           <div className="mb-6">
             <label htmlFor="email" className="block text-sm robotoMedium mb-1">Email Address</label>
             <input
-              type="email"
               id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
+              type="email"
+              {...register('email')}
               className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              required
             />
+            {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}
           </div>
 
           <div className="mb-6">
             <label htmlFor="phone" className="block text-sm robotoMedium mb-1">Contact Number</label>
             <div className="flex">
               <select
-                name="countryCode"
-                value={formData.countryCode}
-                onChange={handleInputChange}
+                {...register('countryCode')}
                 className="px-3 py-2 border border-purple-700 rounded-l-md bg-purple-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
                 <option value="US">US</option>
                 <option value="CA">CA</option>
                 <option value="UK">UK</option>
-                 <option value="NG">UK</option>
+                <option value="NG">NG</option>
               </select>
               <input
-                type="tel"
                 id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
+                type="tel"
+                {...register('phone')}
                 className="flex-1 px-3 py-2 border border-purple-700 border-l-0 rounded-r-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
+                placeholder={
+                  countryCode === 'US' || countryCode === 'CA' ? 'e.g. 555-123-4567' :
+                  countryCode === 'UK' ? 'e.g. 07123 456789' : 
+                  'e.g. 08012345678'
+                }
               />
             </div>
+            {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone.message}</p>}
           </div>
 
           {/* Event Information */}
@@ -223,15 +273,12 @@ export const Booking: React.FC = () => {
           <div className="mb-6">
             <label htmlFor="organization" className="block text-sm robotoMedium mb-1">Organization Name/Host</label>
             <input
-              type="text"
               id="organization"
-              name="organization"
-              value={formData.organization}
-              onChange={handleInputChange}
+              {...register('organization')}
               className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
               placeholder="Enter Name of Organization or Host Here"
-              required
             />
+            {errors.organization && <p className="text-red-400 text-xs mt-1">{errors.organization.message}</p>}
           </div>
 
           <div className="mb-6">
@@ -241,16 +288,15 @@ export const Booking: React.FC = () => {
                 <label key={type} className="inline-flex items-center raleway-slider">
                   <input
                     type="radio"
-                    name="orgType"
                     value={type}
-                    checked={formData.orgType === type}
-                    onChange={handleInputChange}
+                    {...register('orgType')}
                     className="form-radio text-purple-500"
                   />
                   <span className="ml-2">{type}</span>
                 </label>
               ))}
             </div>
+            {errors.orgType && <p className="text-red-400 text-xs mt-1">{errors.orgType.message}</p>}
           </div>
 
           <div className="mb-6">
@@ -260,72 +306,63 @@ export const Booking: React.FC = () => {
                 <label key={type} className="inline-flex items-center raleway-slider">
                   <input
                     type="radio"
-                    name="eventType"
                     value={type}
-                    checked={formData.eventType === type}
-                    onChange={handleInputChange}
+                    {...register('eventType')}
                     className="form-radio text-purple-500"
                   />
                   <span className="ml-2">{type}</span>
                 </label>
               ))}
             </div>
+            {errors.eventType && <p className="text-red-400 text-xs mt-1">{errors.eventType.message}</p>}
           </div>
 
           <div className="mb-6">
             <label className="block text-sm robotoMedium mb-1">Date Of Event</label>
             <div className="grid grid-cols-3 gap-2">
               <select
-                name="day"
-                value={formData.day}
-                onChange={handleInputChange}
+                {...register('day')}
                 className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
               >
-                <option value="" className='raleway-slider'>DD</option>
+                <option value="">DD</option>
                 {Array.from({ length: 31 }, (_, i) => (
                   <option key={i + 1} value={i + 1}>{i + 1}</option>
                 ))}
               </select>
               <select
-                name="month"
-                value={formData.month}
-                onChange={handleInputChange}
+                {...register('month')}
                 className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
               >
-                <option value="" className='raleway-slider'>MM</option>
-                {Array.from({ length: 12 }, (_, i) => (
-                  <option key={i + 1} value={i + 1}>{i + 1}</option>
+                <option value="">Month</option>
+                {MONTHS.map((month, index) => (
+                  <option key={index} value={month}>{month}</option>
                 ))}
               </select>
               <select
-                name="year"
-                value={formData.year}
-                onChange={handleInputChange}
+                {...register('year')}
                 className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
               >
-                <option value="" className='raleway-slider'>YYYY</option>
+                <option value="">YYYY</option>
                 {Array.from({ length: 10 }, (_, i) => {
                   const year = new Date().getFullYear() + i;
                   return <option key={year} value={year}>{year}</option>;
                 })}
               </select>
             </div>
+            {errors.day && <p className="text-red-400 text-xs mt-1">{errors.day.message}</p>}
+            {errors.month && <p className="text-red-400 text-xs mt-1">{errors.month.message}</p>}
+            {errors.year && <p className="text-red-400 text-xs mt-1">{errors.year.message}</p>}
           </div>
 
           <div className="mb-6">
             <label htmlFor="eventDetails" className="block text-sm robotoMedium mb-1">Share Event Details</label>
             <textarea
               id="eventDetails"
-              name="eventDetails"
-              value={formData.eventDetails}
-              onChange={handleInputChange}
+              {...register('eventDetails')}
               rows={5}
               className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              required
             ></textarea>
+            {errors.eventDetails && <p className="text-red-400 text-xs mt-1">{errors.eventDetails.message}</p>}
           </div>
 
           {/* Event Location */}
@@ -335,23 +372,17 @@ export const Booking: React.FC = () => {
             <div>
               <label htmlFor="address1" className="block text-sm font-medium mb-1">Address 1</label>
               <input
-                type="text"
                 id="address1"
-                name="address1"
-                value={formData.address1}
-                onChange={handleInputChange}
+                {...register('address1')}
                 className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
               />
+              {errors.address1 && <p className="text-red-400 text-xs mt-1">{errors.address1.message}</p>}
             </div>
             <div>
               <label htmlFor="address2" className="block text-sm robotoMedium mb-1">Address 2</label>
               <input
-                type="text"
                 id="address2"
-                name="address2"
-                value={formData.address2}
-                onChange={handleInputChange}
+                {...register('address2')}
                 className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
@@ -361,56 +392,48 @@ export const Booking: React.FC = () => {
             <label className="block text-sm robotoMedium mb-1">Location</label>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
               <select
-                name="country"
-                value={formData.country}
-                onChange={handleInputChange}
+                {...register('country')}
                 className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
               >
-                <option value=""className='raleway-slider'>Country</option>
-                <option value="United States" className='raleway-slider'>United States</option>
-                <option value="Canada" className='raleway-slider'>Canada</option>
-                <option value="United Kingdom" className='raleway-slider'>United Kingdom</option>
-                <option value="Nigeria" className='raleway-slider'>Nigeria</option>
+                <option value="">Country</option>
+                {Object.keys(COUNTRY_STATE_CITY_DATA).map(country => (
+                  <option key={country} value={country}>{country}</option>
+                ))}
               </select>
               <select
-                name="state"
-                value={formData.state}
-                onChange={handleInputChange}
+                {...register('state')}
                 className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
+                disabled={!country}
               >
-                <option value="" className='raleway-slider'>State</option>
-                <option value="California" className='raleway-slider'>California</option>
-                <option value="Texas" className='raleway-slider'>Texas</option>
-                <option value="New York" className='raleway-slider'>New York</option>
+                <option value="">State</option>
+                {states.map(state => (
+                  <option key={state} value={state}>{state}</option>
+                ))}
               </select>
               <select
-                name="city"
-                value={formData.city}
-                onChange={handleInputChange}
+                {...register('city')}
                 className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
+                disabled={!state}
               >
-                <option value="" className='raleway-slider'>City</option>
-                <option value="San Ramon" className='raleway-slider'>San Ramon</option>
-                <option value="Los Angeles" className='raleway-slider'>Los Angeles</option>
-                <option value="San Francisco" className='raleway-slider'>San Francisco</option>
+                <option value="">City</option>
+                {cities.map(city => (
+                  <option key={city} value={city}>{city}</option>
+                ))}
               </select>
             </div>
+            {errors.country && <p className="text-red-400 text-xs mt-1">{errors.country.message}</p>}
+            {errors.state && <p className="text-red-400 text-xs mt-1">{errors.state.message}</p>}
+            {errors.city && <p className="text-red-400 text-xs mt-1">{errors.city.message}</p>}
           </div>
 
           <div className="mb-6">
             <label htmlFor="zipCode" className="block text-sm font-medium mb-1">ZIP Code</label>
             <input
-              type="text"
               id="zipCode"
-              name="zipCode"
-              value={formData.zipCode}
-              onChange={handleInputChange}
+              {...register('zipCode')}
               className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              required
             />
+            {errors.zipCode && <p className="text-red-400 text-xs mt-1">{errors.zipCode.message}</p>}
           </div>
 
           <div className="mb-8 text-sm">
@@ -422,27 +445,25 @@ export const Booking: React.FC = () => {
             <label className="inline-flex items-center">
               <input
                 type="checkbox"
-                name="agreeTerms"
-                checked={formData.agreeTerms}
-                onChange={handleInputChange}
+                {...register('agreeTerms')}
                 className="form-checkbox text-purple-500"
-                required
               />
               <span className="ml-2 robotoMedium">By proceeding, you agree to our Terms of Use and Services.</span>
             </label>
+            {errors.agreeTerms && <p className="text-red-400 text-xs mt-1">{errors.agreeTerms.message}</p>}
           </div>
 
-            <button 
-        type="submit" 
-        disabled={isSubmitting}
-        className={`w-full md:w-auto roboto-condensed border-1 cursor-pointer border-white text-white font-medium py-3 px-8 rounded-md transition duration-150 ease-in-out ${
-          isSubmitting 
-            ? 'bg-gray-500 cursor-not-allowed' 
-            : 'bg-purple-800 hover:bg-purple-700'
-        }`}
-      >
-        {isSubmitting ? 'Submitting...' : 'Submit'}
-      </button>
+          <button 
+            type="submit" 
+            disabled={isSubmitting}
+            className={`w-full md:w-auto roboto-condensed border-1 cursor-pointer border-white text-white font-medium py-3 px-8 rounded-md transition duration-150 ease-in-out ${
+              isSubmitting 
+                ? 'bg-gray-500 cursor-not-allowed' 
+                : 'bg-purple-800 hover:bg-purple-700'
+            }`}
+          >
+            {isSubmitting ? 'Submitting...' : 'Submit'}
+          </button>
         </form>
       </div>
       <hr className="my-8 border-purple-900" />

@@ -45,9 +45,8 @@ export const ContactData: React.FC = () => {
             We Are Here For You
           </h2>
           <p className="text-gray-700 robotoMedium mt-4 max-w-2xl mx-auto">
-            Whether prayer request, testimony, or personal experience with ClaudyGod, we would love to hear from you. 
-           Thank you for reaching out & growing in study with you & hear your testimony. 
-            We are here for you!
+            Please leave a prayer request, testimony or a comment. We are happy to pray and stand in agreement with you concerning God’s purposes being fulfilled in your life. We would also love to hear your testimony of what’s God’s doing. Additionally you can kindly leave your comments or any questions you may have. 
+Be richly blessed.
           </p>
         </div>
 

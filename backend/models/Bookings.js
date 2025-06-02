@@ -11,7 +11,7 @@ const bookingSchema = new mongoose.Schema({
   eventType: { type: String, required: true },
   eventDate: {
     day: { type: Number, required: true },
-    month: { type: Number, required: true },
+    month: { type: String, required: true }, // Changed to String
     year: { type: Number, required: true }
   },
   eventDetails: { type: String, required: true },

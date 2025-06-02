@@ -4,6 +4,9 @@ export const NewsletterForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
 
+
+
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log({ name, email });

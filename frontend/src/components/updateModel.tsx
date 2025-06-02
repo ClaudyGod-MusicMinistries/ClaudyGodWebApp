@@ -1,6 +1,12 @@
 import React from 'react';
 
-const UpdateModal = ({ isOpen, onClose }) => {
+interface UpdateModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children?: React.ReactNode;
+}
+
+const UpdateModal: React.FC<UpdateModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
