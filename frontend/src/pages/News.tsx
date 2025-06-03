@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { NewsletterForm } from '../components/Newsletter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { About1, Cover, newsBanner } from '../assets';
@@ -384,7 +384,7 @@ export const News = () => {
               <img src={About1} className="rounded-xl w-12 h-12 object-cover" alt="ClaudyGod" />
             </div>
             <blockquote className="md:text-xl work-sans mb-6 text-[#e2e1f3]">
-              My mission is to share God's love through music. "My purpose is wrapped in loving others, using my sound to comfort those in need".
+              To reach the world with the love of Jesus, to proclaim truth always, and to redirect mankind to God through Worship and the Word.
             </blockquote>
             <p className="text-xl font-bold text-[#ff4d94]">— Min. ClaudyGod</p>
           </div>

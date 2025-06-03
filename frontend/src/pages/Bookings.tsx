@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { motion, AnimatePresence } from 'framer-motion';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Herosection } from '../components/Herosection';
-import { VideoBanner2 } from '../assets/'
+import { VideoBanner2 } from '../assets/';
 import { NewsletterForm } from '../components/Newsletter';
 import { Modal } from '../components/Modal';
 
 const API_URL = 'http://localhost:5000/api/bookings';
 
-// Country-state-city data structure
-const COUNTRY_STATE_CITY_DATA = {
+// Define country code type for type safety
+type CountryCode = 'US' | 'CA' | 'UK' | 'NG';
+
+// Country-state-city data structure with type safety
+const COUNTRY_STATE_CITY_DATA: Record<CountryCode, {
+  phonePattern: RegExp;
+  states: Record<string, string[]>;
+}> = {
   US: {
     phonePattern: /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/,
     states: {
@@ -56,10 +65,11 @@ const schema = yup.object().shape({
   phone: yup.string()
     .required('Phone is required')
     .test('phone-format', 'Invalid phone format', function(value) {
-      const countryCode = this.parent.countryCode;
-      return COUNTRY_STATE_CITY_DATA[countryCode]?.phonePattern.test(value);
+      const countryCode = this.parent.countryCode as CountryCode;
+      const pattern = COUNTRY_STATE_CITY_DATA[countryCode]?.phonePattern;
+      return pattern ? pattern.test(value) : false;
     }),
-  countryCode: yup.string().required(),
+  countryCode: yup.string().required().oneOf(['US', 'CA', 'UK', 'NG']),
   organization: yup.string().required('Organization is required'),
   orgType: yup.string().required('Organization type is required'),
   eventType: yup.string().required('Event type is required'),
@@ -73,6 +83,7 @@ const schema = yup.object().shape({
     .min(new Date().getFullYear(), 'Year must be current or future'),
   eventDetails: yup.string().required('Event details are required'),
   address1: yup.string().required('Address is required'),
+  address2: yup.string().optional(), // Added missing field
   country: yup.string().required('Country is required'),
   state: yup.string().required('State is required'),
   city: yup.string().required('City is required'),
@@ -84,15 +95,14 @@ const schema = yup.object().shape({
 
 export const Booking: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalContent, setModalContent] = useState('');
+  const modalTitle = ''; // Removed unused setters
+  const modalContent = ''; // Removed unused setters
   const [states, setStates] = useState<string[]>([]);
   const [cities, setCities] = useState<string[]>([]);
 
   const { 
     register, 
     handleSubmit, 
-    control,
     watch,
     setValue,
     reset,
@@ -100,14 +110,15 @@ export const Booking: React.FC = () => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      countryCode: 'US',
-      agreeTerms: false
+      countryCode: 'US' as CountryCode,
+      agreeTerms: false,
+      address2: '' // Added default value
     }
   });
 
-  const country = watch('country');
+  const country = watch('country') as CountryCode;
   const state = watch('state');
-  const countryCode = watch('countryCode');
+  const countryCode = watch('countryCode') as CountryCode;
 
   // Update states when country changes
   useEffect(() => {
@@ -155,20 +166,18 @@ export const Booking: React.FC = () => {
         throw new Error(errorData.message || 'Submission failed');
       }
       
-      const result = await response.json();
-      setModalTitle('Success!');
-      setModalContent(result.message);
-      setIsModalOpen(true);
+      await response.json(); // Removed unused result variable
+      toast.success('Booking submitted successfully! We will contact you shortly.');
       reset();
     } catch (error: any) {
-      setModalTitle('Error');
-      setModalContent(error.message || 'Failed to submit booking. Please try again.');
-      setIsModalOpen(true);
+      toast.error(error.message || 'Failed to submit booking. Please try again.');
     }
   };
 
   return (
     <div className="bg-white min-h-screen overflow-y-auto">
+      <ToastContainer position="top-right" autoClose={5000} />
+      
       <Modal 
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -216,7 +225,18 @@ export const Booking: React.FC = () => {
                 {...register('firstName')}
                 className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
-              {errors.firstName && <p className="text-red-400 text-xs mt-1">{errors.firstName.message}</p>}
+              <AnimatePresence>
+                {errors.firstName && (
+                  <motion.p 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="text-red-400 text-xs mt-1"
+                  >
+                    {errors.firstName.message}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </div>
             <div>
               <label htmlFor="lastName" className="block text-sm robotoMedium mb-1">Last Name</label>
@@ -225,7 +245,18 @@ export const Booking: React.FC = () => {
                 {...register('lastName')}
                 className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
-              {errors.lastName && <p className="text-red-400 text-xs mt-1">{errors.lastName.message}</p>}
+              <AnimatePresence>
+                {errors.lastName && (
+                  <motion.p 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="text-red-400 text-xs mt-1"
+                  >
+                    {errors.lastName.message}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </div>
           </div>
 
@@ -237,7 +268,18 @@ export const Booking: React.FC = () => {
               {...register('email')}
               className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
-            {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}
+            <AnimatePresence>
+              {errors.email && (
+                <motion.p 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-red-400 text-xs mt-1"
+                  >
+                  {errors.email.message}
+                </motion.p>
+              )}
+            </AnimatePresence>
           </div>
 
           <div className="mb-6">
@@ -264,7 +306,18 @@ export const Booking: React.FC = () => {
                 }
               />
             </div>
-            {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone.message}</p>}
+            <AnimatePresence>
+              {errors.phone && (
+                <motion.p 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-red-400 text-xs mt-1"
+                >
+                  {errors.phone.message}
+                </motion.p>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Event Information */}
@@ -278,7 +331,18 @@ export const Booking: React.FC = () => {
               className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
               placeholder="Enter Name of Organization or Host Here"
             />
-            {errors.organization && <p className="text-red-400 text-xs mt-1">{errors.organization.message}</p>}
+            <AnimatePresence>
+              {errors.organization && (
+                <motion.p 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-red-400 text-xs mt-1"
+                >
+                  {errors.organization.message}
+                </motion.p>
+              )}
+            </AnimatePresence>
           </div>
 
           <div className="mb-6">
@@ -296,7 +360,18 @@ export const Booking: React.FC = () => {
                 </label>
               ))}
             </div>
-            {errors.orgType && <p className="text-red-400 text-xs mt-1">{errors.orgType.message}</p>}
+            <AnimatePresence>
+              {errors.orgType && (
+                <motion.p 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-red-400 text-xs mt-1"
+                >
+                  {errors.orgType.message}
+                </motion.p>
+              )}
+            </AnimatePresence>
           </div>
 
           <div className="mb-6">
@@ -314,44 +389,96 @@ export const Booking: React.FC = () => {
                 </label>
               ))}
             </div>
-            {errors.eventType && <p className="text-red-400 text-xs mt-1">{errors.eventType.message}</p>}
+            <AnimatePresence>
+              {errors.eventType && (
+                <motion.p 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-red-400 text-xs mt-1"
+                >
+                  {errors.eventType.message}
+                </motion.p>
+              )}
+            </AnimatePresence>
           </div>
 
           <div className="mb-6">
             <label className="block text-sm robotoMedium mb-1">Date Of Event</label>
             <div className="grid grid-cols-3 gap-2">
-              <select
-                {...register('day')}
-                className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              >
-                <option value="">DD</option>
-                {Array.from({ length: 31 }, (_, i) => (
-                  <option key={i + 1} value={i + 1}>{i + 1}</option>
-                ))}
-              </select>
-              <select
-                {...register('month')}
-                className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              >
-                <option value="">Month</option>
-                {MONTHS.map((month, index) => (
-                  <option key={index} value={month}>{month}</option>
-                ))}
-              </select>
-              <select
-                {...register('year')}
-                className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              >
-                <option value="">YYYY</option>
-                {Array.from({ length: 10 }, (_, i) => {
-                  const year = new Date().getFullYear() + i;
-                  return <option key={year} value={year}>{year}</option>;
-                })}
-              </select>
+              <div>
+                <select
+                  {...register('day')}
+                  className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value="">DD</option>
+                  {Array.from({ length: 31 }, (_, i) => (
+                    <option key={i + 1} value={i + 1}>{i + 1}</option>
+                  ))}
+                </select>
+                <AnimatePresence>
+                  {errors.day && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="text-red-400 text-xs mt-1"
+                    >
+                      {errors.day.message}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </div>
+              
+              <div>
+                <select
+                  {...register('month')}
+                  className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value="">Month</option>
+                  {MONTHS.map((month, index) => (
+                    <option key={index} value={month}>{month}</option>
+                  ))}
+                </select>
+                <AnimatePresence>
+                  {errors.month && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="text-red-400 text-xs mt-1"
+                    >
+                      {errors.month.message}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </div>
+              
+              <div>
+                <select
+                  {...register('year')}
+                  className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value="">YYYY</option>
+                  {Array.from({ length: 10 }, (_, i) => {
+                    const year = new Date().getFullYear() + i;
+                    return <option key={year} value={year}>{year}</option>;
+                  })}
+                </select>
+                <AnimatePresence>
+                  {errors.year && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="text-red-400 text-xs mt-1"
+                    >
+                      {errors.year.message}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
-            {errors.day && <p className="text-red-400 text-xs mt-1">{errors.day.message}</p>}
-            {errors.month && <p className="text-red-400 text-xs mt-1">{errors.month.message}</p>}
-            {errors.year && <p className="text-red-400 text-xs mt-1">{errors.year.message}</p>}
           </div>
 
           <div className="mb-6">
@@ -362,7 +489,18 @@ export const Booking: React.FC = () => {
               rows={5}
               className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
             ></textarea>
-            {errors.eventDetails && <p className="text-red-400 text-xs mt-1">{errors.eventDetails.message}</p>}
+            <AnimatePresence>
+              {errors.eventDetails && (
+                <motion.p 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-red-400 text-xs mt-1"
+                >
+                  {errors.eventDetails.message}
+                </motion.p>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Event Location */}
@@ -376,7 +514,18 @@ export const Booking: React.FC = () => {
                 {...register('address1')}
                 className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
-              {errors.address1 && <p className="text-red-400 text-xs mt-1">{errors.address1.message}</p>}
+              <AnimatePresence>
+                {errors.address1 && (
+                  <motion.p 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="text-red-400 text-xs mt-1"
+                  >
+                    {errors.address1.message}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </div>
             <div>
               <label htmlFor="address2" className="block text-sm robotoMedium mb-1">Address 2</label>
@@ -391,39 +540,80 @@ export const Booking: React.FC = () => {
           <div className="mb-6">
             <label className="block text-sm robotoMedium mb-1">Location</label>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-              <select
-                {...register('country')}
-                className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              >
-                <option value="">Country</option>
-                {Object.keys(COUNTRY_STATE_CITY_DATA).map(country => (
-                  <option key={country} value={country}>{country}</option>
-                ))}
-              </select>
-              <select
-                {...register('state')}
-                className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                disabled={!country}
-              >
-                <option value="">State</option>
-                {states.map(state => (
-                  <option key={state} value={state}>{state}</option>
-                ))}
-              </select>
-              <select
-                {...register('city')}
-                className="px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                disabled={!state}
-              >
-                <option value="">City</option>
-                {cities.map(city => (
-                  <option key={city} value={city}>{city}</option>
-                ))}
-              </select>
+              <div>
+                <select
+                  {...register('country')}
+                  className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value="">Country</option>
+                  {Object.keys(COUNTRY_STATE_CITY_DATA).map(country => (
+                    <option key={country} value={country}>{country}</option>
+                  ))}
+                </select>
+                <AnimatePresence>
+                  {errors.country && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="text-red-400 text-xs mt-1"
+                    >
+                      {errors.country.message}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </div>
+              
+              <div>
+                <select
+                  {...register('state')}
+                  className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  disabled={!country}
+                >
+                  <option value="">State</option>
+                  {states.map(state => (
+                    <option key={state} value={state}>{state}</option>
+                  ))}
+                </select>
+                <AnimatePresence>
+                  {errors.state && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="text-red-400 text-xs mt-1"
+                    >
+                      {errors.state.message}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </div>
+              
+              <div>
+                <select
+                  {...register('city')}
+                  className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  disabled={!state}
+                >
+                  <option value="">City</option>
+                  {cities.map(city => (
+                    <option key={city} value={city}>{city}</option>
+                  ))}
+                </select>
+                <AnimatePresence>
+                  {errors.city && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="text-red-400 text-xs mt-1"
+                    >
+                      {errors.city.message}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
-            {errors.country && <p className="text-red-400 text-xs mt-1">{errors.country.message}</p>}
-            {errors.state && <p className="text-red-400 text-xs mt-1">{errors.state.message}</p>}
-            {errors.city && <p className="text-red-400 text-xs mt-1">{errors.city.message}</p>}
           </div>
 
           <div className="mb-6">
@@ -433,7 +623,18 @@ export const Booking: React.FC = () => {
               {...register('zipCode')}
               className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
-            {errors.zipCode && <p className="text-red-400 text-xs mt-1">{errors.zipCode.message}</p>}
+            <AnimatePresence>
+              {errors.zipCode && (
+                <motion.p 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-red-400 text-xs mt-1"
+                >
+                  {errors.zipCode.message}
+                </motion.p>
+              )}
+            </AnimatePresence>
           </div>
 
           <div className="mb-8 text-sm">
@@ -450,7 +651,18 @@ export const Booking: React.FC = () => {
               />
               <span className="ml-2 robotoMedium">By proceeding, you agree to our Terms of Use and Services.</span>
             </label>
-            {errors.agreeTerms && <p className="text-red-400 text-xs mt-1">{errors.agreeTerms.message}</p>}
+            <AnimatePresence>
+              {errors.agreeTerms && (
+                <motion.p 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-red-400 text-xs mt-1"
+                >
+                  {errors.agreeTerms.message}
+                </motion.p>
+              )}
+            </AnimatePresence>
           </div>
 
           <button 
