@@ -1,14 +1,22 @@
 import  { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-   MusicBan1, 
+import { MusicBan1, 
+  MusicBan2, 
+  MusicBan3, 
   VideoArt,
-  MusicBan7 , 
-  } from '../assets/';
+  music1,
+  music2,
+  music3,
+  music4,
+  music5,
+  music6,
+  music7,
+  music8,
+  music9} from '../assets';
   import { faPlay,
    faChevronLeft,
-   faVideo,
+
     faChevronRight , 
     faTimes
    } from '@fortawesome/free-solid-svg-icons';
@@ -24,19 +32,19 @@ type VideoType = {
   title: string;
   thumbnail: string;
   youtubeId: string;
-  category: 'music' | 'Concerts' | 'Live Recordings';
+  category: 'Music Videos' | 'Visualizers' | 'Live Sessions';
   description: string;
   date: string;
 };
 
 const videos: VideoType[] = [
-  {
+    {
     id: 1,
-    title: 'Lover of my soul Album',
-    thumbnail: MusicBan1,
-    youtubeId: 'ivj5gVeTCJQ',
-    category: 'music',
-    description: 'Official music video for "You Are Our Everything"',
+    title: 'STEP ASIDE. ',
+    thumbnail: music8,
+    youtubeId: '3nvGauo7kjA',
+    category: 'Music Videos',
+    description: 'Song by Min. ClaudyGod',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -45,11 +53,11 @@ const videos: VideoType[] = [
   },
   {
     id: 2,
-    title: 'Step Aside - Lover of my soul(Album)',
-    thumbnail: MusicBan1,
-    youtubeId: 'CSrgybysweE',
-    category: 'music',
-    description: 'Live worship performance of "In His Presence"',
+    title: 'Joyful Alleluia by ClaudyGod',
+    thumbnail: music1,
+    youtubeId: 'ih4SrEgnV60',
+    category: 'Music Videos',
+    description: 'A Gospel Choir Rendition.',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -58,11 +66,11 @@ const videos: VideoType[] = [
   },
   {
     id: 3,
-    title: 'Yahweh is King - Lover of my soul(Album)',
-    thumbnail: MusicBan1,
-    youtubeId: 'VGjSUaUq3F8',
-    category: 'music',
-    description: 'Official music video for "Affirmation"',
+    title: 'Nothing Compares To You',
+    thumbnail: music2,
+    youtubeId: 'Dw5S-jzzboA',
+    category: 'Visualizers',
+    description: 'Official Music Video/Visualizer',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -72,9 +80,22 @@ const videos: VideoType[] = [
   {
     id: 4,
     title: 'Love Me So Much - Lover of my soul(Album)',
-    thumbnail: MusicBan1,
+    thumbnail: music4,
     youtubeId: 'YPJj0HonZb0',
-    category: 'Concerts',
+    category: 'Live Sessions',
+    description: 'Full Sunday worship service with special ministry',
+    date: new Date().toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })
+  },
+  {
+    id: 4,
+    title: 'Love Me So Much - Lover of my soul(Album)',
+    thumbnail: music5,
+    youtubeId: 'YPJj0HonZb0',
+    category: 'Live Sessions',
     description: 'Full Sunday worship service with special ministry',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -85,9 +106,9 @@ const videos: VideoType[] = [
   {
     id: 5,
     title: 'Thank You (Midnight Cry) - Lover of my soul(Album)',
-    thumbnail: MusicBan1,
+    thumbnail: music6,
     youtubeId: '4i97iBmNnUA',
-    category: 'Live Recordings',
+    category: 'Visualizers',
     description: 'Personal testimony about God\'s grace and mercy',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -97,11 +118,11 @@ const videos: VideoType[] = [
   },
   {
     id: 6,
-    title: 'I Love You Lord - Lover of my Soul',
-    thumbnail: MusicBan1,
-    youtubeId: 'JCLMwST1lSg',
-    category: 'Live Recordings',
-    description: 'Worship Experience',
+    title: `It's A New Day (Thank You For Today) '`,
+    thumbnail: music2,
+    youtubeId: 'Ak0LZgfHMa0',
+    category: 'Music Videos',
+    description: 'Music by ClaudyGOD. Official Music Video.',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -111,9 +132,9 @@ const videos: VideoType[] = [
   {
     id: 7,
     title: 'King of Heaven - King of Heaven Album',
-    thumbnail: VideoArt,
+    thumbnail: music7,
     youtubeId: 'W_Gfia-R3Ec',
-    category: 'music',
+    category: 'Live Sessions',
     description: 'Official music video for "You Are Our Everything"',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -123,11 +144,11 @@ const videos: VideoType[] = [
   },
   {
     id: 8,
-    title: 'There All the Time - King of Heaven Album',
-    thumbnail: VideoArt,
+    title: 'LOVE ME SO MUCH🌺🌺',
+    thumbnail: music8,
     youtubeId: 'ZxOV4PVLc1U',
-    category: 'music',
-    description: 'Live worship performance of "In His Presence"',
+    category: 'Music Videos',
+    description: 'Official Music Video',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -137,9 +158,9 @@ const videos: VideoType[] = [
   {
     id: 9,
     title: 'Good To Me - King of heaven Album',
-    thumbnail: VideoArt,
+    thumbnail: music9,
     youtubeId: 'NmKvR1hVc5M',
-    category: 'music',
+  category: 'Live Sessions',
     description: 'Live Worship Session with ClaudyGod',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -150,9 +171,9 @@ const videos: VideoType[] = [
   {
     id: 10,
     title: 'King of the Nations - King of Heaven Album',
-    thumbnail: VideoArt,
+    thumbnail: music4,
     youtubeId: 'WfiL2fUF-8g',
-    category: 'Concerts',
+    category: 'Visualizers',
     description: 'Full Sunday worship service with special ministry',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -163,9 +184,9 @@ const videos: VideoType[] = [
   {
     id: 11,
     title: 'Forever God (Dwelling Place) - King of Heaven Album',
-    thumbnail: VideoArt,
+    thumbnail: music5,
     youtubeId: '1PjlO2sNyKk',
-    category: 'Live Recordings',
+    category: 'Live Sessions',
     description: 'Personal testimony about God\'s grace and mercy',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -175,11 +196,11 @@ const videos: VideoType[] = [
   },
   {
     id: 12,
-    title: 'Good Lord(Job Tell me) - King of Heavens Album',
-    thumbnail: VideoArt,
-    youtubeId: 'pjCP5bOzbm4',
-    category: 'Live Recordings',
-    description: 'Worship Experience',
+    title: 'All of Me',
+    thumbnail: music7,
+    youtubeId: 'L-AVa2qC5Ic',
+    category: 'Visualizers',
+    description: 'Official Music Video',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -189,9 +210,9 @@ const videos: VideoType[] = [
   {
     id: 13,
     title: 'Affirmation - Affirmation Album',
-    thumbnail: MusicBan7,
+    thumbnail: music6,
     youtubeId: 'elAVI2DDGCM',
-    category: 'music',
+    category: 'Live Sessions',
     description: 'Official music video for "You Are Our Everything"',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -201,11 +222,11 @@ const videos: VideoType[] = [
   },
   {
     id: 14,
-    title: 'We would Reign - LWe would Reign Album (Album)',
-    thumbnail: MusicBan7,
-    youtubeId: 's7XLwfhVSC0',
-    category: 'music',
-    description: 'Live worship performance of "In His Presence"',
+    title: 'Look to You',
+    thumbnail: music7,
+    youtubeId: '7BN7i4puuis',
+    category: 'Visualizers',
+    description: 'official Visualizer/Music Videos"',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -214,11 +235,11 @@ const videos: VideoType[] = [
   },
   {
     id: 15,
-    title: 'Spirit Born Thanks - Spirit Born Album',
-    thumbnail: MusicBan7,
-    youtubeId: 'ZQvvu4Dt9LA',
-    category: 'music',
-    description: 'Official music video for "Affirmation"',
+    title: 'Lover of my Soul',
+    thumbnail: music8,
+    youtubeId: 'lrKaURkswT0',
+    category: 'Visualizers',
+    description: 'Official Visualizers / Music Videos"',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -228,9 +249,9 @@ const videos: VideoType[] = [
   {
     id: 16,
     title: 'You Are Our Everything - You are our Everything Album',
-    thumbnail: MusicBan7,
+    thumbnail: music9,
     youtubeId: 'fK_tCBcnqGs',
-    category: 'Concerts',
+    category: 'Live Sessions',
     description: 'Full Sunday worship service with special ministry',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -240,11 +261,11 @@ const videos: VideoType[] = [
   },
   {
     id: 17,
-    title: 'I SEE YA - Gospel Rhyme',
-    thumbnail: MusicBan7,
+    title: 'Affirmation by ClaudyGod',
+    thumbnail: music7,
     youtubeId: 'Y-U4IvvnNTo',
-    category: 'Live Recordings',
-    description: 'Personal testimony about God\'s grace and mercy',
+    category: 'Music Videos',
+    description: 'Official Music Video',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -254,9 +275,9 @@ const videos: VideoType[] = [
   {
     id: 18,
     title: 'O Holy Night - Claudy God Album',
-    thumbnail: MusicBan7,
+    thumbnail: music5,
     youtubeId: 'oBRS1Uod3X8',
-    category: 'Live Recordings',
+    category: 'Live Sessions',
     description: 'Worship Experience',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -328,6 +349,7 @@ const VideoPlayerModal: React.FC<{
     </div>
   );
 };
+
 const PaginationControls: React.FC<{
   currentPage: number;
   totalPages: number;
@@ -369,11 +391,11 @@ const PaginationControls: React.FC<{
 };
 
 export const VideosData: React.FC = () => {
- const [activeCategory] = useState<'all' | 'music' | 'Concerts' | 'Live Recordings'>('all');
+  const [activeCategory, setActiveCategory] = useState<'All' | 'Music Videos' | 'Visualizers' | 'Live Sessions'>('All');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
 
-  const filteredVideos = activeCategory === 'all' 
+  const filteredVideos = activeCategory === 'All' 
     ? videos 
     : videos.filter(video => video.category === activeCategory);
 
@@ -390,44 +412,43 @@ export const VideosData: React.FC = () => {
         onClose={() => setSelectedVideoId(null)} 
       />
       
-      {/* Rest of your existing layout */}
-        <section className="pt-32 pb-20 bg-purple-900 text-white">
-          <div className="container mx-auto px-4">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <h1 className="text-4xl md:text-5xl roboto-condensed mb-6">Videos</h1>
-              <div className="w-20 h-1 bg-white mb-8"></div>
-              <p className="text-xl max-w-2xl raleway-medium text-20">Watch our Latest Music Videos, Live Recordings and Concerts </p>
-            </motion.div>
-          </div>
-        </section>
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 bg-purple-900 text-white">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className="text-4xl md:text-5xl roboto-condensed mb-6">Videos</h1>
+            <div className="w-20 h-1 bg-white mb-8"></div>
+            <p className="text-xl max-w-2xl raleway-medium text-20">Watch our Latest Music Videos, Visualizers and Live Sessions </p>
+          </motion.div>
+        </div>
+      </section>
 
       <div className="pt-24">
         <div className="container mx-auto px-4 md:px-8 py-16">
-          {/* Category buttons */}
+          {/* Centered Category Buttons */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
-          <div className="relative group">
-  <a href="#videos-section" className="flex flex-col items-center justify-center bg-purple-900 border-2 border-purple-900 rounded-full w-45 h-45 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-    {/* Bounce animation container */}
-    <motion.div 
-      animate={{ y: [-5, 5, -5] }}
-      transition={{ duration: 1.5, repeat: Infinity }}
-      className="text-center"
-    >
-      <h1 className="text-gray-300 roboto-condensed text-2xl mb-2">Latest Videos</h1>
-      <FontAwesomeIcon 
-        icon={faVideo} 
-        className="text-red-600 text-4xl animate-pulse"
-      />
-    </motion.div>
-  </a>
-  
-  {/* Subtle background pulse effect */}
-  <div className="absolute inset-0 rounded-full border-2 border-purple-200 opacity-0 group-hover:opacity-100 group-hover:animate-ping w-40 h-40 -z-10"></div>
-</div>
+            {(['All', 'Music Videos', 'Visualizers', 'Live Sessions'] as const).map((category) => (
+              <motion.button
+                key={category}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  setActiveCategory(category);
+                  setCurrentPage(1);
+                }}
+                className={`px-6 py-3 rounded-full text-lg font-medium transition-colors ${
+                  activeCategory === category
+                    ? 'bg-purple-900 text-white'
+                    : 'bg-gray-200 text-gray-700 hover:bg-purple-200'
+                }`}
+              >
+                {category}
+              </motion.button>
+            ))}
           </div>
 
           {/* Video grid */}
@@ -450,9 +471,8 @@ export const VideosData: React.FC = () => {
       </div>
 
       <hr className="h-px w-full bg-purple-900 border-0 mt-4" />
-         <AudioMackComponent />
+      <AudioMackComponent />
       <NewsletterForm />
     </div>
   );
 };
-

@@ -7,16 +7,22 @@ import { CityTourModal } from '../components/CityTourModal';
 import {
   faMusic,
   faGlobeAfrica,
+  faRecordVinyl,
+  faCalendarAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faYoutube,
-
+  faSpotify,
+  faApple,
+  faDeezer,
+  faSoundcloud,
+  faTiktok
 } from '@fortawesome/free-brands-svg-icons';
 
 export const News = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-   const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
 
   const slides = [
     {
@@ -179,186 +185,181 @@ export const News = () => {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="text-lg md:text-xl work-sans text-[#72709e] max-w-3xl mx-auto"
           >
-            Massive announcement: We have 3 new heartfelt single albums, and an epic Nigerian tour coming
+           Massive Announcement!
+We’ve got big things happening:
+🎤 1 Nigerian tour coming soon
+🎶 3 new albums out now — Very Glorious, King of Heaven, Lover of My Soul
+💿 New single — You're Everything is live!
+📺 Plus, live session videos dropping soon
           </motion.p>
         </div>
 
         {/* News Cards - Corrected 2-column layout */}
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 mb-16">
           {/* First Column - Vertical Stack */}
-     <div className="md:w-1/2 flex flex-col gap-8">
-  {/* Box 1 */}
-  <motion.div 
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: 0.2 }}
-    className="bg-[#140f3c]/80 backdrop-blur-sm border border-[#6a11cb]/30 rounded-2xl overflow-hidden shadow-xl hover:shadow-[#ff4d94]/30 transition-all duration-300 hover:-translate-y-2"
-  >
-    <div className="flex flex-col md:flex-row">
-      {/* Image Column */}
-      <div className="md:w-2/5 flex items-center justify-center p-6 bg-gradient-to-br from-[#0a061a] to-[#1a0a2e]">
-        <div className="relative w-full h-48 md:h-full">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#ff4d94] to-[#6a11cb] opacity-20 rounded-xl"></div>
-          <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-full flex items-center justify-center">
-          <img 
-  src={Cover} 
-  alt="Description" 
-  className="w-full h-full object-cover rounded-xl"
-/>
-          </div>
-        </div>
-      </div>
-      
-      {/* Content Column */}
-      <div className="md:w-3/5 p-6">
-        <div className="text-center mb-4">
-          <h3 className="text-sm roboto-condensed mb-2 bg-clip-text text-transparent text-white">
-            You Are Our Everything
-          </h3>
-        <p className="text-gray-300 mb-4 text-xs work-sans">
-            Intimate worship session with Min. ClaudyGod and the Worship team.
-          </p>
-          
-          <a 
-            href="https://youtu.be/fK_tCBcnqGs?si=9oGrwcfKbQygHGVp" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-block w-full"
-          >
-            <button className="w-full py-2.5 bg-gradient-to-r
-             from-[#FA233B] to-[#FD3B4F] hover:from-[#FD3B4F] hover:to-[#FA233B] 
-             text-white raleway-medium rounded-lg flex items-center justify-center transition-all
-              hover:scale-[1.02] transform cursor-pointer">
-              <FontAwesomeIcon icon={faYoutube} className="mr-2" /> 
-              Watch on YouTube
-            </button>
-          </a>
-        </div>
-      </div>
-    </div>
-  </motion.div>
+          <div className="md:w-1/2 flex flex-col gap-8">
+            {/* New Singles Card */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="bg-[#140f3c]/80 backdrop-blur-sm border border-[#6a11cb]/30 rounded-2xl overflow-hidden shadow-xl hover:shadow-[#ff4d94]/30 transition-all duration-300 hover:-translate-y-2"
+            >
+              <div className="flex flex-col md:flex-row">
+                {/* Image Column */}
+                <div className="md:w-2/5 flex items-center justify-center p-6 bg-gradient-to-br from-[#0a061a] to-[#1a0a2e]">
+                  <div className="relative w-full h-48 md:h-full">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#ff4d94] to-[#6a11cb] opacity-20 rounded-xl"></div>
+                    <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-full flex items-center justify-center">
+                      <img 
+                        src={Cover} 
+                        alt="You Are Our Everything" 
+                        className="w-full h-full object-cover rounded-xl"
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Content Column */}
+                <div className="md:w-3/5 p-6">
+                  <div className="mb-4">
+                    <h3 className="text-xl roboto-condensed mb-4 text-white text-center">
+                      New Singles out: You Are Our Everything
+                    </h3>
+                    
+                    <div className="grid grid-cols-2 gap-3">
+                      {[
+                        { icon: faSpotify, name: 'Spotify', color: '#1DB954' },
+                        { icon: faApple, name: 'Apple Music', color: '#FF2D55' },
+                        { icon: faYoutube, name: 'YouTube', color: '#FF0000' },
+                        { icon: faDeezer, name: 'Deezer', color: '#FEAA2D' },
+                        { icon: faSoundcloud, name: 'SoundCloud', color: '#FF7700' },
+                        { icon: faTiktok, name: 'TikTok', color: '#000000' },
+                      ].map((platform, idx) => (
+                        <a 
+                          key={idx}
+                          href="#" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="inline-block w-full"
+                        >
+                          <button 
+                            className="w-full py-2.5 rounded-lg flex items-center justify-center transition-all hover:scale-[1.02] transform cursor-pointer"
+                            style={{ backgroundColor: platform.color }}
+                          >
+                            <FontAwesomeIcon icon={platform.icon} className="mr-2 text-white" /> 
+                            <span className="text-white text-xs">{platform.name}</span>
+                          </button>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
 
-  {/* Box 2 */}
-  <motion.div 
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: 0.4 }}
-    className="bg-[#140f3c]/80 backdrop-blur-sm border border-[#6a11cb]/30 rounded-2xl overflow-hidden shadow-xl hover:shadow-[#ff4d94]/30 transition-all duration-300 hover:-translate-y-2"
-  >
-    <div className="flex flex-col md:flex-row">
-      {/* Image Column */}
-      <div className="md:w-2/5 flex items-center justify-center p-6 bg-gradient-to-br from-[#0a061a] to-[#1a0a2e]">
-        <div className="relative w-full h-48 md:h-full">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#ff4d94] to-[#6a11cb] opacity-20 rounded-xl"></div>
-          <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-full flex items-center justify-center">
-            <FontAwesomeIcon icon={faMusic} className="text-5xl text-[#ff4d94]" />
-          </div>
-        </div>
-      </div>
-      
-      {/* Content Column */}
-      <div className="md:w-3/5 p-6">
-        <div className="text-center mb-4">
-          <h3 className="text-sm roboto-condensed mb-2 bg-clip-text text-white">
-            Very Glorious - Live Recording( Angel Inspired)
-          </h3>
-          <p className="text-gray-300 mb-4 text-xs work-sans">
-            Intimate worship session with Min. ClaudyGod and the Worship team.
-          </p>
-          
-          <a 
-            href="https://youtu.be/xY4508hwPfw?si=mlJ8nGzfVZjM0-0k" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-block w-full"
-          >
-             <button className="w-full py-2.5 bg-gradient-to-r from-[#FA233B]
-              to-[#FD3B4F] hover:from-[#FD3B4F] hover:to-[#FA233B] text-white 
-              raleway-medium rounded-lg flex items-center justify-center transition-all
-               hover:scale-[1.02] transform cursor-pointer">
-              <FontAwesomeIcon icon={faYoutube} className="mr-2" /> 
-              Watch on YouTube
-            </button>
-          </a>
-        </div>
-      </div>
-    </div>
-  </motion.div>
+            {/* New Albums Card */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="bg-[#140f3c]/80 backdrop-blur-sm border border-[#6a11cb]/30 rounded-2xl overflow-hidden shadow-xl hover:shadow-[#ff4d94]/30 transition-all duration-300 hover:-translate-y-2"
+            >
+              <div className="flex flex-col md:flex-row">
+                {/* Icon Column */}
+                <div className="md:w-1/4 flex items-center justify-center p-6 bg-gradient-to-br from-[#0a061a] to-[#1a0a2e]">
+                  <FontAwesomeIcon icon={faRecordVinyl} className="text-5xl text-[#ff4d94]" />
+                </div>
+                
+                {/* Content Column */}
+                <div className="md:w-3/4 p-6">
+                  <div className="mb-4">
+                    <h3 className="text-xl roboto-condensed mb-2 text-white">
+                      3 New Albums Out Now
+                    </h3>
+                    <ul className="space-y-2 text-gray-300 work-sans">
+                      <li className="flex items-center">
+                        <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                        Very Glorious
+                      </li>
+                      <li className="flex items-center">
+                        <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                        King of Heaven
+                      </li>
+                      <li className="flex items-center">
+                        <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                        Lover of My Soul
+                      </li>
+                    </ul>
+                    <button className="mt-4 w-full py-2.5 bg-gradient-to-r from-[#6a11cb] to-[#2575fc] text-white raleway-medium rounded-lg hover:opacity-90 transition-all">
+                      Listen on All Platforms
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
 
-  {/* Box 3 */}
-  <motion.div 
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: 0.6 }}
-    className="bg-[#140f3c]/80 backdrop-blur-sm border border-[#6a11cb]/30 rounded-2xl overflow-hidden shadow-xl hover:shadow-[#ff4d94]/30 transition-all duration-300 hover:-translate-y-2"
-  >
-    <div className="flex flex-col md:flex-row">
-      {/* Image Column */}
-      <div className="md:w-2/5 flex items-center justify-center p-6 bg-gradient-to-br from-[#0a061a] to-[#1a0a2e]">
-        <div className="relative w-full h-48 md:h-full">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#ff4d94] to-[#6a11cb] opacity-20 rounded-xl"></div>
-          <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-full flex items-center justify-center">
-            <FontAwesomeIcon icon={faMusic} className="text-5xl text-[#ff4d94]" />
-          </div>
-        </div>
-      </div>
-      
-      {/* Content Column */}
-      <div className="md:w-3/5 p-6">
-        <div className="text-center mb-4">
-             <h3 className="text-sm roboto-condensed mb-2 bg-clip-text text-white">
-           I Love you Lord - Min. ClaudyGod
-          </h3>
-          <p className="text-gray-300 mb-4 text-xs work-sans">
-            Intimate worship session with Min. ClaudyGod and the Worship team.
-          </p>
-          
-          <a 
-            href="https://youtu.be/SqaOeGLDPLY?si=hS0mN-lkXEV7qyIz" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-block w-full"
-          >
-            <button className="w-full py-2.5 bg-gradient-to-r from-[#FA233B] 
-            to-[#FD3B4F] hover:from-[#FD3B4F] hover:to-[#FA233B]
-             text-white raleway-medium rounded-lg flex items-center cursor-pointer
-             justify-center transition-all hover:scale-[1.02] transform">
-              <FontAwesomeIcon icon={faYoutube} className="mr-2" /> 
-              Watch on YouTube
-            </button>
-          </a>
-        </div>
-      </div>
-    </div>
-  </motion.div>
-</div>
-           
-
-            {/* Card 3: Nigeria Tour */}
-        {/* Card 3: Nigeria Tour */}
-<motion.div 
+            {/* Live Session Card */}
+            <motion.div 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
               className="bg-[#140f3c]/80 backdrop-blur-sm border border-[#6a11cb]/30 rounded-2xl overflow-hidden shadow-xl hover:shadow-[#ff4d94]/30 transition-all duration-300 hover:-translate-y-2"
             >
+              <div className="flex flex-col md:flex-row">
+                {/* Icon Column */}
+                <div className="md:w-1/4 flex items-center justify-center p-6 bg-gradient-to-br from-[#0a061a] to-[#1a0a2e]">
+                  <FontAwesomeIcon icon={faCalendarAlt} className="text-5xl text-[#ff4d94]" />
+                </div>
+                
+                {/* Content Column */}
+                <div className="md:w-3/4 p-6">
+                  <div className="mb-4">
+                    <h3 className="text-xl roboto-condensed mb-2 text-white">
+                      Live Session Coming Soon
+                    </h3>
+                    <p className="text-gray-300 work-sans mb-4">
+                      Intimate worship session with Min. ClaudyGod and the Worship team. Watch this space for updates!
+                    </p>
+                    <div className="flex space-x-3">
+                      <div className="flex-1 bg-gray-800 rounded-lg h-32 flex items-center justify-center">
+                        <span className="text-gray-400">Teaser Coming Soon</span>
+                      </div>
+                      <div className="flex-1 bg-gray-800 rounded-lg h-32 flex items-center justify-center">
+                        <span className="text-gray-400">Behind the Scenes</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+           
+          {/* Second Column - Nigeria Tour */}
+          <div className="md:w-1/2">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="bg-[#140f3c]/80 backdrop-blur-sm border border-[#6a11cb]/30 rounded-2xl overflow-hidden shadow-xl hover:shadow-[#ff4d94]/30 transition-all duration-300 hover:-translate-y-2 h-full"
+            >
               <div className="p-6 bg-gradient-to-r from-[#6a11cb]/30 to-[#ff4d94]/30 border-b border-[#6a11cb]/30">
                 <div className="flex items-center mb-4">
                   <FontAwesomeIcon icon={faGlobeAfrica} className="text-3xl text-[#5c4b61] mr-3" />
-                  <h2 className="text-2xl roboto-condensed">Nigeria Tour: "You Are Our Everything Music Tour"</h2>
+                  <h2 className="text-2xl roboto-condensed">Musical tour in Nigeria</h2>
                 </div>
               </div>
               
               <div className="p-6 space-y-4">
                 {['Lagos', 'Abuja', 'Port Harcourt', 'Aba', 'Owerri'].map((city) => (
-  <div 
-    key={city} 
-    onClick={() => setSelectedCity(city)}
-    className="bg-gradient-to-r from-[#0a061a] to-[#1a0a2e] p-4 rounded-xl border work-sans border-[#4e2a8e] cursor-pointer hover:border-[#c77dff] transition-colors"
-  >
-    <h3 className="font-bold text-lg text-[#d1d1d1]">{city}</h3>
-  </div>
-))}
+                  <div 
+                    key={city} 
+                    onClick={() => setSelectedCity(city)}
+                    className="bg-gradient-to-r from-[#0a061a] to-[#1a0a2e] p-4 rounded-xl border work-sans border-[#4e2a8e] cursor-pointer hover:border-[#c77dff] transition-colors"
+                  >
+                    <h3 className="font-bold text-lg text-[#d1d1d1]">{city}</h3>
+                  </div>
+                ))}
                 
                 <div className="pt-2">
                   <p className="italic text-gray-400">
@@ -368,11 +369,9 @@ export const News = () => {
               </div>
             </motion.div>
           </div>
-
-      
         </div>
 
-        {/* Artist Quote - Now correctly placed below cards */}
+        {/* Artist Quote */}
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -390,13 +389,15 @@ export const News = () => {
           </div>
         </motion.div>
     
- <CityTourModal 
-        city={selectedCity || ''} 
-        isOpen={Boolean(selectedCity)} 
-        onClose={() => setSelectedCity(null)} 
-      />
-      <hr className="bg-purple-500" />
-      <NewsletterForm />
+        <CityTourModal 
+          city={selectedCity || ''} 
+          isOpen={Boolean(selectedCity)} 
+          onClose={() => setSelectedCity(null)} 
+        />
+        
+        <hr className="bg-purple-500" />
+        <NewsletterForm />
+      </div>
     </>
   );
 };

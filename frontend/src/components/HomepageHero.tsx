@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-
 import { motion, AnimatePresence } from 'framer-motion';
-import { Resize5, Back3, Resize4 , bgresize } from '../assets/';
+import { Resize5, Back3, Resize4, bgresize } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faPlayCircle, 
@@ -51,11 +50,10 @@ const heroSlides: HeroSlide[] = [
         { name: 'Spotify', icon: faMusic, url: 'https://open.spotify.com/album/2MY5xlrYfuvKXaYfdB5v2A?referral=labelaffiliate&utm_source=1101lBmnzTP8&utm_medium=Indie_CDBaby&utm_campaign=labelaffiliate' },
         { name: 'Apple Music', icon: faPodcast, url: 'https://music.apple.com/ng/album/very-glorious/1789665669' },
         { name: 'YouTube Music', icon: faVideo, url: 'https://youtube.com/@claudygodministries?si=6Ne99tTC48Ihv44s' },
-       // Fix the array syntax in your platform list:
-    { name: 'Itunes', icon: faVideo, url: 'https://music.apple.com/ng/album/very-glorious/1789665669' },
+        { name: 'Itunes', icon: faVideo, url: 'https://music.apple.com/ng/album/very-glorious/1789665669' },
         { name: 'Deezer', icon: faNewspaper, url: 'https://www.deezer.com/us/album/695949191' },
-         { name: 'Foundit', icon: faNewspaper, url: 'https://found.ee/gPjnZa' },
-       { name: 'Amazon', icon: faNewspaper, url: 'https://music.amazon.com/albums/B0DSM7QGLF?tag=fndcmpgns-20' },
+        { name: 'Foundit', icon: faNewspaper, url: 'https://found.ee/gPjnZa' },
+        { name: 'Amazon', icon: faNewspaper, url: 'https://music.amazon.com/albums/B0DSM7QGLF?tag=fndcmpgns-20' },
       ]
     }
   },
@@ -145,7 +143,7 @@ export const Hero: React.FC = () => {
             exit="exit"
             className="absolute inset-0 h-full w-full"
           >
-            {/* Background Image */}
+            {/* Background Image with enhanced dark gradient */}
             <motion.div
               variants={imageVariants}
               initial="hidden"
@@ -157,7 +155,8 @@ export const Hero: React.FC = () => {
                 alt="Background"
                 className="h-full w-full object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+              {/* Dark gradient overlay - much darker and more prominent */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-black/70" />
             </motion.div>
 
             {/* Content Container */}
@@ -179,169 +178,113 @@ export const Hero: React.FC = () => {
 <motion.h1 
   variants={textVariants}
   className="
-    /* Mobile-first styles (default) */
-sm:text-xl
+    sm:text-xl
     sm:leading-4 
-  relative
+    relative
     top-20
     w-full 
     px-4 
     text-white
     text-left 
     roboto-condensed
-
-    /* Desktop styles override from md and above */
     md:text-5xl
     md:leading-tight 
     md:mb-6 
     md:px-0
-
-
     md:text-white"
 >
   {slide.content?.quote}
 </motion.h1>
 
-
-                    <motion.p 
+<motion.p 
   variants={textVariants}
   className="
-    /* Mobile-first styles */
     text-base 
     italic 
     text-green-500 
     text-left 
     relative 
-   top-22
-   left-5
-
-    /* Desktop overrides */
+    top-22
+    left-5
     md:text-2xl 
     md:text-purple-300 
-    md:top-20
-  "
+    md:top-20"
 >
   {slide.content?.reference}
 </motion.p>
-
 
 {slide.id === 1 && (
   <motion.div 
     variants={textVariants}
     className="
-      /* Desktop layout */
       md:flex md:flex-row md:items-center md:gap-6
-      
-      /* Mobile layout */
-      max-md:flex max-md:flex-col
-       max-md:items-center max-md:gap-4
-    "
+      max-md:flex max-md:flex-col max-md:items-center max-md:gap-4"
   >
-
-    
-    {/* Button & Text Container */}
     <div className="
-      /* Desktop styling */
-      md:flex md:flex-col  md:mt-25 md:items-center md:gap-2
-      
-      /* Mobile styling */
-      max-md:flex max-md:flex-col  max-md:mt-25 max-md:mr-90 max-md:items-center max-md:gap-3
-    ">
+      md:flex md:flex-col md:mt-25 md:items-center md:gap-2
+      max-md:flex max-md:flex-col max-md:mt-25 max-md:mr-90 max-md:items-center max-md:gap-3"
+    >
       <motion.button
         whileHover={{ scale: 1.1 }}
         className="
-          /* Desktop button */
           md:rounded-full md:bg-white/20 md:p-4 md:backdrop-blur-sm
-          
-          /* Mobile button */
           max-md:rounded-full max-md:bg-white/20 max-md:p-3 max-md:backdrop-blur-sm
-          
-          /* Shared hover */
-          hover:bg-white/30 transition-all
-        "
+          hover:bg-white/30 transition-all"
       >
         <FontAwesomeIcon 
           icon={faPlayCircle} 
-          className=" cursor-pointer
-            /* Desktop icon */
+          className="cursor-pointer
             md:text-3xl md:text-purple-400
-            
-            /* Mobile icon */
-            max-md:text-2xl max-md:text-purple-400
-          " 
+            max-md:text-2xl max-md:text-purple-400" 
         />
       </motion.button>
       
       <h3 className="
-        /* Desktop text */
         md:text-lg md:text-white md:font-medium md:tracking-wider
-        
-        /* Mobile text */
-        max-md:text-base max-md:text-white max-md:font-medium max-md:tracking-normal
-      ">
+        max-md:text-base max-md:text-white max-md:font-medium max-md:tracking-normal"
+      >
         Play Now
       </h3>
     </div>
   </motion.div>
 )}
-
                   </>
                 )}
 
 {slide.type === 'cta' && (
   <>
-    {/* Text Container */}
-   <motion.div
+    <motion.div
   variants={textVariants}
   className="
-    /* Mobile styling */
-    max-md:flex max-md:flex-col  
-    max-md:items-start max-md:gap-2  
-    max-md:mb-6
-
-    /* Desktop styling */
-    md:flex md:flex-col md:items-start md:gap-4 
-    md:mb-12 roboto-condensed
-  "
+    max-md:flex max-md:flex-col max-md:items-start max-md:gap-2 max-md:mb-6
+    md:flex md:flex-col md:items-start md:gap-4 md:mb-12 roboto-condensed"
 >
       <span className="
-        /* Mobile */
         max-md:text-3xl raleway-medium max-md:leading-tight
-        
-        /* Desktop */
-        md:text-6xl roboto-condensed md:leading-tighter lg:text-7xl
-      ">
+        md:text-6xl roboto-condensed md:leading-tighter lg:text-7xl"
+      >
         Want to Bring 
       </span>
       
       <span className="
-        /* Mobile */
         max-md:text-purple-400 max-md:text-3xl max-md:leading-tight
-        
-        /* Desktop */
-        md:text-purple-400 work-sans md:text-6xl md:leading-tighter lg:text-7xl
-      ">
+        md:text-purple-400 work-sans md:text-6xl md:leading-tighter lg:text-7xl"
+      >
         ClaudyGod Live
       </span>
       
       <span className="
-        /* Mobile */
         max-md:text-white max-md:text-3xl max-md:leading-tight roboto-condensed
-        
-        /* Desktop */
-        md:text-white  md:text-6xl md:leading-tighter lg:text-7xl raleway-medium
-      ">
+        md:text-white md:text-6xl md:leading-tighter lg:text-7xl raleway-medium"
+      >
         To your City?
       </span>
     </motion.div>
 
-    {/* Button */}
     <motion.button
       variants={textVariants}
       whileHover={{ 
-        /* Mobile hover remains default */
         scale: 1.05, 
-        /* Desktop-enhanced hover */
         boxShadow: '0px 4px 30px rgba(128, 0, 255, 0.4)'
       }}
       whileTap={{ 
@@ -350,14 +293,8 @@ sm:text-xl
       }}
       onClick={() => navigate('/bookings')}
       className="
-        /* Mobile styling */
-        max-md:relative max-md:rounded-full max-md:bg-purple-900 
-        max-md:px-6 cursor-pointer max-md:py-3 max-md:text-lg work-sans
-        
-        /* Desktop styling */
-        md:relative cursor-pointer md:rounded-full md:bg-purple-900 
-        md:px-14 md:py-6 md:text-3xl
-      "
+        max-md:relative max-md:rounded-full max-md:bg-purple-900 max-md:px-6 cursor-pointer max-md:py-3 max-md:text-lg work-sans
+        md:relative cursor-pointer md:rounded-full md:bg-purple-900 md:px-14 md:py-6 md:text-3xl"
     >
       <motion.span
         className="absolute inset-0 bg-white/20 opacity-0 rounded-full"
@@ -378,14 +315,8 @@ sm:text-xl
                     <motion.h2 
   variants={textVariants}
   className="
-    /* Mobile styling */
-    max-md:text-4xl max-md:font-bold max-md:raleway-medium 
-    max-md:mb-6 max-md:leading-tight max-md:mt-30
-    
-    /* Desktop styling */
-    md:text-6xl md:font-bold md:roboto-condensed 
-    md:mb-8 md:leading-tighter
-  "
+    max-md:text-4xl max-md:font-bold max-md:raleway-medium max-md:mb-6 max-md:leading-tight max-md:mt-30
+    md:text-6xl md:font-bold md:roboto-condensed md:mb-8 md:leading-tighter"
 >
   MUSIC
 </motion.h2>
@@ -396,25 +327,16 @@ sm:text-xl
                         className="space-y-6"
                       >
                         <h3 className="
-  /* Mobile styling */
-  max-md:text-2xl max-md:font-normal max-md:italic max-md:text-purple-300
-  max-md:mb-3
-  
-  /* Desktop styling */
-  md:text-4xl md:font-light md:italic md:text-purple-300 md:mb-4
-">
+  max-md:text-2xl max-md:font-normal max-md:italic max-md:text-purple-300 max-md:mb-3
+  md:text-4xl md:font-light md:italic md:text-purple-300 md:mb-4"
+>
   {slide.content?.listenText}
 </h3>
 
 <p className="
-  /* Mobile styling */
-  max-md:text-base max-md:text-white/80 max-md:max-w-md
-  max-md:leading-relaxed
-  
-  /* Desktop styling */
-  md:text-xl md:text-white/80 md:max-w-2xl
-  md:leading-snug
-">
+  max-md:text-base max-md:text-white/80 max-md:max-w-md max-md:leading-relaxed
+  md:text-xl md:text-white/80 md:max-w-2xl md:leading-snug"
+>
   Dive into spiritual worship through sacred melodies that uplift the soul and glorify His name
 </p>
                       </motion.div>
@@ -473,8 +395,6 @@ sm:text-xl
     </motion.a>
   ))}
 </div>
-
-
                       </div>
                     </motion.div>
                   </div>
@@ -483,7 +403,7 @@ sm:text-xl
             </div>
 
             {/* Pagination Dots */}
-                   <div className="absolute bottom-4 md:bottom-8 left-1/2 z-30 flex -translate-x-1/2 items-center gap-1 md:gap-2">
+            <div className="absolute bottom-4 md:bottom-8 left-1/2 z-30 flex -translate-x-1/2 items-center gap-1 md:gap-2">
               {heroSlides.map((_, i) => (
                 <motion.div
                   key={i}

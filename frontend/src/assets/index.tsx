@@ -39,6 +39,15 @@ import musicCover5 from './musicCoverArt6.jpg'
 import MusicBan1 from './MusicBanner1.webp'
 import MusicBan2 from './MusicBanner2.webp'
 import MusicBan3 from './MusicBanner3.webp'
+import music1 from './joyfulA.jpg'
+import music2 from './newDay.jpg'
+import music3 from './mucic1.webp'
+import music4 from './music2.jpeg'
+import music5 from './music3.jpeg'
+import music6 from './music4.jpeg'
+import music7 from './music5.jpeg'
+import music8 from './stepAside.jpeg'
+import music9 from './music9.jpeg'
 import MusicBan4 from './CoverArt.jpg';
 import MusicBan5 from './MusicBanner5.jpg'
 import MusicBan6 from './MusicBanner6.jpg'
@@ -77,6 +86,6 @@ export {Log, Back1, Isr, Back2, Back3,  Back4, About1,
     Shop4, bgresize, VideoBanner1, VideoBanner2,newsBanner, VideoBanner3,StoreBanner, product1,
 product2, product3, musicCover2, musicCover3,musicCover4,musicCover5,Resize_4, Resize4,Resize5,Resize1, Resize2, product4,Aud1, Aud2, AudioMack , MusicBan1, MusicBan2,
  MusicBan3, MusicBan4, musicCover1,Resize3, MusicBan5, MusicBan6, MusicBan7, MusicBan8 , Ministry1, ministry2, ministry3, ministry4,
-  ministry5, ministry6, backUp, ministry7, ministry8, ministry9, ministry10, ministry11,
+  ministry5, ministry6, music1, music2, music3, music4, music5, music6, music7, music8, music9, backUp, ministry7, ministry8, ministry9, ministry10, ministry11,
    ministry12, VideoArt, ministry13, ministry14, ministry15,
     ministry16, ministry17, ministry18, ministry19, ministry20}
