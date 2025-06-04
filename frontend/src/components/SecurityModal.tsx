@@ -1,7 +1,9 @@
-// components/SecurityModal.tsx
-import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShieldAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faTriangleExclamation,
+  faArrowUpRightFromSquare,
+  faXmark
+} from '@fortawesome/free-solid-svg-icons';
 
 interface SecurityModalProps {
   isOpen: boolean;
@@ -16,57 +18,47 @@ export const SecurityModal = ({
   onClose, 
   onRedirect 
 }: SecurityModalProps) => {
-  if (!isOpen) return null;
+  if (!isOpen || !redirectUrl) return null;
 
   return (
-    <motion.div 
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-    >
-      <motion.div 
-        className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6"
-        initial={{ scale: 0.9, y: 20 }}
-        animate={{ scale: 1, y: 0 }}
-        transition={{ type: "spring", damping: 25 }}
-      >
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold text-purple-900 flex items-center">
-            <FontAwesomeIcon icon={faShieldAlt} className="mr-2" />
-            Security Notice
-          </h3>
-          <button 
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
-          >
-            <FontAwesomeIcon icon={faTimes} />
-          </button>
-        </div>
-        
-        <div className="mb-6">
-          <p className="text-gray-700 mb-3">
-            Stream our Music on various Streaming Platforms
+    <div className="fixed inset-0 bg-black/70 z-[1000] flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl max-w-md w-full p-6 relative">
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+        >
+          <FontAwesomeIcon icon={faXmark} size="lg" />
+        </button>
+
+        <div className="text-center">
+          <FontAwesomeIcon 
+            icon={faTriangleExclamation} 
+            className="text-yellow-500 text-5xl mb-4" 
+          />
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Security Notice</h3>
+          <p className="text-gray-700 mb-6">
+            You are about to be redirected to an external website. 
+            We recommend verifying the URL before proceeding.
           </p>
-          <div className="bg-gray-100 p-3 rounded-lg break-words text-sm font-mono">
-            {redirectUrl}
+          <div className="bg-gray-100 p-4 rounded-lg mb-6 break-all">
+            <span className="text-sm font-mono text-gray-800">{redirectUrl}</span>
+          </div>
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={onClose}
+              className="px-6 py-3 rounded-lg font-medium bg-gray-200 hover:bg-gray-300 text-gray-800 transition"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={onRedirect}
+              className="px-6 py-3 rounded-lg font-medium bg-blue-600 hover:bg-blue-700 text-white transition flex items-center"
+            >
+              Continue <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="ml-2" />
+            </button>
           </div>
         </div>
-        
-        <div className="flex flex-col sm:flex-row gap-3">
-          <button
-            onClick={onClose}
-            className="flex-1 py-3 px-4 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-800 font-medium transition-colors"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={onRedirect}
-            className="flex-1 py-3 px-4 bg-purple-700 hover:bg-purple-800 rounded-lg text-white font-medium transition-colors"
-          >
-            Continue to Site
-          </button>
-        </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 };

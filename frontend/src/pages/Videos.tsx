@@ -284,7 +284,7 @@ export const VideosData: React.FC = () => {
                 <h1 className="text-4xl md:text-5xl roboto-condensed mb-6">Videos</h1>
                 <div className="w-20 h-1 bg-white mb-8"></div>
                 <p className="text-sm max-w-2xl work-sans">
-                Watch .  Stream  . Play
+                  Experience the inspirational sound of ClaudyGod's gospel music – with a unique blend of American Gospel and Afro-gospel.
                 </p>
               </motion.div>
             </div>
@@ -298,7 +298,7 @@ export const VideosData: React.FC = () => {
       <section className="pt-24">
     <DiagonalSection
           title="Music Videos"
-          description="Be Immerse in anointed gospel worship through our Spirit-led music videos"
+          description="Experience our professionally produced music videos..."
           category="Music Videos"
           videos={videos}  // Pass videos array
           onExplore={() => {
@@ -311,7 +311,7 @@ export const VideosData: React.FC = () => {
           title="Visualizers"
           description="Immerse yourself in our mesmerizing audio visualizers..."
           category="Visualizers"
-          videos={videos}  
+          videos={videos}  // Pass videos array
           reverse
           onExplore={() => {
             setActiveCategory('Visualizers');
@@ -323,7 +323,7 @@ export const VideosData: React.FC = () => {
           title="Live Sessions"
           description="Relive the energy of our live performances..."
           category="Live Sessions"
-          videos={videos}  
+          videos={videos}  // Pass videos array
           onExplore={() => {
             setActiveCategory('Live Sessions');
             scrollToVideoGrid();

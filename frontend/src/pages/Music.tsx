@@ -8,6 +8,8 @@ import { AlbumRelease } from '../components/AlbumRelease';
 import { StreamingPlatforms } from '../components/StreamingPlatform';
 import { MusicIntro } from '../components/musicIntro';
 
+
+
 export const MusicData = () => {
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
