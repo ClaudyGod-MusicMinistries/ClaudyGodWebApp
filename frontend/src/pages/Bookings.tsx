@@ -1,3 +1,4 @@
+// const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/bookings';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,8 +10,9 @@ import { Herosection } from '../components/Herosection';
 import { VideoBanner2 } from '../assets/';
 import { NewsletterForm } from '../components/Newsletter';
 import { Modal } from '../components/Modal';
+import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/bookings';
+
 
 // Define country code type for type safety
 type CountryCode = 'US' | 'CA' | 'UK' | 'NG';
@@ -73,17 +75,29 @@ const schema = yup.object().shape({
   organization: yup.string().required('Organization is required'),
   orgType: yup.string().required('Organization type is required'),
   eventType: yup.string().required('Event type is required'),
+  eventDetails: yup.string().required('Event details are required').min(20, 'Please provide more details'),
   day: yup.number()
     .required('Day is required')
     .min(1, 'Invalid day')
-    .max(31, 'Invalid day'),
+    .max(31, 'Invalid day')
+    .typeError('Day must be a number'),
   month: yup.string().required('Month is required'),
   year: yup.number()
     .required('Year is required')
-    .min(new Date().getFullYear(), 'Year must be current or future'),
-  eventDetails: yup.string().required('Event details are required'),
+    .min(new Date().getFullYear(), 'Year must be current or future')
+    .typeError('Year must be a number'),
+  eventImage: yup
+    .mixed()
+    .required('Event image is required')
+    .test('fileRequired', 'Event image is required', value => value && value[0])
+    .test('fileSize', 'File size too large (max 5MB)', value => 
+      value && value[0] ? value[0].size <= 5 * 1024 * 1024 : false
+    )
+    .test('fileType', 'Unsupported file format (JPEG, PNG only)', value => 
+      value && value[0] ? ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type) : false
+    ),
   address1: yup.string().required('Address is required'),
-  address2: yup.string().optional(), // Added missing field
+  address2: yup.string().optional(),
   country: yup.string().required('Country is required'),
   state: yup.string().required('State is required'),
   city: yup.string().required('City is required'),
@@ -94,11 +108,10 @@ const schema = yup.object().shape({
 });
 
 export const Booking: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const modalTitle = ''; // Removed unused setters
-  const modalContent = ''; // Removed unused setters
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [states, setStates] = useState<string[]>([]);
   const [cities, setCities] = useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { 
     register, 
@@ -106,13 +119,13 @@ export const Booking: React.FC = () => {
     watch,
     setValue,
     reset,
-    formState: { errors, isSubmitting } 
+    formState: { errors } 
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       countryCode: 'US' as CountryCode,
       agreeTerms: false,
-      address2: '' // Added default value
+      address2: ''
     }
   });
 
@@ -145,32 +158,39 @@ export const Booking: React.FC = () => {
   }, [country, state, setValue]);
 
   const onSubmit = async (data: any) => {
-    try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          ...data,
-          eventDate: {
-            day: data.day,
-            month: data.month,
-            year: data.year
-          }
-        })
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Submission failed');
+    setIsSubmitting(true);
+    const formData = new FormData();
+    
+    // Append all fields with proper data types
+    Object.keys(data).forEach(key => {
+      if (key === 'eventImage') {
+        formData.append(key, data[key][0]);
+      } else if (key === 'agreeTerms') {
+        formData.append(key, data[key] ? 'true' : 'false');
+      } else {
+        formData.append(key, data[key]);
       }
-      
-      await response.json(); // Removed unused result variable
-      toast.success('Booking submitted successfully! We will contact you shortly.');
-      reset();
+    });
+
+    try {
+      const response = await axios.post(API_URL, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      if (response.status === 201) {
+        toast.success('Booking submitted successfully!');
+        reset();
+        setShowThankYouModal(true);
+      }
     } catch (error: any) {
-      toast.error(error.message || 'Failed to submit booking. Please try again.');
+      const errorMessage = error.response?.data?.message || 
+                           error.response?.data?.error || 
+                           'Failed to submit booking';
+      toast.error(errorMessage);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -179,14 +199,17 @@ export const Booking: React.FC = () => {
       <ToastContainer position="top-right" autoClose={5000} />
       
       <Modal 
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title={modalTitle}
+        isOpen={showThankYouModal}
+        onClose={() => setShowThankYouModal(false)}
+        title="Thank You!"
       >
-        <div className="text-gray-700 mb-4">{modalContent}</div>
+        <div className="text-gray-700 mb-4">
+          <p>Thank you for contacting us!</p>
+          <p>We will review your request and our team will get in touch with you shortly.</p>
+        </div>
         <div className="flex justify-end">
           <button
-            onClick={() => setIsModalOpen(false)}
+            onClick={() => setShowThankYouModal(false)}
             className="px-4 py-2 bg-purple-800 text-white rounded-md hover:bg-purple-700 transition"
           >
             Close
@@ -320,16 +343,12 @@ export const Booking: React.FC = () => {
             </AnimatePresence>
           </div>
 
-          {/* Event Information */}
-          <h3 className="text-xl font-bold mt-8 mb-4 roboto-condensed uppercase">Event Information</h3>
-
           <div className="mb-6">
-            <label htmlFor="organization" className="block text-sm robotoMedium mb-1">Organization Name/Host</label>
+            <label htmlFor="organization" className="block text-sm robotoMedium mb-1">Organization</label>
             <input
               id="organization"
               {...register('organization')}
               className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              placeholder="Enter Name of Organization or Host Here"
             />
             <AnimatePresence>
               {errors.organization && (
@@ -340,6 +359,34 @@ export const Booking: React.FC = () => {
                   className="text-red-400 text-xs mt-1"
                 >
                   {errors.organization.message}
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Event Information */}
+          <h3 className="text-xl font-bold mt-8 mb-4 roboto-condensed uppercase">Event Information</h3>
+
+          <div className="mb-6">
+            <label htmlFor="eventImage" className="block text-sm robotoMedium mb-1">
+              Event Image (Max 5MB, JPEG/PNG)
+            </label>
+            <input
+              id="eventImage"
+              type="file"
+              accept="image/jpeg, image/png, image/jpg"
+              {...register('eventImage')}
+              className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+            <AnimatePresence>
+              {errors.eventImage && (
+                <motion.p 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-red-400 text-xs mt-1"
+                >
+                  {errors.eventImage.message}
                 </motion.p>
               )}
             </AnimatePresence>
@@ -488,6 +535,7 @@ export const Booking: React.FC = () => {
               {...register('eventDetails')}
               rows={5}
               className="w-full px-3 py-2 border border-purple-700 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Please describe the event, audience size, theme, and any special requirements..."
             ></textarea>
             <AnimatePresence>
               {errors.eventDetails && (

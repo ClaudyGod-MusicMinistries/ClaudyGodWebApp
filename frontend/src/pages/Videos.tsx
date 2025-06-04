@@ -1,36 +1,18 @@
-import  { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MusicBan1, 
-  MusicBan2, 
-  MusicBan3, 
-  VideoArt,
-  music1,
-  music2,
-  music3,
-  music4,
-  music5,
-  music6,
-  music7,
-  music8,
-  music9} from '../assets';
-  import { faPlay,
-   faChevronLeft,
-
-    faChevronRight , 
-    faTimes
-   } from '@fortawesome/free-solid-svg-icons';
-
-
-  import { NewsletterForm } from '../components/Newsletter';
-  import { AudioMackComponent } from '../components/audioMack';
-
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import VideoPlayerModal from '../components/videos/VideoPlayerModel';
+import VideoCard from '../components/videos/VideoCard';
+import PaginationControls from '../components/videos/PaginationControls';
+import DiagonalSection from '../components/videos/DiagonalSection';
+import { NewsletterForm } from '../components/Newsletter';
+import { AudioMackComponent } from '../components/audioMack';
 
 
 type VideoType = {
   id: number;
   title: string;
-  thumbnail: string;
   youtubeId: string;
   category: 'Music Videos' | 'Visualizers' | 'Live Sessions';
   description: string;
@@ -38,10 +20,9 @@ type VideoType = {
 };
 
 const videos: VideoType[] = [
-    {
+  {
     id: 1,
     title: 'STEP ASIDE. ',
-    thumbnail: music8,
     youtubeId: '3nvGauo7kjA',
     category: 'Music Videos',
     description: 'Song by Min. ClaudyGod',
@@ -54,7 +35,6 @@ const videos: VideoType[] = [
   {
     id: 2,
     title: 'Joyful Alleluia by ClaudyGod',
-    thumbnail: music1,
     youtubeId: 'ih4SrEgnV60',
     category: 'Music Videos',
     description: 'A Gospel Choir Rendition.',
@@ -67,7 +47,6 @@ const videos: VideoType[] = [
   {
     id: 3,
     title: 'Nothing Compares To You',
-    thumbnail: music2,
     youtubeId: 'Dw5S-jzzboA',
     category: 'Visualizers',
     description: 'Official Music Video/Visualizer',
@@ -80,20 +59,6 @@ const videos: VideoType[] = [
   {
     id: 4,
     title: 'Love Me So Much - Lover of my soul(Album)',
-    thumbnail: music4,
-    youtubeId: 'YPJj0HonZb0',
-    category: 'Live Sessions',
-    description: 'Full Sunday worship service with special ministry',
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 4,
-    title: 'Love Me So Much - Lover of my soul(Album)',
-    thumbnail: music5,
     youtubeId: 'YPJj0HonZb0',
     category: 'Live Sessions',
     description: 'Full Sunday worship service with special ministry',
@@ -105,8 +70,19 @@ const videos: VideoType[] = [
   },
   {
     id: 5,
+    title: 'Love Me So Much - Lover of my soul(Album)',
+    youtubeId: 'YPJj0HonZb0',
+    category: 'Live Sessions',
+    description: 'Full Sunday worship service with special ministry',
+    date: new Date().toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })
+  },
+  {
+    id: 6,
     title: 'Thank You (Midnight Cry) - Lover of my soul(Album)',
-    thumbnail: music6,
     youtubeId: '4i97iBmNnUA',
     category: 'Visualizers',
     description: 'Personal testimony about God\'s grace and mercy',
@@ -117,9 +93,8 @@ const videos: VideoType[] = [
     })
   },
   {
-    id: 6,
+    id: 7,
     title: `It's A New Day (Thank You For Today) '`,
-    thumbnail: music2,
     youtubeId: 'Ak0LZgfHMa0',
     category: 'Music Videos',
     description: 'Music by ClaudyGOD. Official Music Video.',
@@ -130,9 +105,8 @@ const videos: VideoType[] = [
     })
   },
   {
-    id: 7,
+    id: 8,
     title: 'King of Heaven - King of Heaven Album',
-    thumbnail: music7,
     youtubeId: 'W_Gfia-R3Ec',
     category: 'Live Sessions',
     description: 'Official music video for "You Are Our Everything"',
@@ -143,9 +117,8 @@ const videos: VideoType[] = [
     })
   },
   {
-    id: 8,
+    id: 9,
     title: 'LOVE ME SO MUCH🌺🌺',
-    thumbnail: music8,
     youtubeId: 'ZxOV4PVLc1U',
     category: 'Music Videos',
     description: 'Official Music Video',
@@ -156,11 +129,10 @@ const videos: VideoType[] = [
     })
   },
   {
-    id: 9,
+    id: 10,
     title: 'Good To Me - King of heaven Album',
-    thumbnail: music9,
     youtubeId: 'NmKvR1hVc5M',
-  category: 'Live Sessions',
+    category: 'Live Sessions',
     description: 'Live Worship Session with ClaudyGod',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -169,9 +141,8 @@ const videos: VideoType[] = [
     })
   },
   {
-    id: 10,
+    id: 11,
     title: 'King of the Nations - King of Heaven Album',
-    thumbnail: music4,
     youtubeId: 'WfiL2fUF-8g',
     category: 'Visualizers',
     description: 'Full Sunday worship service with special ministry',
@@ -182,9 +153,8 @@ const videos: VideoType[] = [
     })
   },
   {
-    id: 11,
+    id: 12,
     title: 'Forever God (Dwelling Place) - King of Heaven Album',
-    thumbnail: music5,
     youtubeId: '1PjlO2sNyKk',
     category: 'Live Sessions',
     description: 'Personal testimony about God\'s grace and mercy',
@@ -195,9 +165,8 @@ const videos: VideoType[] = [
     })
   },
   {
-    id: 12,
+    id: 13,
     title: 'All of Me',
-    thumbnail: music7,
     youtubeId: 'L-AVa2qC5Ic',
     category: 'Visualizers',
     description: 'Official Music Video',
@@ -208,9 +177,8 @@ const videos: VideoType[] = [
     })
   },
   {
-    id: 13,
+    id: 14,
     title: 'Affirmation - Affirmation Album',
-    thumbnail: music6,
     youtubeId: 'elAVI2DDGCM',
     category: 'Live Sessions',
     description: 'Official music video for "You Are Our Everything"',
@@ -221,9 +189,8 @@ const videos: VideoType[] = [
     })
   },
   {
-    id: 14,
+    id: 15,
     title: 'Look to You',
-    thumbnail: music7,
     youtubeId: '7BN7i4puuis',
     category: 'Visualizers',
     description: 'official Visualizer/Music Videos"',
@@ -234,9 +201,8 @@ const videos: VideoType[] = [
     })
   },
   {
-    id: 15,
+    id: 16,
     title: 'Lover of my Soul',
-    thumbnail: music8,
     youtubeId: 'lrKaURkswT0',
     category: 'Visualizers',
     description: 'Official Visualizers / Music Videos"',
@@ -247,9 +213,8 @@ const videos: VideoType[] = [
     })
   },
   {
-    id: 16,
+    id: 17,
     title: 'You Are Our Everything - You are our Everything Album',
-    thumbnail: music9,
     youtubeId: 'fK_tCBcnqGs',
     category: 'Live Sessions',
     description: 'Full Sunday worship service with special ministry',
@@ -260,9 +225,8 @@ const videos: VideoType[] = [
     })
   },
   {
-    id: 17,
+    id: 18,
     title: 'Affirmation by ClaudyGod',
-    thumbnail: music7,
     youtubeId: 'Y-U4IvvnNTo',
     category: 'Music Videos',
     description: 'Official Music Video',
@@ -273,9 +237,8 @@ const videos: VideoType[] = [
     })
   },
   {
-    id: 18,
+    id: 19,
     title: 'O Holy Night - Claudy God Album',
-    thumbnail: music5,
     youtubeId: 'oBRS1Uod3X8',
     category: 'Live Sessions',
     description: 'Worship Experience',
@@ -285,115 +248,15 @@ const videos: VideoType[] = [
       day: 'numeric' 
     })
   }
-];
+]
 
 const VIDEOS_PER_PAGE = 6;
-
-const VideoCard: React.FC<{ 
-  content: VideoType;
-  onSelect: (videoId: string) => void;
-}> = ({ content, onSelect }) => {
-  return (
-    <div className="group cursor-pointer">
-      <div className="relative overflow-hidden rounded-lg">
-        <img 
-          src={content.thumbnail} 
-          alt={content.title} 
-          className="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-center">
-        <button 
-            onClick={() => onSelect(content.youtubeId)}
-            className="absolute inset-0 flex items-center justify-center"
-          >
-            <div className="bg-purple-900/80 hover:bg-purple-800 text-white p-4 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <FontAwesomeIcon icon={faPlay} className="text-lg" />
-            </div>
-          </button>
-       
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 p-4">
-          <h3 className="text-white robotoMedium">{content.title}</h3>
-          <p className="text-gray-300 slider-font ">{content.date}</p>
-        </div>
-      </div>
-    </div>
-  );
-};
-const VideoPlayerModal: React.FC<{
-  videoId: string | null;
-  onClose: () => void;
-}> = ({ videoId, onClose }) => {
-  if (!videoId) return null;
-  return (
-    <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-      <div className="relative w-full max-w-4xl">
-        <button 
-          onClick={onClose}
-          className="absolute -top-8 right-0 text-white hover:text-purple-300"
-        >
-          <FontAwesomeIcon icon={faTimes} className="text-2xl" />
-        </button>
-        <div className="aspect-video w-full">
-          <iframe
-            width="100%"
-            height="100%"
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="rounded-lg"
-          ></iframe>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const PaginationControls: React.FC<{
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-}> = ({ currentPage, totalPages, onPageChange }) => {
-  return (
-    <div className="flex justify-center items-center gap-4 mt-8">
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="p-2 disabled:opacity-50 disabled:cursor-not-allowed text-purple-900 hover:text-purple-700"
-      >
-        <FontAwesomeIcon icon={faChevronLeft} />
-      </button>
-      
-      {Array.from({ length: totalPages }).map((_, index) => (
-        <button
-          key={index + 1}
-          onClick={() => onPageChange(index + 1)}
-          className={`px-3 py-1 rounded-md ${
-            currentPage === index + 1
-              ? 'bg-purple-900 text-white'
-              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-          }`}
-        >
-          {index + 1}
-        </button>
-      ))}
-      
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="p-2 disabled:opacity-50 disabled:cursor-not-allowed text-purple-900 hover:text-purple-700"
-      >
-        <FontAwesomeIcon icon={faChevronRight} />
-      </button>
-    </div>
-  );
-};
 
 export const VideosData: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<'All' | 'Music Videos' | 'Visualizers' | 'Live Sessions'>('All');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
+  const videoGridRef = useRef<HTMLDivElement>(null);
 
   const filteredVideos = activeCategory === 'All' 
     ? videos 
@@ -405,32 +268,83 @@ export const VideosData: React.FC = () => {
     currentPage * VIDEOS_PER_PAGE
   );
 
+  const scrollToVideoGrid = () => {
+    videoGridRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
+    <>
+     <section className="pt-32 pb-20 bg-purple-900 text-white">
+            <div className="container mx-auto px-4">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <h1 className="text-4xl md:text-5xl roboto-condensed mb-6">Videos</h1>
+                <div className="w-20 h-1 bg-white mb-8"></div>
+                <p className="text-sm max-w-2xl work-sans">
+                Watch .  Stream  . Play
+                </p>
+              </motion.div>
+            </div>
+          </section>
     <div className="bg-white">
       <VideoPlayerModal 
         videoId={selectedVideoId} 
         onClose={() => setSelectedVideoId(null)} 
       />
       
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-purple-900 text-white">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-4xl md:text-5xl roboto-condensed mb-6">Videos</h1>
-            <div className="w-20 h-1 bg-white mb-8"></div>
-            <p className="text-xl max-w-2xl raleway-medium text-20">Watch our Latest Music Videos, Visualizers and Live Sessions </p>
-          </motion.div>
-        </div>
+      <section className="pt-24">
+    <DiagonalSection
+          title="Music Videos"
+          description="Experience our professionally produced music videos..."
+          category="Music Videos"
+          videos={videos}  // Pass videos array
+          onExplore={() => {
+            setActiveCategory('Music Videos');
+            scrollToVideoGrid();
+          }}
+        />
+
+       <DiagonalSection
+          title="Visualizers"
+          description="Immerse yourself in our mesmerizing audio visualizers..."
+          category="Visualizers"
+          videos={videos}  // Pass videos array
+          reverse
+          onExplore={() => {
+            setActiveCategory('Visualizers');
+            scrollToVideoGrid();
+          }}
+        />
+
+<DiagonalSection
+          title="Live Sessions"
+          description="Relive the energy of our live performances..."
+          category="Live Sessions"
+          videos={videos}  // Pass videos array
+          onExplore={() => {
+            setActiveCategory('Live Sessions');
+            scrollToVideoGrid();
+          }}
+        />
       </section>
 
-      <div className="pt-24">
-        <div className="container mx-auto px-4 md:px-8 py-16">
-          {/* Centered Category Buttons */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
+      <div className="py-16 bg-purple-900 text-center">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={scrollToVideoGrid}
+          className="px-10 py-4 bg-white text-purple-900 md:text-2xl rounded-full roboto-condensed flex items-center gap-3 mx-auto"
+        >
+          Browse All Videos <FontAwesomeIcon icon={faArrowRight} />
+        </motion.button>
+      </div>
+
+      <div ref={videoGridRef} className="pt-16 pb-24">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="flex flex-wrap justify-center max-md:text-sm  work-sans gap-4 mb-12">
             {(['All', 'Music Videos', 'Visualizers', 'Live Sessions'] as const).map((category) => (
               <motion.button
                 key={category}
@@ -440,9 +354,9 @@ export const VideosData: React.FC = () => {
                   setActiveCategory(category);
                   setCurrentPage(1);
                 }}
-                className={`px-6 py-3 rounded-full text-lg font-medium transition-colors ${
+                className={`px-6 py-3 rounded-full md:text-sm work-sans max-md:text-purple-900 cursor-pointer  transition-colors ${
                   activeCategory === category
-                    ? 'bg-purple-900 text-white'
+                    ? 'bg-black text-white'
                     : 'bg-gray-200 text-gray-700 hover:bg-purple-200'
                 }`}
               >
@@ -451,8 +365,12 @@ export const VideosData: React.FC = () => {
             ))}
           </div>
 
-          {/* Video grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div 
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             {paginatedVideos.map((video) => (
               <VideoCard
                 key={video.id}
@@ -460,7 +378,7 @@ export const VideosData: React.FC = () => {
                 onSelect={setSelectedVideoId}
               />
             ))}
-          </div>
+          </motion.div>
 
           <PaginationControls
             currentPage={currentPage}
@@ -474,5 +392,7 @@ export const VideosData: React.FC = () => {
       <AudioMackComponent />
       <NewsletterForm />
     </div>
+    </>
   );
 };
+
