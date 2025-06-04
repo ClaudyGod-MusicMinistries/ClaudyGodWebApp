@@ -298,7 +298,7 @@ export const VideosData: React.FC = () => {
       <section className="pt-24">
     <DiagonalSection
           title="Music Videos"
-          description="Experience our professionally produced music videos..."
+          description="Be Immerse in anointed gospel worship through our Spirit-led music videos"
           category="Music Videos"
           videos={videos}  // Pass videos array
           onExplore={() => {
@@ -311,7 +311,7 @@ export const VideosData: React.FC = () => {
           title="Visualizers"
           description="Immerse yourself in our mesmerizing audio visualizers..."
           category="Visualizers"
-          videos={videos}  // Pass videos array
+          videos={videos}  
           reverse
           onExplore={() => {
             setActiveCategory('Visualizers');
@@ -323,7 +323,7 @@ export const VideosData: React.FC = () => {
           title="Live Sessions"
           description="Relive the energy of our live performances..."
           category="Live Sessions"
-          videos={videos}  // Pass videos array
+          videos={videos}  
           onExplore={() => {
             setActiveCategory('Live Sessions');
             scrollToVideoGrid();
