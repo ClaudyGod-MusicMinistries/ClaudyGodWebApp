@@ -5,6 +5,7 @@ import {
   faShare, 
   faFaceSmile 
 } from '@fortawesome/free-solid-svg-icons';
+import { Blog } from '@/pages/Blogpost';
 
 interface Comment {
   id: string;
@@ -29,7 +30,7 @@ interface BlogPostProps {
   onShare: () => void;
 }
 
-export const BlogPost: React.FC<BlogPostProps> = ({
+const BlogPost: React.FC<BlogPostProps> = ({
   id,
   title,
   content,
@@ -192,3 +193,4 @@ export const BlogPost: React.FC<BlogPostProps> = ({
   );
 };
 
+export  default BlogPost

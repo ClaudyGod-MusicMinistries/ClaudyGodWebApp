@@ -8,7 +8,7 @@ interface Message {
   timestamp: number;
 }
 
-export const Chatbot: React.FC = () => {
+const Chatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -139,3 +139,4 @@ export const Chatbot: React.FC = () => {
   );
 };
 
+export default Chatbot;

@@ -6,7 +6,7 @@ import VideoPlayerModal from '../components/videos/VideoPlayerModel';
 import VideoCard from '../components/videos/VideoCard';
 import PaginationControls from '../components/videos/PaginationControls';
 import DiagonalSection from '../components/videos/DiagonalSection';
-import { NewsletterForm } from '../components/Newsletter';
+import  NewsletterForm  from '../components/Newsletter';
 import { AudioMackComponent } from '../components/audioMack';
 
 

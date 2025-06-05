@@ -2,7 +2,7 @@ import  { useState } from 'react';
 import { Herosection } from '../components/Herosection';
 import { Log } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NewsletterForm } from '../components/Newsletter';
+import NewsletterForm  from '../components/Newsletter';
 import { 
   faMapPin,
   faPhone,

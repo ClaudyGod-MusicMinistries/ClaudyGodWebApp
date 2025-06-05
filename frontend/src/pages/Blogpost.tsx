@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { BlogPost } from '../components/mainBlog';
+import React, { useState, useEffect, lazy, Suspense, useCallback, useMemo } from 'react';
 import { Heroblog } from '../components/blogHero';
 import { blogPosts } from '../components/blogsData';
 import Pagination from '../components/pagination';
-import { Chatbot } from '../components/Chatbot';
-import { NewsletterForm } from '../components/Newsletter';
 import Interview from '../components/Interview';
+
+// Lazy load components
+const LazyBlogWelcome = lazy(() => import('../components/blogWelcome'));
+const LazyWelcomeImage = lazy(() => import('../components/WelcomeImage'));
+const LazyBlogPost = lazy(() => import('../components/mainBlog'));
+const LazyChatbot = lazy(() => import('../components/Chatbot'));
+const LazyNewsletterForm = lazy(() => import('../components/Newsletter'));
 
 interface Comment {
   id: string;
@@ -18,17 +22,30 @@ interface Reactions {
 }
 
 export const Blog: React.FC = () => {
-   const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [reactions, setReactions] = useState<{ [postId: string]: Reactions }>({});
   const [comments, setComments] = useState<{ [postId: string]: Comment[] }>({});
 
-  const POSTS_PER_PAGE = 6; // 2x3 grid layout
-  const totalPages = Math.ceil(blogPosts.length / POSTS_PER_PAGE);
+  const POSTS_PER_PAGE = 6;
+  
+  // Memoize featured posts
+  const featuredPosts = useMemo(() => {
+    return blogPosts.filter(post => post.featured).slice(0, 3);
+  }, []);
+
+  // Memoize non-featured posts for pagination
+  const nonFeaturedPosts = useMemo(() => {
+    return blogPosts.filter(post => !post.featured);
+  }, []);
+
+  const totalPages = Math.ceil(nonFeaturedPosts.length / POSTS_PER_PAGE);
   
   // Get current posts for the page
-  const indexOfLastPost = currentPage * POSTS_PER_PAGE;
-  const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
-    const currentPosts = blogPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = useMemo(() => {
+    const indexOfLastPost = currentPage * POSTS_PER_PAGE;
+    const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
+    return nonFeaturedPosts.slice(indexOfFirstPost, indexOfLastPost);
+  }, [currentPage, nonFeaturedPosts]);
 
   // Load saved data from localStorage
   useEffect(() => {
@@ -46,14 +63,12 @@ export const Blog: React.FC = () => {
   }, [reactions, comments]);
 
   // Handle page change
-  const handlePageChange = (pageNumber: number) => {
+  const handlePageChange = useCallback((pageNumber: number) => {
     setCurrentPage(pageNumber);
-    // Scroll to top when changing page
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, []);
 
   // Handle adding a reaction to a post
-  const handleAddReaction = (postId: string, emoji: string) => {
+  const handleAddReaction = useCallback((postId: string, emoji: string) => {
     setReactions(prev => ({
       ...prev,
       [postId]: {
@@ -61,10 +76,10 @@ export const Blog: React.FC = () => {
         [emoji]: (prev[postId]?.[emoji] || 0) + 1
       }
     }));
-  };
+  }, []);
 
   // Handle adding a comment to a post
-  const handleAddComment = (postId: string, commentText: string) => {
+  const handleAddComment = useCallback((postId: string, commentText: string) => {
     setComments(prev => ({
       ...prev,
       [postId]: [
@@ -76,10 +91,10 @@ export const Blog: React.FC = () => {
         }
       ]
     }));
-  };
+  }, []);
 
   // Handle share functionality
-  const handleShare = async () => {
+  const handleShare = useCallback(async () => {
     try {
       if (navigator.share) {
         await navigator.share({
@@ -93,28 +108,54 @@ export const Blog: React.FC = () => {
     } catch (error) {
       console.error('Error sharing content:', error);
     }
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100">
       <Heroblog />
-      
+
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          {/* Image Column with Lazy Loading */}
+          <Suspense fallback={<div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-80 animate-pulse" />}>
+            <LazyWelcomeImage />
+          </Suspense>
+          
+          {/* Welcome Text Column */}
+          <Suspense fallback={<div className="h-80 flex items-center justify-center">Loading welcome message...</div>}>
+            <LazyBlogWelcome />
+          </Suspense>
+        </div>
+      </section>
+
+<div className="relative py-8">
+        <div className="absolute inset-0 flex items-center" aria-hidden="true">
+          <div className="w-full border-t border-gray-300"></div>
+        </div>
+        <div className="relative flex justify-center">
+          <span className="bg-gray-100 px-6 text-3xl md:text-8xl roboto-condensed text-center text-purple-900 tracking-wide">
+            FEATURED ARTICLES
+          </span>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {currentPosts.map(post => (
-            <BlogPost
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              content={post.content}
-              date={post.date}
-              image={post.image}
-              reactions={reactions[post.id] || {}}
-              comments={comments[post.id] || []}
-              onAddReaction={handleAddReaction}
-              onAddComment={handleAddComment}
-              onShare={handleShare}
-            />
+            <Suspense key={post.id} fallback={<div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-96 animate-pulse" />}>
+              <LazyBlogPost
+                id={post.id}
+                title={post.title}
+                content={post.content}
+                date={post.date}
+                image={post.image}
+                reactions={reactions[post.id] || {}}
+                comments={comments[post.id] || []}
+                onAddReaction={handleAddReaction}
+                onAddComment={handleAddComment}
+                onShare={handleShare}
+              />
+            </Suspense>
           ))}
         </div>
         
@@ -124,10 +165,18 @@ export const Blog: React.FC = () => {
           onPageChange={handlePageChange}
         />
       </div>
-      <Interview />
-      <Chatbot />
-      {/* <hr className='bg-purple-900'/> */}
-      <NewsletterForm />
+      
+      <Suspense fallback={<div className="max-w-7xl mx-auto px-4 h-96 bg-gray-200 animate-pulse" />}>
+        <Interview />
+      </Suspense>
+      
+      <Suspense fallback={<div>Loading chatbot...</div>}>
+        <LazyChatbot />
+      </Suspense>
+      
+      <Suspense fallback={<div className="max-w-7xl mx-auto px-4 h-60 bg-gray-200 animate-pulse" />}>
+        <LazyNewsletterForm />
+      </Suspense>
     </div>
   );
 };

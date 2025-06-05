@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
-interface CityTourModalProps {
+interface TourCityModalProps {
   city: string;
   isOpen: boolean;
   onClose: () => void;
 }
 
-const CityTourModal = ({ city, isOpen, onClose }: CityTourModalProps) => {
+const TourCityModal = ({ city, isOpen, onClose }: TourCityModalProps) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -60,9 +60,9 @@ const CityTourModal = ({ city, isOpen, onClose }: CityTourModalProps) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </motion.div>
-            <h3 className="text-2xl font-bold text-white mb-2">Request Received!</h3>
+            <h3 className="text-2xl font-bold text-white mb-2">Your Request is Received!</h3>
             <p className="text-gray-300">
-              We'll notify you when Min. ClaudyGod is in {city}
+              We will keep in touch with you when we are in your city.
             </p>
           </div>
         ) : (
@@ -71,7 +71,7 @@ const CityTourModal = ({ city, isOpen, onClose }: CityTourModalProps) => {
               Stay Updated for <span className="text-purple-400">{city}</span>
             </h2>
             <p className="text-gray-400 text-center mb-6">
-              Enter your details to get notified when we're in your city
+              Enter your details to get notified when Min. ClaudyGod is in {city}
             </p>
             
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -105,7 +105,7 @@ const CityTourModal = ({ city, isOpen, onClose }: CityTourModalProps) => {
                 type="submit"
                 className="w-full py-3.5 bg-gradient-to-r from-purple-900 to-purple-700 text-white font-medium rounded-lg shadow-lg hover:opacity-90 transition-all focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2 focus:ring-offset-[#140f3c]"
               >
-                Notify Me
+                Submit Request
               </button>
             </form>
           </>
@@ -114,4 +114,4 @@ const CityTourModal = ({ city, isOpen, onClose }: CityTourModalProps) => {
     </motion.div>
   );
 };
- export default CityTourModal
+export default TourCityModal

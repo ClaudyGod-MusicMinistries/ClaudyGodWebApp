@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const NewsletterForm: React.FC = () => {
+const NewsletterForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
 
@@ -72,3 +72,4 @@ export const NewsletterForm: React.FC = () => {
     </div>
   );
 };
+export default NewsletterForm;

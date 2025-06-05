@@ -5,7 +5,7 @@ import { Hero } from '../components/HomepageHero';
 import LatestRelease from '../components/latestRelease';
 import { FeaturedVideos } from '../components/Featuredvideos';
 import { ShopPreview } from '../components/ShopPreview';
-import { NewsletterForm } from '../components/Newsletter';
+import NewsletterForm  from '../components/Newsletter';
 import { AudioMackComponent } from '../components/audioMack';
 import { ScrollToTop } from '../components/ScrollToTop';
 import { Welcome } from '../components/welcome';

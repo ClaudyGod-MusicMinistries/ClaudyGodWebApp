@@ -1,7 +1,7 @@
 import React from 'react';
 import { Herosection } from '../components/Herosection';
 import { About1, About2 } from '../assets';
-import { NewsletterForm } from '../components/Newsletter';
+import NewsletterForm  from '../components/Newsletter';
 
 export const Biography: React.FC = () => {
   return (

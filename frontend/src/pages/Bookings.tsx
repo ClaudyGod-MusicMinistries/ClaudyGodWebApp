@@ -8,7 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Herosection } from '../components/Herosection';
 import { VideoBanner2 } from '../assets/';
-import { NewsletterForm } from '../components/Newsletter';
+import  NewsletterForm  from '../components/Newsletter';
 import { Modal } from '../components/Modal';
 import axios from 'axios';
 

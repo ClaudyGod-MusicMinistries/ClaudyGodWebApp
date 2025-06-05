@@ -80,6 +80,11 @@
 .text-3xl { font-size: calc(var(--base-font-size) * 1.875); }
 .text-4xl { font-size: calc(var(--base-font-size) * 2.25); }
 .text-5xl { font-size: calc(var(--base-font-size) * 3); }
+.text-6xl { font-size: calc(var(--base-font-size) * 4); }
+.text-7xl { font-size: calc(var(--base-font-size) * 5); }
+.text-8xl { font-size: calc(var(--base-font-size) * 6); }
+.text-9xl { font-size: calc(var(--base-font-size) * 7); }
+.text-10xl { font-size: calc(var(--base-font-size) * 8); }
 
 /* Device-specific Overrides */
 @media (max-width: 640px) {

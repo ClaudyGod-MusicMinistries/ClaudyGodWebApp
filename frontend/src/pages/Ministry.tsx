@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Herosection } from '../components/Herosection';
-import { NewsletterForm } from '../components/Newsletter';
+import NewsletterForm  from '../components/Newsletter';
 import { About1, ministry10, ministry11, ministry12, ministry13, ministry14, ministry15, ministry16, ministry18, ministry19, ministry20, ministry9 } from '../assets/';
 import { Ministry1, ministry2, Isr,ministry3, ministry4, ministry17, ministry5, ministry6, ministry7, ministry8 } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
