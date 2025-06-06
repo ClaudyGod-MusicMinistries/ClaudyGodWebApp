@@ -3,10 +3,23 @@ import { useForm } from 'react-hook-form';
 import { Herosection } from '../components/Herosection';
 import { Log } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapPin, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import NewsletterForm from '../components/Newsletter';
+import {
+  faMapPin,
+  faPhone,
+  faEnvelope,
+} from '@fortawesome/free-solid-svg-icons';
+
+// Add these brand‐icon imports:
+import {
+  faFacebookF,
+  faXTwitter,
+  faInstagram,
+  faYoutube,
+} from '@fortawesome/free-brands-svg-icons';
+
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import NewsletterForm from '../components/Newsletter';
 
 type ContactFormInputs = {
   name: string;
@@ -34,10 +47,10 @@ export const ContactData: React.FC = () => {
 
   const onSubmit = async (data: ContactFormInputs) => {
     try {
-      // Simulate a network request delay (remove in production)
+      // Simulate network delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Replace this with your actual fetch/axios call:
+      // In production, replace with your actual POST request:
       
       const response = await fetch('http://localhost:5000/api/contacts', {
         method: 'POST',
@@ -48,7 +61,6 @@ export const ContactData: React.FC = () => {
       if (!response.ok) throw new Error(result.message || 'Submission failed');
       
 
-      // If successful:
       toast.success('Your message was sent successfully!', {
         position: 'top-right',
         autoClose: 3000,
@@ -342,16 +354,45 @@ export const ContactData: React.FC = () => {
             <div className="mt-8">
               <h4 className="text-lg font-medium text-gray-900 mb-3">Connect With Us</h4>
               <div className="flex space-x-4">
-                {['facebook', 'twitter', 'instagram', 'youtube'].map((social) => (
-                  <a
-                    key={social}
-                    href="#"
-                    className="bg-gray-100 hover:bg-purple-100 w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300"
-                    aria-label={`Follow us on ${social}`}
-                  >
-                    <div className="bg-gray-400 border-2 border-dashed rounded-xl w-6 h-6" />
-                  </a>
-                ))}
+                <a
+                  href="https://www.facebook.com/yourpage"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gray-100 hover:bg-purple-100 w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300"
+                  aria-label="Follow us on Facebook"
+                >
+                  <FontAwesomeIcon icon={faFacebookF} className="text-purple-900" />
+                </a>
+
+                <a
+                  href="https://x.com/yourhandle"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gray-100 hover:bg-purple-100 w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300"
+                  aria-label="Follow us on X"
+                >
+                  <FontAwesomeIcon icon={faXTwitter} className="text-purple-900" />
+                </a>
+
+                <a
+                  href="https://www.instagram.com/yourprofile"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gray-100 hover:bg-purple-100 w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300"
+                  aria-label="Follow us on Instagram"
+                >
+                  <FontAwesomeIcon icon={faInstagram} className="text-purple-900" />
+                </a>
+
+                <a
+                  href="https://www.youtube.com/yourchannel"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gray-100 hover:bg-purple-100 w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300"
+                  aria-label="Follow us on YouTube"
+                >
+                  <FontAwesomeIcon icon={faYoutube} className="text-purple-900" />
+                </a>
               </div>
             </div>
           </div>
@@ -368,16 +409,45 @@ export const ContactData: React.FC = () => {
           <h2 className="text-3xl font-bold mb-4">ClaudyGod Music & Ministries</h2>
           <p className="text-lg mb-6">Connect With Us On Various Social Platforms</p>
           <div className="flex justify-center space-x-6">
-            {['facebook', 'twitter', 'instagram', 'youtube'].map((social) => (
-              <a
-                key={social}
-                href="#"
-                className="bg-purple-800 hover:bg-purple-700 w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300"
-                aria-label={`Follow us on ${social}`}
-              >
-                <div className="bg-gray-200 border-2 border-dashed rounded-xl w-6 h-6" />
-              </a>
-            ))}
+            <a
+              href="https://www.facebook.com/yourpage"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-purple-800 hover:bg-purple-700 w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300"
+              aria-label="Follow us on Facebook"
+            >
+              <FontAwesomeIcon icon={faFacebookF} className="text-white" />
+            </a>
+
+            <a
+              href="https://x.com/yourhandle"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-purple-800 hover:bg-purple-700 w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300"
+              aria-label="Follow us on X"
+            >
+              <FontAwesomeIcon icon={faXTwitter} className="text-white" />
+            </a>
+
+            <a
+              href="https://www.instagram.com/yourprofile"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-purple-800 hover:bg-purple-700 w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300"
+              aria-label="Follow us on Instagram"
+            >
+              <FontAwesomeIcon icon={faInstagram} className="text-white" />
+            </a>
+
+            <a
+              href="https://www.youtube.com/yourchannel"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-purple-800 hover:bg-purple-700 w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300"
+              aria-label="Follow us on YouTube"
+            >
+              <FontAwesomeIcon icon={faYoutube} className="text-white" />
+            </a>
           </div>
         </div>
       </div>
