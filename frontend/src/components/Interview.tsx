@@ -105,9 +105,10 @@ const Interview = () => {
 
         {/* Video Slider */}
         <div className="mt-12">
-          <h2 className="text-2xl roboto-condensed mt-20 mb-10 md:text-center max-md:text-left text-white">
-            Latest Tour - Interviews with ClaudyGod Music & Ministry
-          </h2>
+         <h2 className="text-2xl roboto-condensed mt-20 mb-10 md:text-center max-md:text-left text-white">
+  Interview Session – Catch Up on Minister ClaudyGod’s Interviews
+</h2>
+
           
           {/* Centered video grid */}
           <div className="flex justify-center">

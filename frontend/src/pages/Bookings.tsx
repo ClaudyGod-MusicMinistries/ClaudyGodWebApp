@@ -1,4 +1,4 @@
-// const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/bookings';
+
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -13,6 +13,13 @@ import { Modal } from '../components/Modal';
 import axios from 'axios';
 
 
+const API_URL = (() => {
+  // Guard against "process is not defined" in the browser.
+  if (typeof process !== 'undefined' && process.env.REACT_APP_API_URL) {
+    return `${process.env.REACT_APP_API_URL}/api/bookings`;
+  }
+  return 'http://localhost:5000/api/bookings';
+})();
 
 // Define country code type for type safety
 type CountryCode = 'US' | 'CA' | 'UK' | 'NG';

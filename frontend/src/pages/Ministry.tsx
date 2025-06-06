@@ -497,7 +497,7 @@ export const MinistryData: React.FC = () => {
       <ContentSection
         title="ClaudyGod Teachings"
        
-        description="Claudy’s passion for sharing the Gospel radiates through both her writing and speaking. As a gospel artist, devoted teacher, and lover of God, she has also shared her inspiring presence on national television, guest-hosting programs such as Breakfast in Bed and The Sunday Show."
+        description="Minister ClaudyGod passion for sharing the Gospel radiates through both her writing and speaking. As a gospel artist, devoted teacher, and lover of God, she has also shared her inspiring presence on national television, guest-hosting programs such as Breakfast in Bed and The Sunday Show."
         contents={teachingsData}
       />
       

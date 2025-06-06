@@ -5,7 +5,7 @@ import {
   faShare, 
   faFaceSmile 
 } from '@fortawesome/free-solid-svg-icons';
-import { Blog } from '@/pages/Blogpost';
+
 
 interface Comment {
   id: string;

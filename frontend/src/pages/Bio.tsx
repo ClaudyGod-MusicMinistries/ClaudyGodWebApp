@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Herosection } from '../components/Herosection';
 import { About1, About2 } from '../assets';
 import NewsletterForm from '../components/Newsletter';
-import { BioSection } from '../components/Bio/BioSection';
+import { BioSection } from '../components/Bio/BioSectio';
 
 // Text content arrays for modularity
 const firstSectionTexts = [

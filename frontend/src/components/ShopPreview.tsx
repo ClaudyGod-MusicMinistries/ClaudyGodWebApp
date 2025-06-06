@@ -16,10 +16,10 @@ interface ProductProps {
 }
 
 const products: ProductProps[] = [
-  { id: "1", name: "ClaudyGod T-Shirt", price: 30, imageUrl: Shop3 },
-  { id: "2", name: "ClaudyGod Mugs", price: 15, imageUrl: Shop2 },
-  { id: "3", name: "ClaudyGod Y-Shirt", price: 25, imageUrl: Shop4 },
-  { id: "4", name: "ClaudyGod Mugs", price: 15, imageUrl: Shop1 }
+  { id: "1", name: "ClaudyGod T-Shirt", price: 25, imageUrl: Shop3 },
+  { id: "2", name: "ClaudyGod Mugs", price: 5, imageUrl: Shop2 },
+  { id: "3", name: "ClaudyGod Y-Shirt", price: 30, imageUrl: Shop4 },
+  { id: "4", name: "ClaudyGod Mugs", price: 5, imageUrl: Shop1 }
 ];
 
 const ProductCard: React.FC<ProductProps> = ({ id, name, price, imageUrl }) => {
