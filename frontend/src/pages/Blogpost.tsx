@@ -28,24 +28,14 @@ export const Blog: React.FC = () => {
 
   const POSTS_PER_PAGE = 6;
   
-  // Memoize featured posts
-  const featuredPosts = useMemo(() => {
-    return blogPosts.filter(post => post.featured).slice(0, 3);
-  }, []);
-
-  // Memoize non-featured posts for pagination
-  const nonFeaturedPosts = useMemo(() => {
-    return blogPosts.filter(post => !post.featured);
-  }, []);
-
-  const totalPages = Math.ceil(nonFeaturedPosts.length / POSTS_PER_PAGE);
-  
-  // Get current posts for the page
+  // Calculate current posts and total pages
   const currentPosts = useMemo(() => {
     const indexOfLastPost = currentPage * POSTS_PER_PAGE;
     const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
-    return nonFeaturedPosts.slice(indexOfFirstPost, indexOfLastPost);
-  }, [currentPage, nonFeaturedPosts]);
+    return blogPosts.slice(indexOfFirstPost, indexOfLastPost);
+  }, [currentPage]);
+
+  const totalPages = Math.ceil(blogPosts.length / POSTS_PER_PAGE);
 
   // Load saved data from localStorage
   useEffect(() => {

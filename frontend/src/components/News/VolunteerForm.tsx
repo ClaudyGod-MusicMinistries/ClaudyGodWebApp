@@ -10,7 +10,8 @@ export const VolunteerForm = () => {
     role: '',
     reason: '',
   });
-  const [submitted, setSubmitted] = useState(false);
+ const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -19,16 +20,39 @@ export const VolunteerForm = () => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setForm({
-      firstName: '',
-      lastName: '',
-      email: '',
-      role: '',
-      reason: '',
-    });
+    setErrorMsg(null);
+
+    try {
+      // Send a POST to /api/volunteers with the form data
+      const response = await fetch('http://localhost:5000/api/volunteers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (!response.ok) {
+        // If back-end returns 4xx/5xx, show an error
+        const err = await response.json();
+        throw new Error(err.message || 'Failed to submit volunteer form.');
+      }
+
+      // If successful, mark as submitted and clear form
+      setSubmitted(true);
+      setForm({
+        firstName: '',
+        lastName: '',
+        email: '',
+        role: '',
+        reason: '',
+      });
+    } catch (err: any) {
+      console.error('Error when submitting volunteer form:', err);
+      setErrorMsg(err.message ?? 'Something went wrong. Please try again.');
+    }
   };
 
   return (
@@ -52,7 +76,11 @@ export const VolunteerForm = () => {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Form fields remain the same as original */}
+          {errorMsg && (
+            <div className="text-red-500 text-sm md:text-base bg-red-100/10 p-3 rounded-lg">
+              {errorMsg}
+            </div>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div>
               <label
