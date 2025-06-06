@@ -32,20 +32,9 @@ const videos: VideoType[] = [
       day: 'numeric' 
     })
   },
+ 
   {
     id: 2,
-    title: 'Joyful Alleluia by ClaudyGod',
-    youtubeId: 'ih4SrEgnV60',
-    category: 'Music Videos',
-    description: 'A Gospel Choir Rendition.',
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 3,
     title: 'Nothing Compares To You',
     youtubeId: 'Dw5S-jzzboA',
     category: 'Visualizers',
@@ -56,36 +45,48 @@ const videos: VideoType[] = [
       day: 'numeric' 
     })
   },
-  {
+    {
+    id: 3,
+    title: 'Dwelling Place (Forever God)',
+    youtubeId: 'KoVkhbrRjf8',
+    category: 'Live Sessions',
+    description: ' Song By Min. ClaudyGod and Her Worship Team.',
+    date: new Date().toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })
+  },
+    {
     id: 4,
-    title: 'Love Me So Much - Lover of my soul(Album)',
-    youtubeId: 'YPJj0HonZb0',
-    category: 'Live Sessions',
-    description: 'Full Sunday worship service with special ministry',
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 5,
-    title: 'Love Me So Much - Lover of my soul(Album)',
-    youtubeId: 'YPJj0HonZb0',
-    category: 'Live Sessions',
-    description: 'Full Sunday worship service with special ministry',
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 6,
-    title: 'Thank You (Midnight Cry) - Lover of my soul(Album)',
-    youtubeId: '4i97iBmNnUA',
+    title: 'Look To You (Official Visualizer/ Music Video)',
+    youtubeId: '7BN7i4puuis',
     category: 'Visualizers',
-    description: 'Personal testimony about God\'s grace and mercy',
+    description: 'Song By Min. ClaudyGod',
+    date: new Date().toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })
+  },
+    {
+    id: 5,
+    title: 'NEW! I Love You Lord by ClaudyGod',
+    youtubeId: 'SqaOeGLDPLY',
+    category: 'Live Sessions',
+    description: ' Song By Min. ClaudyGod and Her Worship Team.',
+    date: new Date().toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })
+  },
+       {
+    id: 6,
+    title: `'It's A New Day (Thank You For Today)'`,
+    youtubeId: 'Ak0LZgfHMa0',
+    category: 'Music Videos',
+    description: 'Song by Min. Claudy',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -94,58 +95,58 @@ const videos: VideoType[] = [
   },
   {
     id: 7,
-    title: `It's A New Day (Thank You For Today) '`,
-    youtubeId: 'Ak0LZgfHMa0',
-    category: 'Music Videos',
-    description: 'Music by ClaudyGOD. Official Music Video.',
+    title: 'All of Me (Official Music Video)',
+    youtubeId: 'L-AVa2qC5Ic',
+   category: 'Visualizers',
+    description: 'Song By Min. ClaudyGod',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
       day: 'numeric' 
     })
   },
-  {
+    {
     id: 8,
-    title: 'King of Heaven - King of Heaven Album',
-    youtubeId: 'W_Gfia-R3Ec',
+    title: 'VERY GLORIOUS Live Recording (Angel Inspired Song)',
+    youtubeId: 'xY4508hwPfw',
     category: 'Live Sessions',
-    description: 'Official music video for "You Are Our Everything"',
+    description: ' Song By Min. ClaudyGod and Her Worship Team.',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
       day: 'numeric' 
     })
   },
-  {
+   {
     id: 9,
-    title: 'LOVE ME SO MUCH🌺🌺',
-    youtubeId: 'ZxOV4PVLc1U',
+    title: 'Joyful Alleluia by ClaudyGod',
+    youtubeId: 'ih4SrEgnV60',
     category: 'Music Videos',
-    description: 'Official Music Video',
+    description: 'Song by Min. Claudy',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
       day: 'numeric' 
     })
   },
-  {
+    {
     id: 10,
-    title: 'Good To Me - King of heaven Album',
-    youtubeId: 'NmKvR1hVc5M',
+    title: 'NOW OUT! King of the Nations',
+    youtubeId: 'UZPaupINXYI',
     category: 'Live Sessions',
-    description: 'Live Worship Session with ClaudyGod',
+    description: ' Song By Min. ClaudyGod and Her Worship Team.',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
       day: 'numeric' 
     })
   },
-  {
+     {
     id: 11,
-    title: 'King of the Nations - King of Heaven Album',
-    youtubeId: 'WfiL2fUF-8g',
-    category: 'Visualizers',
-    description: 'Full Sunday worship service with special ministry',
+    title: 'Love Me So Much',
+    youtubeId: 'uro0EWsYdxc',
+    category: 'Music Videos',
+    description: 'Song by Min. Claudy',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -154,34 +155,34 @@ const videos: VideoType[] = [
   },
   {
     id: 12,
-    title: 'Forever God (Dwelling Place) - King of Heaven Album',
-    youtubeId: '1PjlO2sNyKk',
-    category: 'Live Sessions',
-    description: 'Personal testimony about God\'s grace and mercy',
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 13,
-    title: 'All of Me',
-    youtubeId: 'L-AVa2qC5Ic',
+    title: 'Nothing Compares To You(Official Music Video/Visualizer)',
+    youtubeId: 'Dw5S-jzzboA',
     category: 'Visualizers',
-    description: 'Official Music Video',
+    description: 'Song By Min. ClaudyGod',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
       day: 'numeric' 
     })
   },
-  {
-    id: 14,
-    title: 'Affirmation - Affirmation Album',
-    youtubeId: 'elAVI2DDGCM',
+    {
+    id: 13,
+    title: 'NEW! Very Glorious LIVE WORSHIP SESSION (An Angel Inspired Song)',
+    youtubeId: '6pDDMP9Xprg',
     category: 'Live Sessions',
-    description: 'Official music video for "You Are Our Everything"',
+    description: ' Song By Min. ClaudyGod and Her Worship Team.',
+    date: new Date().toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })
+  },
+     {
+    id: 14,
+    title: 'Affirmation',
+    youtubeId: 'ih4SrEgnV60',
+    category: 'Music Videos',
+    description: 'Song by Min Claudy',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -190,22 +191,22 @@ const videos: VideoType[] = [
   },
   {
     id: 15,
-    title: 'Look to You',
-    youtubeId: '7BN7i4puuis',
+    title: 'Lover of My Soul',
+    youtubeId: 'lrKaURkswT0',
     category: 'Visualizers',
-    description: 'official Visualizer/Music Videos"',
+    description: 'Song By Min. ClaudyGod',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
-      day: 'numeric' 
+      day: 'numeric'
     })
   },
   {
     id: 16,
-    title: 'Lover of my Soul',
-    youtubeId: 'lrKaURkswT0',
+    title: `I Love You Lord ( Official Music Video) '`,
+    youtubeId: 'r8rp58DqavM',
     category: 'Visualizers',
-    description: 'Official Visualizers / Music Videos"',
+    description: 'Song By Min. ClaudyGod',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -214,40 +215,17 @@ const videos: VideoType[] = [
   },
   {
     id: 17,
-    title: 'You Are Our Everything - You are our Everything Album',
-    youtubeId: 'fK_tCBcnqGs',
-    category: 'Live Sessions',
-    description: 'Full Sunday worship service with special ministry',
+    title: 'Look to You',
+    youtubeId: 'vS8myyETQP4',
+    category: 'Visualizers',
+    description: 'official Visualizer/Music Videos"',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
       day: 'numeric' 
     })
   },
-  {
-    id: 18,
-    title: 'Affirmation by ClaudyGod',
-    youtubeId: 'Y-U4IvvnNTo',
-    category: 'Music Videos',
-    description: 'Official Music Video',
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 19,
-    title: 'O Holy Night - Claudy God Album',
-    youtubeId: 'oBRS1Uod3X8',
-    category: 'Live Sessions',
-    description: 'Worship Experience',
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  }
+  
 ]
 
 const VIDEOS_PER_PAGE = 6;
