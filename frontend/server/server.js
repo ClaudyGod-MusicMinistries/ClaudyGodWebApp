@@ -3,8 +3,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const contactRoutes = require('../server/routes/ContactRoutes');
-const volunteerRoutes = require('../server/routes/volunteerRoutes')
+
+
+// Routes
+const contactRoutes = require('./routes/ContactRoutes');
+const volunteerRoutes = require('./routes/volunteerRoutes');
+const subscriberRoutes = require('./routes/SubscribeRoutes');
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,6 +29,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 // Routes
 app.use('/api/contacts', contactRoutes);
 app.use('/api/volunteers', volunteerRoutes);
+app.use('/api/subscribers', subscriberRoutes);
 
 // Start Server
 app.listen(PORT, () => {
