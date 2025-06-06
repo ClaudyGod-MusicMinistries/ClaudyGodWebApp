@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, FieldErrors } from 'react-hook-form';
 import { Herosection } from '../components/Herosection';
 import { Log } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +10,7 @@ import {
   faEnvelope,
 } from '@fortawesome/free-solid-svg-icons';
 
-// Add these brand‐icon imports:
+// Brand icons:
 import {
   faFacebookF,
   faXTwitter,
@@ -45,13 +45,13 @@ export const ContactData: React.FC = () => {
     },
   });
 
+  // Called when all fields pass validation
   const onSubmit = async (data: ContactFormInputs) => {
     try {
       // Simulate network delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // In production, replace with your actual POST request:
-      
+      // In production, replace with your real POST request:
       const response = await fetch('http://localhost:5000/api/contacts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -59,15 +59,10 @@ export const ContactData: React.FC = () => {
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.message || 'Submission failed');
-      
 
       toast.success('Your message was sent successfully!', {
         position: 'top-right',
         autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
       });
 
       setIsModalOpen(true);
@@ -77,14 +72,23 @@ export const ContactData: React.FC = () => {
       toast.error('Failed to send message. Please try again.', {
         position: 'bottom-right',
         autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
       });
     }
   };
 
+  // Called when validation fails on submit
+  const onError = (fieldErrors: FieldErrors<ContactFormInputs>) => {
+    // Show a generic toast if any required field is missing or invalid
+    toast.warn('Please fill in all required fields.', {
+      position: 'top-right',
+      autoClose: 3000,
+    });
+    // Optionally, you could also trigger the first invalid field to show its inline error immediately:
+    const firstKey = Object.keys(fieldErrors)[0] as keyof ContactFormInputs;
+    trigger(firstKey);
+  };
+
+  // Trigger validation for a single field on blur
   const validateField = async (field: keyof ContactFormInputs) => {
     await trigger(field);
   };
@@ -104,7 +108,7 @@ export const ContactData: React.FC = () => {
             </p>
             <button
               onClick={() => setIsModalOpen(false)}
-              className="bg-purple-900 hover:bg-purple-800 text-white font-medium py-2 px-4 rounded-md transition-colors"
+              className="bg-purple-900 hover:bg-purple-800 text-white font-medium py-2 px-4 rounded-md transition-colors cursor-pointer"
             >
               Close
             </button>
@@ -139,7 +143,11 @@ export const ContactData: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {/* Contact Form */}
           <div>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
+            <form
+              onSubmit={handleSubmit(onSubmit, onError)}
+              className="space-y-6"
+              noValidate
+            >
               {/* Name Field */}
               <div>
                 <label htmlFor="name" className="block text-sm robotoMedium text-gray-700 mb-1">
@@ -285,7 +293,7 @@ export const ContactData: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting || !isValid || !isDirty}
-                className={`w-full md:w-auto bg-purple-900 hover:bg-purple-800 robotoMedium text-white font-medium py-3 px-8 rounded-md transition-all duration-300 ease-in-out flex items-center justify-center ${
+                className={`w-full md:w-auto bg-purple-900 cursor-pointer hover:bg-purple-800 robotoMedium text-white font-medium py-3 px-8 rounded-md transition-all duration-300 ease-in-out flex items-center justify-center ${
                   isSubmitting || !isValid || !isDirty
                     ? 'opacity-70 cursor-not-allowed'
                     : 'hover:scale-[1.02] transform shadow-lg hover:shadow-xl'
