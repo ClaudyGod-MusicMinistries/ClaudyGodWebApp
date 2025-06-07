@@ -3,8 +3,9 @@ import React from 'react';
 import { useForm, FieldErrors } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { submitContactForm } from '../api/ContactApi';
 
-type ContactFormInputs = {
+export type ContactFormInputs = {
   name: string;
   email: string;
   message: string;
@@ -26,19 +27,13 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
     defaultValues: { name: '', email: '', message: '' },
   });
 
-  const onSubmit = async (data: ContactFormInputs) => {
+ const onSubmit = async (data: ContactFormInputs) => {
     try {
       // Simulate network delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Replace with real endpoint in production
-      const response = await fetch('http://localhost:5000/api/contacts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.message || 'Submission failed');
+      
+      // Use the API service instead of direct fetch
+      await submitContactForm(data);
 
       toast.success('Your message was sent successfully!', {
         position: 'top-right',
@@ -49,7 +44,9 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       reset();
     } catch (err) {
       console.error('Form submit error:', err);
-      toast.error('Failed to send message. Please try again.', {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to send message';
+      
+      toast.error(`Error: ${errorMessage}`, {
         position: 'bottom-right',
         autoClose: 5000,
       });

@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-
-type FormData = {
-  name: string;
-  email: string;
-};
+import { subscribeToNewsletter, FormData } from '../components/api/subscriber'; // Add this import
 
 const NewsletterForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,16 +19,8 @@ const NewsletterForm: React.FC = () => {
     setError(null);
     
     try {
-      const response = await fetch('http://localhost:5000/api/subscribers', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Subscription failed');
-      }
+      // Use the API service instead of direct fetch
+      await subscribeToNewsletter(data);
 
       reset();
       setIsSuccess(true);

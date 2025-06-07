@@ -10,7 +10,7 @@ import { Home } from './pages/Home';
 import { Biography } from './pages/Bio';
 import { MusicData } from './pages/Music';
 import { VideosData } from './pages/Videos';
-import { Booking } from './pages/Bookings';
+import { Bookings } from './pages/Bookings';
 import { ContactData } from './pages/Contact';
 import { DonateData } from './pages/Donate';
 import { StoreData } from './pages/Store';
@@ -36,7 +36,7 @@ function AppRoutes() {
           <Route path="biography" element={<Biography />} />
           <Route path="music" element={<MusicData />} />
           <Route path="videos" element={<VideosData />} />
-          <Route path="bookings" element={<Booking />} />
+          <Route path="bookings" element={<Bookings />} />
           <Route path="contact" element={<ContactData />} />
           <Route path="donate" element={<DonateData />} />
           <Route path="store" element={<StoreData />} />

@@ -17,7 +17,7 @@ import {
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
 
-import { toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 type ContactFormInputs = {

@@ -1,17 +1,9 @@
-// src/components/news/VolunteerForm.tsx
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-type VolunteerFormData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: string;
-  reason: string;
-};
+import { submitVolunteerForm, VolunteerFormData } from '../api/volunteer'; // Add this import
 
 export const VolunteerForm = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -24,24 +16,8 @@ export const VolunteerForm = () => {
 
   const onSubmit = async (data: VolunteerFormData) => {
     try {
-      const response = await fetch('http://localhost:5000/api/volunteers', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        let errorMessage = 'Failed to submit volunteer form';
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.message || errorMessage;
-        } catch {
-          errorMessage = response.statusText || errorMessage;
-        }
-        throw new Error(errorMessage);
-      }
+      // Use the API service instead of direct fetch
+      await submitVolunteerForm(data);
 
       // Show success toast and modal
       toast.success('Volunteer application submitted successfully!');
