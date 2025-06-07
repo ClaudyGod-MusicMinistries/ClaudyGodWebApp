@@ -44,7 +44,7 @@ export const ContactData: React.FC = () => {
 
  return (
     <div className="bg-white relative">
-      {/* === Success Modal: shows when form is submitted successfully === */}
+      
       <SuccessModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       {/* Hero Section */}
@@ -70,13 +70,14 @@ export const ContactData: React.FC = () => {
         <h3 className="text-gray-900 mb-6 roboto-condensed text-2xl md:text-3xl lg:text-4xl">
           Get In Touch With Us
         </h3>
-
-       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          {/* Left side: the form */}
-          <ContactForm onSuccess={() => setIsModalOpen(true)} />
-
-          {/* Right side: contact information + social links */}
-          <ContactInfo />
+ <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-8 md:gap-16 mb-16">
+          <div className="md:pr-8">
+            <ContactForm onSuccess={() => setIsModalOpen(true)} />
+          </div>
+          
+          <div className="md:pl-8 md:border-l md:border-purple-200">
+            <ContactInfo />
+          </div>
         </div>
         <hr className="my-8 border-purple-900" />
 

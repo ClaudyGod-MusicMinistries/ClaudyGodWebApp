@@ -52,7 +52,7 @@ export const HeroSlider = () => {
             onLoadedData={() => setVideoLoaded(true)}
             preload="none"
           >
-            <source src="/mainBanner.mp4" type="video/mp4" />
+            <source src="/mainBanner.webm" type="video/webm" />
             Your browser does not support the video tag.
           </video>
         )}

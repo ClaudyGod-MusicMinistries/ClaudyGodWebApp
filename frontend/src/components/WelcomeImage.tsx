@@ -1,12 +1,13 @@
 import React from 'react';
-import Blog from '../assets/blogBanner.jpg'
+import blog  from '../assets/blogBanner.webp';
+
 
 const WelcomeImage: React.FC = () => {
   return (
     <div className="relative h-full  overflow-hidden rounded-2xl shadow-xl">
       {/* Lazy-loaded image with gradient overlay */}
       <img 
-        src={Blog} 
+        src={blog} 
         alt="Blog community discussion"
         className=" h-full"
         loading="lazy"
