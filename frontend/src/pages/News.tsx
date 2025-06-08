@@ -2,17 +2,16 @@
 import { useState, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Cover } from '../assets/';
+import { Cover,musicCover6 , VideoArt, veryGlorious } from '../assets/';
 import {
-  faRecordVinyl,
-  faCalendarAlt,
+  
+ faArrowDown
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faYoutube,
   faSpotify,
   faApple,
   faDeezer,
-
 } from '@fortawesome/free-brands-svg-icons';
 
 // Components
@@ -77,7 +76,7 @@ export const News = () => {
             transition={{ duration: 0.5 }}
             className="text-3xl sm:text-4xl md:text-5xl roboto-condensed lg:text-6xl text-purple-950 bg-clip-text"
           >
-            ClaudyGod Latest News
+            Latest Albums
           </motion.h1>
           <motion.div
             initial={{ width: 0 }}
@@ -91,7 +90,7 @@ export const News = () => {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="text-lg md:text-xl work-sans text-[#72709e] max-w-3xl mx-auto"
           >
-            Massive Announcement! We've got big things happening:
+      We’ve just released three new gospel albums, packed with inspiring messages and soulful melodies.
           </motion.p>
         </div>
 
@@ -101,142 +100,263 @@ export const News = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-[#140f3c]/80 backdrop-blur-sm border border-[#6a11cb]/30 rounded-2xl overflow-hidden shadow-xl hover:shadow-[#ff4d94]/30 transition-all duration-300 hover:-translate-y-2"
+            className="bg-[#1a0a2e] rounded-2xl p-6 md:p-8 shadow-xl h-full"
           >
-            <div className="flex flex-col">
-              <div className="w-full h-60 bg-gradient-to-br from-[#0a061a] to-[#1a0a2e] flex items-center justify-center p-6">
-                <div className="relative w-full h-full">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#ff4d94] to-[#6a11cb] opacity-20 rounded-xl" />
-                  <img
-                    src={Cover}
-                    alt="You Are Our Everything"
-                    className="w-full h-full object-cover rounded-xl"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-              <div className="p-4 md:p-6">
-                <h3 className="text-lg md:text-xl roboto-condensed mb-4 text-white text-center">
-                  New Singles out: You Are Our Everything
-                </h3>
-                <div className="grid grid-cols-2 gap-2 md:gap-3">
-                  {[
-                    { icon: faSpotify, name: 'Spotify', color: '#1DB954' },
-                    { icon: faApple, name: 'Apple Music', color: '#FF2D55' },
-                    { icon: faYoutube, name: 'YouTube', color: '#FF0000' },
-                    { icon: faDeezer, name: 'Deezer', color: '#FEAA2D' },
-                    
-                  ].map((platform, idx) => (
-                    <a
-                      key={idx}
-                      href="#"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block w-full"
-                    >
-                      <button
-                        className="w-full py-2 text-xs md:text-sm rounded-lg flex items-center justify-center transition-all hover:scale-[1.02] transform cursor-pointer"
-                        style={{ backgroundColor: platform.color }}
-                      >
-                        <FontAwesomeIcon
-                          icon={platform.icon}
-                          className="mr-1 md:mr-2 text-white"
-                        />
-                        <span className="text-white">{platform.name}</span>
-                      </button>
-                    </a>
-                  ))}
+            <h3 className="sm:text-sm md:text-xl  roboto-condensed text-white mb-6 text-left">
+              Album: Lover of my Soul
+            </h3>
+
+            <div className="relative aspect-video rounded-xl overflow-hidden mb-6">
+              <img
+                src={musicCover6}
+                alt="Latest Release"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-center">
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <svg
+                    className="w-6 h-6 md:w-8 md:h-8 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                 </div>
               </div>
             </div>
-          </motion.div>
 
-          {/* New Albums Card */}
+            <div className="mt-6 md:mt-8 grid grid-cols-2 gap-3">
+    
+              <a
+                href="#"
+                className="flex items-center justify-center p-3 bg-green-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
+              >
+                <FontAwesomeIcon icon={faSpotify} className="w-5 h-5 mr-2 text-white" />
+                <span className="text-white text-sm font-medium">Spotify</span>
+              </a>
+          
+              <a
+                href="#"
+                className="flex items-center justify-center p-3 bg-red-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
+              >
+                <FontAwesomeIcon icon={faYoutube} className="w-5 h-5 mr-2 text-white" />
+                <span className="text-white text-sm font-medium">YouTube</span>
+              </a>
+              <a
+                href="#"
+                className="flex items-center justify-center p-3 bg-black rounded-lg shadow-lg hover:opacity-90 transition-all"
+              >
+                <FontAwesomeIcon icon={faApple} className="w-5 h-5 mr-2 text-white" />
+                <span className="text-white text-sm font-medium">Apple Music</span>
+              </a>
+              <a
+                href="#"
+                className="flex items-center justify-center p-3 bg-[#feaa2d] rounded-lg shadow-lg hover:opacity-90 transition-all"
+              >
+                <FontAwesomeIcon icon={faDeezer} className="w-5 h-5 mr-2 text-white" />
+                <span className="text-white text-sm font-medium">Deezer</span>
+              </a>
+            </div>
+          </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="bg-[#140f3c]/80 backdrop-blur-sm border border-[#6a11cb]/30 rounded-2xl overflow-hidden shadow-xl hover:shadow-[#ff4d94]/30 transition-all duration-300 hover:-translate-y-2"
+            className="bg-[#1a0a2e] rounded-2xl p-6 md:p-8 shadow-xl h-full"
           >
-            <div className="flex flex-col">
-              <div className="p-6 bg-gradient-to-br from-[#0a061a] to-[#1a0a2e] flex justify-center">
-                <FontAwesomeIcon
-                  icon={faRecordVinyl}
-                  className="text-4xl md:text-5xl text-[#ff4d94]"
-                />
+            <h3 className="sm:text-sm md:text-xl  roboto-condensed text-white mb-6 text-left">
+           Album: Very Glorious
+            </h3>
+
+            <div className="relative aspect-video rounded-xl overflow-hidden mb-6">
+              <img
+                src={veryGlorious}
+                alt="New Album"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-center">
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <svg
+                    className="w-6 h-6 md:w-8 md:h-8 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
               </div>
-              <div className="p-4 md:p-6">
-                <h3 className="text-lg md:text-xl roboto-condensed mb-2 text-white">
-                  3 New Albums Out Now
-                </h3>
-                <ul className="space-y-2 text-gray-300 work-sans text-sm md:text-base">
-                  {['Very Glorious', 'King of Heaven', 'Lover of My Soul'].map(
-                    (title, i) => (
-                      <li key={i} className="flex items-center">
-                        <span className="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
-                        {title}
-                      </li>
-                    )
-                  )}
-                </ul>
-                <button className="mt-4 w-full py-2.5 bg-gradient-to-r from-[#6a11cb] to-[#2575fc] text-white raleway-medium rounded-lg hover:opacity-90 transition-all text-sm md:text-base">
-                  Listen on All Platforms
-                </button>
-              </div>
+            </div>
+            <div className="mt-6 md:mt-8 grid grid-cols-2 gap-3">
+              <a
+                href="#"
+                className="flex items-center justify-center p-3 bg-green-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
+              >
+                <FontAwesomeIcon icon={faSpotify} className="w-5 h-5 mr-2 text-white" />
+                <span className="text-white text-sm font-medium">Spotify</span>
+              </a>
+              <a
+                href="#"
+                className="flex items-center justify-center p-3 bg-red-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
+              >
+                <FontAwesomeIcon icon={faYoutube} className="w-5 h-5 mr-2 text-white" />
+                <span className="text-white text-sm font-medium">YouTube</span>
+              </a>
+              <a
+                href="#"
+                className="flex items-center justify-center p-3 bg-black rounded-lg shadow-lg hover:opacity-90 transition-all"
+              >
+                <FontAwesomeIcon icon={faApple} className="w-5 h-5 mr-2 text-white" />
+                <span className="text-white text-sm font-medium">Apple Music</span>
+              </a>
+              <a
+                href="#"
+                className="flex items-center justify-center p-3 bg-[#feaa2d] rounded-lg shadow-lg hover:opacity-90 transition-all"
+              >
+                <FontAwesomeIcon icon={faDeezer} className="w-5 h-5 mr-2 text-white" />
+                <span className="text-white text-sm font-medium">Deezer</span>
+              </a>
             </div>
           </motion.div>
 
-          {/* Tour & Concerts Card */}
-          <motion.div
+         <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="bg-[#140f3c]/80 backdrop-blur-sm border border-[#6a11cb]/30 rounded-2xl overflow-hidden shadow-xl hover:shadow-[#ff4d94]/30 transition-all duration-300 hover:-translate-y-2"
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-[#1a0a2e] rounded-2xl p-6 md:p-8 shadow-xl h-full"
           >
-            <div className="p-4 md:p-6 bg-gradient-to-r from-[#6a11cb]/30 to-[#ff4d94]/30 border-b border-[#6a11cb]/30">
-              <div className="flex items-center mb-4">
-                <FontAwesomeIcon
-                  icon={faCalendarAlt}
-                  className="text-2xl md:text-3xl text-[#5c4b61] mr-2 md:mr-3"
-                />
-                <h2 className="text-xl md:text-2xl roboto-condensed">
-                   Latest Updates
-                </h2>
+            <h3 className="sm:text-sm md:text-xl  roboto-condensed text-white mb-6 text-left">
+              Album: King of heavens
+            </h3>
+
+            <div className="relative aspect-video rounded-xl overflow-hidden mb-6">
+              <img
+                src={VideoArt}
+                alt="Latest Release"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-center">
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <svg
+                    className="w-6 h-6 md:w-8 md:h-8 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
-            <div className="p-4 md:p-6 space-y-4 md:space-y-6">
-              {[
-                {
-                  date: 'Upcoming',
-                  title: 'Min. ClaudyGod Live In Nigeria',
-                  location: 'Min. ClaudyGod will be visiting 5 States in Nigeria. Read More',
-                },
-        
-              ].map((event, i) => (
-                <div
-                  key={i}
-                  className="border-b border-[#4e2a8e] pb-3 md:pb-4"
-                >
-                  <div className="text-[#ff4d94] text-base md:text-lg font-bold mb-1 md:mb-2">
-                    {event.date}
-                  </div>
-                  <h3 className="text-lg md:text-xl font-bold text-white mb-1 md:mb-2">
-                    {event.title}
-                  </h3>
-                  <p className="text-gray-300 text-sm md:text-base">
-                    {event.location}
-                  </p>
-                </div>
-              ))}
-
-          
+            <div className="mt-6 md:mt-8 grid grid-cols-2 gap-3">
+              <a
+                href="#"
+                className="flex items-center justify-center p-3 bg-green-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
+              >
+                <FontAwesomeIcon icon={faSpotify} className="w-5 h-5 mr-2 text-white" />
+                <span className="text-white text-sm font-medium">Spotify</span>
+              </a>
+              <a
+                href="#"
+                className="flex items-center justify-center p-3 bg-red-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
+              >
+                <FontAwesomeIcon icon={faYoutube} className="w-5 h-5 mr-2 text-white" />
+                <span className="text-white text-sm font-medium">YouTube</span>
+              </a>
+              <a
+                href="#"
+                className="flex items-center justify-center p-3 bg-black rounded-lg shadow-lg hover:opacity-90 transition-all"
+              >
+                <FontAwesomeIcon icon={faApple} className="w-5 h-5 mr-2 text-white" />
+                <span className="text-white text-sm font-medium">Apple Music</span>
+              </a>
+              <a
+                href="#"
+                className="flex items-center justify-center p-3 bg-[#feaa2d] rounded-lg shadow-lg hover:opacity-90 transition-all"
+              >
+                <FontAwesomeIcon icon={faDeezer} className="w-5 h-5 mr-2 text-white" />
+                <span className="text-white text-sm font-medium">Deezer</span>
+              </a>
             </div>
           </motion.div>
         </div>
       </div>
 
+<div className="w-full py-20 mb-20 bg-[#0a061a]">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-16">
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-3xl sm:text-4xl md:text-5xl roboto-condensed lg:text-6xl text-white"
+      >
+        Check Out Our Live Sessions
+      </motion.h2>
+      <motion.div
+        initial={{ width: 0 }}
+        animate={{ width: '8rem' }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        className="h-1 bg-purple-500 mx-auto my-6"
+      />
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+        className="md:text-sm max-md:text-xx  work-sans text-[#72709e] max-w-3xl mx-auto"
+      >
+        We recently hosted vibrant live gospel sessions in Nigeria, bringing soulful performances and spiritual inspiration to the community.
+        Stay connected for more updates and unforgettable moments of praise and worship!
+      </motion.p>
+      
+      {/* Down arrow icon with YouTube link */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.8 }}
+        className="mt-12"
+      >
+        <a 
+          href="https://youtu.be/6pDDMP9Xprg?si=EjLow0PUYG7QvIWG" 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block"
+        >
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ 
+              repeat: Infinity, 
+              duration: 1.5,
+              ease: "easeInOut"
+            }}
+            className="flex flex-col items-center"
+          >
+            <FontAwesomeIcon 
+              icon={faArrowDown} 
+              className="w-8 h-8 text-purple-500 mb-2" 
+            />
+            <span className="text-purple-400 text-sm font-medium">Watch Now</span>
+          </motion.div>
+        </a>
+      </motion.div>
+    </div>
+  </div>
+</div>
       {/* ─────────────── ARTIST QUOTE ───────────────────────────────────────────── */}
-    <ArtistQuote />
+    <ArtistQuote  />
 
       {showTourModal && selectedTourCity && (
         <Suspense fallback={<div>Loading...</div>}>

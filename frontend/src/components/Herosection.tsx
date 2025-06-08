@@ -18,7 +18,7 @@ export const Herosection: React.FC<HeroSectionProps> = ({ title, backgroundImage
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="w-full lg:w-1/2 text-white flex flex-col justify-center h-full py-8 lg:py-0"
+          className="hidden md:flex w-full lg:w-1/2 text-white flex-col justify-center h-full py-8 lg:py-0"
         >
           <div className="max-w-2xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
@@ -28,7 +28,7 @@ export const Herosection: React.FC<HeroSectionProps> = ({ title, backgroundImage
             </h1>
             <div className="border-l-4 border-white pl-4">
               <p className="text-gray-300 text-lg md:text-xl leading-relaxed">
-                Experience the divine fusion of American Gospel and Afro-gospel through ClaudyGod's inspirational journey
+                Experience the divine fusion of American Contemporary Christian Music and Afro-Gospel Songs through ClaudyGod's Inspirational Journey.
               </p>
             </div>
           </div>
@@ -40,6 +40,7 @@ export const Herosection: React.FC<HeroSectionProps> = ({ title, backgroundImage
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="w-full lg:w-1/2 h-full relative flex items-center justify-center"
+        
         >
           <div className="relative w-full h-full max-w-[600px]">
             <img

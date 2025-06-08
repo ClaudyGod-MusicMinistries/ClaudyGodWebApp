@@ -180,7 +180,7 @@ const videos: VideoType[] = [
      {
     id: 14,
     title: 'Affirmation',
-    youtubeId: 'ih4SrEgnV60',
+    youtubeId: 'bVOAeBAer4U',
     category: 'Music Videos',
     description: 'Song by Min Claudy',
     date: new Date().toLocaleDateString('en-US', { 

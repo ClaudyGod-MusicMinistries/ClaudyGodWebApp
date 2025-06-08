@@ -49,10 +49,11 @@ export const StoreData = () => {
 
       <section className="bg-purple-900 text-white py-16 relative">
         <div className="container mx-auto px-4 md:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl roboto-condensed">Store</h1>
+          <h1 className="text-4xl md:text-5xl roboto-condensed"> ClaudyGod Gospel Store</h1>
           <div className="w-20 h-1 bg-accent-gold mx-auto my-6" />
           <p className="max-w-2xl mx-auto text-lg md:text-xl raleway-medium">
-            Shop exclusive ClaudyGod merchandise and support the ministry.
+       Shop our curated collection of faith-inspired products, including uplifting mugs, apparel,
+        and accessories designed to inspire and uplift your spirit every day.
           </p>
         </div>
       </section>

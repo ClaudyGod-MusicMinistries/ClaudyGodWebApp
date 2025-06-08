@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Herosection } from '../components/Herosection';
-import { VideoBanner2 } from '../assets/';
+import { Back3 } from '../assets/';
 import NewsletterForm from '../components/Newsletter';
 import { Modal } from '../components/Modal';
 import { submitBooking } from '../components/api/bookingApi';
@@ -114,7 +114,7 @@ export const Bookings: React.FC = () => {
         <div className="absolute inset-0 bg-black/50 z-10"></div>
         <Herosection 
           title="ClaudyGod Music & Ministries / Bookings"
-          backgroundImage={VideoBanner2}
+          backgroundImage={Back3}
           className="relative z-0"
         />
       </div>

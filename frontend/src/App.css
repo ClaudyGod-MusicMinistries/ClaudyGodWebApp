@@ -31,6 +31,7 @@
 .roboto-condensed {
   font-family: var(--font-roboto-condensed);
   font-weight: 900;
+  /* font-size: var( --base-font-size); */
 }
 
 .roboto-medium {

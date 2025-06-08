@@ -123,8 +123,8 @@ export const Blog: React.FC = () => {
           <div className="w-full border-t border-gray-300"></div>
         </div>
         <div className="relative flex justify-center">
-          <span className="bg-gray-100 px-6 text-3xl md:text-8xl roboto-condensed text-center text-purple-900 tracking-wide">
-            FEATURED ARTICLES
+          <span className="bg-gray-100 px-6 roboto-condensed text-4xl text-center text-purple-900 ">
+            LATEST BLOG POSTS
           </span>
         </div>
       </div>

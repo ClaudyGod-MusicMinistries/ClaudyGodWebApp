@@ -33,6 +33,7 @@ import musicCover2 from './musicCoverArt2.webp'
 import musicCover3 from './musicCoverArt3.webp'
 import musicCover4 from './musicCoverArt4.webp'
 import musicCover5 from './musicCoverArt5.webp'
+import musicCover6 from './musicCoverArt6.webp'
 import MusicBan1 from './MusicBanner1.webp'
 import MusicBan2 from './MusicBanner2.webp'
 import MusicBan3 from './MusicBanner3.webp'
@@ -75,13 +76,17 @@ import ministry20 from './Ministry20.webp';
 import VideoArt from './videoCoverArt.webp';
 import newsBanner from './newsBanner.webp'
 import blog from './blogBanner.webp'
+import veryGlorious from './veryGlorious.jpg'
 
 
 
 export {Log, Back1, Isr, Back2, Back3,  Back4, About1, blog,
-    About2, Cover, Shop1, Shop2,Shop3, Donate1 , Donate2,
-    Shop4, bgresize, VideoBanner1, VideoBanner2,newsBanner, VideoBanner3,StoreBanner,  musicCover2, musicCover3,musicCover4,musicCover5,Resize_4, Resize4,Resize5,Resize1, Resize2, product4,Aud1, Aud2, AudioMack , MusicBan1, MusicBan2,
- MusicBan3, MusicBan4, musicCover1,Resize3, MusicBan5, MusicBan6, MusicBan7, MusicBan8 , Ministry1, ministry2, ministry3, ministry4,
+    About2, Cover, Shop1, Shop2,Shop3, Donate1 , Donate2, veryGlorious,
+    Shop4, bgresize, VideoBanner1, VideoBanner2,newsBanner, musicCover6,
+    VideoBanner3,StoreBanner, musicCover2, musicCover3,musicCover4,
+    musicCover5,Resize_4, Resize4,Resize5,Resize1, Resize2, AudioMack ,
+MusicBan1, MusicBan2,MusicBan3, MusicBan4, musicCover1,Resize3, MusicBan5, 
+MusicBan6, MusicBan7, MusicBan8 , Ministry1, ministry2, ministry3, ministry4,
   ministry5, ministry6, music1, music2, music3, music4, music5, music6, music7, music8, music9, backUp, ministry7, ministry8, ministry9, ministry10, ministry11,
    ministry12, VideoArt, ministry13, ministry14, ministry15,
     ministry16, ministry17, ministry18, ministry19, ministry20}

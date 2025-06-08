@@ -55,7 +55,7 @@ export const VolunteerForm = () => {
           theme="dark"
         />
         
-        <h3 className="text-xl md:text-2xl roboto-condensed text-white mb-6 text-center">
+        <h3 className="text-3xl sm:text-4xl md:text-5xl roboto-condensed lg:text-6xl text-white mb-6 text-center">
           Volunteer to be part of our Music Tour
         </h3>
 
