@@ -70,17 +70,13 @@ export const HeroSlider = () => {
             transition={{ duration: 0.8 }}
             className="bg-black/30 backdrop-blur-sm p-8 md:p-10 rounded-2xl max-w-2xl lg:max-w-3xl"
           >
-            {/* Title - Increased size and weight */}
+       
             <h2 className="md:text-8xl sm:text-4xl  lg:text-6xl text-white font-bold tracking-tight roboto-condensed mb-4 md:mb-5">
               {slide.title}
             </h2>
-            
-            {/* Description - Increased size, weight and line height */}
             <p className="text-gray-200 text-base sm:text-lg md:text-xl lg:text-2xl font-medium md:font-semibold leading-relaxed work-sans mb-6 md:mb-8">
               {slide.description}
             </p>
-            
-            {/* Button - Increased size and weight */}
             <button className="mt-2 bg-purple-700 cursor-pointer
              hover:bg-purple-800 text-white max-md:text-xx
               px-8 py-4 text-base md:text-lg

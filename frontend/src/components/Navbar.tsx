@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Log } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import StreamingModal from './StreamingModel';
@@ -20,16 +20,35 @@ import {
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
-
-
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const toggleMenu = () => setIsOpen(!isOpen);
-  const closeMenu = () => setIsOpen(false);
+  
+  // Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
+  // Handle mobile navigation
+  const handleMobileNavigation = (to: string) => {
+    if (location.pathname === to) {
+      // If already on the same page, just scroll to top
+      scrollToTop();
+    } else {
+      // Navigate to new page
+      navigate(to);
+    }
+    closeMenu();
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,7 +59,9 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Scroll to top on route change
   useEffect(() => {
+    scrollToTop();
     closeMenu();
   }, [location]);
 
@@ -89,6 +110,11 @@ export const Navbar: React.FC = () => {
               key={link.to}
               to={link.to}
               end
+              onClick={() => {
+                if (location.pathname === link.to) {
+                  scrollToTop();
+                }
+              }}
               className={({ isActive }) => `flex items-center text-xs work-sans transition-colors ${
                 scrolled 
                   ? (isActive 
@@ -169,16 +195,17 @@ export const Navbar: React.FC = () => {
                 { to: "/contact", name: "Contact", icon: faEnvelope },
               ].map((link) => (
                 <li key={link.to}>
-                  <NavLink
-                    to={link.to}
-                    className={({ isActive }) => `flex items-center p-2 rounded-md transition-colors ${
-                      isActive ? 'bg-purple-900 text-white' : 'text-gray-800 hover:bg-purple-900 hover:text-white'
+                  <button
+                    onClick={() => handleMobileNavigation(link.to)}
+                    className={`flex items-center w-full p-2 rounded-md transition-colors ${
+                      location.pathname === link.to 
+                        ? 'bg-purple-900 text-white' 
+                        : 'text-gray-800 hover:bg-purple-900 hover:text-white'
                     }`}
-                    onClick={closeMenu}
                   >
                     <FontAwesomeIcon icon={link.icon} className="mr-3 w-5" />
                     {link.name}
-                  </NavLink>
+                  </button>
                 </li>
               ))}
             </ul>

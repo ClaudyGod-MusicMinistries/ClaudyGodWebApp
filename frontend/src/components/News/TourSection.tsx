@@ -34,7 +34,7 @@ export const TourSection = ({
           className="text-center lg:text-left"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl roboto-condensed text-white mb-6">
-            Min. ClaudyGod Visits Nigeria
+           Exciting News !
           </h2>
           <p className="md:text-base work-sans text-purple-200 mb-8">
             Exciting News! ClaudyGod is coming to Nigeria for an inspiring music tour, evangelism, and outreach. 

@@ -29,7 +29,7 @@ Join the Movement
 This tour is more than just a series of concerts; it’s a movement of faith, love, and unity. Be part of this exciting journey with ClaudyGod as she brings her message of hope to Nigeria. Stay tuned for more details and prepare to be inspired!.`;
 
 export const TourDetailsModal: FC<TourDetailsModalProps> = ({ isOpen, onClose }) => {
-  // Handle body scroll and keyboard events
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';

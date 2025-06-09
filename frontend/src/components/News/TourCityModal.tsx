@@ -1,4 +1,3 @@
-// src/components/news/TourCityModal.tsx
 import { useState, ChangeEvent, FormEvent } from 'react';
 
 export const TourCityModal = ({
@@ -28,13 +27,9 @@ export const TourCityModal = ({
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
-    // Simulate API call
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
-
-      // Auto-close after success
       setTimeout(() => {
         onClose();
       }, 3000);
