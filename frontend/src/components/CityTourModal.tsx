@@ -14,11 +14,8 @@ const CityTourModal = ({ city, isOpen, onClose }: CityTourModalProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, you would send this data to your backend
     console.log('Form submitted:', { name, email, city });
     setIsSubmitted(true);
-    
-    // Reset form after 3 seconds
     setTimeout(() => {
       setIsSubmitted(false);
       setName('');

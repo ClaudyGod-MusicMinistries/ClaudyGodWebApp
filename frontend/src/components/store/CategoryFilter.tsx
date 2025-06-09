@@ -1,6 +1,4 @@
-// src/components/store/CategoryFilter.tsx
 import { categories } from "../data/storeData";
-
 
 interface CategoryFilterProps {
   activeCategory: string;

@@ -1,4 +1,4 @@
-// src/types/bookingTypes.ts
+
 export type CountryCode = 'US' | 'CA' | 'UK' | 'NG';
 
 export type BookingFormData = {

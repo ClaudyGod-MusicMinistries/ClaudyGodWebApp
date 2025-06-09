@@ -1,4 +1,4 @@
-// src/schemas/bookingSchema.ts
+
 import * as yup from 'yup';
 import { CountryCode } from '../types/booking';
 import { COUNTRY_STATE_CITY_DATA, ZIP_CODE_PATTERNS } from '../Utils/bookingConstants';

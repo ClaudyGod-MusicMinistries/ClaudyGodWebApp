@@ -12,8 +12,6 @@ export const Herosection: React.FC<HeroSectionProps> = ({ title, backgroundImage
   
   return (
     <section className="relative w-full bg-black h-[500px] overflow-hidden">
-      <div className="container mx-auto h-full flex flex-col lg:flex-row items-center justify-center gap-8 px-4 sm:px-6">
-        {/* Text Container */}
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -33,15 +31,11 @@ export const Herosection: React.FC<HeroSectionProps> = ({ title, backgroundImage
             </div>
           </div>
         </motion.div>
-
-        {/* Image Container */}
         <motion.div 
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full lg:w-1/2 h-full relative flex items-center justify-center"
-        
-        >
+          className="w-full lg:w-1/2 h-full relative flex items-center justify-center">
           <div className="relative w-full h-full max-w-[600px]">
             <img
               src={backgroundImage}
@@ -51,7 +45,7 @@ export const Herosection: React.FC<HeroSectionProps> = ({ title, backgroundImage
             <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent lg:bg-gradient-to-l" />
           </div>
         </motion.div>
-      </div>
+      
     </section>
   );
 };

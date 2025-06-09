@@ -1,4 +1,4 @@
-// src/constants/bookingConstants.ts
+
 import { CountryCode } from '../types/booking';
 
 export const COUNTRY_STATE_CITY_DATA: Record<CountryCode, {

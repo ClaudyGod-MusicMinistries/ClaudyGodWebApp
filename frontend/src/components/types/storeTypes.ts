@@ -1,4 +1,4 @@
-// src/types/storeTypes.ts
+
 export interface Product {
   id: number;
   name: string;

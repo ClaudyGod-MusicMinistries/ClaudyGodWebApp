@@ -27,7 +27,6 @@ const Chatbot: React.FC = () => {
   ];
   
   useEffect(() => {
-    // Add initial greeting message when chat is first opened
     if (isOpen && messages.length === 0) {
       setMessages([
         {
@@ -40,7 +39,6 @@ const Chatbot: React.FC = () => {
   }, [isOpen, messages.length]);
   
   useEffect(() => {
-    // Scroll to the bottom when new messages are added
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
   
@@ -49,7 +47,7 @@ const Chatbot: React.FC = () => {
     
     if (input.trim() === '') return;
     
-    // Add user message
+
     const userMessage: Message = {
       sender: 'user',
       text: input,
@@ -59,7 +57,7 @@ const Chatbot: React.FC = () => {
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     
-    // Add bot response after a short delay
+
     setTimeout(() => {
       const randomResponse = autoResponses[Math.floor(Math.random() * autoResponses.length)];
       

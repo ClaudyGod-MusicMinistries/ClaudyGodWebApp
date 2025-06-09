@@ -1,4 +1,4 @@
-// utils/securityUtils.ts
+
 export const TRUSTED_DOMAINS = [
   'spotify.com',
   'apple.com',

@@ -16,14 +16,14 @@ const DiagonalSection: React.FC<{
   title: string;
   description: string;
   category: 'Music Videos' | 'Visualizers' | 'Live Sessions';
-  videos: VideoType[]; // Add videos prop
+  videos: VideoType[];
   reverse?: boolean;
   onExplore: () => void;
 }> = ({
   title,
   description,
   category,
-  videos, // Receive videos prop
+  videos, 
   reverse = false,
   onExplore
 }) => {
@@ -31,7 +31,7 @@ const DiagonalSection: React.FC<{
   const [isHovered, setIsHovered] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   
-  // Filter videos based on category
+
   const categoryVideos = videos.filter(video => video.category === category);
   
   useEffect(() => {
@@ -124,8 +124,7 @@ const DiagonalSection: React.FC<{
     background: 'linear-gradient(90deg, rgba(107, 33, 168, 0.8) 0%, rgba(156, 163, 175, 0.7) 100%)',
     cursor: 'pointer'
   }}
-/>
-            
+/>  
             <div className="absolute inset-0 flex items-center justify-center">
               <motion.div
                 className="text-white text-5xl"

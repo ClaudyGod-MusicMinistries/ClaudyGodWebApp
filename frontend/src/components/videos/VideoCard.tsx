@@ -18,26 +18,20 @@ const VideoCard: React.FC<{
 }> = ({ content, onSelect }) => {
   // State for handling thumbnail errors
   const [thumbnailError, setThumbnailError] = useState(false);
-  
-  // YouTube thumbnail URLs
   const maxResUrl = `https://img.youtube.com/vi/${content.youtubeId}/maxresdefault.jpg`;
   const hqDefaultUrl = `https://img.youtube.com/vi/${content.youtubeId}/hqdefault.jpg`;
   const defaultThumbnail = MusicBan1; // Local fallback
 
   const handleThumbnailError = () => {
     if (!thumbnailError) {
-      // First try HQ default if maxres fails
       setThumbnailError(true);
     }
   };
-
-  // Determine which thumbnail to show
   const thumbnailSrc = thumbnailError ? hqDefaultUrl : maxResUrl;
 
   return (
     <div className="group cursor-pointer">
       <div className="relative overflow-hidden rounded-lg">
-        {/* Image with multiple fallbacks */}
         <img 
           src={thumbnailSrc}
           onError={handleThumbnailError}
@@ -46,15 +40,13 @@ const VideoCard: React.FC<{
           loading="lazy"
           decoding="async"
         />
-        
-        {/* Show default if both YouTube sources fail */}
         {thumbnailError && (
           <img 
             src={defaultThumbnail}
             alt="Default thumbnail"
             className="absolute inset-0 w-full h-full object-cover"
             onError={(e) => {
-              // Ultimate fallback to prevent broken image icon
+      
               e.currentTarget.onerror = null;
               e.currentTarget.src = '/images/default-fallback.jpg';
             }}

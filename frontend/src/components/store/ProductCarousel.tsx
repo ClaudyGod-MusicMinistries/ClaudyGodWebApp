@@ -1,4 +1,3 @@
-// src/components/store/ProductCarousel.tsx
 import { Product } from '../types/storeTypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';

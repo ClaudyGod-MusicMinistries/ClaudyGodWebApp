@@ -143,7 +143,6 @@ export const Hero: React.FC = () => {
             exit="exit"
             className="absolute inset-0 h-full w-full"
           >
-            {/* Background Image with enhanced dark gradient */}
             <motion.div
               variants={imageVariants}
               initial="hidden"
@@ -155,11 +154,8 @@ export const Hero: React.FC = () => {
                 alt="Background"
                 className="h-full w-full object-cover object-center"
               />
-              {/* Dark gradient overlay - much darker and more prominent */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-black/70" />
             </motion.div>
-
-            {/* Content Container */}
             <div className="container ml-4 md:ml-10 mt-6 md:mt-10 relative mx-auto flex h-full items-center px-4">
               <motion.div
                 initial="hidden"

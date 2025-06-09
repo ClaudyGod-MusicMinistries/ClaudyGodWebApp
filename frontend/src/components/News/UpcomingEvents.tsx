@@ -59,7 +59,6 @@ export const UpcomingEvents = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-          {/* Image Column */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -74,7 +73,6 @@ export const UpcomingEvents = () => {
             />
           </motion.div>
 
-          {/* Content Column */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}

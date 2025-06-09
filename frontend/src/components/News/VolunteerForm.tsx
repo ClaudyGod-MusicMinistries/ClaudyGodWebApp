@@ -16,14 +16,11 @@ export const VolunteerForm = () => {
 
   const onSubmit = async (data: VolunteerFormData) => {
     try {
-      // Use the API service instead of direct fetch
+  
       await submitVolunteerForm(data);
-
-      // Show success toast and modal
       toast.success('Volunteer application submitted successfully!');
       setShowSuccessModal(true);
-      
-      // Reset form after 3 seconds when toast closes
+  
       setTimeout(() => {
         reset();
         setShowSuccessModal(false);
@@ -208,8 +205,6 @@ export const VolunteerForm = () => {
           </button>
         </form>
       </motion.div>
-
-      {/* Success Modal */}
       {showSuccessModal && (
         <motion.div
           initial={{ opacity: 0 }}

@@ -1,4 +1,3 @@
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faLocationDot,
@@ -14,7 +13,6 @@ export const Footer: React.FC = () => {
     <footer className="bg-[rgba(24,0,44,1)] text-white">
   <div className="max-w-5xl mx-auto py-6 px-2 sm:px-6 lg:px-8">
     <div className="flex flex-col gap-8 pb-4 sm:grid sm:grid-cols-2 md:grid-cols-3">
-          {/* Col 1: Logo & Title */}
         <div className="w-full flex flex-col items-center sm:items-start text-center sm:text-left px-4 py-6">
         <div className="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] rounded-2xl overflow-hidden shadow-lg mb-2">
           <img
@@ -30,8 +28,6 @@ export const Footer: React.FC = () => {
           Music & Ministries
         </p>
       </div>
-          
-          {/* Col 2: Contact info */}
                 <div className="w-full flex flex-col items-center sm:text-center px-4 py-6">
         <h3 className="text-lg font-bold mb-4 roboto-condensed">Keep In Touch With Us</h3>
         <div className="flex items-center mb-3 px-2 py-1">
@@ -49,33 +45,25 @@ export const Footer: React.FC = () => {
           <span className="text-sm sm:text-base raleway-medium">+1 (385) 219‑6632</span>
         </div>
       </div>
-
-      {/* Col 3: Social links */}
       <div className="w-full flex flex-col items-center sm:text-right px-4 py-6">
         <h3 className="text-lg font-bold mb-4 roboto-condensed">Connect With Us</h3>
         <Social />
       </div>
     </div>
   </div>
-
-      {/* Rest of the footer remains the same */}
         <div className="w-full border-t border-gray-500" />
-
     <div className="max-w-5xl mx-auto py-8 px-2 sm:px-6 lg:px-8 text-center">
     <h3 className="text-xl font-bold mb-6 px-4 roboto-condensed">STREAM ACROSS ALL PLATFORMS</h3>
     <div className="flex justify-center px-4">
       <Streaming />
     </div>
   </div>
-  {/* <div className="w-full border-t border-gray-500" /> */}
   <div className="mt-4 mb-6 text-left text-sm work-sans text-gray-300 px-6 md:px-12 lg:px-50 py-4">
   <p>
     © 2025 CLAUDYGOD. All rights reserved. This website and its content are the intellectual property of CLAUDYGOD. Unauthorized use, reproduction, 
     or distribution of any materials without prior written consent is strictly prohibited. For inquiries, collaborations, or support, please contact us via the Contact Page or email: support@claudygod.com
   </p>
 </div>
-
-
 </footer>
   );
 };

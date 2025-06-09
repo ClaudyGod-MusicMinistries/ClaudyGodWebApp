@@ -1,4 +1,4 @@
-// components/SuccessModal.tsx
+
 import { useEffect } from 'react';
 
 interface SuccessModalProps {
@@ -8,7 +8,7 @@ interface SuccessModalProps {
 }
 
 export default function SuccessModal({ onClose, title, message }: SuccessModalProps) {
-  // Close modal when pressing Escape key
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
