@@ -13,16 +13,17 @@ interface ProductProps {
   name: string;
   price: number;
   imageUrl: string;
+  Desc:string
 }
 
 const products: ProductProps[] = [
-  { id: "1", name: "ClaudyGod T-Shirt", price: 25, imageUrl: Shop3 },
-  { id: "2", name: "ClaudyGod Mugs", price: 5, imageUrl: Shop2 },
-  { id: "3", name: "ClaudyGod Y-Shirt", price: 30, imageUrl: Shop4 },
-  { id: "4", name: "ClaudyGod Mugs", price: 5, imageUrl: Shop1 }
+  { id: "1", name: "ClaudyGod Premium T-Shirt", price: 25, Desc: "T-Shirt", imageUrl: Shop3 },
+  { id: "2", name: "Savior is born, Jesus is here", price: 5, Desc: "Mug" ,imageUrl: Shop2 },
+  { id: "3", name: "ClaudyGod Premium T-shirt", price: 30, Desc: "T-Shirt", imageUrl: Shop4 },
+  { id: "4", name: "ClaudyGod Exclusive Mug", price: 5, Desc: "Mug", imageUrl: Shop1 }
 ];
 
-const ProductCard: React.FC<ProductProps> = ({ id, name, price, imageUrl }) => {
+const ProductCard: React.FC<ProductProps> = ({ id, name, price, imageUrl, Desc }) => {
   return (
     <motion.div 
       className="group px-2" // Added horizontal padding for mobile spacing
@@ -43,6 +44,9 @@ const ProductCard: React.FC<ProductProps> = ({ id, name, price, imageUrl }) => {
           </div>
           <div className="w-full mt-2 px-1 text-center">
             <h3 className="text-base roboto-flex text-gray-800 mb-0.5">{name}</h3>
+             -
+ <p className="text-sm work-sans text-yellow-400 mb-0.5">{Desc}</p>
+
             <p className="text-sm text-primary-dark roboto-condensed">${price}</p>
           </div>
         </div>

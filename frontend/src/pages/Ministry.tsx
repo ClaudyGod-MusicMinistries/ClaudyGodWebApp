@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Herosection } from '../components/Herosection';
 import NewsletterForm  from '../components/Newsletter';
-import { About1, ministry10, ministry11, ministry12, ministry13, ministry14, ministry15, ministry16, ministry18, ministry19, ministry20, ministry9 } from '../assets/';
-import { Ministry1, ministry2, Isr,ministry3, ministry4, ministry17, ministry5, ministry6, ministry7, ministry8 } from '../assets/';
+import { About1, music6, music7, music9, } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,10 +18,10 @@ type TeachingType = {
 const teachingsData: TeachingType[] = [
   {
     id: 1,
-    title: "Reviewing the signs of the lord",
-    thumbnail: Ministry1,
+    title: "Discussing Matters that affects Modern day church",
+    thumbnail: music6,
     youtubeId: '0e-JsLgoa00',
-    scripture: "Teens Teachings Series",
+    scripture: "Live Teachings",
     teacher: "ClaudyGodTeachings",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -32,11 +31,11 @@ const teachingsData: TeachingType[] = [
   },
   {
     id: 2,
-    title: "Reviewing the signs of the lord",
-    thumbnail: ministry2,
-    youtubeId: 'U_Is76egy9I',
-    scripture: "Abraham's Kind of Faith",
-    teacher: "ClaudyGodTeachings",
+    title: "Three Operations of the Gift of Tongues",
+    thumbnail: music7,
+    youtubeId: 'EQGJdGfS9Ak',
+    scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -45,11 +44,11 @@ const teachingsData: TeachingType[] = [
   },
   {
     id: 3,
-    title: "BE FOUND WITHOUT SPOT!",
-    thumbnail: ministry5,
-    youtubeId: '25ar_CFNwjY',
-    scripture: "Being a Good Person is not a guarantee",
-    teacher: "ClaudyGodTeachings",
+    title: "How to identify a demon in a person. What is God will for such person.",
+    thumbnail: music9,
+    youtubeId: 'ZmIt4Pk1y2o',
+     scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -58,11 +57,11 @@ const teachingsData: TeachingType[] = [
   },
   {
     id: 4,
-    title: "Who do you turn to when in Distress",
-    thumbnail: ministry6,
-    youtubeId: 'brS0nkWGYa4',
-    scripture: "Why is God Silent in certain Times and Season of our lives",
-    teacher: "ClaudyGodTeachings",
+    title: "How to Start Living Holy",
+   thumbnail: music7,
+    youtubeId: '9VlbbmHlzFc',
+   scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -71,11 +70,11 @@ const teachingsData: TeachingType[] = [
   },
   {
     id: 5,
-    title: "Don't just be a hearer only",
-    thumbnail: ministry7,
-    youtubeId: 't4lD9Hhk6HI',
-    scripture: "Nuggets for your Spiritual Growth",
-    teacher: "ClaudyGodTeachings",
+    title: "Walking by the Spirit(ClaudyGod's Nugget of Truth)",
+      thumbnail: music6,
+    youtubeId: 'HUMjBLKTq7Q',
+   scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -84,12 +83,11 @@ const teachingsData: TeachingType[] = [
   },
   {
     id: 6,
-    title: "All Kinds of Sin Deplease God",
-    thumbnail: ministry3,
-    youtubeId: 'cOd7zhSN44s',
-    scripture: "Nuggets for your Spiritual Growth",
-
-    teacher: "ClaudyGodTeachings",
+    title: "God's Plan for Isreal",
+    thumbnail: music9,
+    youtubeId: 'swOlMakN570',
+      scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -98,12 +96,11 @@ const teachingsData: TeachingType[] = [
   },
   {
     id: 7,
-    title: "Are you a Wheat or a Weed",
-    thumbnail: ministry4,
-    youtubeId: 'hw1aHaGlT-k',
-    scripture: "Nuggets for your growth",
-    
-    teacher: "ClaudyGodTeachings",
+    title: "Don't be stuck in moments - (ClaudyGod's Nugget of Truth)",
+thumbnail: music6,
+    youtubeId: 'tyxSeRXxaSE',
+ scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -112,11 +109,11 @@ const teachingsData: TeachingType[] = [
   },
   {
     id: 8,
-    title: "Following the Lord's Guidiance",
-    thumbnail: ministry8,
-    youtubeId: '-Ocy0Y6MHzY',
-    scripture: "Nuggets for your Spiritual Growth",
-    teacher: "ClaudyGodTeachings",
+    title: "The Day of the Lord according to the Book of Malachi.(Series - Coming of the Lord)",
+     thumbnail: music7,
+    youtubeId: '95N205rkScs',
+     scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -125,12 +122,11 @@ const teachingsData: TeachingType[] = [
   },
   {
     id: 9,
-    title: "God Knows how to Defy the normal ",
-    thumbnail: ministry9,
-    youtubeId: 'DmGi7BVtS8U',
-    scripture: "Nuggets for your Spiritual Growth",
-    
-    teacher: "ClaudyGodTeachings",
+    title: "Not all Storms are from the devil",
+  thumbnail: music9,
+    youtubeId: 'EtAvn6NAwMY',
+     scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -139,11 +135,11 @@ const teachingsData: TeachingType[] = [
   },
     {
     id: 10,
-    title: "The love of money is the root of all evil (examining the life of Judas Iscariot)",
-    thumbnail: ministry10,
-    youtubeId: 'mA_NKjX9aNg',
-    scripture: "Nuggets for your Spiritual Growth",
-    teacher: "ClaudyGodTeachings",
+    title: "Faith like Abraham's",
+    thumbnail: music7,
+    youtubeId: 'U_Is76egy9I',
+        scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -152,11 +148,11 @@ const teachingsData: TeachingType[] = [
   },
    {
     id: 11,
-    title: "How the Lord Expect us to Behave ",
-    thumbnail: ministry11,
-    youtubeId: '9VlbbmHlzFc',
-    scripture: "Nuggets for your Spiritual Growth",
-    teacher: "ClaudyGodTeachings",
+    title: "When God goes against normal - He defies regular! ",
+ thumbnail: music6,
+    youtubeId: 'DmGi7BVtS8U',
+    scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -165,11 +161,11 @@ const teachingsData: TeachingType[] = [
   },
   {
     id: 12,
-    title: "Harkening to the Voice of the Holy Spirit at such a time as this",
-    thumbnail: ministry12,
-    youtubeId: '-Ocy0Y6MHzY',
-    scripture: "Nuggets for your Spiritual Growth",
-    teacher: "ClaudyGodTeachings",
+    title: "When God Hides His Face From Us",
+   thumbnail: music9,
+    youtubeId: 'lEBNS-rP8D4',
+     scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -179,10 +175,10 @@ const teachingsData: TeachingType[] = [
   {
     id: 13,
     title: "The love of this world is hostility to God. James 4:4",
-    thumbnail: ministry13,
+   thumbnail: music6,
     youtubeId: 'Tm8b1ZP-P5g',
-    scripture: "Nuggets for your Spiritual Growth",
-    teacher: "ClaudyGodTeachings",
+    scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -191,11 +187,11 @@ const teachingsData: TeachingType[] = [
   },
     {
     id: 14,
-    title: "How do we get to God? (Nimrod’s attempted journey to heaven)",
-    thumbnail: ministry14,
-    youtubeId: 'OEoYf8Wk5Ic',
-    scripture: "Nuggets for your Spiritual Growth",
-    teacher: "ClaudyGodTeachings",
+    title: "Who are the 144,000 in the book of Revelation?",
+      thumbnail: music7,
+    youtubeId: '/l3iEa2tbdvU',
+scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -204,11 +200,11 @@ const teachingsData: TeachingType[] = [
   },
      {
     id: 15,
-    title: "The Day of the Lord - According to the Book of Malachi",
-    thumbnail: ministry15,
-    youtubeId: '95N205rkScs',
-    scripture: "Nuggets for your Spiritual Growth",
-    teacher: "ClaudyGodTeachings",
+    title: "How's your ASK?(You do not have what you want because you don't ask)",
+   thumbnail: music9,
+    youtubeId: 'SHwQVf35oxM',
+    scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -218,11 +214,10 @@ const teachingsData: TeachingType[] = [
      {
     id: 16,
     title: "The Lord is a Jealous God",
-    thumbnail: ministry16,
+   thumbnail: music7,
     youtubeId: 'VDPSqmpFRs8',
-    scripture: "Help Series",
-  
-    teacher: "ClaudyGodTeachings",
+    scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -232,11 +227,10 @@ const teachingsData: TeachingType[] = [
      {
     id: 17,
     title: "How the Lord expects us to behave",
-    thumbnail: ministry17,
+    thumbnail: music6,
     youtubeId: 'FlHxLnpwyNk',
-    scripture: "Truth Series",
-  
-    teacher: "ClaudyGodTeachings",
+  scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -246,10 +240,10 @@ const teachingsData: TeachingType[] = [
      {
     id: 18,
     title: "What's your Motive for Asking God for help?",
-    thumbnail: ministry18,
+       thumbnail: music9,
     youtubeId: 'hishWNwR1v8',
-    scripture: "Help Series",
-      teacher: "ClaudyGodTeachings",
+  scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -259,11 +253,10 @@ const teachingsData: TeachingType[] = [
      {
     id: 19,
     title: "WWhy God blesses us (ClaudyGod's Nugget of Truth)",
-    thumbnail: ministry19,
+    thumbnail: music6,
     youtubeId: 'qrruANQhLKI',
-    scripture: "Help Series",
-
-    teacher: "ClaudyGodTeachings",
+scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -273,11 +266,10 @@ const teachingsData: TeachingType[] = [
      {
     id: 20,
     title: "What kind of relationship do you have with God - a Mary or Martha kind?",
-    thumbnail: ministry20,
+    thumbnail: music7,
     youtubeId: 'PhVKzo1IKrU',
-    scripture: "Nuggets for your Spiritual Growth",
-
-    teacher: "ClaudyGodTeachings",
+scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -288,11 +280,10 @@ const teachingsData: TeachingType[] = [
      {
     id: 21,
     title: "Understanding God's Endtime plan for Isreal",
-    thumbnail: Isr,
+   thumbnail: music9,
     youtubeId: '/swOlMakN570',
-    scripture: "Nuggets for your Spiritual Growth",
-
-    teacher: "ClaudyGodTeachings",
+scripture: "CGM Podcasts",
+    teacher: "Min. Claudy",
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -305,34 +296,63 @@ const teachingsData: TeachingType[] = [
 const VideoCard: React.FC<{
   content: TeachingType;
   onClick: () => void;
-}> = ({ content, onClick }) => (
-  <div 
-    className="relative cursor-pointer group transition-all duration-300 hover:shadow-lg"
-    onClick={onClick}
-  >
-    <figure className="relative aspect-video overflow-hidden rounded-lg">
-      <img
-        src={content.thumbnail}
-        alt={content.title}
-        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
-      />
-      <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-        <FontAwesomeIcon 
-          icon={faPlay} 
-          className="text-white text-4xl opacity-80 hover:opacity-100 transition-opacity" 
+}> = ({ content, onClick }) => {
+  // Dynamically build YouTube thumbnail URL
+  const ytThumbnail = `https://img.youtube.com/vi/${content.youtubeId}/hqdefault.jpg`;
+  const [imgSrc, setImgSrc] = useState<string>(ytThumbnail);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [hasError, setHasError] = useState<boolean>(false);
+
+  const handleError = () => {
+    if (!hasError) {
+      setImgSrc(fallbackThumbnail);
+      setHasError(true);
+    }
+    setLoading(false);
+  };
+
+  return (
+    <div
+      className="relative cursor-pointer group transition-all duration-300 hover:shadow-lg"
+      onClick={onClick}
+    >
+      <figure className="relative aspect-video overflow-hidden rounded-lg bg-gray-100">
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="loader"></div>
+          </div>
+        )}
+
+        <img
+          src={imgSrc}
+          alt={content.title}
+          className={
+            `w-full h-full object-cover transform transition-transform duration-300 ` +
+            (loading ? 'opacity-0' : 'opacity-100 group-hover:scale-105')
+          }
+          onLoad={() => setLoading(false)}
+          onError={handleError}
         />
-      </div>
-    </figure>
-    <div className="mt-4 space-y-2">
-      <h3 className="text-lg roboto-condensed text-gray-800">{content.title}</h3>
-      <p className="text-sm text-purple-600 robotoMedium">{content.scripture}</p>
-      <div className="flex justify-between raleway-slider text-sm text-gray-500">
-        <span>{content.teacher}</span>
-        <span>{content.date}</span>
+
+        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+          <FontAwesomeIcon
+            icon={faPlay}
+            className="text-white text-4xl opacity-80 hover:opacity-100 transition-opacity"
+          />
+        </div>
+      </figure>
+
+      <div className="mt-4 space-y-2">
+        <h3 className="text-lg roboto-condensed text-gray-800">{content.title}</h3>
+        <p className="text-sm text-purple-600 robotoMedium">{content.scripture}</p>
+        <div className="flex justify-between raleway-slider text-sm text-gray-500">
+          <span>{content.teacher}</span>
+          <span>{content.date}</span>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const VideoModal: React.FC<{
   videoId: string | null;

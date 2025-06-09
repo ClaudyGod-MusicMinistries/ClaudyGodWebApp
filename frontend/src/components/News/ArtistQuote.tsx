@@ -25,7 +25,7 @@ export const ArtistQuote = () => {
           )}
         </div>
         <blockquote className="text-base md:text-xl work-sans mb-4 md:mb-6 text-[#e2e1f3]">
-          To reach the world with the love of Jesus, to proclaim truth always, and to
+         My Vision is to reach the world with the love of Jesus, to proclaim truth always, and to
           redirect mankind to God through Worship and the Word.
         </blockquote>
         <p className="font-bold text-lg md:text-xl text-[#ff4d94]">
