@@ -79,7 +79,7 @@ import blog from './blogBanner.webp'
 import veryGlorious from './veryGlorious.jpg'
 
 // video
-import bgVideo from '../../public/mainBanner.webm'
+import bgVideo from '/mainBanner.webm'
 
 
 
