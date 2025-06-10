@@ -6,7 +6,6 @@ import { About1, About2 } from '../assets';
 import NewsletterForm from '../components/Newsletter';
 import { BioSection } from '../components/Bio/BioSectio';
 
-// Text content arrays for modularity
 const firstSectionTexts = [
   "ClaudyGod is an American born, California-based Christian & Gospel music artist of both a Nigerian and Sierra-Leonian ancestry. Developing her passion for music through choral activities in Nigeria during middle and high school, she received a divine message from the lord in 2003 during worship in Nashville: \"I love your worship.\" This pivotal moment led to her ministerial calling.",
   "Answering this call, she relocated to Tulsa, Oklahoma, attending Victory Bible Institute's School of Worship. For years she served in various church ministries until 2018, when prayer and fasting in California ignited her songwriting journey, resulting in her debut album \"Lord of My Heart\" and six subsequent inspirational albums.",
@@ -21,7 +20,6 @@ const secondSectionTexts = [
 export const Biography: React.FC = () => {
   return (
     <div className="bg-white">
-      {/* Hero Section with Enhanced Mobile Overlay and Animation */}
       <Herosection
         title="ClaudyGod Music & Ministries / Biography"
         backgroundImage={About1}
@@ -38,9 +36,7 @@ export const Biography: React.FC = () => {
         </motion.h2>
       </Herosection>
 
-      {/* Main Content Container */}
       <div className="max-w-7xl mx-auto px-4 xs:px-5 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-12 lg:py-16">
-        {/* Title with Better Mobile Line-height and Fade-in */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -50,15 +46,11 @@ export const Biography: React.FC = () => {
         >
           ClaudyGod: American Contemporary Christian music and Afro-Gospel Songs
         </motion.h2>
-
-        {/* First Bio Section */}
         <BioSection
           imageSrc={About2}
           altText="ClaudyGod portrait"
           texts={firstSectionTexts}
         />
-
-        {/* Second Bio Section with image hidden on small screens */}
         <BioSection
           imageSrc={About2}
           altText="ClaudyGod performing"

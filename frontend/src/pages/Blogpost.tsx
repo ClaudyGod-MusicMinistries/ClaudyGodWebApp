@@ -106,12 +106,9 @@ export const Blog: React.FC = () => {
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Image Column with Lazy Loading */}
           <Suspense fallback={<div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-80 animate-pulse" />}>
             <LazyWelcomeImage />
           </Suspense>
-          
-          {/* Welcome Text Column */}
           <Suspense fallback={<div className="h-80 flex items-center justify-center">Loading welcome message...</div>}>
             <LazyBlogWelcome />
           </Suspense>

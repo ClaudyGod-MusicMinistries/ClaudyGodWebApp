@@ -5,13 +5,13 @@ import {
   faDeezer, 
   faAmazon,
 } from '@fortawesome/free-brands-svg-icons';
-import { Cover } from '../../assets';
-import { MusicPlatform, Album } from '../types/types'; // Import types
+// import { Cover } from '../../assets';
+import { MusicPlatform} from '../types/types'; // Import types
 
 export const securedMusicPlatforms: MusicPlatform[] = [
   { 
     name: 'Spotify', 
-    url: 'https://open.spotify.com/album/2MY5xlrYfuvKXaYfdB5v2A?referral=labelaffiliate&utm_source=1101lBmnzTP8&utm_medium=Indie_CDBaby&utm_campaign=labelaffiliate', 
+    url: 'https://open.spotify.com/album/1zCT0YUVggnzkZJK5VP0yd', 
     icon: faSpotify,
     bgColor: 'bg-[#1DB954]',
     textColor: 'text-white',
@@ -56,17 +56,3 @@ export const securedMusicPlatforms: MusicPlatform[] = [
   }
 ];
 
-export const albums: Album[] = [
-  {
-    id: 1,
-    title: 'You Are Our Everything',
-    year: '2025',
-    image: Cover,
-    tracks: [
-      { id: 1, title: 'Amazing Grace', duration: '3:45' },
-      { id: 2, title: 'Heavenly Joy', duration: '4:20' },
-      { id: 3, title: 'Soul Revival', duration: '5:15' },
-      { id: 4, title: 'Worship Medley', duration: '3:30' }
-    ]
-  },
-];

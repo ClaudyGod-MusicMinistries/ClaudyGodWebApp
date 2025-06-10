@@ -1,7 +1,11 @@
-import { defineConfig } from 'vite'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from 'vite';
+import tailwindcss from '@tailwindcss/vite';
+
 export default defineConfig({
   plugins: [
-    tailwindcss(),
+    tailwindcss()
   ],
-})
+  server: {
+    port: 3000, // 👈 this sets your desired port
+  }
+});

@@ -49,11 +49,11 @@ export const ContactData: React.FC = () => {
 
       {/* Hero Section */}
       <div className="relative">
-        <div className="absolute inset-0 bg-black/50 z-10" />
+        <div className="absolute inset-0  z-10" />
         <Herosection
           title="ClaudyGod Music & Ministries / Contact"
           backgroundImage={Log}
-          className="relative z-0"
+          className="relative rounded-2xl z-0"
         />
       </div>
 

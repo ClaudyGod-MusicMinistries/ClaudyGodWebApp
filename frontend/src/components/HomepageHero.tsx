@@ -1,20 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Resize5, Back3, Resize4, bgresize } from '../assets/';
+import { Resize5, DesktopBg, Back3, Resize4 , Main} from '../assets/';
+import { bgVideo } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faPlayCircle, 
   faMusic, 
   faVideo, 
   faNewspaper,
-  faPodcast 
+  faPodcast,
+  faVolumeUp,
+  faVolumeMute
 } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
 interface HeroSlide {
   id: number;
-  imageUrl: string;
-  type: 'quote' | 'form' | 'streaming' | 'cta' | 'music';
+  imageUrl?: string;
+  imageUrlMobile?: string; 
+  imageUrlDesktop?: string; 
+  videoUrl?: string;
+  type: 'quote' | 'form' | 'streaming' | 'cta' | 'music' | 'video';
   content?: {
     quote?: string;
     reference?: string;
@@ -27,7 +33,8 @@ interface HeroSlide {
 const heroSlides: HeroSlide[] = [
   { 
     id: 1, 
-    imageUrl: Resize5, 
+    imageUrlMobile: Main, 
+    imageUrlDesktop: DesktopBg, 
     type: 'quote', 
     content: { 
       quote: "Enter Into His Gates With Thanksgiving And Into His Courts With Praise; Be Thankful Unto Him, and Bless His Name.", 
@@ -59,8 +66,8 @@ const heroSlides: HeroSlide[] = [
   },
   { 
     id: 4, 
-    imageUrl: bgresize, 
-    type: 'quote', 
+    videoUrl: bgVideo, 
+    type: 'video', 
     content: { 
       quote: 'Praise the Lord Most High', 
       reference: '— Psalm 100:4' 
@@ -115,6 +122,8 @@ const slideVariants = {
 export const Hero: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -125,13 +134,26 @@ export const Hero: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
+  }, [currentSlide]);
+
   const goToSlide = (index: number) => {
     setDirection(index > currentSlide ? 1 : -1);
     setCurrentSlide(index);
   };
 
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+    }
+  };
+
   return (
-     <section className="relative h-[100vh] md:h-[120vh] w-full overflow-hidden">
+    <section className="relative h-[100vh] md:h-[120vh] w-full overflow-hidden">
       <AnimatePresence initial={false} custom={direction}>
         {heroSlides.map((slide, index) => index === currentSlide && (
           <motion.div
@@ -149,13 +171,49 @@ export const Hero: React.FC = () => {
               animate="visible"
               className="absolute inset-0 h-full w-full"
             >
-              <img
-                src={slide.imageUrl}
-                alt="Background"
-                className="h-full w-full object-cover object-center"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-black/70" />
+              {slide.type === 'video' ? (
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  loop
+                  muted={isMuted}
+                  playsInline
+                  className="h-full w-full object-cover object-center brightness-60"
+                >
+                  <source src={slide.videoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : ( 
+                <div className="relative h-full w-full">
+                 {slide.imageUrlMobile && slide.imageUrlDesktop ? (
+      <>
+        <img
+          src={slide.imageUrlMobile}
+          alt="Background"
+          className="md:hidden h-full w-full object-cover object-center saturate-[1.2]"
+        />
+          <img
+          src={slide.imageUrlDesktop}
+          alt="Background"
+          className="hidden md:block h-full w-full object-cover object-center "
+        />
+      </>
+    ) : (
+      <img
+        src={slide.imageUrl}
+        alt="Background"
+        className="h-full w-full object-cover object-center"
+      />
+    )}
+     <div className={`absolute inset-0 ${
+    slide.type === 'cta' || slide.type === 'music' 
+      ? 'bg-gradient-to-t from-black/60 via-black/30 to-transparent' // Lighter gradient for 2nd/3rd slides
+      : 'bg-gradient-to-t from-black/100 via-black/50 to-black/10' // Original gradient for others
+  }`} />
+</div>
+              )}
             </motion.div>
+            
             <div className="container ml-4 md:ml-10 mt-6 md:mt-10 relative mx-auto flex h-full items-center px-4">
               <motion.div
                 initial="hidden"
@@ -167,7 +225,7 @@ export const Hero: React.FC = () => {
                     transition: { staggerChildren: 0.2 }
                   }
                 }}
-                className="max-w-4xl text-white "
+                className="max-w-4xl text-white"
               >
                 {slide.type === 'quote' && (
                   <>
@@ -187,7 +245,8 @@ export const Hero: React.FC = () => {
     md:leading-tight 
     md:mb-6 
     md:px-0
-    md:text-white"
+    md:text-white
+    drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
 >
   {slide.content?.quote}
 </motion.h1>
@@ -197,14 +256,16 @@ export const Hero: React.FC = () => {
   className="
     text-base 
     italic 
-    text-green-500 
+    text-green-400 
     text-left 
     relative 
     top-22
     left-5
     md:text-2xl 
     md:text-purple-300 
-    md:top-20"
+    md:top-20
+    font-bold
+    drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
 >
   {slide.content?.reference}
 </motion.p>
@@ -223,21 +284,23 @@ export const Hero: React.FC = () => {
       <motion.button
         whileHover={{ scale: 1.1 }}
         className="
-          md:rounded-full md:bg-white/20 md:p-4 md:backdrop-blur-sm
-          max-md:rounded-full max-md:bg-white/20 max-md:p-3 max-md:backdrop-blur-sm
-          hover:bg-white/30 transition-all"
+          md:rounded-full md:bg-white/30 md:p-4 md:backdrop-blur-sm
+          max-md:rounded-full max-md:bg-white/30 max-md:p-3 max-md:backdrop-blur-sm
+          hover:bg-white/40 transition-all
+          shadow-lg"
       >
         <FontAwesomeIcon 
           icon={faPlayCircle} 
           className="cursor-pointer
-            md:text-3xl md:text-purple-400
-            max-md:text-2xl max-md:text-purple-400" 
+            md:text-3xl md:text-purple-700
+            max-md:text-2xl max-md:text-purple-700" 
         />
       </motion.button>
       
       <h3 className="
-        md:text-lg md:text-white md:font-medium md:tracking-wider
-        max-md:text-base max-md:text-white max-md:font-medium max-md:tracking-normal"
+        md:text-lg md:text-white md:font-bold md:tracking-wider
+        max-md:text-base max-md:text-white max-md:font-bold max-md:tracking-normal
+        drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
       >
         Play Now
       </h3>
@@ -257,21 +320,24 @@ export const Hero: React.FC = () => {
 >
       <span className="
         max-md:text-3xl raleway-medium max-md:leading-tight
-        md:text-6xl roboto-condensed md:leading-tighter lg:text-7xl"
+        md:text-6xl roboto-condensed md:leading-tighter lg:text-7xl
+        drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
       >
         Want to Bring 
       </span>
       
       <span className="
         max-md:text-purple-400 max-md:text-3xl max-md:leading-tight
-        md:text-purple-400 work-sans md:text-6xl md:leading-tighter lg:text-7xl"
+        md:text-purple-400 work-sans md:text-6xl md:leading-tighter lg:text-7xl
+        drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
       >
         ClaudyGod Live
       </span>
       
       <span className="
         max-md:text-white max-md:text-3xl max-md:leading-tight roboto-condensed
-        md:text-white md:text-6xl md:leading-tighter lg:text-7xl raleway-medium"
+        md:text-white md:text-6xl md:leading-tighter lg:text-7xl raleway-medium
+        drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
       >
         To your City?
       </span>
@@ -289,8 +355,9 @@ export const Hero: React.FC = () => {
       }}
       onClick={() => navigate('/bookings')}
       className="
-        max-md:relative max-md:rounded-full max-md:bg-purple-900 max-md:px-6 cursor-pointer max-md:py-3 max-md:text-lg work-sans
-        md:relative cursor-pointer md:rounded-full md:bg-purple-900 md:px-14 md:py-6 md:text-3xl"
+        max-md:relative max-md:rounded-full max-md:bg-purple-800 max-md:px-6 cursor-pointer max-md:py-3 max-md:text-lg work-sans
+        md:relative cursor-pointer md:rounded-full md:bg-purple-800 md:px-14 md:py-6 md:text-3xl
+        shadow-xl"
     >
       <motion.span
         className="absolute inset-0 bg-white/20 opacity-0 rounded-full"
@@ -301,7 +368,7 @@ export const Hero: React.FC = () => {
           transition: { duration: 0.6 }
         }}
       />
-      <span className="relative z-10">Contact Us</span>
+      <span className="relative z-10 font-bold">Contact Us</span>
     </motion.button>
   </>
 )}
@@ -312,7 +379,8 @@ export const Hero: React.FC = () => {
   variants={textVariants}
   className="
     max-md:text-4xl max-md:font-bold max-md:raleway-medium max-md:mb-6 max-md:leading-tight max-md:mt-30
-    md:text-6xl md:font-bold md:roboto-condensed md:mb-8 md:leading-tighter"
+    md:text-6xl md:font-bold md:roboto-condensed md:mb-8 md:leading-tighter
+    drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
 >
   MUSIC
 </motion.h2>
@@ -324,14 +392,17 @@ export const Hero: React.FC = () => {
                       >
                         <h3 className="
   max-md:text-2xl max-md:font-normal max-md:italic max-md:text-purple-300 max-md:mb-3
-  md:text-4xl md:font-light md:italic md:text-purple-300 md:mb-4"
+  md:text-4xl md:font-light md:italic md:text-purple-300 md:mb-4
+  drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
 >
   {slide.content?.listenText}
 </h3>
 
 <p className="
-  max-md:text-base max-md:text-white/80 max-md:max-w-md max-md:leading-relaxed
-  md:text-xl md:text-white/80 md:max-w-2xl md:leading-snug"
+  max-md:text-base max-md:text-white/90 max-md:max-w-md max-md:leading-relaxed
+  md:text-xl md:text-white/90 md:max-w-2xl md:leading-snug
+  font-medium
+  drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
 >
   Dive into spiritual worship through sacred melodies that uplift the soul and glorify His name
 </p>
@@ -346,11 +417,11 @@ export const Hero: React.FC = () => {
                           className="relative group"
                           whileHover={{ scale: 1.02 }}
                         >
-                         <div className="w-24 h-24 rounded-full bg-purple-900/30 backdrop-blur-sm flex items-center justify-center hover:bg-purple-900/40 transition-all transform hover:scale-105">
+                         <div className="w-24 h-24 rounded-full bg-purple-900/40 backdrop-blur-sm flex items-center justify-center hover:bg-purple-900/50 transition-all transform hover:scale-105 shadow-lg">
   <motion.button
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.95 }}
-    className="w-16 h-16 rounded-full bg-purple-900 flex items-center justify-center hover:bg-purple-800 transition-colors"
+    className="w-16 h-16 rounded-full bg-purple-800 flex items-center justify-center hover:bg-purple-700 transition-colors"
   >
     <FontAwesomeIcon 
       icon={faPlayCircle} 
@@ -359,7 +430,7 @@ export const Hero: React.FC = () => {
   </motion.button>
 </div>
                         </motion.div>
-                        <h3 className="text-white font-medium tracking-wider text-xl">
+                        <h3 className="text-white font-bold tracking-wider text-xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                           Play Latest Album
                         </h3>
                       </motion.div>
@@ -369,7 +440,7 @@ export const Hero: React.FC = () => {
                         variants={textVariants}
                         className="space-y-4 md:space-y-6 mt-8 md:mt-12"
                       >
-                        <h5 className="text-xl md:text-2xl font-semibold text-purple-300 roboto-condensed">
+                        <h5 className="text-xl md:text-2xl font-bold text-purple-400 roboto-condensed drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                           STREAM EVERYWHERE
                         </h5>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
@@ -381,13 +452,17 @@ export const Hero: React.FC = () => {
       target="_blank"
       rel="noopener noreferrer"
       whileHover={{ y: -5 }}
-      className="flex items-center gap-2 px-1 py-1 md:px-6 md:py-1 text-sm md:text-lg"
+      className="flex items-center gap-2 px-1 py-1 md:px-6 md:py-1 text-sm md:text-lg
+                 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors
+                 shadow-md"
     >
       <FontAwesomeIcon 
         icon={platform.icon} 
-        className="text-lg md:text-2xl" 
+        className="text-lg md:text-2xl text-purple-700" 
       />
-      <span>{platform.name}</span>
+      <span className="font-medium text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+        {platform.name}
+      </span>
     </motion.a>
   ))}
 </div>
@@ -395,8 +470,43 @@ export const Hero: React.FC = () => {
                     </motion.div>
                   </div>
                 )}
+                
+                {slide.type === 'video' && (
+                  <motion.div 
+                    variants={textVariants}
+                    className="max-w-3xl"
+                  >
+                    <motion.h1 
+                      className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
+                    >
+                      {slide.content?.quote}
+                    </motion.h1>
+                    <motion.p 
+                      className="text-xl md:text-3xl italic text-purple-300 font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                    >
+                      {slide.content?.reference}
+                    </motion.p>
+                  </motion.div>
+                )}
               </motion.div>
             </div>
+
+            {/* Video controls for video slide */}
+            {slide.type === 'video' && (
+              <div className="absolute bottom-6 right-6 z-30">
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={toggleMute}
+                  className="bg-white/30 p-3 rounded-full backdrop-blur-sm shadow-lg"
+                >
+                  <FontAwesomeIcon 
+                    icon={isMuted ? faVolumeMute : faVolumeUp} 
+                    className="text-white text-xl" 
+                  />
+                </motion.button>
+              </div>
+            )}
 
             {/* Pagination Dots */}
             <div className="absolute bottom-4 md:bottom-8 left-1/2 z-30 flex -translate-x-1/2 items-center gap-1 md:gap-2">

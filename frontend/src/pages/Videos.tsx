@@ -262,7 +262,7 @@ export const VideosData: React.FC = () => {
                 <h1 className="text-4xl md:text-5xl roboto-condensed mb-6">Videos</h1>
                 <div className="w-20 h-1 bg-white mb-8"></div>
                 <p className="text-sm max-w-2xl work-sans">
-                  Experience the inspirational sound of ClaudyGod's gospel music – with a unique blend of American Gospel and Afro-gospel.
+                      Experience the divine fusion of American Contemporary Christian Music and Afro-Gospel Songs through ClaudyGod's Inspirational Journey.
                 </p>
               </motion.div>
             </div>

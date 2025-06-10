@@ -29,7 +29,6 @@ export const Navbar: React.FC = () => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
   
-  // Scroll to top function
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -38,13 +37,10 @@ export const Navbar: React.FC = () => {
     setIsOpen(false);
   };
 
-  // Handle mobile navigation
   const handleMobileNavigation = (to: string) => {
     if (location.pathname === to) {
-      // If already on the same page, just scroll to top
       scrollToTop();
     } else {
-      // Navigate to new page
       navigate(to);
     }
     closeMenu();
@@ -59,7 +55,6 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Scroll to top on route change
   useEffect(() => {
     scrollToTop();
     closeMenu();
@@ -135,26 +130,26 @@ export const Navbar: React.FC = () => {
         </nav>
 
         {/* Mobile Menu Toggle */}
-        <div className="flex items-center justify-end gap-4">
-          <StreamingModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-          />
-          <div className="lg:hidden flex justify-end flex-1">
-            <button
-              onClick={toggleMenu}
-              className="p-3 bg-purple-900 hover:bg-purple-800 text-white rounded-lg shadow-sm transition-colors"
-            >
-              <FontAwesomeIcon 
-                icon={isOpen ? faTimes : faBars} 
-                className="h-6 w-6" 
-              />
-            </button>
-          </div>
-        </div>
+  <div className="flex items-center justify-end gap-4">
+  <StreamingModal
+    isOpen={isModalOpen}
+    onClose={() => setIsModalOpen(false)}
+  />
+  <div className="lg:hidden flex justify-end flex-1">
+    <button
+      onClick={toggleMenu}
+      className="p-3 bg-purple-900 hover:bg-purple-800 text-white rounded-lg shadow-sm transition-colors absolute right-4 top-4"
+    >
+      <FontAwesomeIcon 
+        icon={isOpen ? faTimes : faBars} 
+        className="h-6 w-6" 
+      />
+    </button>
+  </div>
+</div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Updated with larger icons */}
       <div className={`lg:hidden fixed inset-0 z-50 transition-transform duration-300 ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}>
@@ -197,14 +192,19 @@ export const Navbar: React.FC = () => {
                 <li key={link.to}>
                   <button
                     onClick={() => handleMobileNavigation(link.to)}
-                    className={`flex items-center w-full p-2 rounded-md transition-colors ${
+                    className={`flex items-center w-full p-4 rounded-lg transition-colors ${
                       location.pathname === link.to 
                         ? 'bg-purple-900 text-white' 
                         : 'text-gray-800 hover:bg-purple-900 hover:text-white'
                     }`}
                   >
-                    <FontAwesomeIcon icon={link.icon} className="mr-3 w-5" />
-                    {link.name}
+                    {/* Increased icon size to 1.5rem (24px) */}
+                    <FontAwesomeIcon 
+                      icon={link.icon} 
+                      className="mr-4 text-xl"  // Changed from w-5 to text-xl
+                      style={{ width: '24px', height: '24px' }} // Ensures consistent sizing
+                    />
+                    <span className="text-lg">{link.name}</span> {/* Increased text size */}
                   </button>
                 </li>
               ))}
@@ -216,9 +216,13 @@ export const Navbar: React.FC = () => {
                   setIsModalOpen(true);
                   closeMenu();
                 }}
-                className="w-full bg-purple-900 hover:bg-purple-800 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center justify-center transition-colors"
+                className="w-full bg-purple-900 hover:bg-purple-800 text-white px-4 py-3 rounded-full text-base font-medium flex items-center justify-center transition-colors"
               >
-                <FontAwesomeIcon icon={faHeadset} className="mr-2" />
+                <FontAwesomeIcon 
+                  icon={faHeadset} 
+                  className="mr-3 text-xl" // Increased icon size
+                  style={{ width: '24px', height: '24px' }}
+                />
                 Listen Now
               </button>
             </div>

@@ -1,7 +1,7 @@
 
  import Log from './ClaudyGoLogo.webp'
 import Back1 from './Bg_1.webp'
-import Back2 from './bg_2.webp'
+import Back2 from './bg_2.jpg'
 import Back3 from './Bg_13.webp'
 import Back4 from './Bg_4.webp'
 import About1 from './aboutUs.webp'
@@ -17,9 +17,9 @@ import VideoBanner3 from './VideoBanner3.webp'
 import StoreBanner from './StoreBanner.webp'
 import Donate1 from './Donate1.jpg'
 import Donate2 from './Donate2.jpg'
+import Main from './manBack.jpg';
+import DesktopBg from './desktopBg.jpg'
 
-// import Aud1 from './aud1.webp'
-// import Aud2 from './aud2.webp'
 import Isr from './Israel.webp'
 import Resize1  from './resize_abt.webp'
 import Resize2 from './resize_bg1.webp'
@@ -78,12 +78,15 @@ import newsBanner from './newsBanner.webp'
 import blog from './blogBanner.webp'
 import veryGlorious from './veryGlorious.jpg'
 
+// video
+import bgVideo from '../../public/mainBanner.webm'
+
 
 
 export {Log, Back1, Isr, Back2, Back3,  Back4, About1, blog,
-    About2, Cover, Shop1, Shop2,Shop3, Donate1 , Donate2, veryGlorious,
+    About2, Cover, Shop1, Shop2,Shop3, Donate1 , Donate2, veryGlorious,DesktopBg,
     Shop4, bgresize, VideoBanner1, VideoBanner2,newsBanner, musicCover6,
-    VideoBanner3,StoreBanner, musicCover2, musicCover3,musicCover4,
+    VideoBanner3,StoreBanner, musicCover2, musicCover3,musicCover4, bgVideo,Main,
     musicCover5,Resize_4, Resize4,Resize5,Resize1, Resize2, AudioMack ,
 MusicBan1, MusicBan2,MusicBan3, MusicBan4, musicCover1,Resize3, MusicBan5, 
 MusicBan6, MusicBan7, MusicBan8 , Ministry1, ministry2, ministry3, ministry4,

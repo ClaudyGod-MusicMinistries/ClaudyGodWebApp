@@ -252,7 +252,7 @@ scripture: "CGM Podcasts",
   },
      {
     id: 19,
-    title: "WWhy God blesses us (ClaudyGod's Nugget of Truth)",
+    title: "Why God blesses us (ClaudyGod's Nugget of Truth)",
     thumbnail: music6,
     youtubeId: 'qrruANQhLKI',
 scripture: "CGM Podcasts",
@@ -506,7 +506,7 @@ export const MinistryData: React.FC = () => {
   return (
     <div className="bg-white">
       <div className="relative">
-        <div className="absolute inset-0 bg-black/50 z-10"></div>
+        <div className="absolute inset-0  z-10"></div>
         <Herosection 
           title="ClaudyGod Music & Ministry / Ministry"
           backgroundImage={About1}
