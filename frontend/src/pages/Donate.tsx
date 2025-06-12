@@ -1,8 +1,9 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWallet, faArrowDown, faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import { Herosection } from '../components/Herosection';    
 import { Donate1, Donate2 } from '../assets/';
+import { useNavContext } from '../context/NavContext';
 
 // Currency selector component
 const CurrencySelector = ({ currency, setCurrency }: { currency: string, setCurrency: React.Dispatch<React.SetStateAction<string>> }) => {
@@ -38,19 +39,34 @@ const CurrencySelector = ({ currency, setCurrency }: { currency: string, setCurr
 };
 
 const DonateHeroSlider: React.FC = () => {
+  const { isNavOpen } = useNavContext();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [shouldAnimate, setShouldAnimate] = useState(true);
   const images = [Donate1, Donate2];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
+    // Pause animation when nav is open
+    if (isNavOpen) {
+      setShouldAnimate(false);
+      return;
+    }
 
-    return () => clearInterval(interval);
-  }, [images.length]);
+    setShouldAnimate(true);
+    let interval: NodeJS.Timeout | null = null;
+    
+    if (shouldAnimate) {
+      interval = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % images.length);
+      }, 5000);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [images.length, shouldAnimate, isNavOpen]);
 
   return (
-    <div className="relative w-full">
+    <div className={`relative w-full ${isNavOpen ? 'filter blur-sm opacity-75 transition-all duration-300' : ''}`}>
       {/* Mobile Version */}
       <div className="md:hidden relative h-[60vh] min-h-[400px] w-full overflow-hidden bg-black">
         {images.map((img, index) => (
@@ -107,6 +123,7 @@ const DonateHeroSlider: React.FC = () => {
 };
 
 export const DonateData: React.FC = () => {
+  const { isNavOpen } = useNavContext();
   const [amount, setAmount] = useState('');
   const [name, setName] = useState('');
   const [currency, setCurrency] = useState('USD');
@@ -120,10 +137,10 @@ export const DonateData: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className={`min-h-screen ${isNavOpen ? 'overflow-hidden max-h-screen' : ''}`}>
       <DonateHeroSlider />
       
-      <div className="max-w-7xl  mx-auto px-4 py-8 md:py-12">
+      <div className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75 transition-all duration-300' : ''}`}>
         <h2 className="roboto-condensed mt-10 text-4xl text-center">
           Support Our Ministry
         </h2>
@@ -131,7 +148,7 @@ export const DonateData: React.FC = () => {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-16">
           
-            <p className=" md:text-lg max-md:text-sm text-left text-gray-700 work-sans">
+            <p className="md:text-lg max-md:text-sm text-left text-gray-700 work-sans">
              We appreciate your support and donations towards the ministry. You partner with us to advance the gospel. 
 “And my God will meet all your needs according to the riches of His glory in Christ Jesus.”(Phillipians 4:19)
             </p>

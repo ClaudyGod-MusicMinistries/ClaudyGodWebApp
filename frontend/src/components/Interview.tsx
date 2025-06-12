@@ -60,7 +60,7 @@ const Interview = () => {
       <div className="text-center mb-20 mt-12">
         <h1 className="text-4xl roboto-condensed text-white mb-4">Our Latest Updates</h1>
         <p className="text-gray-200 work-sans md:text-base max-md:text-xs max-w-xl mx-auto">
-          Catch up with all our interviews, outings and messages, surely God is working out his purpose in us and through us.
+          Catch up with all our interviews, press releases, May God be glorified in all things.
         </p>
       </div>
 

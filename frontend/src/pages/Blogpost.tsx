@@ -1,11 +1,11 @@
 import React, { useState, useEffect, lazy, Suspense, useCallback, useMemo } from 'react';
-import { Heroblog } from '../components/blogHero';
-import { blogPosts } from '../components/blogsData';
+import { Heroblog } from '../components/blog/blogHero';
+import { blogPosts } from '../components/blog/blogsData';
 import Pagination from '../components/pagination';
 import Interview from '../components/Interview';
 
 // Lazy load components
-const LazyBlogWelcome = lazy(() => import('../components/blogWelcome'));
+const LazyBlogWelcome = lazy(() => import('../components/blog/blogWelcome'));
 const LazyWelcomeImage = lazy(() => import('../components/WelcomeImage'));
 const LazyBlogPost = lazy(() => import('../components/mainBlog'));
 const LazyChatbot = lazy(() => import('../components/Chatbot'));

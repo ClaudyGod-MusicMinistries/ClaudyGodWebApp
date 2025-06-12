@@ -7,13 +7,41 @@ const compression = require('compression');
 const cors = require('cors'); 
 
 const app = express();
-const PORT = process.env.API_URL || 5000;
+const PORT = process.env.PORT || 5000;
 
 // Middleware - ORDER MATTERS!
-app.use(cors()); // ADDED: Must come first to handle CORS
-app.use(helmet());
+// app.use(cors({
+//   origin: process.env.CORS_ORIGIN || 'https://loader-ways.onrender.com',
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   allowedHeaders: ['Content-Type', 'Authorization']
+// })); 
+// server.js
+const allowedOrigins = [
+  process.env.CORS_ORIGIN,       // https://loader-ways.onrender.com
+  'http://localhost:3000',       // dev React
+];
+app.use(cors({ origin: allowedOrigins }));
+
+// Add security headers
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "https://www.youtube.com"],
+      styleSrc: ["'self'", "https://fonts.googleapis.com", "'unsafe-inline'"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:"],
+      connectSrc: ["'self'", process.env.CORS_ORIGIN]
+    }
+  }
+}));
 app.use(compression());
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'public, max-age=3600');
+  next();
+});
 
 
 mongoose.connect(process.env.DB_URI)
@@ -25,6 +53,7 @@ app.use('/api/contacts', require('./routes/ContactRoutes'));
 app.use('/api/volunteers', require('./routes/volunteerRoutes'));
 app.use('/api/subscribers', require('./routes/SubscribeRoutes'));
 app.use('/api/bookings', require('./routes/bookingsRoutes'));
+
 
 // 404 Handler
 app.use((req, res) => {

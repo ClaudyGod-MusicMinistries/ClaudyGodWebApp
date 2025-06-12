@@ -86,6 +86,22 @@ export const Bookings: React.FC = () => {
     }
   };
 
+
+useEffect(() => {
+  const checkBackendHealth = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/health`);
+      const data = await res.json();
+      console.log("Backend status:", data.status);
+      console.log("Environment:", data.environment);
+    } catch (error) {
+      console.error("Backend connection failed:", error);
+    }
+  };
+  checkBackendHealth();
+}, []);
+
+
   return (
     <div className="bg-white min-h-screen overflow-y-auto">
       <ToastContainer position="top-right" autoClose={5000} />

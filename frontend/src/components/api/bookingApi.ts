@@ -3,7 +3,8 @@ import axios from 'axios';
 import { BookingFormData } from '../types/booking';
 
 
-const API_BASE = process.env.API_URL || 5000;;
+
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://loader-ways.onrender.com';
 const BOOKINGS_ENDPOINT = `${API_BASE}/api/bookings`;
 
 export const submitBooking = async (data: BookingFormData) => {

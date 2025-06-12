@@ -53,7 +53,7 @@ export const Welcome = () => {
             variants={itemVariants}
             className="text-2xl md:text-3xl font-bold mb-3 roboto-condensed"
           >
-            Winning Through Praise
+            Intimacy Through Praise
           </motion.h2>
           
           <motion.p 

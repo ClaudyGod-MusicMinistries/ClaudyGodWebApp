@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useForm, FieldErrors } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 import { Herosection } from '../components/Herosection';
 import { Log } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,10 +30,7 @@ type ContactFormInputs = {
 export const ContactData: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const {
-    reset,
-    trigger,
-  } = useForm<ContactFormInputs>({
+  useForm<ContactFormInputs>({
     mode: 'onChange',
     defaultValues: {
       name: '',
@@ -41,6 +39,20 @@ export const ContactData: React.FC = () => {
     },
   });
 
+// Add to Bookings.tsx and ContactData.tsx
+useEffect(() => {
+  const checkBackendHealth = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/health`);
+      const data = await res.json();
+      console.log("Backend status:", data.status);
+      console.log("Environment:", data.environment);
+    } catch (error) {
+      console.error("Backend connection failed:", error);
+    }
+  };
+  checkBackendHealth();
+}, []);
 
  return (
     <div className="bg-white relative">

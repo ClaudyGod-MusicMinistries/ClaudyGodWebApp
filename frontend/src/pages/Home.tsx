@@ -1,7 +1,7 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Hero } from '../components/HomepageHero';
+// import { Hero } from '../components/HomepageHero';
 import LatestRelease from '../components/latestRelease';
 import { FeaturedVideos } from '../components/Featuredvideos';
 import { ShopPreview } from '../components/ShopPreview';
@@ -9,6 +9,7 @@ import NewsletterForm  from '../components/Newsletter';
 import { AudioMackComponent } from '../components/audioMack';
 import { ScrollToTop } from '../components/ScrollToTop';
 import { Welcome } from '../components/welcome';
+import { Hero } from '../components/HomeHero/MainHero';
 
 
 const ScrollAnimationWrapper = ({ children }: { children: React.ReactNode }) => {

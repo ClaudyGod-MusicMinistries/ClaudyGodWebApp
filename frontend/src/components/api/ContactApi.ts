@@ -1,7 +1,8 @@
 // src/api/contactService.ts
 import { ContactFormInputs } from "../contact/ContactForm";
 
-const API_BASE = process.env.API_URL || 5000;;
+
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://loader-ways.onrender.com';
 const CONTACT_ENDPOINT = `${API_BASE}/api/contacts`;
 
 export const submitContactForm = async (data: ContactFormInputs) => {

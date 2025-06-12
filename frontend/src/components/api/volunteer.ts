@@ -6,8 +6,7 @@ export type VolunteerFormData = {
   role: string;
   reason: string;
 };
-
-const API_BASE = process.env.API_URL || 5000;;
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://loader-ways.onrender.com';
 const VOLUNTEER_ENDPOINT = `${API_BASE}/api/volunteers`;
 
 // const API_BASE_URL =  "http://localhost:5000";

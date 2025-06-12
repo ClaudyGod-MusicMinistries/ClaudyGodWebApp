@@ -18,7 +18,7 @@ type TeachingType = {
 const teachingsData: TeachingType[] = [
   {
     id: 1,
-    title: "Discussing Matters that affects Modern day church",
+    title: "Discussing Matters that affect the Modern day church",
     thumbnail: music6,
     youtubeId: '0e-JsLgoa00',
     scripture: "Live Teachings",
@@ -70,7 +70,7 @@ const teachingsData: TeachingType[] = [
   },
   {
     id: 5,
-    title: "Walking by the Spirit(ClaudyGod's Nugget of Truth)",
+    title: "Walking by the Spirit (ClaudyGod's Nugget of Truth)",
       thumbnail: music6,
     youtubeId: 'HUMjBLKTq7Q',
    scripture: "CGM Podcasts",
@@ -83,7 +83,7 @@ const teachingsData: TeachingType[] = [
   },
   {
     id: 6,
-    title: "God's Plan for Isreal",
+    title: "God's Plan for Israel",
     thumbnail: music9,
     youtubeId: 'swOlMakN570',
       scripture: "CGM Podcasts",
@@ -109,7 +109,7 @@ thumbnail: music6,
   },
   {
     id: 8,
-    title: "The Day of the Lord according to the Book of Malachi.(Series - Coming of the Lord)",
+    title: "The Day of the Lord according to the Book of Malachi - (Series on the Coming of the Lord).",
      thumbnail: music7,
     youtubeId: '95N205rkScs',
      scripture: "CGM Podcasts",
@@ -122,7 +122,7 @@ thumbnail: music6,
   },
   {
     id: 9,
-    title: "Not all Storms are from the devil",
+    title: "Not all storms are from the devil",
   thumbnail: music9,
     youtubeId: 'EtAvn6NAwMY',
      scripture: "CGM Podcasts",
@@ -279,7 +279,7 @@ scripture: "CGM Podcasts",
   ,
      {
     id: 21,
-    title: "Understanding God's Endtime plan for Isreal",
+    title: "Understanding God's Endtime plan for Israel",
    thumbnail: music9,
     youtubeId: '/swOlMakN570',
 scripture: "CGM Podcasts",
@@ -517,7 +517,7 @@ export const MinistryData: React.FC = () => {
       <ContentSection
         title="ClaudyGod Podcasts"
        
-        description="Minister Claudy passion for sharing the Gospel radiates through both her writing and speaking. As a gospel artist, devoted teacher, and lover of God, she has also shared her inspiring presence on national television, guest-hosting programs such as Breakfast in Bed and The Sunday Show."
+        description="Minister Claudy's passion for sharing the Gospel radiates through both her writing and speaking. As a gospel artist, devoted teacher, and lover of God, she has also shared her inspiring presence on national television, guest-hosting programs such as Breakfast in Bed and The Sunday Show."
         contents={teachingsData}
       />
       

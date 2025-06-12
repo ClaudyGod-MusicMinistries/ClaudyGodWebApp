@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Log } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import StreamingModal from './StreamingModel';
+import { useNavContext } from '../context/NavContext';
 import {
   faUser,
   faMusic,
@@ -21,20 +22,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 export const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isNavOpen, toggleNav, closeNav } = useNavContext();
   const [scrolled, setScrolled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-  
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const closeMenu = () => {
-    setIsOpen(false);
   };
 
   const handleMobileNavigation = (to: string) => {
@@ -43,7 +38,7 @@ export const Navbar: React.FC = () => {
     } else {
       navigate(to);
     }
-    closeMenu();
+    closeNav();
   };
 
   useEffect(() => {
@@ -57,8 +52,8 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     scrollToTop();
-    closeMenu();
-  }, [location]);
+    closeNav();
+  }, [location, closeNav]);
 
   return (
     <header className={`sticky top-0 z-50 h-20 transition-all duration-300 ${
@@ -67,9 +62,9 @@ export const Navbar: React.FC = () => {
       {/* Desktop Header */}
       <div className="container-custom grid grid-cols-3 items-center gap-4">
         {/* Logo */}
-        <Link to="/" onClick={closeMenu} className="flex items-center justify-start">
+        <Link to="/" onClick={closeNav} className="flex items-center justify-start">
           <div className="h-15 w-15 ml-5 flex items-center justify-center">
-            <img src={Log} alt="Logo" />
+            <img src={Log} alt="Logo" className="h-12 w-12" />
           </div>
           <div className="ml-2">
             <span className={`text-purple-900 text-lg roboto-condensed ${
@@ -130,36 +125,36 @@ export const Navbar: React.FC = () => {
         </nav>
 
         {/* Mobile Menu Toggle */}
-  <div className="flex items-center justify-end gap-4">
-  <StreamingModal
-    isOpen={isModalOpen}
-    onClose={() => setIsModalOpen(false)}
-  />
-  <div className="lg:hidden flex justify-end flex-1">
-    <button
-      onClick={toggleMenu}
-      className="p-3 bg-purple-900 hover:bg-purple-800 text-white rounded-lg shadow-sm transition-colors absolute right-4 top-4"
-    >
-      <FontAwesomeIcon 
-        icon={isOpen ? faTimes : faBars} 
-        className="h-6 w-6" 
-      />
-    </button>
-  </div>
-</div>
+        <div className="flex items-center justify-end gap-4">
+          <StreamingModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
+          <div className="lg:hidden flex justify-end flex-1">
+            <button
+              onClick={toggleNav}
+              className="p-3 bg-purple-900 hover:bg-purple-800 text-white rounded-lg shadow-sm transition-colors absolute right-4 top-4"
+            >
+              <FontAwesomeIcon 
+                icon={isNavOpen ? faTimes : faBars} 
+                className="h-6 w-6" 
+              />
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Mobile Menu - Updated with larger icons */}
       <div className={`lg:hidden fixed inset-0 z-50 transition-transform duration-300 ${
-        isOpen ? 'translate-x-0' : 'translate-x-full'
+        isNavOpen ? 'translate-x-0' : 'translate-x-full'
       }`}>
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={toggleMenu} />
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={toggleNav} />
         
         <div className="relative bg-white/95 w-3/4 h-full ml-auto transform transition-all">
           <div className="flex justify-between items-center p-4 border-b">
-            <Link to="/" onClick={closeMenu} className="flex items-center">
+            <Link to="/" onClick={closeNav} className="flex items-center">
               <div className="h-10 w-10 flex items-center justify-center">
-                <img src={Log} alt="Logo" />
+                <img src={Log} alt="Logo" className="h-10 w-10" />
               </div>
               <div className="ml-2">
                 <span className="text-purple-900 font-bold text-lg">ClaudyGod</span>
@@ -167,7 +162,7 @@ export const Navbar: React.FC = () => {
               </div>
             </Link>
             <button 
-              onClick={toggleMenu} 
+              onClick={toggleNav} 
               className="p-2 bg-purple-900 hover:bg-purple-800 text-white rounded-full"
             >
               <FontAwesomeIcon icon={faTimes} className="h-6 w-6" />
@@ -198,13 +193,12 @@ export const Navbar: React.FC = () => {
                         : 'text-gray-800 hover:bg-purple-900 hover:text-white'
                     }`}
                   >
-                    {/* Increased icon size to 1.5rem (24px) */}
                     <FontAwesomeIcon 
                       icon={link.icon} 
-                      className="mr-4 text-xl"  // Changed from w-5 to text-xl
-                      style={{ width: '24px', height: '24px' }} // Ensures consistent sizing
+                      className="mr-4 text-xl"
+                      style={{ width: '24px', height: '24px' }}
                     />
-                    <span className="text-lg">{link.name}</span> {/* Increased text size */}
+                    <span className="text-lg">{link.name}</span>
                   </button>
                 </li>
               ))}
@@ -214,13 +208,13 @@ export const Navbar: React.FC = () => {
               <button 
                 onClick={() => {
                   setIsModalOpen(true);
-                  closeMenu();
+                  closeNav();
                 }}
                 className="w-full bg-purple-900 hover:bg-purple-800 text-white px-4 py-3 rounded-full text-base font-medium flex items-center justify-center transition-colors"
               >
                 <FontAwesomeIcon 
                   icon={faHeadset} 
-                  className="mr-3 text-xl" // Increased icon size
+                  className="mr-3 text-xl"
                   style={{ width: '24px', height: '24px' }}
                 />
                 Listen Now
