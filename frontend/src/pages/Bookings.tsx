@@ -1,4 +1,3 @@
-// src/pages/Booking.tsx
 import { useState, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
