@@ -1,8 +1,10 @@
-// src/api/bookingApi.ts
+
 import axios from 'axios';
 import { BookingFormData } from '../types/booking';
 
-const API_URL = 'http://localhost:5000/api/bookings';
+
+const API_BASE = process.env.API_URL || 5000;;
+const BOOKINGS_ENDPOINT = `${API_BASE}/api/bookings`;
 
 export const submitBooking = async (data: BookingFormData) => {
   const payload = {
@@ -31,7 +33,7 @@ export const submitBooking = async (data: BookingFormData) => {
     agreeTerms: data.agreeTerms
   };
 
-  return axios.post(API_URL, payload, {
+  return axios.post(BOOKINGS_ENDPOINT, payload, {
     headers: { 'Content-Type': 'application/json' }
   });
 };

@@ -7,7 +7,7 @@ const compression = require('compression');
 const cors = require('cors'); 
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.API_URL || 5000;
 
 // Middleware - ORDER MATTERS!
 app.use(cors()); // ADDED: Must come first to handle CORS

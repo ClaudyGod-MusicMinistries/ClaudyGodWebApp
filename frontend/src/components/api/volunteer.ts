@@ -1,4 +1,4 @@
-// src/api/volunteerService.ts
+
 export type VolunteerFormData = {
   firstName: string;
   lastName: string;
@@ -7,11 +7,14 @@ export type VolunteerFormData = {
   reason: string;
 };
 
-const API_BASE_URL =  "http://localhost:5000";
+const API_BASE = process.env.API_URL || 5000;;
+const VOLUNTEER_ENDPOINT = `${API_BASE}/api/volunteers`;
+
+// const API_BASE_URL =  "http://localhost:5000";
 
 export const submitVolunteerForm = async (data: VolunteerFormData) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/volunteers`, {
+    const response = await fetch(`${VOLUNTEER_ENDPOINT}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

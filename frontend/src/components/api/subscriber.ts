@@ -1,14 +1,16 @@
-
 export type FormData = {
   name: string;
   email: string;
 };
 
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE = process.env.API_URL || 5000;;
+const SUBSCRIBE_ENDPOINT = `${API_BASE}/api/subscribers`;
+
+// const API_BASE_URL = 'http://localhost:5000';
 
 export const subscribeToNewsletter = async (data: FormData) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/subscribers`, {
+    const response = await fetch(`${SUBSCRIBE_ENDPOINT}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
