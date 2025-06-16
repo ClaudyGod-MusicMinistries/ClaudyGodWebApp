@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Herosection } from '../components/Herosection';
-import NewsletterForm  from '../components/Newsletter';
+import { Herosection } from '../components/Utils/Herosection';
+import NewsletterForm from '../components/Utils/Newsletter';
 import { About1, music6, music7, music9, } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -508,7 +508,7 @@ export const MinistryData: React.FC = () => {
       <div className="relative">
         <div className="absolute inset-0  z-10"></div>
         <Herosection 
-          title="ClaudyGod Music & Ministry / Ministry"
+          title="ClaudyGod Music & Ministries"
           backgroundImage={About1}
           className="relative z-0"
         />

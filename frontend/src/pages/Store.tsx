@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
-import  NewsletterForm  from '../components/Newsletter';
-import { CartHandler } from '../components/Cart';
+import NewsletterForm from '../components/Utils/Newsletter';
+import { CartHandler } from '../components/store/Cart';
+
 import { useCartStore } from '../Context/Cartcontext';
 import { StoreHero } from '../components/store/StoreHero';
 import { CategoryFilter } from '../components/store/CategoryFilter';

@@ -1,4 +1,3 @@
-// server/models/Booking.js
 const mongoose = require('mongoose');
 
 const bookingSchema = new mongoose.Schema({
@@ -38,7 +37,7 @@ const bookingSchema = new mongoose.Schema({
   orgType: {
     type: String,
     required: [true, 'Organization type is required'],
-    enum: ['Church', 'Promoter', 'Non Profit', 'Others']
+    enum: ['Church', 'Promoters', 'Non Profit', 'Others']
   },
   eventType: {
     type: String,

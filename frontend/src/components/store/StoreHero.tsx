@@ -1,5 +1,5 @@
 // src/components/store/StoreHero.tsx
-import { Herosection } from '../Herosection';
+import { Herosection } from '../Utils/Herosection';
 import { StoreBanner } from '../../assets';
 
 export const StoreHero = () => (

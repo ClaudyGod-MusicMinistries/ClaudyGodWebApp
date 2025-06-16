@@ -1,10 +1,7 @@
-
 import axios from 'axios';
 import { BookingFormData } from '../types/booking';
 
-
-
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://loader-ways.onrender.com';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 const BOOKINGS_ENDPOINT = `${API_BASE}/api/bookings`;
 
 export const submitBooking = async (data: BookingFormData) => {
@@ -19,17 +16,17 @@ export const submitBooking = async (data: BookingFormData) => {
     eventType: data.eventType,
     eventDetails: data.eventDetails,
     eventDate: {
-      day: data.day,
-      month: data.month,
-      year: data.year
+      day: data.eventDate?.day || data.day,
+      month: data.eventDate?.month || data.month,
+      year: data.eventDate?.year || data.year
     },
     address: {
-      address1: data.address1,
-      address2: data.address2 || '',
-      country: data.country,
-      state: data.state,
-      city: data.city,
-      zipCode: data.zipCode
+      address1: data.address?.address1 || data.address1,
+      address2: data.address?.address2 || data.address2 || '',
+      country: data.address?.country || data.country,
+      state: data.address?.state || data.state,
+      city: data.address?.city || data.city,
+      zipCode: data.address?.zipCode || data.zipCode
     },
     agreeTerms: data.agreeTerms
   };

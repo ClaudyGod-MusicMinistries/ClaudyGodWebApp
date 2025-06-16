@@ -3,9 +3,9 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Herosection } from '../components/Herosection';
+import { Herosection } from '../components/Utils/Herosection';
 import { Back3 } from '../assets/';
-import NewsletterForm from '../components/Newsletter';
+import NewsletterForm from '../components/Utils/Newsletter';
 import { Modal } from '../components/Modal';
 import { submitBooking } from '../components/api/bookingApi';
 import { bookingSchema } from '../components/schemas/bookingSchema';
@@ -27,7 +27,12 @@ export const Bookings: React.FC = () => {
     defaultValues: {
       countryCode: 'US' as CountryCode,
       agreeTerms: false,
-      address2: ''
+      address2: '',
+      eventDate: {
+        day: 1,
+        month: 'January',
+        year: new Date().getFullYear()
+      }
     }
   });
 
@@ -86,21 +91,18 @@ export const Bookings: React.FC = () => {
     }
   };
 
-
-useEffect(() => {
-  const checkBackendHealth = async () => {
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/health`);
-      const data = await res.json();
-      console.log("Backend status:", data.status);
-      console.log("Environment:", data.environment);
-    } catch (error) {
-      console.error("Backend connection failed:", error);
-    }
-  };
-  checkBackendHealth();
-}, []);
-
+  useEffect(() => {
+    const checkBackendHealth = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/health`);
+        const data = await res.json();
+        console.log("Backend status:", data.status);
+      } catch (error) {
+        console.error("Backend connection failed:", error);
+      }
+    };
+    checkBackendHealth();
+  }, []);
 
   return (
     <div className="bg-white min-h-screen overflow-y-auto">
@@ -126,11 +128,9 @@ useEffect(() => {
       </Modal>
       
       <div className="relative">
-        <div className="absolute inset-0  z-10"></div>
         <Herosection 
           title="ClaudyGod Music & Ministries / Bookings"
           backgroundImage={Back3}
-          className="relative z-0"
         />
       </div>
 
@@ -139,28 +139,20 @@ useEffect(() => {
           <h2 className="text-gray-900 mb-2 roboto-condensed text-40">ClaudyGod Music Ministry</h2>
           <div className="h-1 w-16 bg-purple-900 mb-3"></div>
           <p className="text-gray-700 mb-2 robotoMedium text-18">
-            To book ClaudyGod for an event, fill out the form below. The ClaudyGod Team will review your information.
-          </p>
-          <p className="text-gray-700 robotoMedium text-18">
-            Thank you in advance for your gracious invitation to be a part of your event.
+            To book ClaudyGod for an event, fill out the form below.
           </p>
         </div>
 
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} className="bg-purple-900 p-8 rounded-lg shadow-md text-white mb-8">
             <PersonalInfoSection countryCode={countryCode} />
-            
-            <h3 className="text-xl font-bold mt-8 mb-4 roboto-condensed uppercase">Event Information</h3>
             <EventInfoSection states={states} cities={cities} country={country} MONTHS={MONTHS} />
-            
-            <h3 className="text-xl robotoMedium mt-8 mb-4 uppercase">Event Location</h3>
             <LocationSection 
               states={states} 
               cities={cities} 
               country={country}
               COUNTRY_STATE_CITY_DATA={COUNTRY_STATE_CITY_DATA}
             />
-            
             <TermsSection />
             
             <button 
@@ -177,7 +169,6 @@ useEffect(() => {
           </form>
         </FormProvider>
       </div>
-      <hr className="my-8 border-purple-900" />
       <NewsletterForm />
     </div>
   );

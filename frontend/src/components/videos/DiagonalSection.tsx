@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { MusicBan1 } from '../../assets';
 
 export type VideoType = {
   id: number;
@@ -93,14 +94,13 @@ const DiagonalSection: React.FC<{
                     index === currentSlideIndex ? 'opacity-100' : 'opacity-0'
                   }`}
                 >
-                  <img 
-                    src={getThumbnailUrl(video.youtubeId)}
-                    alt={`${video.title} thumbnail`}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = `https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`;
-                    }}
-                  />
+             // Replace thumbnail URL generation
+<img 
+  src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} 
+  onError={(e) => {
+    e.target.src = {MusicBan1}
+  }}
+/>
                 </div>
               ))}
             </div>

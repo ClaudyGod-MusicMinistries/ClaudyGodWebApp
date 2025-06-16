@@ -21,7 +21,7 @@ import { TourSection } from '../components/News/TourSection';
 import { VolunteerForm } from '../components/News/VolunteerForm';
 import { LiveSession } from '../components/News/LiveSession';
 import { TourCityModal } from '../components/News/TourCityModal';
-import NewsletterForm from '../components/Newsletter';
+import NewsletterForm from '../components/Utils/Newsletter';
 
 export const News = () => {
   const [showTourModal, setShowTourModal] = useState(false);

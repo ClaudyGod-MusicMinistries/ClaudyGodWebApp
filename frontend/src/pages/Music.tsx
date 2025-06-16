@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { AudioMackComponent } from '../components/audioMack';
+import { AudioMackComponent } from '../components/Homepage/audioMack';
 import { Cover } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -8,9 +8,9 @@ import {
   faShieldAlt,
   faInfoCircle,
   faTimes, 
-  faMusic, 
+  // faMusic, 
   faArrowDown,
-  faSpinner
+  // faSpinner
 } from '@fortawesome/free-solid-svg-icons';
 import { 
   faSpotify, 
@@ -19,7 +19,7 @@ import {
   faDeezer, 
   faAmazon,
 } from '@fortawesome/free-brands-svg-icons';
-import  NewsletterForm  from '../components/Newsletter';
+import  NewsletterForm  from '../components/Utils/Newsletter';
 
 // Music platforms for main section
 const securedMusicPlatforms = [
@@ -166,80 +166,6 @@ const TRUSTED_DOMAINS = [
 ];
 
 // SecureStreamButton Component
-const SecureStreamButton = () => {
-  const [streamUrl, setStreamUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchStreamLink = async () => {
-      try {
-        const response = await fetch('/api/stream-links/primary');
-        if (!response.ok) {
-          throw new Error('Failed to fetch stream link');
-        }
-        
-        const data = await response.json();
-        const url = data.url;
-        if (!isValidUrl(url)) {
-          throw new Error('Invalid stream URL');
-        }
-        
-        setStreamUrl(url);
-      } catch (err) {
-        setError('Failed to load streaming link');
-        console.error('Stream link fetch error:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStreamLink();
-  }, []);
-  const isValidUrl = (url: string) => {
-    try {
-      const parsed = new URL(url);
-      return ['https:', 'http:'].includes(parsed.protocol);
-    } catch {
-      return false;
-    }
-  };
-
-  if (loading) {
-    return (
-      <button 
-        disabled
-        className="bg-blue-400 text-white font-medium py-2 px-6 rounded-full inline-flex items-center"
-      >
-        <FontAwesomeIcon icon={faSpinner} className="animate-spin mr-2" />
-        Loading...
-      </button>
-    );
-  }
-
-  if (error || !streamUrl) {
-    return (
-      <button 
-        disabled
-        className="bg-gray-400 text-white font-medium py-2 px-6 rounded-full"
-      >
-        Stream Unavailable
-      </button>
-    );
-  }
-
-  return (
-    <a 
-      href={streamUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition duration-300 inline-flex items-center shadow-lg transform hover:scale-105"
-    >
-      <FontAwesomeIcon icon={faMusic} className="mr-2" />
-      Stream Now
-    </a>
-  );
-};
 
 export const MusicData = () => {
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);

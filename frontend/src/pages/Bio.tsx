@@ -1,9 +1,9 @@
 // pages/Biography.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Herosection } from '../components/Herosection';
+import { Herosection } from '../components/Utils/Herosection';
 import { About1, About2 } from '../assets';
-import NewsletterForm from '../components/Newsletter';
+import NewsletterForm from '../components/Utils/Newsletter';
 import { BioSection } from '../components/Bio/BioSectio';
 
 const firstSectionTexts = [

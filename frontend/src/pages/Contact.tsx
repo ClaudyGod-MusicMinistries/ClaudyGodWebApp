@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
-import { Herosection } from '../components/Herosection';
+import React, { useState, useEffect } from 'react';
+import { Herosection } from '../components/Utils/Herosection';
 import { Log } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ContactForm from '../components/contact/ContactForm';
 import ContactInfo from '../components/contact/ContactInfo';
 import SuccessModal from '../components/contact/SuccessModal';
+import NewsletterForm from '../components/Utils/Newsletter';
 
-import NewsletterForm from '../components/Newsletter';
-
-// Brand icons:
 import {
   faFacebookF,
   faXTwitter,
@@ -18,50 +14,31 @@ import {
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
 
-
 import 'react-toastify/dist/ReactToastify.css';
-
-type ContactFormInputs = {
-  name: string;
-  email: string;
-  message: string;
-};
 
 export const ContactData: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useForm<ContactFormInputs>({
-    mode: 'onChange',
-    defaultValues: {
-      name: '',
-      email: '',
-      message: '',
-    },
-  });
+  // useEffect(() => {
+  //   const checkBackendHealth = async () => {
+  //     try {
+  //       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/health`);
+  //       const data = await res.json();
+  //       console.log("Backend status:", data.status);
+  //       console.log("Environment:", data.environment);
+  //     } catch (error) {
+  //       console.error("Backend connection failed:", error);
+  //     }
+  //   };
+  //   checkBackendHealth();
+  // }, []);
 
-// Add to Bookings.tsx and ContactData.tsx
-useEffect(() => {
-  const checkBackendHealth = async () => {
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/health`);
-      const data = await res.json();
-      console.log("Backend status:", data.status);
-      console.log("Environment:", data.environment);
-    } catch (error) {
-      console.error("Backend connection failed:", error);
-    }
-  };
-  checkBackendHealth();
-}, []);
-
- return (
+  return (
     <div className="bg-white relative">
-      
       <SuccessModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-      {/* Hero Section */}
       <div className="relative">
-        <div className="absolute inset-0  z-10" />
+        <div className="absolute inset-0 z-10" />
         <Herosection
           title="ClaudyGod Music & Ministries / Contact"
           backgroundImage={Log}
@@ -69,7 +46,7 @@ useEffect(() => {
         />
       </div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl lg:text-4xl roboto-condensed text-purple-900 mb-6 inline-block px-4 md:px-16 py-2 md:py-4 border-b-2 border-purple-900">
             We Are Here For You
@@ -82,7 +59,8 @@ useEffect(() => {
         <h3 className="text-gray-900 mb-6 roboto-condensed text-2xl md:text-3xl lg:text-4xl">
           Get In Touch With Us
         </h3>
- <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-8 md:gap-16 mb-16">
+        
+        <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-8 md:gap-16 mb-16">
           <div className="md:pr-8">
             <ContactForm onSuccess={() => setIsModalOpen(true)} />
           </div>
@@ -91,9 +69,8 @@ useEffect(() => {
             <ContactInfo />
           </div>
         </div>
+        
         <hr className="my-8 border-purple-900" />
-
-        {/* Newsletter Form */}
         <NewsletterForm />
       </div>
 

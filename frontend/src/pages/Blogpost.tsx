@@ -1,15 +1,15 @@
 import React, { useState, useEffect, lazy, Suspense, useCallback, useMemo } from 'react';
 import { Heroblog } from '../components/blog/blogHero';
 import { blogPosts } from '../components/blog/blogsData';
-import Pagination from '../components/pagination';
+import Pagination from '../components/Utils/pagination';
 import Interview from '../components/Interview';
 
 // Lazy load components
 const LazyBlogWelcome = lazy(() => import('../components/blog/blogWelcome'));
-const LazyWelcomeImage = lazy(() => import('../components/WelcomeImage'));
+const LazyWelcomeImage = lazy(() => import('../components/Utils/WelcomeImage'));
 const LazyBlogPost = lazy(() => import('../components/mainBlog'));
 const LazyChatbot = lazy(() => import('../components/Chatbot'));
-const LazyNewsletterForm = lazy(() => import('../components/Newsletter'));
+const LazyNewsletterForm = lazy(() => import('../components/Utils/Newsletter'));
 
 interface Comment {
   id: string;

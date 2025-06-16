@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWallet, faArrowDown, faCreditCard } from '@fortawesome/free-solid-svg-icons';
-import { Herosection } from '../components/Herosection';    
+import { Herosection } from '../components/Utils/Herosection';    
 import { Donate1, Donate2 } from '../assets/';
 import { useNavContext } from '../context/NavContext';
 

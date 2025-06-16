@@ -16,7 +16,7 @@ import { DonateData } from './pages/Donate';
 import { StoreData } from './pages/Store';
 import { Blog } from './pages/Blogpost';
 import { MinistryData } from './pages/Ministry';
-import { CheckoutPage } from './pages/CheckoutPage';
+import { CheckoutPage } from './components/store/CheckoutPage';
 import { CartPage } from './pages/CartPage';
  import { News } from './pages/News';
 

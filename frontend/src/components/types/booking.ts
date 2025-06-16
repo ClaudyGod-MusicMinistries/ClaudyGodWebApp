@@ -2,6 +2,8 @@
 export type CountryCode = 'US' | 'CA' | 'UK' | 'NG';
 
 export type BookingFormData = {
+  eventDate: any;
+  address: any;
   firstName: string;
   lastName: string;
   email: string;

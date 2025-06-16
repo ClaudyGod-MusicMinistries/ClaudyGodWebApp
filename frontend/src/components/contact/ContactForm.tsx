@@ -1,218 +1,134 @@
-// src/components/Contact/ContactForm.tsx
-import React from 'react';
-import { useForm, FieldErrors } from 'react-hook-form';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { ContactFormInputs, ApiError } from '../types/contact';
 import { submitContactForm } from '../api/ContactApi';
 
-export type ContactFormInputs = {
-  name: string;
-  email: string;
-  message: string;
+type ContactFormProps = {
+  onSuccess: () => void;
 };
 
-interface ContactFormProps {
-  onSuccess: () => void;
-}
-
 const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid, isDirty, isSubmitting },
+  const { 
+    register, 
+    handleSubmit, 
+    formState: { errors }, 
     reset,
-    trigger,
-  } = useForm<ContactFormInputs>({
-    mode: 'onChange',
-    defaultValues: { name: '', email: '', message: '' },
-  });
+    setError 
+  } = useForm<ContactFormInputs>();
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
- const onSubmit = async (data: ContactFormInputs) => {
+  const onSubmit = async (data: ContactFormInputs) => {
+    setIsSubmitting(true);
     try {
-      // Simulate network delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      // Use the API service instead of direct fetch
       await submitContactForm(data);
-
-      toast.success('Your message was sent successfully!', {
-        position: 'top-right',
-        autoClose: 3000,
-      });
-
       onSuccess();
       reset();
-    } catch (err) {
-      console.error('Form submit error:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Failed to send message';
+    } catch (error) {
+      const apiError = error as ApiError;
       
-      toast.error(`Error: ${errorMessage}`, {
-        position: 'bottom-right',
-        autoClose: 5000,
-      });
+      if (apiError.name === 'ValidationError' && apiError.errors) {
+        Object.entries(apiError.errors).forEach(([field, message]) => {
+          setError(field as keyof ContactFormInputs, {
+            type: 'manual',
+            message
+          });
+        });
+      } else {
+        console.error('Submission error:', apiError.message);
+        setError('root', {
+          type: 'manual',
+          message: apiError.message || 'Failed to send message. Please try again later.'
+        });
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const onError = (fieldErrors: FieldErrors<ContactFormInputs>) => {
-    toast.warn('Please fill in all required fields.', {
-      position: 'top-right',
-      autoClose: 3000,
-    });
-    const firstKey = Object.keys(fieldErrors)[0] as keyof ContactFormInputs;
-    trigger(firstKey);
-  };
-
-  const validateField = async (field: keyof ContactFormInputs) => {
-    await trigger(field);
-  };
-
   return (
-    <div>
-      {/* Toast Container for this form */}
-      <ToastContainer />
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          Full Name
+        </label>
+        <input
+          id="name"
+          type="text"
+          className={`mt-1 block w-full px-4 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-purple-900 focus:border-purple-900`}
+          {...register('name', { required: 'Name is required' })}
+        />
+        {errors.name && (
+          <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+        )}
+      </div>
 
-      <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-6" noValidate>
-        {/* Name Field */}
-        <div>
-          <label htmlFor="name" className="block text-sm robotoMedium text-gray-700 mb-1">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            {...register('name', {
-              required: 'Name is required',
-              minLength: { value: 2, message: 'Name must be at least 2 characters' },
-              maxLength: { value: 50, message: 'Name cannot exceed 50 characters' },
-            })}
-            onBlur={() => validateField('name')}
-            className={`w-full px-3 py-2 border ${
-              errors.name ? 'border-red-500' : 'border-gray-300 focus:border-purple-500'
-            } rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 transition-colors`}
-            placeholder="Enter Name Here"
-            aria-invalid={errors.name ? 'true' : 'false'}
-          />
-          {errors.name && (
-            <p className="text-red-500 text-sm mt-1 flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 mr-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              {errors.name.message}
-            </p>
-          )}
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          Email Address
+        </label>
+        <input
+          id="email"
+          type="email"
+          className={`mt-1 block w-full px-4 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-purple-900 focus:border-purple-900`}
+          {...register('email', { 
+            required: 'Email is required',
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: 'Invalid email address'
+            }
+          })}
+        />
+        {errors.email && (
+          <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+          Your Message
+        </label>
+        <textarea
+          id="message"
+          rows={4}
+          className={`mt-1 block w-full px-4 py-2 border ${errors.message ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-purple-900 focus:border-purple-900`}
+          {...register('message', { 
+            required: 'Message is required',
+            minLength: {
+              value: 10,
+              message: 'Message should be at least 10 characters'
+            }
+          })}
+        ></textarea>
+        {errors.message && (
+          <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
+        )}
+      </div>
+
+      {errors.root && (
+        <div className="text-red-600 text-sm">
+          {errors.root.message}
         </div>
+      )}
 
-        {/* Email Field */}
-        <div>
-          <label htmlFor="email" className="block text-sm robotoMedium text-gray-700 mb-1">
-            Email Address
-          </label>
-          <input
-            type="email"
-            id="email"
-            {...register('email', {
-              required: 'Email is required',
-              pattern: { value: /^\S+@\S+\.\S+$/, message: 'Enter a valid email address' },
-              maxLength: { value: 100, message: 'Email cannot exceed 100 characters' },
-            })}
-            onBlur={() => validateField('email')}
-            className={`w-full px-3 py-2 border ${
-              errors.email ? 'border-red-500' : 'border-gray-300 focus:border-purple-500'
-            } rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 transition-colors`}
-            placeholder="Enter Email Address"
-            aria-invalid={errors.email ? 'true' : 'false'}
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm mt-1 flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 mr-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              {errors.email.message}
-            </p>
-          )}
-        </div>
-
-        {/* Message Field */}
-        <div>
-          <label htmlFor="message" className="block text-sm robotoMedium text-gray-700 mb-1">
-            Message
-          </label>
-          <textarea
-            id="message"
-            rows={6}
-            {...register('message', {
-              required: 'Message is required',
-              minLength: { value: 10, message: 'Message must be at least 10 characters' },
-              maxLength: { value: 2000, message: 'Message cannot exceed 2000 characters' },
-            })}
-            onBlur={() => validateField('message')}
-            className={`w-full px-3 py-2 border ${
-              errors.message ? 'border-red-500' : 'border-gray-300 focus:border-purple-500'
-            } rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300 transition-colors`}
-            placeholder="Write Your Message Here. Max 2000 Characters"
-            aria-invalid={errors.message ? 'true' : 'false'}
-          />
-          {errors.message && (
-            <p className="text-red-500 text-sm mt-1 flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 mr-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              {errors.message.message}
-            </p>
-          )}
-        </div>
-
-        {/* Submit Button */}
+      <div>
         <button
           type="submit"
-          disabled={isSubmitting || !isValid || !isDirty}
-          className={`w-full md:w-auto bg-purple-900 cursor-pointer hover:bg-purple-800 robotoMedium text-white font-medium py-3 px-8 rounded-md transition-all duration-300 ease-in-out flex items-center justify-center ${
-            isSubmitting || !isValid || !isDirty
-              ? 'opacity-70 cursor-not-allowed'
-              : 'hover:scale-[1.02] transform shadow-lg hover:shadow-xl'
-          }`}
+          disabled={isSubmitting}
+          className="w-full flex justify-center py-3 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-900 hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-900 disabled:opacity-50"
         >
           {isSubmitting ? (
             <>
-              <svg
-                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                />
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
               Sending...
             </>
-          ) : (
-            'Submit Message'
-          )}
+          ) : 'Send Message'}
         </button>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 };
 
