@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { BookingFormData } from '../types/booking';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:10000';
 const BOOKINGS_ENDPOINT = `${API_BASE}/api/bookings`;
+
 
 export const submitBooking = async (data: BookingFormData) => {
   const payload = {

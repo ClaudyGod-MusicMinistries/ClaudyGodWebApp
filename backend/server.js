@@ -50,9 +50,13 @@ mongoose.connect(process.env.DB_URI, {
 
 // Routes
 const subscriberRoutes = require('./routes/SubscriberRoutes');
-const contactRoutes = require('./routes/ContactRoutes')
+const contactRoutes = require('./routes/ContactRoutes');
+const bookingsRoutes = require('./routes/bookingsRoutes');
+const volunteerRoutes = require('./routes/volunteerRoutes');
 app.use('/api/subscribers', subscriberRoutes);
 app.use('/api/contacts', contactRoutes);
+app.use('/api/bookings', bookingsRoutes);
+app.use('/api/volunteers', volunteerRoutes);
 
 // health & root
 app.get('/', (_, res) =>
