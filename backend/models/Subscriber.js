@@ -1,21 +1,19 @@
 const mongoose = require('mongoose');
 
 const subscriberSchema = new mongoose.Schema({
-  name: {  // Changed from 'Name' to 'name'
+  name: {
     type: String,
-    required: [true, 'Name is required'],
+    required: [true, 'Name required'],
     trim: true,
   },
   email: {
     type: String,
-    required: [true, 'Email is required'],
-    trim: true,
+    required: [true, 'Email required'],
     lowercase: true,
-    match: [/.+@.+\..+/, 'Please enter a valid email address'],
-    unique: true  // Prevent duplicate subscriptions
+    trim: true,
+    unique: true,
+    match: [/.+@.+\..+/, 'Invalid email'],
   }
-}, {
-  timestamps: true
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Subscriber', subscriberSchema);

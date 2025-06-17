@@ -1,38 +1,20 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://claudygodwebapp-1.onrender.com';
+// src/utils/newsletter.js
+
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:10000';
 const SUBSCRIBE_ENDPOINT = `${API_BASE}/api/subscribers`;
 
-export const subscribeToNewsletter = async (data: FormData) => {
-  try {
-    console.log("Sending request to:", SUBSCRIBE_ENDPOINT);
-    
-    const response = await fetch(SUBSCRIBE_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+export async function subscribeToNewsletter({ name, email }) {
+  const payload = { name, email };
+  const res = await fetch(SUBSCRIBE_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
 
-    console.log("Response status:", response.status);
-    
-    // Handle 204 No Content responses
-    if (response.status === 204) {
-      return { message: "Subscription successful" };
-    }
-    
-    const responseData = await response.json();
-    
-    if (!response.ok) {
-      throw new Error(responseData.message || `HTTP error! Status: ${response.status}`);
-    }
+  const data = await res.json().catch(() => ({}));
 
-    return responseData;
-  } catch (error) {
-    console.error("Full fetch error:", error);
-    
-    // More specific error messages
-    if (error instanceof TypeError) {
-      throw new Error("Network error. Please check your internet connection.");
-    }
-    
-    throw new Error(error.message || "An unexpected error occurred");
+  if (!res.ok) {
+    throw new Error(data.message || `Error ${res.status}`);
   }
-};
+  return data;
+}

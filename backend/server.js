@@ -1,114 +1,94 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const https = require('https'); // Added for keep-alive requests
-
-dotenv.config();
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const https = require('https');
 
 const app = express();
-const port = process.env.PORT || 10000;
+const PORT = process.env.PORT || 10000;
 
-// Parse CORS_ORIGIN into array
-const corsOrigins = process.env.CORS_ORIGIN 
-  ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
+// CORS whitelist from env
+const corsOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map(u => u.replace(/\/$/, '').trim())
   : [];
-console.log('Allowed CORS origins:', corsOrigins);
 
-// CORS Configuration
+// Log allowed origins
+console.log('🔑 Allowed CORS origins:', corsOrigins);
+
 app.use(cors({
-  origin: corsOrigins.length ? corsOrigins : [
-    "http://localhost:3000",
-    "https://claudygodwebapp-1.onrender.com",
-    "https://claudygod.org"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true
+  origin: (incomingOrigin, cb) => {
+    // allow no‑origin like curl/postman
+    if (!incomingOrigin || corsOrigins.includes(incomingOrigin)) {
+      cb(null, true);
+    } else {
+      cb(new Error(`Origin ${incomingOrigin} not allowed by CORS`));
+    }
+  },
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  credentials: true,
 }));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // For form data
+app.use(express.urlencoded({ extended: true }));
 
-// Request logging middleware
+// simple request logger
 app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
   next();
 });
 
-// MongoDB Connection
-const dbUri = process.env.DB_URI || 'mongodb+srv://peter4tech:Ogba96@cluster0.khyjqap.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-
-mongoose.connect(dbUri, {
+// MongoDB connection
+mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => console.log("MongoDB Connected Successfully"))
+.then(() => console.log('✅ MongoDB connected'))
 .catch(err => {
-  console.error("Database connection failed", err);
-  process.exit(1); // Exit on DB connection failure
+  console.error('❌ MongoDB connection error:', err);
+  process.exit(1);
 });
 
-
+// Subscriber routes
 const subscriberRoutes = require('./routes/SubscriberRoutes');
-
-
 app.use('/api/subscribers', subscriberRoutes);
 
-// Root endpoint
-app.get("/", (req, res) => {
+// health & root
+app.get('/', (_, res) =>
+  res.json({ status: 'running', timestamp: new Date() })
+);
+app.get('/health', (_, res) =>
   res.json({
-    status: "running",
-    message: "Server is running Live",
+    status: 'ok',
+    database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
     timestamp: new Date()
-  });
-});
+  })
+);
 
-// Health check endpoint
-app.get('/health', (req, res) => {
-  const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
-  res.status(200).json({ 
-    status: 'ok', 
-    database: dbStatus,
-    timestamp: new Date() 
-  });
-});
-
-// Error handling middleware
+// 404 and error handlers
+app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: 'Internal Server Error' });
+  res.status(500).json({ error: err.message || 'Internal Server Error' });
 });
 
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ message: "Route not found" });
-});
-
-// Keep Render awake (production only)
+// keep‑alive pings (Render)
 if (process.env.NODE_ENV === 'production') {
   setInterval(() => {
-    console.log("Pinging server to prevent sleep...");
-    
-    https.get('https://claudygodwebapp-1.onrender.com/health', (res) => {
-      console.log(`Keep-alive ping status: ${res.statusCode}`);
-    }).on('error', (err) => {
-      console.error("Keep-alive ping failed:", err.message);
-    });
-  }, 240000); // Every 4 minutes
+    https.get(`${process.env.KEEP_ALIVE_URL}/health`)
+      .on('response', r => console.log(`Keep‑alive ping ${r.statusCode}`))
+      .on('error', e => console.error('Keep‑alive failed:', e.message));
+  }, 240000);
 }
 
-// Start server
-const server = app.listen(port, () => {
-  console.log(`Server started on port ${port}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+app.listen(PORT, () => {
+  console.log(`🚀 Server listening on port ${PORT} (${process.env.NODE_ENV || 'dev'})`);
 });
 
-// Graceful shutdown
+// graceful shutdown
 process.on('SIGINT', () => {
-  console.log('Shutting down server...');
-  server.close(() => {
-    mongoose.connection.close();
-    console.log('Server and DB connection closed');
+  console.log('🛑 Shutting down');
+  mongoose.connection.close(() => {
+    console.log('📦 MongoDB disconnected');
     process.exit(0);
   });
 });
