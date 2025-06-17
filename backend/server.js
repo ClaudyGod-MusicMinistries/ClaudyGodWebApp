@@ -7,22 +7,31 @@ const subscriberRoutes = require('./routes/SubscriberRoutes');
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 1000;
+const port = process.env.PORT || 10000; // Use Render's required port
 
-// Creating the communication between 
+// Parse CORS_ORIGIN into array
+const corsOrigins = process.env.CORS_ORIGIN 
+  ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
+  : [];
+
+// CORS Configuration
 app.use(cors({
-  origin: [
-    process.env.CORS_ORIGIN,
-     "https://claudygodwebapp-1.onrender.com"
+  origin: corsOrigins.length ? corsOrigins : [
+    "http://localhost:3000",
+    "https://claudygodwebapp-1.onrender.com"
   ],
-  credentials:true
+  methods: ["GET", "POST"],
+  credentials: true
 }));
+
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect(process.env.DB_URI, {
+const dbUri = process.env.DB_URI || 'mongodb+srv://peter4tech:Ogba96@cluster0.khyjqap.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+
+mongoose.connect(dbUri, {
   useNewUrlParser: true,
-  useUnifiedTopology:true
+  useUnifiedTopology: true
 })
 .then(() => console.log("MongoDB Connected Successfully"))
 .catch(err => console.error("Database connection failed", err));
@@ -31,9 +40,22 @@ mongoose.connect(process.env.DB_URI, {
 app.use('/api/subscribers', subscriberRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Server is running Live")
-})
+  res.send("Server is running Live");
+});
 
-app.listen(port,() => {
-  console.log(`Server started on port' ${port}`)
-})
+// Add health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
+// Keep Render awake
+setInterval(() => {
+  console.log("Pinging server to prevent sleep...");
+  fetch(`https://claudygodwebapp-1.onrender.com/health`)
+    .then(res => console.log(`Ping status: ${res.status}`))
+    .catch(err => console.error("Ping failed:", err));
+}, 240000); // Ping every 4 minutes
+
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
+});

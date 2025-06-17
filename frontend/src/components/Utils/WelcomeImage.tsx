@@ -1,5 +1,5 @@
 import React from 'react';
-import blog from '../assets/blogBanner.webp';
+import { blog } from '../../assets/';
 
 const WelcomeImage: React.FC = () => {
   return (
