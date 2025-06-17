@@ -3,7 +3,7 @@ export type FormData = {
   email: string;
 };
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 const SUBSCRIBE_ENDPOINT = `${API_BASE}/api/subscribers`;
 
 export const subscribeToNewsletter = async (data: FormData) => {

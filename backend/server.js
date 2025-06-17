@@ -7,7 +7,7 @@ const subscriberRoutes = require('./routes/SubscriberRoutes');
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 1000;
 
 // Creating the communication between 
 app.use(cors({
