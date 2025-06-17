@@ -7,37 +7,57 @@ const https = require('https');
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// CORS whitelist from env
-const corsOrigins = process.env.CORS_ORIGIN
-  ? process.env.CORS_ORIGIN.split(',').map(u => u.replace(/\/$/, '').trim())
-  : [];
+// Enhanced CORS handling
+const getOrigins = () => {
+  const origins = process.env.CORS_ORIGIN 
+    ? process.env.CORS_ORIGIN.split(',').map(u => {
+        const url = u.trim();
+        return url.endsWith('/') ? url.slice(0, -1) : url;
+      })
+    : [];
+  
+  console.log('🔑 Allowed CORS origins:', origins);
+  return origins;
+};
 
-// COrs-validator
-console.log('🔑 Allowed CORS origins:', corsOrigins);
+const corsOptions = {
+  origin: (origin, callback) => {
+    const allowedOrigins = getOrigins();
+    
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin is allowed
+    const originAllowed = allowedOrigins.some(allowed => {
+      return (
+        origin === allowed ||
+        origin === `${allowed}/` ||
+        origin.replace(/\/$/, '') === allowed
+      );
+    });
 
-app.use(cors({
-  origin: (incomingOrigin, cb) => {
-    // allow no‑origin like curl/postman
-    if (!incomingOrigin || corsOrigins.includes(incomingOrigin)) {
-      cb(null, true);
-    } else {
-      cb(new Error(`Origin ${incomingOrigin} not allowed by CORS`));
-    }
+    originAllowed
+      ? callback(null, true)
+      : callback(new Error(`Origin ${origin} not allowed by CORS`));
   },
-  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
-  credentials: true,
-}));
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true
+};
 
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Request Tester
+// Request Logger
 app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`, {
+    origin: req.headers.origin,
+    ip: req.ip
+  });
   next();
 });
 
-// MongoDB connection
+// MongoDB Connection
 mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -53,48 +73,73 @@ const subscriberRoutes = require('./routes/SubscriberRoutes');
 const contactRoutes = require('./routes/ContactRoutes');
 const bookingsRoutes = require('./routes/bookingsRoutes');
 const volunteerRoutes = require('./routes/volunteerRoutes');
+
 app.use('/api/subscribers', subscriberRoutes);
 app.use('/api/contacts', contactRoutes);
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/volunteers', volunteerRoutes);
 
-// health & root
-app.get('/', (_, res) =>
-  res.json({ status: 'running', timestamp: new Date() })
-);
-app.get('/health', (_, res) =>
-  res.json({
-    status: 'ok',
-    database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
-    timestamp: new Date()
-  })
-);
+// Health Check Endpoints
+app.get('/', (_, res) => res.json({ 
+  status: 'running', 
+  timestamp: new Date(),
+  environment: process.env.NODE_ENV || 'development'
+}));
 
-// 404 and error handlers
+app.get('/health', (_, res) => res.json({
+  status: 'ok',
+  database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+  timestamp: new Date(),
+  corsOrigins: getOrigins()
+}));
+
+// Error Handling
 app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
+
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error(`[ERROR] ${err.stack}`);
+  
+  // Special handling for CORS errors
+  if (err.message.includes('CORS')) {
+    return res.status(403).json({ 
+      error: 'Forbidden - Origin not allowed',
+      allowedOrigins: getOrigins(),
+      yourOrigin: req.headers.origin
+    });
+  }
+  
   res.status(500).json({ error: err.message || 'Internal Server Error' });
 });
 
-// keep‑alive pings (Render)
+// Keep-alive for Render
 if (process.env.NODE_ENV === 'production') {
   setInterval(() => {
-    https.get(`${process.env.KEEP_ALIVE_URL}/health`)
-      .on('response', r => console.log(`Keep‑alive ping ${r.statusCode}`))
-      .on('error', e => console.error('Keep‑alive failed:', e.message));
-  }, 240000);
+    const url = `${process.env.KEEP_ALIVE_URL || app.get('url')}/health`;
+    console.log(`Pinging keep-alive: ${url}`);
+    
+    https.get(url, res => {
+      console.log(`Keep-alive status: ${res.statusCode}`);
+    }).on('error', err => {
+      console.error('Keep-alive error:', err.message);
+    });
+  }, 240000); // Every 4 minutes
 }
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server listening on port ${PORT} (${process.env.NODE_ENV || 'dev'})`);
+// Server Start
+const server = app.listen(PORT, () => {
+  const address = server.address();
+  const host = address.address === '::' ? 'localhost' : address.address;
+  console.log(`🚀 Server running at http://${host}:${PORT} (${process.env.NODE_ENV || 'dev'})`);
 });
 
-
+// Graceful shutdown
 process.on('SIGINT', () => {
-  console.log('🛑 Shutting down');
-  mongoose.connection.close(() => {
+  console.log('🛑 Shutting down server...');
+  mongoose.connection.close(false, () => {
     console.log('📦 MongoDB disconnected');
-    process.exit(0);
+    server.close(() => {
+      console.log('💤 Server stopped');
+      process.exit(0);
+    });
   });
 });
