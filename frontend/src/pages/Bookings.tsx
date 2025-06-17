@@ -16,6 +16,7 @@ import { EventInfoSection } from '../components/Bookings/EventInfo';
 import { LocationSection } from '../components/Bookings/LocationInfo';
 import { TermsSection } from '../components/Bookings/TermsSubmit';
 import { DownloadSection } from '../components/Utils/download';
+import { SEO } from '../components/Utils/SEO';
 
 export const Bookings: React.FC = () => {
   const [showThankYouModal, setShowThankYouModal] = useState(false);
@@ -107,6 +108,27 @@ export const Bookings: React.FC = () => {
 
   return (
     <div className="bg-white min-h-screen overflow-y-auto">
+       <SEO
+        title="Book ClaudyGod for Events | Gospel Artist Booking"
+        description="Book ClaudyGod for worship events, concerts, and church services. International gospel artist available for bookings worldwide."
+        keywords="book gospel artist, christian event booking, worship leader hire, church concert booking"
+        canonical="https://claudygod.org/bookings"
+        image="https://claudygod.org/images/booking-og.jpg"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "serviceType": "Event Booking",
+          "provider": {
+            "@type": "Person",
+            "name": "ClaudyGod"
+          },
+          "areaServed": ["US", "Nigeria", "Worldwide"],
+          "availableChannel": {
+            "@type": "ServiceChannel",
+            "serviceUrl": "https://claudygod.org/bookings"
+          }
+        }}
+      />
       <ToastContainer position="top-right" autoClose={5000} />
       
       <Modal 

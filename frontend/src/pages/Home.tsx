@@ -1,4 +1,4 @@
-
+import { SEO } from '../components/Utils/SEO';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 // import { Hero } from '../components/HomepageHero';
@@ -33,6 +33,23 @@ const ScrollAnimationWrapper = ({ children }: { children: React.ReactNode }) => 
 
 export const Home = () => {
   return (
+    <>
+     <SEO
+        title="ClaudyGod Ministries - Gospel Music & Worship Community"
+        description="Experience transformative worship, biblical teachings, and Christian community. Join our spiritual gatherings and grow in faith."
+        keywords="gospel music, christian worship, claudygod, worship community"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "ClaudyGod Ministries",
+          "url": "https://claudygod.org/",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://claudygod.org/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }}
+      />
     <div className="overflow-x-hidden">
       
       <ScrollToTop />
@@ -66,5 +83,6 @@ export const Home = () => {
         <NewsletterForm />
       </ScrollAnimationWrapper>
     </div>
+    </>
   );
 };

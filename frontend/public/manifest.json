@@ -1,21 +1,12 @@
 {
-  "name": "Claudy God Ministries",
+  "name": "ClaudyGod Ministries",
   "short_name": "ClaudyGod",
-  "theme_color": "#000000",
-  "background_color": "#ffffff",
-  "display": "standalone",
-  "scope": "/",
-  "start_url": "/",
   "icons": [
-    {
-      "src": "/logo192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/logo512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+    { "src": "/frontend/src/assets/ClaudyGoLogo.webp", "type": "image/png", "sizes": "192x192" },
+    { "src": "/frontend/src/assets/ClaudyGoLogo.webp", "type": "image/png", "sizes": "512x512" }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
 }

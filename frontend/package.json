@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "build": "vite build ",
+    "preview": "vite preview",
+    "predeploy": "npm run build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -16,12 +16,11 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@hookform/resolvers": "^5.0.1",
-    "@tailwindcss/vite": "^4.1.6",
     "axios": "^1.9.0",
     "framer-motion": "^12.15.0",
-    "nodemailer": "^7.0.3",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.57.0",
     "react-intersection-observer": "^9.16.0",
     "react-router-dom": "^7.6.0",
@@ -30,11 +29,13 @@
     "react-youtube": "^10.1.0",
     "slick-carousel": "^1.8.1",
     "tailwindcss": "^4.1.6",
+    "vite-plugin-sitemap": "^0.8.2",
     "yup": "^1.6.1",
     "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@tailwindcss/vite": "^4.1.6",
     "@types/node": "^22.15.29",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.2",
@@ -45,6 +46,8 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+    "sitemap": "^8.0.0",
+    "terser": "^5.43.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.30.1",
     "vite": "^6.3.5"

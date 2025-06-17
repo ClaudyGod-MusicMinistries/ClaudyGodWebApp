@@ -46,6 +46,27 @@ export const StoreData = () => {
 
   return (
     <div className="bg-white">
+         <SEO
+        title="ClaudyGod Store - Gospel Merchandise & Products"
+        description="Shop official ClaudyGod merchandise. Uplifting apparel, music albums, and faith-inspired products."
+        keywords="gospel merchandise, christian store, worship products"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Store",
+          "name": "ClaudyGod Gospel Store",
+          "url": "https://claudygod.org/store",
+          "description": "Official merchandise store for ClaudyGod Ministries",
+          "openingHours": "Mo-Su",
+          "telephone": "+1-XXX-XXX-XXXX",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "123 Faith Avenue",
+            "addressLocality": "California",
+            "postalCode": "90001",
+            "addressCountry": "US"
+          }
+        }}
+      />
       <StoreHero />
 
       <section className="bg-purple-900 text-white py-16 relative">

@@ -1,5 +1,4 @@
-// App.tsx
-
+import { HelmetProvider } from 'react-helmet-async';
 import { AnimatePresence } from 'framer-motion';
 import { Routes, Route, useLocation, BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
@@ -57,8 +56,10 @@ function AppRoutes() {
 
 export default function Root() {
   return (
+    <HelmetProvider>
     <Router>
       <AppRoutes />
     </Router>
+    </HelmetProvider>
   );
 }

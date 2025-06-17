@@ -138,6 +138,25 @@ export const DonateData: React.FC = () => {
 
   return (
     <div className={`min-h-screen ${isNavOpen ? 'overflow-hidden max-h-screen' : ''}`}>
+        <SEO
+        title="Support Gospel Music Ministry | Donate to ClaudyGod"
+        description="Partner with ClaudyGod Ministries to spread the gospel through music. Your donations support worship events, albums, and global outreach."
+        keywords="donate to gospel ministry, support christian artist, music ministry donation, kingdom investment"
+        canonical="https://claudygod.org/donate"
+        image="https://claudygod.org/images/donate-og.jpg"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "DonateAction",
+          "name": "Support Gospel Music Ministry",
+          "description": "Donation page for ClaudyGod Ministries",
+          "url": "https://claudygod.org/donate",
+          "recipient": {
+            "@type": "Organization",
+            "name": "ClaudyGod Ministries",
+            "url": "https://claudygod.org"
+          }
+        }}
+      />
       <DonateHeroSlider />
       
       <div className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75 transition-all duration-300' : ''}`}>

@@ -1,3 +1,4 @@
+import { SEO } from '../components/Utils/SEO';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { AudioMackComponent } from '../components/Homepage/audioMack';
@@ -189,6 +190,7 @@ export const MusicData = () => {
     const isTrusted = SecurityUtils.isTrustedDomain(sanitizedUrl, TRUSTED_DOMAINS);
     
     return (
+      
       <motion.a
         href={sanitizedUrl}
         onClick={(e) => handleLinkClick(platform.url, e)}
@@ -214,7 +216,25 @@ export const MusicData = () => {
   };
 
   return (
+    
     <div className="bg-white min-h-screen relative">
+       <SEO
+        title="ClaudyGod Music - Stream Gospel Albums & Singles"
+        description="Stream ClaudyGod's gospel music on all platforms. New albums 'Very Glorious', 'Lover of My Soul', and 'King of Heaven' available now."
+        keywords="gospel music, christian albums, worship songs, claudygod music"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "MusicGroup",
+          "name": "ClaudyGod",
+          "url": "https://claudygod.org/music",
+          "genre": "Gospel, Contemporary Christian, Afro-Gospel",
+          "image": "https://claudygod.org/music/src/assets/album-cover.jpg",
+          "sameAs": [
+            "https://open.spotify.com/artist/...",
+            "https://music.apple.com/artist/..."
+          ]
+        }}
+      />
       {isModalOpen && (
         <motion.div 
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
@@ -266,6 +286,7 @@ export const MusicData = () => {
           </motion.div>
         </motion.div>
       )}
+      
       <section className="pt-32 pb-20 bg-purple-900 text-white">
         <div className="container mx-auto px-4">
           <motion.div 

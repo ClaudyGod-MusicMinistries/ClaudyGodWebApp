@@ -1,4 +1,4 @@
-// pages/Biography.tsx
+import { SEO } from '../components/Utils/SEO';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Herosection } from '../components/Utils/Herosection';
@@ -47,6 +47,32 @@ children.`
 
 export const Biography: React.FC = () => {
   return (
+    <>
+       <SEO
+        title="ClaudyGod Biography - American Gospel Artist & Ministry Leader"
+        description="Discover ClaudyGod's journey from Nigeria to becoming a California-based gospel artist. Learn about her music ministry, albums, and family life."
+        keywords="claudygod biography, gospel artist bio, christian musician, worship leader, american gospel artist"
+        canonical="https://claudygod.org/biography"
+        image="https://claudygod.org/images/bio-og.jpg"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": "ClaudyGod",
+          "url": "https://claudygod.org/biography",
+          "image": "https://claudygod.org/images/claudygod-profile.jpg",
+          "sameAs": [
+            "https://facebook.com/claudygod",
+            "https://youtube.com/claudygod",
+            "https://instagram.com/claudygod"
+          ],
+          "description": "American Gospel artist and worship leader",
+          "birthPlace": "Nigeria",
+          "birthDate": "1975-01-01",
+          "alumniOf": "Victory Bible Institute",
+          "award": ["Gospel Music Awards"],
+          "genre": ["Gospel", "Contemporary Christian", "Afro-gospel"]
+        }}
+      />
     <div className="bg-white">
       <Herosection
         title="ClaudyGod Music & Ministries / Biography"
@@ -92,5 +118,6 @@ export const Biography: React.FC = () => {
 
       <NewsletterForm />
     </div>
+    </>
   );
 };
