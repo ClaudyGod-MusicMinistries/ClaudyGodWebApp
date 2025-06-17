@@ -15,6 +15,7 @@ import { PersonalInfoSection } from '../components/Bookings/PersonalInfo';
 import { EventInfoSection } from '../components/Bookings/EventInfo';
 import { LocationSection } from '../components/Bookings/LocationInfo';
 import { TermsSection } from '../components/Bookings/TermsSubmit';
+import { DownloadSection } from '../components/Utils/download';
 
 export const Bookings: React.FC = () => {
   const [showThankYouModal, setShowThankYouModal] = useState(false);
@@ -169,6 +170,7 @@ export const Bookings: React.FC = () => {
           </form>
         </FormProvider>
       </div>
+      <DownloadSection/>
       <NewsletterForm />
     </div>
   );

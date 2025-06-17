@@ -25,6 +25,7 @@ import { CartPage } from './pages/CartPage';
 
 
 
+
 function AppRoutes() {
   const location = useLocation();
 
@@ -45,6 +46,7 @@ function AppRoutes() {
            <Route path="news" element={<News />} />
       <Route path="checkout" element={<CheckoutPage />} />
       <Route path="cart" element={<CartPage />} />
+   
 
           <Route path="*" element={<div>404 Not Found</div>} />
         </Route>

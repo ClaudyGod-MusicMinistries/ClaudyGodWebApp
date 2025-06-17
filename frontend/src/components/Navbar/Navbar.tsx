@@ -94,7 +94,7 @@ export const Navbar: React.FC = () => {
             { to: "/store", name: "Store" },
             { to: "/contact", name: "Contact" },
             { to: "/donate", name: "Donate" },
-            { to: "/help", name: "Help" },
+            // { to: "/help", name: "Help" },
           ].map((link) => (
             <NavLink
               key={link.to}

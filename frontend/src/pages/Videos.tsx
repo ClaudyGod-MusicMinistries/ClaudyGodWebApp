@@ -8,6 +8,7 @@ import PaginationControls from '../components/videos/PaginationControls';
 import DiagonalSection from '../components/videos/DiagonalSection';
 import  NewsletterForm  from '../components/Utils/Newsletter';
 import { AudioMackComponent } from '../components/Homepage/audioMack';
+import { DownloadSection } from '../components/Utils/download';
 
 
 type VideoType = {
@@ -368,6 +369,7 @@ export const VideosData: React.FC = () => {
 
       <hr className="h-px w-full bg-purple-900 border-0 mt-4" />
       <AudioMackComponent />
+      <DownloadSection />
       <NewsletterForm />
     </div>
     </>
