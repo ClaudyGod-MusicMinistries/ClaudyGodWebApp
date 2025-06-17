@@ -4,6 +4,7 @@ const SUBSCRIBE_ENDPOINT = `${API_BASE}/api/subscribers`;
 export const subscribeToNewsletter = async (data: FormData) => {
   try {
     console.log("Sending request to:", SUBSCRIBE_ENDPOINT);
+    
     const response = await fetch(SUBSCRIBE_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -12,14 +13,26 @@ export const subscribeToNewsletter = async (data: FormData) => {
 
     console.log("Response status:", response.status);
     
+    // Handle 204 No Content responses
+    if (response.status === 204) {
+      return { message: "Subscription successful" };
+    }
+    
+    const responseData = await response.json();
+    
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || `HTTP error! Status: ${response.status}`);
+      throw new Error(responseData.message || `HTTP error! Status: ${response.status}`);
     }
 
-    return await response.json();
+    return responseData;
   } catch (error) {
     console.error("Full fetch error:", error);
-    throw new Error("Network error. Please check your connection and try again.");
+    
+    // More specific error messages
+    if (error instanceof TypeError) {
+      throw new Error("Network error. Please check your internet connection.");
+    }
+    
+    throw new Error(error.message || "An unexpected error occurred");
   }
 };

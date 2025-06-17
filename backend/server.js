@@ -13,16 +13,26 @@ const port = process.env.PORT || 10000; // Use Render's required port
 const corsOrigins = process.env.CORS_ORIGIN 
   ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
   : [];
+console.log('Allowed CORS origins:', corsOrigins);
 
 // CORS Configuration
 app.use(cors({
   origin: corsOrigins.length ? corsOrigins : [
     "http://localhost:3000",
-    "https://claudygodwebapp-1.onrender.com"
+    "https://claudygodwebapp-1.onrender.com",
+    "https://claudygod.org/"
   ],
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "OPTIONS"],
   credentials: true
 }));
+
+app.options('*', cors());
+
+// Add OPTIONS handler for preflight requests
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+})
 
 app.use(express.json());
 
@@ -40,22 +50,30 @@ mongoose.connect(dbUri, {
 app.use('/api/subscribers', subscriberRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Server is running Live");
+  res.json({
+    status: "running",
+    message: "Server is running Live",
+    timestamp: new Date()
+  })
 });
 
 // Add health check endpoint
 app.get('/health', (req, res) => {
-  res.status(200).send('OK');
+  res.status(200).json({ status: 'ok', timestamp: new Date() });
 });
 
 // Keep Render awake
-setInterval(() => {
-  console.log("Pinging server to prevent sleep...");
-  fetch(`https://claudygodwebapp-1.onrender.com/health`)
-    .then(res => console.log(`Ping status: ${res.status}`))
-    .catch(err => console.error("Ping failed:", err));
-}, 240000); // Ping every 4 minutes
+if (process.env.NODE_ENV === 'production') {
+  setInterval(() => {
+    console.log("Pinging server to prevent sleep...");
+    fetch(`https://claudygodwebapp-1.onrender.com/health`)
+      .then(res => console.log(`Ping status: ${res.status}`))
+      .catch(err => console.error("Ping failed:", err));
+  }, 240000); // Ping every 4 minutes
+}
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
+  console.log(`Environment: ${process.env.NODE_ENV}`);
+  console.log(`CORS Origins: ${process.env.CORS_ORIGIN}`);
 });
