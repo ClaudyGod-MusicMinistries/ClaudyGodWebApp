@@ -12,7 +12,7 @@ const corsOrigins = process.env.CORS_ORIGIN
   ? process.env.CORS_ORIGIN.split(',').map(u => u.replace(/\/$/, '').trim())
   : [];
 
-// Log allowed origins
+// COrs-validator
 console.log('🔑 Allowed CORS origins:', corsOrigins);
 
 app.use(cors({
@@ -31,7 +31,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// simple request logger
+// Request Tester
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
   next();
@@ -48,9 +48,11 @@ mongoose.connect(process.env.DB_URI, {
   process.exit(1);
 });
 
-// Subscriber routes
+// Routes
 const subscriberRoutes = require('./routes/SubscriberRoutes');
+const contactRoutes = require('./routes/ContactRoutes')
 app.use('/api/subscribers', subscriberRoutes);
+app.use('/api/contacts', contactRoutes);
 
 // health & root
 app.get('/', (_, res) =>
@@ -84,7 +86,7 @@ app.listen(PORT, () => {
   console.log(`🚀 Server listening on port ${PORT} (${process.env.NODE_ENV || 'dev'})`);
 });
 
-// graceful shutdown
+
 process.on('SIGINT', () => {
   console.log('🛑 Shutting down');
   mongoose.connection.close(() => {
