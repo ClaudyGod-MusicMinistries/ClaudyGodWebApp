@@ -5,7 +5,7 @@ export type VolunteerFormData = {
   role: string;
   reason: string;
 };
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:10000';
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 const VOLUNTEER_ENDPOINT = `${API_BASE}/api/volunteers`;
 
 export const submitVolunteerForm = async (data: VolunteerFormData) => {

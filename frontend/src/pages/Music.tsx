@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { AudioMackComponent } from '../components/Homepage/audioMack';
 import { Cover } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DownloadSection } from '../components/Utils/download';
 import { 
   faExternalLinkAlt,
   faShieldAlt,
@@ -42,7 +43,7 @@ const securedMusicPlatforms = [
     safeRedirect: true
   },
   { 
-    name: 'YouTube Music', 
+    name: 'YouTube', 
     url: 'https://youtube.com/@claudygodministries?si=6Ne99tTC48Ihv44s', 
     icon: faYoutube,
     bgColor: 'bg-[#FF0000]',
@@ -91,7 +92,7 @@ const latestReleasePlatforms = [
     safeRedirect: true
   },
   { 
-    name: 'YouTube Music', 
+    name: 'YouTube', 
     url: 'https://www.youtube.com/watch?v=fK_tCBcnqGs&list=OLAK5uy_nO6i6o85ojjKvu8QQlrV0keV4M_T7PPe4', 
     icon: faYoutube,
     bgColor: 'bg-[#FF0000]',
@@ -389,7 +390,9 @@ export const MusicData = () => {
           </div>
         </div>
       </section>
+      
       <AudioMackComponent />
+      <DownloadSection />
       <NewsletterForm />
     </div>
   );

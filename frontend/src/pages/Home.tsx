@@ -10,6 +10,7 @@ import { AudioMackComponent } from '../components/Homepage/audioMack';
 import { ScrollToTop } from '../components/Homepage/ScrollToTop';
 import { Welcome } from '../components/Homepage/welcome';
 import { Hero } from '../components/HomeHero/MainHero';
+import { DownloadSection } from '../components/Utils/download';
 
 
 const ScrollAnimationWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -54,7 +55,9 @@ export const Home = () => {
       <ScrollAnimationWrapper>
         <AudioMackComponent />
       </ScrollAnimationWrapper>
-
+ <ScrollAnimationWrapper>
+     <DownloadSection />
+      </ScrollAnimationWrapper>
       <ScrollAnimationWrapper>
         <FeaturedVideos />
       </ScrollAnimationWrapper>

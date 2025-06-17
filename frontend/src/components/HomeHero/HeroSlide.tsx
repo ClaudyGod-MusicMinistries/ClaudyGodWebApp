@@ -2,10 +2,10 @@ import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { HeroSlide, slideVariants } from '../types/homeHero';
 import SlideBackground from './SlideBackground';
-import QuoteSlide from './QuoteSlide';
-import CTASlide from './SlideContent/CTASlide';
-import MusicSlide from './SlideContent/MusicSlide';
-import VideoSlide from './SlideContent/VideoSlide';
+import { QuoteSlide } from './QuoteSlide';
+import { CtaSlide } from './CtaSlide';
+import { MusicSlide } from './MusicSlide';
+import { VideoSlide } from './VideoSlide';
 
 const HeroSlide = ({
   slide,

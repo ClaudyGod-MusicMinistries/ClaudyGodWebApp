@@ -24,17 +24,16 @@ const DiagonalSection: React.FC<{
   title,
   description,
   category,
-  videos, 
+  videos,
   reverse = false,
   onExplore
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  
 
   const categoryVideos = videos.filter(video => video.category === category);
-  
+
   useEffect(() => {
     if (isHovered && categoryVideos.length > 0) {
       intervalRef.current = setInterval(() => {
@@ -43,20 +42,19 @@ const DiagonalSection: React.FC<{
     } else if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
-    
+
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [isHovered, categoryVideos.length]);
-  
-  const getThumbnailUrl = (youtubeId: string) => {
-    return `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
-  };
+
+  const getThumbnailUrl = (youtubeId: string) =>
+    `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
 
   return (
     <div className={`relative py-16 ${reverse ? 'bg-purple-50' : 'bg-white'}`}>
       <div className={`container mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${reverse ? 'flex-row-reverse' : ''}`}>
-        <motion.div 
+        <motion.div
           className={`${reverse ? 'lg:order-2 lg:pr-12' : 'lg:pl-12'}`}
           initial={{ opacity: 0, x: reverse ? 50 : -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -77,7 +75,7 @@ const DiagonalSection: React.FC<{
           </motion.button>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className={`relative aspect-video overflow-hidden rounded-xl ${reverse ? 'lg:order-1' : ''}`}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -86,45 +84,44 @@ const DiagonalSection: React.FC<{
           onMouseLeave={() => setIsHovered(false)}
         >
           <div className="relative w-full h-full overflow-hidden">
-            <div className="absolute inset-0 transition-opacity duration-700">
-              {categoryVideos.map((video, index) => (
-                <div
-                  key={video.id}
-                  className={`absolute inset-0 transition-opacity duration-700 ${
-                    index === currentSlideIndex ? 'opacity-100' : 'opacity-0'
-                  }`}
-                >
-             // Replace thumbnail URL generation
-<img 
-  src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} 
-  onError={(e) => {
-    e.target.src = {MusicBan1}
-  }}
-/>
-                </div>
-              ))}
-            </div>
-            
-        <motion.div
-  className="absolute top-0 left-0 w-1/2 h-full origin-left cursor-pointer"
-  initial={{ scaleX: 1 }}
-  animate={{ scaleX: isHovered ? 0 : 1 }}
-  transition={{ duration: 0.7, ease: "easeInOut" }}
-  style={{
-    background: 'linear-gradient(90deg, rgba(76, 29, 149, 0.9) 0%, rgba(107, 33, 168, 0.8) 100%)',
-    cursor: 'pointer'
-  }}
-/>
-<motion.div
-  className="absolute top-0 right-0 w-1/2 h-full origin-right cursor-pointer"
-  initial={{ scaleX: 1 }}
-  animate={{ scaleX: isHovered ? 0 : 1 }}
-  transition={{ duration: 0.7, ease: "easeInOut" }}
-  style={{
-    background: 'linear-gradient(90deg, rgba(107, 33, 168, 0.8) 0%, rgba(156, 163, 175, 0.7) 100%)',
-    cursor: 'pointer'
-  }}
-/>  
+            {categoryVideos.map((video, index) => (
+              <div
+                key={video.id}
+                className={`absolute inset-0 transition-opacity duration-700 ${
+                  index === currentSlideIndex ? 'opacity-100' : 'opacity-0'
+                }`}
+              >
+                <img
+                  src={getThumbnailUrl(video.youtubeId)}
+                  alt={video.title}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    target.src = MusicBan1;
+                  }}
+                />
+              </div>
+            ))}
+
+            <motion.div
+              className="absolute top-0 left-0 w-1/2 h-full origin-left cursor-pointer"
+              initial={{ scaleX: 1 }}
+              animate={{ scaleX: isHovered ? 0 : 1 }}
+              transition={{ duration: 0.7, ease: 'easeInOut' }}
+              style={{
+                background: 'linear-gradient(90deg, rgba(76, 29, 149, 0.9) 0%, rgba(107, 33, 168, 0.8) 100%)'
+              }}
+            />
+            <motion.div
+              className="absolute top-0 right-0 w-1/2 h-full origin-right cursor-pointer"
+              initial={{ scaleX: 1 }}
+              animate={{ scaleX: isHovered ? 0 : 1 }}
+              transition={{ duration: 0.7, ease: 'easeInOut' }}
+              style={{
+                background: 'linear-gradient(90deg, rgba(107, 33, 168, 0.8) 0%, rgba(156, 163, 175, 0.7) 100%)'
+              }}
+            />
+
             <div className="absolute inset-0 flex items-center justify-center">
               <motion.div
                 className="text-white text-5xl"
@@ -137,8 +134,12 @@ const DiagonalSection: React.FC<{
           </div>
         </motion.div>
       </div>
-      
-      <div className={`absolute inset-x-0 h-16 -z-10 ${reverse ? 'top-0 -skew-y-2 translate-y-[-50%] bg-white' : 'bottom-0 skew-y-2 translate-y-[50%] bg-purple-50'}`}></div>
+
+      <div className={`absolute inset-x-0 h-16 -z-10 ${
+        reverse
+          ? 'top-0 -skew-y-2 translate-y-[-50%] bg-white'
+          : 'bottom-0 skew-y-2 translate-y-[50%] bg-purple-50'
+      }`}></div>
     </div>
   );
 };

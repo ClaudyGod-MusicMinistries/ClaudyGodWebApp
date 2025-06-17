@@ -28,7 +28,7 @@ export const securedMusicPlatforms: MusicPlatform[] = [
     safeRedirect: true
   },
   { 
-    name: 'YouTube Music', 
+    name: 'YouTube', 
     url: 'https://youtube.com/@claudygodministries?si=6Ne99tTC48Ihv44s', 
     icon: faYoutube,
     bgColor: 'bg-[#FF0000]',

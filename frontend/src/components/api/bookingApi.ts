@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { BookingFormData } from '../types/booking';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:10000';
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 const BOOKINGS_ENDPOINT = `${API_BASE}/api/bookings`;
 
 

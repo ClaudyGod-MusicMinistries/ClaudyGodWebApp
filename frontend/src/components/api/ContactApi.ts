@@ -3,7 +3,7 @@ import axios from 'axios'; // Use axios instead of fetch
 import { ContactFormInputs } from "../types/contact";
 
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:10000';
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 const CONTACT_ENDPOINT = `${API_BASE}/api/contacts`;
 
 export const submitContactForm = async (data: ContactFormInputs) => {

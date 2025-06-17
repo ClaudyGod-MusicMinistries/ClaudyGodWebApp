@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import {  AnimatePresence } from 'framer-motion';
-import { heroSlides } from '../types/homeHero';
-import { HeroSlide } from '../types/homeHero';
-import PaginationDots from './Pagination';
-import StreamingModal from './StreamingModal';
+import { heroSlides } from '../data/HeroSlide';
+import HeroSlide from './HeroSlide';
+import { PaginationDots } from './Pagination';
+import StreamingModal from '../StreamingModel';
+
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);

@@ -12,6 +12,7 @@ import { CtaSlide } from './CtaSlide';
 import { MusicSlide } from './MusicSlide';
 import { VideoSlide } from './VideoSlide';
 
+
 export const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(1);
