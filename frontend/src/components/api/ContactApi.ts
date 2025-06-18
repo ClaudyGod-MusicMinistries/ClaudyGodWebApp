@@ -1,10 +1,15 @@
-// ContactApi.ts
-import axios from 'axios'; // Use axios instead of fetch
+import axios from "axios";
 import { ContactFormInputs } from "../types/contact";
-
-
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
-const CONTACT_ENDPOINT = `${API_BASE}/api/contacts`;
+const getApiBase = () => {
+  if (import.meta.env.PROD) {
+    return 'https://claudygodwebapp-1.onrender.com';
+  }
+  return window.location.origin.includes('localhost') 
+    ? 'http://localhost:10000' 
+    : 'https://claudygodwebapp-1.onrender.com';
+};
+const API_BASE = getApiBase();
+const CONTACT_ENDPOINT = `${API_BASE}/api/subscribers`;
 
 export const submitContactForm = async (data: ContactFormInputs) => {
   try {

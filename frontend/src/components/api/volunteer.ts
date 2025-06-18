@@ -5,7 +5,15 @@ export type VolunteerFormData = {
   role: string;
   reason: string;
 };
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
+const getApiBase = () => {
+  if (import.meta.env.PROD) {
+    return 'https://claudygodwebapp-1.onrender.com';
+  }
+  return window.location.origin.includes('localhost') 
+    ? 'http://localhost:10000' 
+    : 'https://claudygodwebapp-1.onrender.com';
+};
+const API_BASE = getApiBase();
 const VOLUNTEER_ENDPOINT = `${API_BASE}/api/volunteers`;
 
 export const submitVolunteerForm = async (data: VolunteerFormData) => {

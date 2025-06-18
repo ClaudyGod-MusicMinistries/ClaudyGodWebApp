@@ -1,7 +1,15 @@
 import axios from 'axios';
 import { BookingFormData } from '../types/booking';
+const getApiBase = () => {
+  if (import.meta.env.PROD) {
+    return 'https://claudygodwebapp-1.onrender.com';
+  }
+  return window.location.origin.includes('localhost') 
+    ? 'http://localhost:10000' 
+    : 'https://claudygodwebapp-1.onrender.com';
+};
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
+const API_BASE = getApiBase();
 const BOOKINGS_ENDPOINT = `${API_BASE}/api/bookings`;
 
 
