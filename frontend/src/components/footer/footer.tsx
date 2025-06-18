@@ -5,6 +5,7 @@ import {
   faPhone,
 } from '@fortawesome/free-solid-svg-icons';
 import { Social } from '../Social';
+// import { SocialLinks } from '../Utils/socials';
 import { Streaming }  from '../Streaming';
 import { Log } from '../../assets';
 

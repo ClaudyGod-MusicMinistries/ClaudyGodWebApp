@@ -54,24 +54,32 @@ export const Biography: React.FC = () => {
         keywords="claudygod biography, gospel artist bio, christian musician, worship leader, american gospel artist"
         canonical="https://claudygod.org/biography"
         image="https://claudygod.org/images/bio-og.jpg"
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "Person",
-          "name": "ClaudyGod",
-          "url": "https://claudygod.org/biography",
-          "image": "https://claudygod.org/images/claudygod-profile.jpg",
-          "sameAs": [
-            "https://facebook.com/claudygod",
-            "https://youtube.com/claudygod",
-            "https://instagram.com/claudygod"
-          ],
-          "description": "American Gospel artist and worship leader",
-          "birthPlace": "Nigeria",
-          "birthDate": "1975-01-01",
-          "alumniOf": "Victory Bible Institute",
-          "award": ["Gospel Music Awards"],
-          "genre": ["Gospel", "Contemporary Christian", "Afro-gospel"]
-        }}
+      // Update the Person schema
+structuredData={{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "ClaudyGod",
+  "url": "https://claudygod.org/biography",
+  "image": "https://claudygod.org/images/claudygod-profile.jpg",
+  "sameAs": [
+    "https://www.instagram.com/singerclaudygod/?hl=en",
+    "https://www.youtube.com/@ClaudyGODMinistries",
+    "https://www.facebook.com/ClaudyGod/",
+    "https://twitter.com/claudygod",
+    "https://www.linkedin.com/in/claudygod-music-and-ministries-b2887094",
+    "https://www.tiktok.com/@claudygod",
+    "https://music.apple.com/ng/artist/claudygod/1440081695",
+    "https://www.youtube.com/channel/UC0RUDNzIiSLxoWGcNQbrLNQ",
+    "https://music.youtube.com/channel/UCBZR8mELmaD5EpyuKMFUlaw",
+    "https://www.deezer.com/artist/53266602"
+  ],
+  "description": "American Gospel artist and worship leader",
+  "birthPlace": "Nigeria",
+  "birthDate": "1975-01-01",
+  "alumniOf": "Victory Bible Institute",
+  "award": ["Gospel Music Awards"],
+  "genre": ["Gospel", "Contemporary Christian", "Afro-gospel"]
+}}
       />
     <div className="bg-white">
       <Herosection
