@@ -9,11 +9,11 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const https = require('https');
 
-// Import routers
-const subscriberRoutes = require('./routes/SubscriberRoutes');
-const contactRoutes = require('./routes/ContactRoutes');
-const bookingsRoutes = require('./routes/BookingsRoutes');
-const volunteerRoutes = require('./routes/VolunteerRoutes');
+// Import routers - FIXED CASE SENSITIVITY
+const subscriberRoutes = require('./routes/subscriberRoutes');
+const contactRoutes = require('./routes/contactRoutes');
+const bookingsRoutes = require('./routes/bookingsRoutes'); // Lowercase 'b'
+const volunteerRoutes = require('./routes/volunteerRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -28,13 +28,8 @@ console.log('Allowed Origins:', allowedOrigins);
 // CORS middleware
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    
-    if (process.env.NODE_ENV === 'development') {
-      return callback(null, true);
-    }
-
+    if (process.env.NODE_ENV === 'development') return callback(null, true);
     if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
       callback(null, true);
     } else {
@@ -46,14 +41,9 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-// // Handle preflight requests
-// app.options('*', (req, res) => {
-//   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   res.setHeader('Access-Control-Allow-Credentials', 'true');
-//   res.sendStatus(204);
-// });
+
+
+
 // === Middleware ===
 app.use(helmet());
 app.use(compression());
@@ -67,16 +57,9 @@ app.use(rateLimit({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Enhanced request logger
+// Request logger
 app.use((req, res, next) => {
-  const { method, originalUrl, headers, ip } = req;
-  console.log({
-    ts: new Date().toISOString(),
-    method,
-    url: originalUrl,
-    origin: headers.origin,
-    ip
-  });
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.originalUrl}`);
   next();
 });
 
@@ -104,7 +87,7 @@ app.get('/', (req, res) => res.json({
 
 app.use('/api/subscribers', subscriberRoutes);
 app.use('/api/contacts', contactRoutes);
-app.use('/api/bookings', bookingsRoutes);
+app.use('/api/bookings', bookingsRoutes); // Keep if you have the file
 app.use('/api/volunteers', volunteerRoutes);
 
 // Health check
@@ -113,58 +96,44 @@ app.get('/health', (_, res) => {
     status: 'ok',
     uptime: process.uptime(),
     timestamp: new Date(),
-    database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
-    memory: process.memoryUsage()
+    database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
   });
 });
 
 // 404 handler
-app.use((req, res, next) => {
-  res.status(404).json({
-    error: 'Not Found', path: req.originalUrl
-  });
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not Found', path: req.originalUrl });
 });
 
 // Global error handler
 app.use((err, req, res, next) => {
   console.error('🔥 Error:', err.stack || err.message);
-  const status = err.status || 500;
-  let message = err.message || 'Internal Server Error';
-  
-  if (err.name === 'ValidationError') {
-    message = Object.values(err.errors).map(val => val.message).join(', ');
-  }
-  
-  res.status(status).json({ error: message });
+  res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
 });
 
-// Keep-alive ping (for Render)
+// Keep-alive ping
 if (process.env.NODE_ENV === 'production' && process.env.KEEP_ALIVE_URL) {
-  const keepAlive = () => {
-    const url = `${process.env.KEEP_ALIVE_URL}/health`;
-    console.log(`Pinging: ${url}`);
-    https.get(url, res => {
-      console.log(`✅ Keep-alive status: ${res.statusCode}`);
-    }).on('error', err => {
-      console.error('❌ Keep-alive error:', err.message);
-    });
-    setTimeout(keepAlive, 240000); // Every 4 minutes
-  };
-  keepAlive();
+  setInterval(() => {
+    https.get(`${process.env.KEEP_ALIVE_URL}/health`, () => {})
+      .on('error', err => console.error('Keep-alive error:', err.message));
+  }, 240000); // Every 4 minutes
 }
-
-// Graceful shutdown
-const shutdown = async () => {
-  console.log('🛑 Shutting down...');
-  server.close(() => console.log('HTTP server closed'));
-  await mongoose.connection.close(false);
-  console.log('MongoDB disconnected');
-  process.exit(0);
-};
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
 
 // Start server
 const server = app.listen(PORT, () => {
   console.log(`🚀 Server listening on port ${PORT}`);
 });
+
+// Graceful shutdown
+process.on('SIGINT', () => shutdown(server));
+process.on('SIGTERM', () => shutdown(server));
+
+async function shutdown(server) {
+  console.log('🛑 Shutting down...');
+  server.close(() => {
+    mongoose.connection.close(false, () => {
+      console.log('MongoDB disconnected');
+      process.exit(0);
+    });
+  });
+}
