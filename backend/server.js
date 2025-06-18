@@ -1,145 +1,163 @@
 require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
 const https = require('https');
+
+// Import routers
+const subscriberRoutes = require('./routes/SubscriberRoutes');
+const contactRoutes = require('./routes/ContactRoutes');
+const bookingsRoutes = require('./routes/BookingsRoutes');
+const volunteerRoutes = require('./routes/VolunteerRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Enhanced CORS handling
-const getOrigins = () => {
-  const origins = process.env.CORS_ORIGIN 
-    ? process.env.CORS_ORIGIN.split(',').map(u => {
-        const url = u.trim();
-        return url.endsWith('/') ? url.slice(0, -1) : url;
-      })
-    : [];
-  
-  console.log('🔑 Allowed CORS origins:', origins);
-  return origins;
-};
+// === Enhanced CORS Configuration ===
+const allowedOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map(o => o.trim()).filter(o => o)
+  : [];
 
-const corsOptions = {
-  origin: (origin, callback) => {
-    const allowedOrigins = getOrigins();
-    
-    // Allow requests with no origin (like mobile apps or curl)
+console.log('Allowed Origins:', allowedOrigins);
+
+// CORS middleware
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
-    // Check if origin is allowed
-    const originAllowed = allowedOrigins.some(allowed => {
-      return (
-        origin === allowed ||
-        origin === `${allowed}/` ||
-        origin.replace(/\/$/, '') === allowed
-      );
-    });
+    if (process.env.NODE_ENV === 'development') {
+      return callback(null, true);
+    }
 
-    originAllowed
-      ? callback(null, true)
-      : callback(new Error(`Origin ${origin} not allowed by CORS`));
+    if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
+      callback(null, true);
+    } else {
+      console.error(`CORS blocked: ${origin} | Allowed: ${allowedOrigins.join(', ')}`);
+      callback(new Error('Not allowed by CORS'));
+    }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true
-};
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
-app.use(cors(corsOptions));
+// === Middleware ===
+app.use(helmet());
+app.use(compression());
+app.use(morgan('dev'));
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 1000,
+  standardHeaders: true,
+  legacyHeaders: false,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Request Logger
+// Enhanced request logger
 app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`, {
-    origin: req.headers.origin,
-    ip: req.ip
+  const { method, originalUrl, headers, ip } = req;
+  console.log({
+    ts: new Date().toISOString(),
+    method,
+    url: originalUrl,
+    origin: headers.origin,
+    ip
   });
   next();
 });
 
-// MongoDB Connection
-mongoose.connect(process.env.DB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('✅ MongoDB connected'))
-.catch(err => {
-  console.error('❌ MongoDB connection error:', err);
-  process.exit(1);
-});
+// === Database connection ===
+(async () => {
+  try {
+    if (!process.env.DB_URI) throw new Error('DB_URI not set');
+    await mongoose.connect(process.env.DB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 10000
+    });
+    console.log('✅ MongoDB connected');
+  } catch (err) {
+    console.error('❌ DB connection error:', err.message);
+    process.exit(1);
+  }
+})();
 
-// Routes
-const subscriberRoutes = require('./routes/SubscriberRoutes');
-const contactRoutes = require('./routes/ContactRoutes');
-const bookingsRoutes = require('./routes/bookingsRoutes');
-const volunteerRoutes = require('./routes/volunteerRoutes');
+// === Routes ===
+app.get('/', (req, res) => res.json({
+  status: 'running', version: '1.0.0', ts: new Date(), env: process.env.NODE_ENV
+}));
 
 app.use('/api/subscribers', subscriberRoutes);
 app.use('/api/contacts', contactRoutes);
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/volunteers', volunteerRoutes);
 
-// Health Check Endpoints
-app.get('/', (_, res) => res.json({ 
-  status: 'running', 
-  timestamp: new Date(),
-  environment: process.env.NODE_ENV || 'development'
-}));
+// Health check
+app.get('/health', (_, res) => {
+  res.json({
+    status: 'ok',
+    uptime: process.uptime(),
+    timestamp: new Date(),
+    database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    memory: process.memoryUsage()
+  });
+});
 
-app.get('/health', (_, res) => res.json({
-  status: 'ok',
-  database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
-  timestamp: new Date(),
-  corsOrigins: getOrigins()
-}));
+// 404 handler
+app.use((req, res, next) => {
+  res.status(404).json({
+    error: 'Not Found', path: req.originalUrl
+  });
+});
 
-// Error Handling
-app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
-
+// Global error handler
 app.use((err, req, res, next) => {
-  console.error(`[ERROR] ${err.stack}`);
+  console.error('🔥 Error:', err.stack || err.message);
+  const status = err.status || 500;
+  let message = err.message || 'Internal Server Error';
   
-  // Special handling for CORS errors
-  if (err.message.includes('CORS')) {
-    return res.status(403).json({ 
-      error: 'Forbidden - Origin not allowed',
-      allowedOrigins: getOrigins(),
-      yourOrigin: req.headers.origin
-    });
+  if (err.name === 'ValidationError') {
+    message = Object.values(err.errors).map(val => val.message).join(', ');
   }
   
-  res.status(500).json({ error: err.message || 'Internal Server Error' });
+  res.status(status).json({ error: message });
 });
 
-// Keep-alive for Render
-if (process.env.NODE_ENV === 'production') {
-  setInterval(() => {
-    const url = `${process.env.KEEP_ALIVE_URL || app.get('url')}/health`;
-    console.log(`Pinging keep-alive: ${url}`);
-    
+// Keep-alive ping (for Render)
+if (process.env.NODE_ENV === 'production' && process.env.KEEP_ALIVE_URL) {
+  const keepAlive = () => {
+    const url = `${process.env.KEEP_ALIVE_URL}/health`;
+    console.log(`Pinging: ${url}`);
     https.get(url, res => {
-      console.log(`Keep-alive status: ${res.statusCode}`);
+      console.log(`✅ Keep-alive status: ${res.statusCode}`);
     }).on('error', err => {
-      console.error('Keep-alive error:', err.message);
+      console.error('❌ Keep-alive error:', err.message);
     });
-  }, 240000); // Every 4 minutes
+    setTimeout(keepAlive, 240000); // Every 4 minutes
+  };
+  keepAlive();
 }
 
-// Server Start
-const server = app.listen(PORT, () => {
-  const address = server.address();
-  const host = address.address === '::' ? 'localhost' : address.address;
-  console.log(`🚀 Server running at http://${host}:${PORT} (${process.env.NODE_ENV || 'dev'})`);
-});
-
 // Graceful shutdown
-process.on('SIGINT', () => {
-  console.log('🛑 Shutting down server...');
-  mongoose.connection.close(false, () => {
-    console.log('📦 MongoDB disconnected');
-    server.close(() => {
-      console.log('💤 Server stopped');
-      process.exit(0);
-    });
-  });
+const shutdown = async () => {
+  console.log('🛑 Shutting down...');
+  server.close(() => console.log('HTTP server closed'));
+  await mongoose.connection.close(false);
+  console.log('MongoDB disconnected');
+  process.exit(0);
+};
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
+
+// Start server
+const server = app.listen(PORT, () => {
+  console.log(`🚀 Server listening on port ${PORT}`);
 });

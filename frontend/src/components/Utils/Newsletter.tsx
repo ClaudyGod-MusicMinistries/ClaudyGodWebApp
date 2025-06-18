@@ -1,6 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { subscribeToNewsletter, FormData } from '../../components/api/subscriber'; // Add this import
+import { subscribeToNewsletter } from '../../components/api/subscriber';
+
+type FormData = {
+  name: string;
+  email: string;
+};
 
 const NewsletterForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -11,22 +16,26 @@ const NewsletterForm: React.FC = () => {
     register, 
     handleSubmit, 
     reset,
-    formState: { errors } 
-  } = useForm<FormData>();
+    formState: { errors, isValid }
+  } = useForm<FormData>({ mode: 'onChange' });
+
+  useEffect(() => {
+    if (isSuccess) {
+      const timer = setTimeout(() => setIsSuccess(false), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess]);
 
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
     setError(null);
     
     try {
-      // Use the API service instead of direct fetch
       await subscribeToNewsletter(data);
-
       reset();
       setIsSuccess(true);
-      setTimeout(() => setIsSuccess(false), 5000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred. Please try again.');
+      setError(err.message || 'An unexpected error occurred. Please try again later.');
     } finally {
       setIsLoading(false);
     }
@@ -77,6 +86,7 @@ const NewsletterForm: React.FC = () => {
               </label>
               <input
                 id="email"
+                type="email"
                 className="w-full px-4 py-3 border work-sans text-15 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 placeholder="your.email@example.com"
                 {...register('email', { 
@@ -99,19 +109,20 @@ const NewsletterForm: React.FC = () => {
               {error}
             </div>
           )}
-     {isSuccess && (
-  <div className="mb-4 p-3 bg-green-50 text-green-700 rounded-lg text-center">
-    Thank you for subscribing! You'll receive updates soon.
-  </div>
-)}
+          
+          {isSuccess && (
+            <div className="mb-4 p-3 bg-green-50 text-green-700 rounded-lg text-center">
+              Thank you for subscribing! You'll receive updates soon.
+            </div>
+          )}
 
           <div className="text-center">
             <button 
               type="submit" 
-              disabled={isLoading}
+              disabled={isLoading || !isValid}
               className={`bg-purple-900 hover:bg-purple-800 cursor-pointer roboto-condensed text-15 text-white font-semibold py-3 px-8 rounded-lg transition duration-200 transform hover:scale-105 ${
                 isLoading ? 'opacity-75 cursor-not-allowed' : ''
-              }`}
+              } ${!isValid ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               {isLoading ? (
                 <span className="flex items-center justify-center">

@@ -1,23 +1,30 @@
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import Root from './App';
 import { NavProvider } from './context/NavContext';
-// import App from './App';
 import './index.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+const container = document.getElementById('root') as HTMLElement;
 
-
-const root = createRoot(document.getElementById('root')!);
-
-root.render(
-    <React.StrictMode>
-    <NavProvider>
-      <Root />
-    </NavProvider>
-  </React.StrictMode>
- 
-);
+// Check for pre-rendered content
+if (container.hasChildNodes()) {
+  hydrateRoot(
+    container,
+    <StrictMode>
+      <NavProvider>
+        <Root />
+      </NavProvider>
+    </StrictMode>
+  );
+} else {
+  const root = createRoot(container);
+  root.render(
+    <StrictMode>
+      <NavProvider>
+        <Root />
+      </NavProvider>
+    </StrictMode>
+  );
+}

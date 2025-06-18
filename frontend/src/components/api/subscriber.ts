@@ -1,4 +1,3 @@
-// Determine base URL based on environment
 const getApiBase = () => {
   if (import.meta.env.PROD) {
     return 'https://claudygodwebapp-1.onrender.com';
@@ -15,29 +14,26 @@ export async function subscribeToNewsletter({ name, email }) {
   try {
     const res = await fetch(SUBSCRIBE_ENDPOINT, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
       body: JSON.stringify({ name, email }),
     });
 
-    const data = await res.json();
-
     if (!res.ok) {
-      // Enhanced error messages
-      let errorMsg = data.message || `Request failed with status ${res.status}`;
-      
-      // Special handling for common errors
-      if (res.status === 403) {
-        errorMsg = 'Access forbidden - please check your connection';
-      } else if (res.status === 0) {
-        errorMsg = 'Network error - failed to reach server';
+      let errorData;
+      try {
+        errorData = await res.json();
+      } catch (e) {
+        throw new Error(`HTTP error! status: ${res.status}`);
       }
-      
-      throw new Error(errorMsg);
+      throw new Error(errorData.message || `Request failed with status ${res.status}`);
     }
-    
-    return data;
+
+    return await res.json();
   } catch (err) {
-    console.error('Subscription error:', err);
+    console.error('API Error:', err);
     throw new Error(err.message || 'Network request failed');
   }
 }

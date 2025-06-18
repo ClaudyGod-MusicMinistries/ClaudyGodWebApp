@@ -24,7 +24,7 @@ const subscriberSchema = new mongoose.Schema({
   toObject: { virtuals: true }
 });
 
-// Index for faster queries
+
 subscriberSchema.index({ email: 1 }, { unique: true });
 subscriberSchema.index({ createdAt: -1 });
 
