@@ -10,8 +10,8 @@ const rateLimit = require('express-rate-limit');
 const https = require('https');
 
 // Import routers - FIXED CASE SENSITIVITY
-const subscriberRoutes = require('./routes/subscriberRoutes');
-const contactRoutes = require('./routes/contactRoutes');
+const subscriberRoutes = require('./routes/SubscriberRoutes');
+const contactRoutes = require('./routes/ContactRoutes');
 const bookingsRoutes = require('./routes/bookingsRoutes'); // Lowercase 'b'
 const volunteerRoutes = require('./routes/volunteerRoutes');
 
