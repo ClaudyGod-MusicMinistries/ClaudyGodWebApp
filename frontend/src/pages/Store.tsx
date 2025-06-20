@@ -1,18 +1,17 @@
-// src/components/store/Store.tsx
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingBag, faShoppingCart } from '@fortawesome/free-solid-svg-icons'; // Added faShoppingCart
 import NewsletterForm from '../components/Utils/Newsletter';
-import { CartHandler } from '../components/store/Cart';
-
+import { Cart } from '../components/store/Cart';
+import { SEO } from '../components/Utils/SEO';
 import { useCartStore } from '../Context/Cartcontext';
 import { StoreHero } from '../components/store/StoreHero';
 import { CategoryFilter } from '../components/store/CategoryFilter';
 import { ProductCarousel } from '../components/store/ProductCarousel';
 import { ProductGrid } from '../components/store/ProductGrid';
-import { products,categories } from '../components/data/storeData';
- import { AddToCartDialog } from '../components/store/AddToCartDialog';
+import { products, categories } from '../components/data/storeData';
+import { AddToCartDialog } from '../components/store/AddToCartDialog';
 import { Product } from '@/components/types/storeTypes';
 
 export const StoreData = () => {
@@ -20,7 +19,10 @@ export const StoreData = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [dialogProduct, setDialogProduct] = useState<Product | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { addItem } = useCartStore();
+  const { items, addItem } = useCartStore(); // Added items from cart context
+
+  // Calculate cart items count
+  const cartItemsCount = items.reduce((total, item) => total + item.quantity, 0);
 
   const filteredProducts =
     activeCategory === 'all'
@@ -46,7 +48,7 @@ export const StoreData = () => {
 
   return (
     <div className="bg-white">
-         <SEO
+      <SEO
         title="ClaudyGod Store - Gospel Merchandise & Products"
         description="Shop official ClaudyGod merchandise. Uplifting apparel, music albums, and faith-inspired products."
         keywords="gospel merchandise, christian store, worship products"
@@ -57,25 +59,40 @@ export const StoreData = () => {
           "url": "https://claudygod.org/store",
           "description": "Official merchandise store for ClaudyGod Ministries",
           "openingHours": "Mo-Su",
-          "telephone": "+1-XXX-XXX-XXXX",
+          "telephone": "+1 (385) 219‑6632",
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "123 Faith Avenue",
+            "streetAddress": "San Ramon, California",
             "addressLocality": "California",
             "postalCode": "90001",
             "addressCountry": "US"
           }
         }}
       />
+      
+      {/* Floating Cart Button */}
+      <button
+        onClick={() => setIsCartOpen(true)}
+        className="fixed bottom-8 right-8 bg-purple-900 text-white p-4 rounded-full shadow-lg hover:bg-purple-800 transition duration-300 z-50 flex items-center justify-center"
+        aria-label="Open cart"
+      >
+        <FontAwesomeIcon icon={faShoppingCart} className="h-6 w-6" />
+        {cartItemsCount > 0 && (
+          <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+            {cartItemsCount}
+          </span>
+        )}
+      </button>
+
       <StoreHero />
 
       <section className="bg-purple-900 text-white py-16 relative">
         <div className="container mx-auto px-4 md:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl roboto-condensed"> ClaudyGod Gospel Store</h1>
+          <h1 className="text-4xl md:text-5xl roboto-condensed">ClaudyGod Gospel Store</h1>
           <div className="w-20 h-1 bg-accent-gold mx-auto my-6" />
           <p className="max-w-2xl mx-auto text-lg md:text-xl raleway-medium">
-       Shop our curated collection of faith-inspired products, including uplifting mugs, apparel,
-        and accessories designed to inspire and uplift your spirit every day.
+            Shop our curated collection of faith-inspired products, including uplifting mugs, apparel,
+            and accessories designed to inspire and uplift your spirit every day.
           </p>
         </div>
       </section>
@@ -111,7 +128,7 @@ export const StoreData = () => {
       <hr className="my-8 border-purple-900" />
       <NewsletterForm />
 
-      <CartHandler isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <Cart isModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
 
       <AddToCartDialog 
         dialogProduct={dialogProduct} 

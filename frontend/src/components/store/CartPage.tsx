@@ -23,11 +23,11 @@ interface CartProps {
   isModal?: boolean;
 }
 
-export const Cart: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = false }) => {
-  // Consume store via selectors
-  const items       = useCartStore(selectCartItems);
-  const subtotal    = useCartStore(selectCartTotal);
-  const itemCount   = useCartStore(selectCartCount);
+export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = false }) => {
+  // Use selectors to get reactive data
+  const items     = useCartStore(selectCartItems);
+  const subtotal  = useCartStore(selectCartTotal);
+  const itemCount = useCartStore(selectCartCount);
   const removeItem     = useCartStore(state => state.removeItem);
   const updateQuantity = useCartStore(state => state.updateQuantity);
   const clearCart      = useCartStore(state => state.clearCart);
@@ -242,6 +242,7 @@ export const Cart: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = fa
     );
   }
 
+  // Full Page Cart View
   return (
     <>
       <Helmet>
@@ -257,7 +258,7 @@ export const Cart: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = fa
             : "Your shopping cart is empty. Browse our collection of faith-inspired products and Christian merchandise."} 
         />
       </Helmet>
-      {/* Full Page View */}
+
       <div className="pt-16 min-h-screen bg-gray-50">
         {/* Header */}
         <div className="bg-purple-900 text-white py-12">
@@ -275,6 +276,7 @@ export const Cart: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = fa
             </motion.div>
           </div>
         </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {items.length === 0 ? (
             <motion.div
@@ -300,6 +302,7 @@ export const Cart: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = fa
                   </div>
                 </div>
               </div>
+
               {/* Order Summary */}
               <div className="lg:col-span-1">
                 <motion.div

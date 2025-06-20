@@ -15,8 +15,8 @@ import { DonateData } from './pages/Donate';
 import { StoreData } from './pages/Store';
 import { Blog } from './pages/Blogpost';
 import { MinistryData } from './pages/Ministry';
-import { CheckoutPage } from './components/store/CheckoutPage';
-import { CartPage } from './pages/CartPage';
+import { Checkout } from './components/store/Checkout';
+import { CartPage } from './components/store/CartPage';
  import { News } from './pages/News';
 
 
@@ -43,7 +43,7 @@ function AppRoutes() {
           <Route path="blogs" element={<Blog />} />
           <Route path="ministry" element={<MinistryData />} />
            <Route path="news" element={<News />} />
-      <Route path="checkout" element={<CheckoutPage />} />
+      <Route path="checkout" element={<Checkout />} />
       <Route path="cart" element={<CartPage />} />
    
 

@@ -93,9 +93,11 @@ export const Welcome = () => {
             variants={itemVariants}
             className="text-gray-600 text-sm md:text-base work-sans leading-relaxed"
           >
-            ClaudyGod is a California-based, American Gospel Artiste. She however has both a Nigerian and Sierraleonian
-   descent and spent a good amount of her childhood in Nigeria. While growing up in Nigeria, 
-  ClaudyGod nursed a passion for music, participating in choral activities in both middle and high school.
+            ClaudyGod is an American born, California-based Christian & Gospel music artist
+   of both a Nigerian and Sierra-Leonian ancestry. While growing up in Nigeria, 
+   ClaudyGod nursed a passion for music, participating in choral activities in both
+    middle and high school. During a session of fellowship with God in Nashville USA 
+    in 2003, She heard God say to her "I love your worship."
           </motion.p>
           
             <motion.button 

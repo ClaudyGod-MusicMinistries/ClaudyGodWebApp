@@ -1,207 +1,183 @@
-import  { useState } from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useCartStore } from '../../Context/Cartcontext';
 import { useNavigate } from 'react-router-dom';
+import {
+  Building,
+  Smartphone,
+} from 'lucide-react';
+import toast from 'react-hot-toast';
+import { ShippingForm } from './ShippingForm';
+import { ZellePayment } from './paymentPlatforms/zelle';
 
-export const CheckoutPage = () => {
-  const { items, total, clearCart } = useCartStore();
+interface ShippingInfo {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+}
+
+interface PaymentInfo {
+  method: 'paypal' | 'zelle' | '';
+  zelleConfirmation?: string;
+}
+
+export const CheckoutPage: React.FC = () => {
+  const { items, clearCart } = useCartStore();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [step, setStep] = useState(1);
+  const [showZelleForm, setShowZelleForm] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const [shippingInfo, setShippingInfo] = useState<ShippingInfo>({
     firstName: '',
     lastName: '',
     email: '',
+    phone: '',
     address: '',
     city: '',
-    country: '',
+    state: '',
     zipCode: '',
+    country: 'US'
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  const [paymentInfo, setPaymentInfo] = useState<PaymentInfo>({ method: '' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validTotal = Array.isArray(items) && items.length > 0 ? items.reduce((sum, item) => sum + item.price * item.quantity, 0) : 0;
+  const tax = validTotal * 0.08;
+  const grandTotal = validTotal + tax;
+
+  const paymentMethods = [
+    { id: 'paypal', name: 'PayPal', description: 'Pay with your PayPal account', icon: Smartphone, color: 'bg-blue-600' },
+    { id: 'zelle', name: 'Zelle', description: 'Send money with Zelle', icon: Building, color: 'bg-purple-600' }
+  ];
+
+  const submitShipping = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically handle payment processing
-    alert('Order placed successfully!');
-    clearCart();
-    navigate('/store');
+    setStep(2);
   };
 
-  if (items.length === 0) {
-    return (
-      <div className="pt-24">
-        <div className="container mx-auto px-4 md:px-8 py-16 text-center">
-          <h2 className="text-2xl font-bold mb-4">Your cart is empty</h2>
-          <button
-            onClick={() => navigate('/store')}
-            className="bg-purple-900 text-white px-6 py-2 rounded-md hover:bg-purple-800 transition-colors"
-          >
-            Return to Store
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const submitPayment = async () => {
+    setIsProcessing(true);
+    try {
+      await new Promise(res => setTimeout(res, 2000));
+      const order = { items, shippingInfo, paymentInfo, subtotal: validTotal, tax, total: grandTotal };
+      localStorage.setItem('lastOrder', JSON.stringify(order));
+      clearCart();
+      toast.success('Order placed successfully!');
+      navigate('/order-success');
+    } catch {
+      toast.error('Payment failed. Please try again.');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
-  return (
-    <div className="pt-24">
-      <div className="container mx-auto px-4 md:px-8 py-16">
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Checkout Form */}
-          <div className="max-w-lg mx-auto bg-white border border-gray-300 rounded-lg shadow-sm p-8">
-  <h2 className="text-2xl font-bold mb-6">Checkout Information</h2>
-  <form onSubmit={handleSubmit} className="space-y-6">
-    {/* Name fields */}
-    <div className="grid grid-cols-2 gap-4">
-      <div>
-        <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
-          First Name
-        </label>
-        <input
-          type="text"
-          id="firstName"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-          className="mt-1 block w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-        />
-      </div>
-      <div>
-        <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
-          Last Name
-        </label>
-        <input
-          type="text"
-          id="lastName"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          required
-          className="mt-1 block w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-        />
-      </div>
-    </div>
-
-    {/* Email */}
-    <div>
-      <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-        Email
-      </label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        required
-        className="mt-1 block w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-      />
-    </div>
-
-    {/* Address */}
-    <div>
-      <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-        Address
-      </label>
-      <input
-        type="text"
-        id="address"
-        name="address"
-        value={formData.address}
-        onChange={handleChange}
-        required
-        className="mt-1 block w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-      />
-    </div>
-
-    {/* City & ZIP */}
-    <div className="grid grid-cols-2 gap-4">
-      <div>
-        <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-          City
-        </label>
-        <input
-          type="text"
-          id="city"
-          name="city"
-          value={formData.city}
-          onChange={handleChange}
-          required
-          className="mt-1 block w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-        />
-      </div>
-      <div>
-        <label htmlFor="zipCode" className="block text-sm font-medium text-gray-700">
-          ZIP Code
-        </label>
-        <input
-          type="text"
-          id="zipCode"
-          name="zipCode"
-          value={formData.zipCode}
-          onChange={handleChange}
-          required
-          className="mt-1 block w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-        />
-      </div>
-    </div>
-
-    {/* Country */}
-    <div>
-      <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-        Country
-      </label>
-      <input
-        type="text"
-        id="country"
-        name="country"
-        value={formData.country}
-        onChange={handleChange}
-        required
-        className="mt-1 block w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-      />
-    </div>
-
-    {/* Submit */}
-    <button
-      type="submit"
-      className="w-full bg-purple-900 text-white py-3 rounded-md font-semibold hover:bg-purple-800 transition-colors"
+  const PaymentForm = () => (
+    <motion.div 
+      className="space-y-6" 
+      initial={{ opacity: 0, y: 20 }} 
+      animate={{ opacity: 1, y: 0 }} 
+      transition={{ duration: 0.5 }}
     >
-      Place Order (${total.toFixed(2)})
-    </button>
-  </form>
-</div>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold text-gray-900">Payment Method</h2>
+        <button onClick={() => setStep(1)} type="button" className="text-purple-900 hover:text-purple-700 font-medium">Edit Shipping</button>
+      </div>
 
-          {/* Order Summary */}
-          <div>
-            <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
-            <div className="bg-gray-50 p-6 rounded-lg">
-              {items.map((item) => (
-                <div key={item.id} className="flex items-center space-x-4 mb-4 pb-4 border-b last:border-0">
-                  <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded" />
-                  <div className="flex-1">
-                    <h3 className="font-medium">{item.name}</h3>
-                    <p className="text-gray-600">Quantity: {item.quantity}</p>
-                    <p className="text-purple-900 font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
-                  </div>
-                </div>
-              ))}
-              <div className="mt-6 pt-6 border-t">
-                <div className="flex justify-between text-lg font-semibold">
-                  <span>Total</span>
-                  <span className="text-purple-900">${total.toFixed(2)}</span>
-                </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        {paymentMethods.map(m => (
+          <motion.button
+            key={m.id}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => {
+              setPaymentInfo({ ...paymentInfo, method: m.id as any });
+              setShowZelleForm(false);
+            }}
+            type="button"
+            className={`p-6 border-2 rounded-xl text-left cursor-pointer transition-all duration-300 ease-in-out ${
+              paymentInfo.method === m.id ? 'border-purple-500 bg-purple-50' : 'border-gray-200 hover:border-purple-300'
+            }`}
+          >
+            <div className="flex items-center mb-4">
+              <div className={`${m.color} p-3 rounded-lg text-white`}><m.icon className="h-6 w-6" /></div>
+              <div className="ml-4">
+                <h3 className="font-semibold text-gray-900">{m.name}</h3>
+                <p className="text-sm text-gray-600">{m.description}</p>
               </div>
             </div>
-          </div>
-        </div>
+          </motion.button>
+        ))}
       </div>
-    </div>
+
+      {paymentInfo.method === 'zelle' && !showZelleForm && (
+        <motion.div 
+          className="text-center space-y-4" 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          transition={{ duration: 0.3 }}
+        >
+          <p className="text-lg font-medium text-gray-800">Total amount to pay: <span className="text-purple-800 font-bold">NGN {grandTotal.toFixed(2)}</span></p>
+          <button 
+            className="bg-purple-900 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-800 transition-colors duration-200"
+            onClick={() => setShowZelleForm(true)}
+          >
+            Complete Order Using Zelle
+          </button>
+        </motion.div>
+      )}
+
+      {paymentInfo.method === 'zelle' && showZelleForm && (
+        <ZellePayment 
+          onNext={submitPayment} 
+        />
+      )}
+
+      {paymentInfo.method === 'paypal' && (
+        <motion.div 
+          className="bg-blue-50 p-4 rounded-lg text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <p>You will be redirected to PayPal</p>
+          <motion.button 
+            type="button" 
+            disabled={isProcessing} 
+            className="w-full mt-4 bg-purple-900 text-white py-4 rounded-lg font-semibold hover:bg-purple-800 disabled:opacity-50 flex justify-center items-center"
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            onClick={submitPayment}
+          >
+            {isProcessing ? <span>Processing...</span> : `Complete Order - NGN${grandTotal.toFixed(2)}`}
+          </motion.button>
+        </motion.div>
+      )}
+    </motion.div>
+  );
+
+  return (
+    <motion.div 
+      className="container mx-auto px-4 md:px-8 py-8 max-w-4xl"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+    >
+      {step === 1 ? (
+        <ShippingForm
+          shippingInfo={shippingInfo}
+          setShippingInfo={setShippingInfo}
+          onSubmit={submitShipping}
+        />
+      ) : (
+        <PaymentForm />
+      )}
+    </motion.div>
   );
 };
-

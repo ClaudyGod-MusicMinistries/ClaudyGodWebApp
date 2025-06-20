@@ -2,7 +2,19 @@
 import { Product } from '../types/storeTypes';
 import { Shop1, Shop2, Shop3, Shop4, MusicBan8, MusicBan6 } from '../../assets';
 
-export const categories = ['all', 'clothing', 'accessories', 'music'];
+// Define Category type
+export interface Category {
+  id: string;
+  name: string;
+}
+
+// Updated to array of objects with id and name
+export const categories: Category[] = [
+  { id: 'all', name: 'All' },
+  { id: 'clothing', name: 'Clothing' },
+  { id: 'accessories', name: 'Accessories' },
+  { id: 'music', name: 'Music' }
+];
 
 export const products: Product[] = [
   { id: 1, name: 'ClaudyGod Exclusive Mug', image: Shop1, price: 5, category: 'accessories', description: 'Mug' },

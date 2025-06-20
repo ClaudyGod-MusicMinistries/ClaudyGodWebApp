@@ -4,6 +4,8 @@ import { faWallet, faArrowDown, faCreditCard } from '@fortawesome/free-solid-svg
 import { Herosection } from '../components/Utils/Herosection';    
 import { Donate1, Donate2 } from '../assets/';
 import { useNavContext } from '../context/NavContext';
+import { SEO } from '../components/Utils/SEO';
+import { PaymentPlatforms } from '../components/DonatePayment/payment';
 
 // Currency selector component
 const CurrencySelector = ({ currency, setCurrency }: { currency: string, setCurrency: React.Dispatch<React.SetStateAction<string>> }) => {
@@ -121,24 +123,40 @@ const DonateHeroSlider: React.FC = () => {
     </div>
   );
 };
-
 export const DonateData: React.FC = () => {
   const { isNavOpen } = useNavContext();
   const [amount, setAmount] = useState('');
   const [name, setName] = useState('');
   const [currency, setCurrency] = useState('USD');
+  const [isCheckout, setIsCheckout] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate amount
+    if (!amount || parseFloat(amount) <= 0) {
+      alert('Please enter a valid donation amount');
+      return;
+    }
+    
     console.log({ name, amount, currency });
-    alert(`Thank you for your donation of ${currency} ${amount}!`);
+    setIsCheckout(true);
+  };
+
+  const handlePaymentComplete = () => {
+    alert('Thank you for your donation!');
     setAmount('');
     setName('');
+    setIsCheckout(false);
+  };
+  
+  const handlePaymentBack = () => {
+    setIsCheckout(false);
   };
 
   return (
     <div className={`min-h-screen ${isNavOpen ? 'overflow-hidden max-h-screen' : ''}`}>
-        <SEO
+      <SEO
         title="Support Gospel Music Ministry | Donate to ClaudyGod"
         description="Partner with ClaudyGod Ministries to spread the gospel through music. Your donations support worship events, albums, and global outreach."
         keywords="donate to gospel ministry, support christian artist, music ministry donation, kingdom investment"
@@ -159,82 +177,84 @@ export const DonateData: React.FC = () => {
       />
       <DonateHeroSlider />
       
-      <div className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75 transition-all duration-300' : ''}`}>
-        <h2 className="roboto-condensed mt-10 text-4xl text-center">
-          Support Our Ministry
-        </h2>
+      {isCheckout ? (
+        <div className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75' : ''}`}>
+          <PaymentPlatforms 
+            amount={parseFloat(amount)} 
+            currency={currency}
+            onBack={handlePaymentBack}
+            onComplete={handlePaymentComplete}
+          />
+        </div>
+      ) : (
+        <div className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75 transition-all duration-300' : ''}`}>
+          <h2 className="roboto-condensed mt-10 text-4xl text-center">
+            Support Our Ministry
+          </h2>
 
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center mb-16">
-          
-            <p className="md:text-lg max-md:text-sm text-left text-gray-700 work-sans">
-             We appreciate your support and donations towards the ministry. You partner with us to advance the gospel. 
-“And my God will meet all your needs according to the riches of His glory in Christ Jesus.”(Phillipians 4:19)
-            </p>
-          </div>
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div className="text-center mb-16">
+              <p className="md:text-lg max-md:text-sm text-left text-gray-700 work-sans">
+                We appreciate your support and donations towards the ministry. You partner with us to advance the gospel. 
+                "And my God will meet all your needs according to the riches of His glory in Christ Jesus." (Philippians 4:19)
+              </p>
+            </div>
 
-          <div className="flex justify-center my-8">
-            <FontAwesomeIcon 
-              icon={faArrowDown} 
-              className="text-purple-900 text-4xl animate-bounce" 
-            />
-          </div>
-
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-8 roboto-condensed">Donate</h2>
-
-          <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md mb-16">
-            <div className="mb-6">
-              <label htmlFor="name" className="block text-sm roboto-condensed text-gray-700 mb-1">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
+            <div className="flex justify-center my-8">
+              <FontAwesomeIcon 
+                icon={faArrowDown} 
+                className="text-purple-900 text-4xl animate-bounce" 
               />
             </div>
-            
-            <div className="mb-6">
-              <label htmlFor="amount" className="block text-sm roboto-condensed text-gray-700 mb-1">
-                Enter Amount
-              </label>
-              <div className="flex">
-                <CurrencySelector currency={currency} setCurrency={setCurrency} />
+
+            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8 roboto-condensed">Donate</h2>
+
+            <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md mb-16">
+              <div className="mb-6">
+                <label htmlFor="name" className="block text-sm roboto-condensed text-gray-700 mb-1">
+                  Name
+                </label>
                 <input
-                  type="number"
-                  id="amount"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  placeholder="0.00"
-                  min="1"
-                  step="0.01"
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                   required
                 />
               </div>
-            </div>
-            
-            <button 
-              type="submit"
-              className="w-full bg-purple-900 roboto-condensed hover:bg-purple-800 text-white font-medium py-3 px-4 rounded-md transition duration-150 ease-in-out mb-4 flex items-center justify-center gap-2"
-            >
-              <FontAwesomeIcon icon={faWallet} />
-              Pay With PayPal
-            </button>
-            
-            <button 
-              type="submit"
-              className="w-full bg-white border roboto-condensed border-purple-900 text-purple-900 hover:bg-purple-50 font-medium py-3 px-4 rounded-md transition duration-150 ease-in-out flex items-center justify-center gap-2"
-            >
-              <FontAwesomeIcon icon={faCreditCard} />
-              Pay With Debit/Master Card
-            </button>
-          </form>
+              
+              <div className="mb-6">
+                <label htmlFor="amount" className="block text-sm roboto-condensed text-gray-700 mb-1">
+                  Enter Amount
+                </label>
+                <div className="flex">
+                  <CurrencySelector currency={currency} setCurrency={setCurrency} />
+                  <input
+                    type="number"
+                    id="amount"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    placeholder="0.00"
+                    min="1"
+                    step="0.01"
+                    required
+                  />
+                </div>
+              </div>
+              
+              <button 
+                type="submit"
+                className="w-full cursor-pointer bg-purple-900 roboto-condensed hover:bg-purple-800 text-white font-medium py-3 px-4 rounded-md transition duration-150 ease-in-out mb-4 flex items-center justify-center gap-2"
+              >
+                <FontAwesomeIcon icon={faWallet} />
+                Make your donation
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
