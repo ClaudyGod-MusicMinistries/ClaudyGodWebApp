@@ -1,2 +1,9 @@
-.env
 node_modules
+
+# Build outputs
+dist/
+.svelte-kit/
+.vite/
+
+# Environment secrets
+.env
