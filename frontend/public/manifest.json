@@ -2,8 +2,8 @@
   "name": "ClaudyGod Ministries",
   "short_name": "ClaudyGod",
   "icons": [
-    { "src": "/frontend/src/assets/ClaudyGoLogo.webp", "type": "image/png", "sizes": "192x192" },
-    { "src": "/frontend/src/assets/ClaudyGoLogo.webp", "type": "image/png", "sizes": "512x512" }
+    { "src": "/ClaudyLogo-1.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/ClaudyLogo-2.png", "type": "image/png", "sizes": "512x512" }
   ],
   "start_url": "/",
   "display": "standalone",
