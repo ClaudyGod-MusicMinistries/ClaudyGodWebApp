@@ -55,7 +55,7 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({ onNext }) => {
           </li>
           <li className="flex items-start raleway-medium">
             <span className="bg-purple-900 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs mr-3 mt-0.5">5</span>
-            Copy the confirmation ID and paste it below
+            Copy the Transaction ID and paste it below
           </li>
         </ol>
 
