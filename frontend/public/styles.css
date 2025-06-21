@@ -1,0 +1,46 @@
+:root {
+  --header-bg: #fafafa;
+  --text-dark: #222;
+  --text-muted: #555;
+  --spacing: 1rem;
+}
+
+body {
+  margin: 0;
+  font-family: 'Work Sans', sans-serif;
+  color: var(--text-dark);
+  background: #fff;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing);
+  background: var(--header-bg);
+}
+
+.site-header__logo {
+  width: 80px;
+  height: auto;
+  margin-right: var(--spacing);
+}
+
+.site-header__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.site-header__title {
+  margin: 0;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.site-header__subtitle {
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
