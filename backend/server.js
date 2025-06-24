@@ -14,6 +14,8 @@ const subscriberRoutes = require('./routes/SubscriberRoutes');
 const contactRoutes = require('./routes/ContactRoutes');
 const bookingsRoutes = require('./routes/bookingsRoutes'); // Lowercase 'b'
 const volunteerRoutes = require('./routes/volunteerRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
+
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -89,6 +91,8 @@ app.use('/api/subscribers', subscriberRoutes);
 app.use('/api/contacts', contactRoutes);
 app.use('/api/bookings', bookingsRoutes); // Keep if you have the file
 app.use('/api/volunteers', volunteerRoutes);
+app.use('/api/payment', paymentRoutes);
+
 
 // Health check
 app.get('/health', (_, res) => {

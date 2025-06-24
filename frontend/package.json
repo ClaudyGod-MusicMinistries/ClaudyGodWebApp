@@ -3,15 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-"scripts": {
-  "dev": "vite",
-  "build": "vite build && node ./scripts/generateSitemap.js",
-  "preview": "vite preview",
-  "predeploy": "npm run build",
-  "postbuild": "react-snap",
-  "generate-sitemap": "node ./scripts/generateSitemap.js"
-}
-,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node ./scripts/generateSitemap.js",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "postbuild": "react-snap",
+    "generate-sitemap": "node ./scripts/generateSitemap.js"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
@@ -24,6 +23,7 @@
     "helmet": "^8.1.0",
     "lucide-react": "^0.518.0",
     "react": "^18.2.0",
+    "react-confetti": "^6.4.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.57.0",

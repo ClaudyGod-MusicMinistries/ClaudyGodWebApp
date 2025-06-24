@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { ShippingForm } from './ShippingForm';
-import { ZellePayment } from './paymentPlatforms/zelle';
+import { Zelle } from './paymentPlatforms/zelle';
 
 interface ShippingInfo {
   firstName: string;
@@ -66,7 +66,8 @@ export const CheckoutPage: React.FC = () => {
     setIsProcessing(true);
     try {
       await new Promise(res => setTimeout(res, 2000));
-      const order = { items, shippingInfo, paymentInfo, subtotal: validTotal, tax, total: grandTotal };
+      const orderId = `CL-ORDER-${Date.now()}`;
+      const order = { items, shippingInfo, paymentInfo, subtotal: validTotal, tax, total: grandTotal, orderId };
       localStorage.setItem('lastOrder', JSON.stringify(order));
       clearCart();
       toast.success('Order placed successfully!');
@@ -134,8 +135,20 @@ export const CheckoutPage: React.FC = () => {
       )}
 
       {paymentInfo.method === 'zelle' && showZelleForm && (
-        <ZellePayment 
-          onNext={submitPayment} 
+        <Zelle
+          amount={grandTotal}
+          onSubmit={(txId) => {
+            console.log('Received from Zelle:', txId);
+            // Save order details to localStorage
+            const order = { 
+              items, 
+              shippingInfo, 
+              total: grandTotal,
+              paymentMethod: 'zelle',
+              transactionId: txId
+            };
+            localStorage.setItem('lastOrder', JSON.stringify(order));
+          }}
         />
       )}
 
