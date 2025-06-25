@@ -63,7 +63,7 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
 
       <div className="bg-purple-50 p-4 rounded-lg mb-6">
         <p className="text-center font-medium work-sans">Send {formatAmount(amount)} to:</p>
-        <p className="text-center text-lg work-sans text-purple-800 mt-2">cokorie77@gmail.com</p>
+        <p className="text-center text-lg work-sans text-purple-800 mt-2">info@ClaudyGod.com</p>
       </div>
 
       <form onSubmit={handleFormSubmit}>

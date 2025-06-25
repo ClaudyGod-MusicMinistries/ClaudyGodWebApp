@@ -68,29 +68,29 @@ router.get('/orders/:orderId', (req, res) => {
     return res.status(404).json({ error: 'Order not found' });
   }
   
-  // In a real app, fetch from database
-  // For demo, return mock data
-  res.json({
-    ...order,
-    items: [
-      { id: 'prod-001', name: 'Premium Headphones', price: 149.99, quantity: 1 },
-      { id: 'prod-002', name: 'USB-C Cable', price: 19.99, quantity: 2 }
-    ],
-    shippingInfo: {
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'john@example.com',
-      address: '123 Main St',
-      city: 'New York',
-      state: 'NY',
-      zipCode: '10001',
-      country: 'USA'
-    },
-    subtotal: 189.97,
-    tax: 15.20,
-    total: 205.17
-  });
-});
+//   // In a real app, fetch from database
+//   // For demo, return mock data
+//   res.json({
+//     ...order,
+//     items: [
+//       { id: 'prod-001', name: 'Premium Headphones', price: 149.99, quantity: 1 },
+//       { id: 'prod-002', name: 'USB-C Cable', price: 19.99, quantity: 2 }
+//     ],
+//     shippingInfo: {
+//       firstName: 'John',
+//       lastName: 'Doe',
+//       email: 'john@example.com',
+//       address: '123 Main St',
+//       city: 'New York',
+//       state: 'NY',
+//       zipCode: '10001',
+//       country: 'USA'
+//     },
+//     subtotal: 189.97,
+//     tax: 15.20,
+//     total: 205.17
+//   });
+// });
 
 // For manual confirmation simulation
 router.post('/zelle/manual-confirm', (req, res) => {

@@ -48,8 +48,8 @@ export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal 
     };
   }, [isModal, isOpen]);
 
-  const tax        = subtotal * 0.08;
-  const orderTotal = subtotal + tax;
+
+  const orderTotal = subtotal;
 
   const renderEmptyCart = () => (
     <div className="text-center py-8 px-4">
@@ -151,10 +151,7 @@ export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal 
           <span className="text-gray-600">Shipping</span>
           <span className="font-medium text-green-600">Free</span>
         </div>
-        <div className="flex justify-between text-base">
-          <span className="text-gray-600">Tax</span>
-          <span className="font-medium">${tax.toFixed(2)}</span>
-        </div>
+        
         <div className="border-t border-gray-200 pt-3">
           <div className="flex justify-between text-lg font-bold">
             <span>Total</span>

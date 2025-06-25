@@ -1,3 +1,4 @@
+// PaymentPending.tsx
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -22,6 +23,7 @@ interface ShippingInfo {
   state: string;
   zipCode: string;
   country: string;
+  phone: string;
 }
 
 interface OrderDetails {
@@ -45,7 +47,6 @@ export const PaymentPending: React.FC = () => {
 
   useEffect(() => {
     if (!orderId) {
-      // If no orderId, redirect home
       navigate('/', { replace: true });
       return;
     }
@@ -61,8 +62,6 @@ export const PaymentPending: React.FC = () => {
           const { status } = await res.json();
           if (status === 'confirmed') {
             clearInterval(interval);
-
-            // Fetch the complete order details from the correct endpoint
             const orderRes = await fetch(
               `http://localhost:10000/api/payment/orders/${orderId}`
             );
@@ -70,14 +69,11 @@ export const PaymentPending: React.FC = () => {
               throw new Error('Failed to fetch order details');
             }
             const orderData: OrderDetails = await orderRes.json();
-
-            // Navigate to success page with order data
             navigate('/order-success', { state: { order: orderData } });
           }
         }
       } catch (err) {
         console.error('Polling error:', err);
-        // Optionally show an error toast here
       }
     }, 3000);
 
@@ -85,16 +81,50 @@ export const PaymentPending: React.FC = () => {
   }, [orderId, navigate]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-50 relative overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden z-0">
+        {Array.from({ length: 15 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full bg-indigo-200 opacity-20"
+            style={{
+              width: Math.random() * 80 + 30,
+              height: Math.random() * 80 + 30,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -15, 0],
+              x: [0, Math.random() * 30 - 15, 0],
+              scale: [1, 1.05, 1],
+            }}
+            transition={{
+              duration: 4 + Math.random() * 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: Math.random() * 3,
+            }}
+          />
+        ))}
+      </div>
+
       <motion.div
-        className="text-center"
+        className="text-center relative z-10 bg-white/90 backdrop-blur-md p-10 rounded-3xl shadow-xl border border-white/50 max-w-md w-full mx-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <motion.div
+          className="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6"
+          animate={{ rotate: 360 }}
+          transition={{ 
+            duration: 2, 
+            repeat: Infinity, 
+            ease: "linear" 
+          }}
+        >
           <svg
-            className="w-12 h-12 text-blue-500"
+            className="w-12 h-12 text-indigo-600"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -106,10 +136,10 @@ export const PaymentPending: React.FC = () => {
               d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-        </div>
+        </motion.div>
 
         <motion.h2
-          className="text-2xl font-semibold mb-4"
+          className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text mb-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
@@ -118,7 +148,7 @@ export const PaymentPending: React.FC = () => {
         </motion.h2>
 
         <motion.p
-          className="text-gray-600 mb-8"
+          className="text-gray-600 mb-8 text-lg"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
@@ -127,12 +157,27 @@ export const PaymentPending: React.FC = () => {
         </motion.p>
 
         <motion.div
-          className="flex justify-center"
+          className="flex justify-center mb-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-purple-500"></div>
+          <div className="relative">
+            <div className="w-16 h-16 rounded-full border-t-4 border-b-4 border-indigo-500 animate-spin"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-indigo-500 animate-ping"></div>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          <p className="text-gray-500 text-sm">
+            This may take a few moments...
+          </p>
         </motion.div>
       </motion.div>
     </div>

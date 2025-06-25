@@ -43,8 +43,8 @@ export const Checkout: React.FC = () => {
   if (items.length === 0) return null;
 
   const subtotal = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
-  const taxAmount  = subtotal * 0.08;
-  const finalTotal = subtotal + taxAmount;
+ 
+  const finalTotal = subtotal;
 
   return (
     <>
@@ -95,7 +95,8 @@ export const Checkout: React.FC = () => {
                 initial="hidden"
                 animate="visible"
               >
-                {items.map((item, index) => (
+               
+                {items.map((item, _index) => (
                   <motion.div 
                     key={item.id} 
                     className="flex items-center space-x-4 py-2 border-b border-gray-100"
@@ -140,12 +141,7 @@ export const Checkout: React.FC = () => {
                     Free
                   </span>
                 </div>
-                <div className="flex justify-between text-base">
-                  <span className="text-gray-600">Tax</span>
-                  <span className="font-medium text-sm">
-                    ${taxAmount.toFixed(2)}
-                  </span>
-                </div>
+        
                 <div className="border-t border-gray-200 pt-3">
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total</span>
