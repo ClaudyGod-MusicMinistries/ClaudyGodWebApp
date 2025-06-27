@@ -1,15 +1,10 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { AnimatePresence } from 'framer-motion';
-import {
-  Routes,
-  Route,
-  useLocation,
-  BrowserRouter as Router
-} from 'react-router-dom';
+import { Routes, Route, useLocation, BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout/Mainlayout';
 
-// Import pages
+// Page imports
 import { Home } from './pages/Home';
 import { Biography } from './pages/Bio';
 import { MusicData } from './pages/Music';
@@ -17,18 +12,18 @@ import { VideosData } from './pages/Videos';
 import { Bookings } from './pages/Bookings';
 import { ContactData } from './pages/Contact';
 import { DonateData } from './pages/Donate';
-import { StoreData } from './pages/Store';
+import { StoreData } from './pages/StoreData';
 import { Blog } from './pages/Blogpost';
 import { MinistryData } from './pages/Ministry';
 import { News } from './pages/News';
 
-// Store & Checkout
+// Store components
 import { Checkout } from './components/store/Checkout';
 import { CartPage } from './components/store/CartPage';
-
-// Zelle Flow
+import ZellePaymentWrapper from './components/store/paymentPlatforms/ZelleWrapper';
 import { PaymentPending } from './components/store/status/PaymentPending';
-import { OrderSuccess }  from './components/store/status/OrderSuccess';
+import { OrderSuccess } from './components/store/status/OrderSuccess';
+
 
 function AppRoutes() {
   const location = useLocation();
@@ -46,15 +41,16 @@ function AppRoutes() {
           <Route path="contact" element={<ContactData />} />
           <Route path="donate" element={<DonateData />} />
           <Route path="store" element={<StoreData />} />
+          <Route path="checkout" element={<Checkout />} />
           <Route path="blogs" element={<Blog />} />
           <Route path="ministry" element={<MinistryData />} />
           <Route path="news" element={<News />} />
-
-          {/* E-commerce & Zelle flow */}
-          <Route path="checkout" element={<Checkout />} />
           <Route path="cart" element={<CartPage />} />
-          <Route path="paymentPending" element={<PaymentPending />} />
-            <Route path="order-success" element={<OrderSuccess />} />
+
+          {/* Payment routes */}
+          <Route path="checkout/zelle" element={<ZellePaymentWrapper />} />
+          <Route path="payment-pending" element={<PaymentPending />} />
+          <Route path="order-success/:orderId" element={<OrderSuccess />} />
 
           {/* Fallback */}
           <Route path="*" element={<div>404 Not Found</div>} />

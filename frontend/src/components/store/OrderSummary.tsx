@@ -1,5 +1,6 @@
 import React from 'react';
-import { CartItem } from '../../Context/Cartcontext';
+import { motion } from 'framer-motion';
+import { CartItem } from '../../types';
 
 interface OrderSummaryProps {
   items: CartItem[];
@@ -15,7 +16,12 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
   total
 }) => {
   return (
-    <div className="bg-white rounded-xl shadow-sm p-6 sticky top-24">
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-white rounded-2xl shadow-lg p-6 sticky top-8"
+    >
       <h2 className="text-xl font-semibold text-gray-900 mb-6">Order Summary</h2>
       
       {/* Items */}
@@ -57,7 +63,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
         <div className="border-t border-gray-200 pt-3">
           <div className="flex justify-between text-lg font-bold">
             <span>Total</span>
-            <span className="text-purple-900">${total.toFixed(2)}</span>
+            <span className="text-purple-600">${total.toFixed(2)}</span>
           </div>
         </div>
       </div>
@@ -67,6 +73,6 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
           <span>🔒 Secure checkout with SSL encryption</span>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

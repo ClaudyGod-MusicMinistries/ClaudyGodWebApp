@@ -76,17 +76,17 @@ export const slideVariants = {
   center: {
     x: 0,
     opacity: 1,
-    transition: { duration: 0.8, ease: 'easeInOut' }
+    transition: { duration: 1.5, ease: 'easeInOut' }
   },
   exit: (direction: number) => ({
     x: direction > 0 ? '-100%' : '100%',
     opacity: 0,
-    transition: { duration: 0.8, ease: 'easeInOut' }
+    transition: { duration: 2.5, ease: 'easeInOut' }
   })
 };
 
 export const modalVariants = {
-  hidden: { opacity: 0, scale: 0.8 },
+  hidden: { opacity: 0, scale:1.5 },
   visible: { 
     opacity: 1, 
     scale: 1,

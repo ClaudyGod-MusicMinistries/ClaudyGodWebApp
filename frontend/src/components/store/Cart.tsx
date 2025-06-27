@@ -24,13 +24,13 @@ interface CartProps {
 }
 
 export const Cart: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = false }) => {
-  // Consume store via selectors
-  const items       = useCartStore(selectCartItems);
-  const subtotal    = useCartStore(selectCartTotal);
-  const itemCount   = useCartStore(selectCartCount);
-  const removeItem     = useCartStore(state => state.removeItem);
+  // Consume store via selectors with fallbacks
+  const items = useCartStore(selectCartItems) || [];
+  const subtotal = useCartStore(selectCartTotal) || 0;
+  const itemCount = useCartStore(selectCartCount) || 0;
+  const removeItem = useCartStore(state => state.removeItem);
   const updateQuantity = useCartStore(state => state.updateQuantity);
-  const clearCart      = useCartStore(state => state.clearCart);
+  const clearCart = useCartStore(state => state.clearCart);
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
@@ -48,7 +48,7 @@ export const Cart: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = fa
     };
   }, [isModal, isOpen]);
 
-  const tax        = subtotal * 0.08;
+  const tax = subtotal * 0.08;
   const orderTotal = subtotal + tax;
 
   const renderEmptyCart = () => (
@@ -82,60 +82,67 @@ export const Cart: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = fa
 
   const renderCartItems = () => (
     <div className="space-y-4">
-      {items.map((item) => (
-        <motion.div
-          key={item.id}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 20 }}
-          className="flex items-start gap-4 pb-4 border-b"
-        >
-          <div className="flex-shrink-0">
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-20 h-20 md:w-24 md:h-24 object-cover rounded-lg"
-            />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex justify-between gap-2">
-              <div>
-                <h3 className="font-medium text-gray-900 line-clamp-2">{item.name}</h3>
-                <p className="text-sm text-gray-500 capitalize mt-1">{item.category}</p>
-              </div>
-              <button
-                onClick={() => removeItem(item.id)}
-                className="text-gray-400 hover:text-red-500 transition-colors duration-200 p-1 mt-1"
-                aria-label="Remove item"
-              >
-                <FontAwesomeIcon icon={faTimes} className="h-5 w-5" />
-              </button>
+      {items.map((item) => {
+        // Add null checks for item properties
+        const itemPrice = item?.price || 0;
+        const itemQuantity = item?.quantity || 1;
+        const itemTotal = itemPrice * itemQuantity;
+
+        return (
+          <motion.div
+            key={item.id}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            className="flex items-start gap-4 pb-4 border-b"
+          >
+            <div className="flex-shrink-0">
+              <img
+                src={item.image || ''}
+                alt={item.name || 'Product'}
+                className="w-20 h-20 md:w-24 md-h-24 object-cover rounded-lg"
+              />
             </div>
-            <div className="flex flex-wrap justify-between items-center mt-4 gap-4">
-              <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+            <div className="flex-1 min-w-0">
+              <div className="flex justify-between gap-2">
+                <div>
+                  <h3 className="font-medium text-gray-900 line-clamp-2">{item.name}</h3>
+                  <p className="text-sm text-gray-500 capitalize mt-1">{item.category}</p>
+                </div>
                 <button
-                  onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
-                  className="p-2 hover:bg-gray-50 transition-colors duration-200"
-                  disabled={item.quantity <= 1}
+                  onClick={() => removeItem(item.id)}
+                  className="text-gray-400 hover:text-red-500 transition-colors duration-200 p-1 mt-1"
+                  aria-label="Remove item"
                 >
-                  <FontAwesomeIcon icon={faMinus} className="h-4 w-4" />
-                </button>
-                <span className="px-4 py-2 text-center min-w-[2rem] font-medium">{item.quantity}</span>
-                <button
-                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                  className="p-2 hover:bg-gray-50 transition-colors duration-200"
-                >
-                  <FontAwesomeIcon icon={faPlus} className="h-4 w-4" />
+                  <FontAwesomeIcon icon={faTimes} className="h-5 w-5" />
                 </button>
               </div>
-              <div className="text-right">
-                <p className="text-lg font-bold text-purple-900">${(item.price * item.quantity).toFixed(2)}</p>
-                <p className="text-sm text-gray-500">${item.price.toFixed(2)} each</p>
+              <div className="flex flex-wrap justify-between items-center mt-4 gap-4">
+                <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                  <button
+                    onClick={() => updateQuantity(item.id, Math.max(1, itemQuantity - 1))}
+                    className="p-2 hover:bg-gray-50 transition-colors duration-200"
+                    disabled={itemQuantity <= 1}
+                  >
+                    <FontAwesomeIcon icon={faMinus} className="h-4 w-4" />
+                  </button>
+                  <span className="px-4 py-2 text-center min-w-[2rem] font-medium">{itemQuantity}</span>
+                  <button
+                    onClick={() => updateQuantity(item.id, itemQuantity + 1)}
+                    className="p-2 hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    <FontAwesomeIcon icon={faPlus} className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="text-right">
+                  <p className="text-lg font-bold text-purple-900">${itemTotal.toFixed(2)}</p>
+                  <p className="text-sm text-gray-500">${itemPrice.toFixed(2)} each</p>
+                </div>
               </div>
             </div>
-          </div>
-        </motion.div>
-      ))}
+          </motion.div>
+        );
+      })}
     </div>
   );
 
@@ -153,7 +160,7 @@ export const Cart: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = fa
         </div>
         <div className="flex justify-between text-base">
           <span className="text-gray-600">Tax</span>
-        
+          <span className="font-medium">${tax.toFixed(2)}</span>
         </div>
         <div className="border-t border-gray-200 pt-3">
           <div className="flex justify-between text-lg font-bold">
@@ -197,6 +204,10 @@ export const Cart: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = fa
       </div>
     </div>
   );
+
+  // Rest of your component remains the same...
+  // [Keep all the modal and full page view code exactly as you had it]
+  // Only the renderCartItems and renderOrderSummary functions were modified
 
   if (isModal) {
     return (

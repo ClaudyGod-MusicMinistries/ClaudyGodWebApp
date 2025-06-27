@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { CreditCard, Smartphone, Building, Globe } from 'lucide-react';
-import { StripePayment } from '../store/paymentPlatforms/stripe';
-import { PayPalPayment } from '../store/paymentPlatforms/paypal';
-import { ZellePayment } from '../store/paymentPlatforms/zelle';
-import { PaystackPayment } from '../store/paymentPlatforms/paystack';
+import { CreditCard, Smartphone, Building, ArrowLeft, Globe, Landmark } from 'lucide-react';
+import { StripePayment } from './payments/StripePayment';
+import { PayPalPayment } from './payments/PayPalPayment';
+import { ZellePayment } from './payments/ZellePayment';
+import { PaystackPayment } from './payments/PaystackPayment';
+import { NigerianBankTransfer } from './payments/NigerianBankTransfer';
 
 interface PaymentMethodsProps {
   paymentMethod: string;
   setPaymentMethod: (method: string) => void;
   onNext: () => void;
   onBack: () => void;
+  orderTotal: number;
 }
 
 export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   paymentMethod,
   setPaymentMethod,
   onNext,
-  onBack
+  onBack,
+  orderTotal
 }) => {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
 
@@ -27,14 +30,14 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
       name: 'Credit/Debit Card',
       description: 'Visa, Mastercard, American Express',
       icon: CreditCard,
-      color: 'bg-blue-500'
+      color: 'bg-blue-600'
     },
     {
       id: 'paypal',
       name: 'PayPal',
       description: 'Pay with your PayPal account',
       icon: Smartphone,
-      color: 'bg-blue-600'
+      color: 'bg-blue-500'
     },
     {
       id: 'zelle',
@@ -49,6 +52,13 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
       description: 'Nigerian payment gateway',
       icon: Globe,
       color: 'bg-green-600'
+    },
+    {
+      id: 'nigerian-bank',
+      name: 'Nigerian Bank Transfer',
+      description: 'Direct bank transfer to Nigerian account',
+      icon: Landmark,
+      color: 'bg-green-700'
     }
   ];
 
@@ -60,13 +70,15 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   const renderPaymentForm = () => {
     switch (paymentMethod) {
       case 'stripe':
-        return <StripePayment onNext={onNext} />;
+        return <StripePayment amount={orderTotal} onNext={onNext} />;
       case 'paypal':
-        return <PayPalPayment onNext={onNext} />;
+        return <PayPalPayment amount={orderTotal} onNext={onNext} />;
       case 'zelle':
-        return <ZellePayment onNext={onNext} />;
+        return <ZellePayment amount={orderTotal} onNext={onNext} />;
       case 'paystack':
-        return <PaystackPayment onNext={onNext} />;
+        return <PaystackPayment amount={orderTotal} onNext={onNext} />;
+      case 'nigerian-bank':
+        return <NigerianBankTransfer amount={orderTotal} onNext={onNext} />;
       default:
         return null;
     }
@@ -79,27 +91,29 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
           <h2 className="text-2xl font-bold text-gray-900">Payment Details</h2>
           <button
             onClick={() => setShowPaymentForm(false)}
-            className="text-purple-900 hover:text-purple-700 font-medium"
+            className="flex items-center text-purple-600 hover:text-purple-700 font-medium"
           >
+            <ArrowLeft className="mr-1 h-4 w-4" />
             Change Method
           </button>
         </div>
         {renderPaymentForm()}
-        <div className="flex justify-between mt-8">
-          <button
-            onClick={onBack}
-            className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
-          >
-            Back
-          </button>
-        </div>
       </div>
     );
   }
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Choose Payment Method</h2>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold text-gray-900">Payment Method</h2>
+        <button
+          onClick={onBack}
+          className="flex items-center text-purple-600 hover:text-purple-700 font-medium"
+        >
+          <ArrowLeft className="mr-1 h-4 w-4" />
+          Back
+        </button>
+      </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         {paymentOptions.map((option) => (
@@ -115,32 +129,16 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
             }`}
           >
             <div className="flex items-center mb-4">
-              <div className={`${option.color} p-3 rounded-lg text-white`}>
+              <div className={`${option.color} p-3 rounded-lg text-white mr-4`}>
                 <option.icon className="h-6 w-6" />
               </div>
-              <div className="ml-4">
+              <div>
                 <h3 className="font-semibold text-gray-900">{option.name}</h3>
                 <p className="text-sm text-gray-600">{option.description}</p>
               </div>
             </div>
           </motion.button>
         ))}
-      </div>
-
-      <div className="flex justify-between">
-        <button
-          onClick={onBack}
-          className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
-        >
-          Back
-        </button>
-        <button
-          onClick={() => paymentMethod && setShowPaymentForm(true)}
-          disabled={!paymentMethod}
-          className="px-6 py-3 bg-purple-900 text-white rounded-lg hover:bg-purple-800 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Continue
-        </button>
       </div>
     </div>
   );

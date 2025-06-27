@@ -1,30 +1,30 @@
-// src/pages/Checkout/paymentPlatforms/NigerianBankTransfer.tsx
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useOrderStore } from '../store/orderStore';
 
 interface NigerianBankTransferProps {
   amount: number;
-  onSubmit: (transactionId: string) => void;
+  onNext: () => void;
 }
 
-export const NigerianBankTransfer: React.FC<NigerianBankTransferProps> = ({ amount, onSubmit }) => {
+export const NigerianBankTransfer: React.FC<NigerianBankTransferProps> = ({ amount, onNext }) => {
   const [reference, setReference] = useState('');
   const [slipFile, setSlipFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { currentOrder, confirmPayment } = useOrderStore();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       
-      // Validate file type and size
       if (!file.type.match('image.*') && !file.type.includes('pdf')) {
         alert('Please upload an image or PDF file');
         return;
       }
       
-      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+      if (file.size > 5 * 1024 * 1024) {
         alert('File size too large (max 5MB)');
         return;
       }
@@ -65,26 +65,18 @@ export const NigerianBankTransfer: React.FC<NigerianBankTransferProps> = ({ amou
       // Simulate API call to backend
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // In a real app, you would send the file to your backend:
-      /*
-      const formData = new FormData();
-      formData.append('reference', reference);
-      formData.append('slip', slipFile);
-      formData.append('amount', amount.toString());
-      
-      const response = await fetch('/api/validate-nigerian-transfer', {
-        method: 'POST',
-        body: formData
-      });
-      
-      if (!response.ok) throw new Error('Validation failed');
-      */
-      
-      // Simulate successful validation
       setUploadStatus('success');
       await new Promise(resolve => setTimeout(resolve, 500));
       
-      onSubmit(`NIG-REF-${reference}`);
+      // Update order with payment info
+      if (currentOrder) {
+        await confirmPayment(currentOrder.orderId, {
+          method: 'nigerian-bank',
+          bankTransferReference: reference
+        });
+      }
+      
+      onNext();
     } catch (error) {
       setUploadStatus('error');
       alert('Payment validation failed. Please try again.');
@@ -103,7 +95,7 @@ export const NigerianBankTransfer: React.FC<NigerianBankTransferProps> = ({ amou
     >
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Nigerian Bank Transfer</h3>
       <p className="mb-4">
-        Please transfer <strong>₦{(amount * 1500).toLocaleString()}</strong> (${amount.toFixed(2)}) to the following account:
+        Please transfer <strong>₦{(amount * 1592).toLocaleString()}</strong> (${amount.toFixed(2)}) to the following account:
       </p>
       
       <div className="bg-white p-4 rounded-lg border border-green-300 mb-6">
@@ -120,29 +112,21 @@ export const NigerianBankTransfer: React.FC<NigerianBankTransferProps> = ({ amou
             <p className="text-sm text-gray-600">Account Name:</p>
             <p className="font-medium">Claudette E George</p>
           </div>
-          <div>
-            <p className="text-sm text-gray-600">Reference:</p>
-            <p className="font-medium">ORDER-{Date.now().toString().slice(-6)}</p>
-          </div>
         </div>
       </div>
 
-      <div className="mb-6">
-        <label htmlFor="reference" className="block text-sm font-medium text-gray-700 mb-2">
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
           Transaction Reference Number
         </label>
         <input
           type="text"
-          id="reference"
           value={reference}
           onChange={(e) => setReference(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-          placeholder="Enter your bank transaction reference"
-          required
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+          placeholder="Enter your bank transfer reference"
+          disabled={isSubmitting}
         />
-        <p className="mt-2 text-sm text-gray-500">
-          Enter the reference number from your bank transfer
-        </p>
       </div>
 
       <div className="mb-6">
@@ -214,23 +198,16 @@ export const NigerianBankTransfer: React.FC<NigerianBankTransferProps> = ({ amou
                 <span className="text-xs">Payment slip validated successfully</span>
               </div>
             )}
-            
-            {uploadStatus === 'error' && (
-              <div className="mt-3 flex items-center text-red-600">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-                <span className="text-xs">Validation failed. Please try again.</span>
-              </div>
-            )}
           </div>
         )}
       </div>
 
-      <button
+      <motion.button
         className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 flex justify-center items-center"
         onClick={validatePayment}
         disabled={isSubmitting}
+        whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+        whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
       >
         {isSubmitting ? (
           <>
@@ -241,7 +218,7 @@ export const NigerianBankTransfer: React.FC<NigerianBankTransferProps> = ({ amou
             Validating Payment...
           </>
         ) : 'Validate and Confirm Payment'}
-      </button>
+      </motion.button>
       
       <div className="mt-4 p-3 bg-blue-50 border border-blue-100 rounded-lg text-sm text-blue-700">
         <p className="font-medium">Note:</p>
