@@ -1,5 +1,5 @@
 // src/components/payments/Paypal.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FaPaypal, FaSpinner, FaCheckCircle, FaExternalLinkAlt } from 'react-icons/fa';
 import toast from 'react-hot-toast';
@@ -21,7 +21,7 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
 }) => {
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>('idle');
   const [paymentCompleted, setPaymentCompleted] = useState(false);
-  const [paymentWindow, setPaymentWindow] = useState<Window | null>(null);
+  const paymentWindowRef = useRef<Window | null>(null);
 
   const formatAmount = (value: number) =>
     new Intl.NumberFormat('en-US', {
@@ -44,22 +44,22 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
 
   // Monitor popup window
   useEffect(() => {
-    if (!paymentWindow) return;
+    if (!paymentWindowRef.current) return;
 
     const timer = setInterval(() => {
-      if (paymentWindow.closed) {
+      if (paymentWindowRef.current?.closed) {
         clearInterval(timer);
-        setPaymentWindow(null);
         
         if (!paymentCompleted) {
           toast('Payment canceled or incomplete', { icon: '⚠️' });
           setPaymentStatus('idle');
         }
+        paymentWindowRef.current = null;
       }
     }, 500);
 
     return () => clearInterval(timer);
-  }, [paymentWindow, paymentCompleted]);
+  }, [paymentCompleted]);
 
   const handleRedirect = async () => {
     if (paymentCompleted) {
@@ -67,11 +67,24 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
       return;
     }
     
-    setPaymentStatus('processing');
+    // Immediately open blank popup (synchronous)
+    const newWindow = window.open(
+      '', 
+      'paypal', 
+      'width=800,height=600,scrollbars=yes'
+    );
+    
+    if (!newWindow) {
+      toast.error('Please allow popups for PayPal payments');
+      return;
+    }
+
+    paymentWindowRef.current = newWindow;
+    setPaymentStatus('popupOpen');
     
     try {
-      // 1. Try VITE_ first, then CRA prefix, then fallback
-      const apiBase =
+      // Get API base URL
+      const apiBase = 
         (import.meta.env?.VITE_API_BASE as string) ||
         process.env.REACT_APP_API_BASE ||
         '';
@@ -82,37 +95,30 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
         );
       }
 
-      // 2. Build URL & fetch
+      // Fetch PayPal URL
       const apiUrl = `${apiBase}/api/paypal/generate-url?amount=${amount}&currency=${currency}`;
-      
       const res = await fetch(apiUrl);
-      const ct = res.headers.get('content-type') || '';
       
-      if (!ct.includes('application/json')) {
-        const text = await res.text();
-        throw new Error('Unexpected response from server');
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || `Payment failed with status ${res.status}`);
       }
-
+      
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || `Status ${res.status}`);
       if (!data.url) throw new Error('No PayPal URL returned');
 
-      // Open PayPal in new window
-      const newWindow = window.open(
-        data.url,
-        'paypal',
-        'width=800,height=600,scrollbars=yes'
-      );
-      
-      if (newWindow) {
-        setPaymentWindow(newWindow);
-        setPaymentStatus('popupOpen');
-      } else {
-        throw new Error('Please allow popups for PayPal');
-      }
+      // Redirect popup to PayPal
+      newWindow.location.href = data.url;
+      setPaymentStatus('popupOpen');
     } catch (err: any) {
       console.error('PayPal error:', err);
       toast.error(err.message || 'Failed to start PayPal payment');
+      
+      // Close popup on error
+      if (newWindow && !newWindow.closed) {
+        newWindow.close();
+      }
+      paymentWindowRef.current = null;
       setPaymentStatus('idle');
     }
   };
@@ -123,8 +129,8 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
     setPaymentStatus('idle');
     
     // Close popup if still open
-    if (paymentWindow && !paymentWindow.closed) {
-      paymentWindow.close();
+    if (paymentWindowRef.current && !paymentWindowRef.current.closed) {
+      paymentWindowRef.current.close();
     }
     
     // Proceed to success
@@ -244,9 +250,7 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
                   : ''
               }`}
             >
-              {paymentStatus === 'processing' ? (
-                <FaSpinner className="animate-spin text-white" />
-              ) : paymentStatus === 'popupOpen' ? (
+              {paymentStatus === 'popupOpen' ? (
                 <>
                   <FaExternalLinkAlt /> Payment in Progress
                 </>
