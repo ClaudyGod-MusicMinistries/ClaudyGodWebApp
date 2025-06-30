@@ -45,7 +45,6 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
 }) => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [paymentMethod, setPaymentMethod] = useState<'paypal' | 'zelle' | null>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('US');
 
   const {
@@ -104,7 +103,7 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
         className="space-y-6"
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 roboto-condensed">Donor Information</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Donor Information</h2>
           <button
             onClick={handleBack}
             className="text-purple-900 hover:text-purple-700 font-medium flex items-center gap-1"
@@ -205,7 +204,7 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
             type="submit"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full bg-purple-900 text-white py-3 px-4 rounded-md font-medium roboto-condensed transition"
+            className="w-full bg-purple-900 text-white py-3 px-4 rounded-md font-medium transition"
           >
             Continue to Payment
           </motion.button>
@@ -227,7 +226,7 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
       className="space-y-6"
     >
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 roboto-condensed">Select Payment Method</h2>
+        <h2 className="text-2xl font-bold text-gray-900">Select Payment Method</h2>
         <button
           onClick={handleBack}
           className="text-purple-900 hover:text-purple-700 font-medium flex items-center gap-1"
@@ -265,21 +264,6 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
     </motion.div>
   );
 
-  const submitPayment = async () => {
-    setIsProcessing(true);
-    try {
-      const id = toast.loading('Processing payment…');
-      await new Promise(res => setTimeout(res, 2000));
-      toast.dismiss(id);
-      toast.success('Payment successful!');
-      onComplete();
-    } catch {
-      toast.error('Payment failed. Please try again.');
-    } finally {
-      setIsProcessing(false);
-    }
-  };
-
   const handleBack = () => {
     if (step === 1) {
       onBack();
@@ -296,7 +280,7 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
 
       <div className="mb-8">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-900 roboto-condensed">
+          <h1 className="text-3xl font-bold text-gray-900">
             Complete Your Donation
           </h1>
           <div className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
@@ -342,10 +326,7 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
             amount={amount}
             currency={currency}
             onBack={handleBack}
-            onSubmit={submitPayment}
-            register={register}
-            errors={errors}
-            isProcessing={isProcessing}
+            onComplete={onComplete}
           />
         )}
       </motion.div>

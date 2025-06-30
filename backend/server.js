@@ -51,7 +51,8 @@ const routes = {
   bookings: require('./routes/bookingsRoutes'),
   volunteer: require('./routes/volunteerRoutes'),
   paypal: require('./routes/paypalRoutes'),
-  nigerianBank: require('./routes/nigerianBankTransferRoutes')
+  nigerianBank: require('./routes/nigerianBankTransferRoutes'),
+  zellePayment: require('./routes/zellePaymentRoutes')
 };
 
 // Mount routes
@@ -61,6 +62,7 @@ app.use('/api/bookings', routes.bookings);
 app.use('/api/volunteers', routes.volunteer);
 app.use('/api/paypal', routes.paypal);
 app.use('/api/nigerian-bank-transfer', routes.nigerianBank);
+app.use('/api/zelle-payment', routes.zellePayment);
 
 // Health Check
 app.get('/health', (_, res) => res.json({ 
