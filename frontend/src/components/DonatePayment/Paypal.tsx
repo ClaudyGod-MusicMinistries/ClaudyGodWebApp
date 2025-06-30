@@ -83,33 +83,44 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
     setPaymentStatus('popupOpen');
     
     try {
-      // Get API base URL
-      const apiBase = 
-        (import.meta.env?.VITE_API_BASE as string) ||
-        process.env.REACT_APP_API_BASE ||
-        '';
+      // Correct API endpoint construction
+      const apiUrl = `/api/paypal/generate-url?amount=${amount}&currency=${currency}&t=${Date.now()}`;
       
-      if (!apiBase) {
-        throw new Error(
-          'API base URL not configured—please set VITE_API_BASE or REACT_APP_API_BASE',
-        );
-      }
-
-      // Fetch PayPal URL
-      const apiUrl = `${apiBase}/api/paypal/generate-url?amount=${amount}&currency=${currency}`;
-      const res = await fetch(apiUrl);
+      console.log('Fetching PayPal URL:', apiUrl);
       
+      const res = await fetch(apiUrl, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache'
+        }
+      });
+      
+      // Handle HTML responses
       if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || `Payment failed with status ${res.status}`);
+        const text = await res.text();
+        
+        // Check for HTML error pages
+        if (text.startsWith('<!DOCTYPE html>') || text.startsWith('<html')) {
+          console.error('Server returned HTML error page:', text.substring(0, 500));
+          throw new Error('Server error occurred. Please try again later.');
+        }
+        
+        try {
+          // Attempt to parse as JSON
+          const errorData = JSON.parse(text);
+          throw new Error(errorData.error || `Payment failed with status ${res.status}`);
+        } catch {
+          throw new Error(`Payment failed: ${text.substring(0, 100)}`);
+        }
       }
       
       const data = await res.json();
       if (!data.url) throw new Error('No PayPal URL returned');
 
+      console.log('Redirecting to PayPal URL:', data.url);
+      
       // Redirect popup to PayPal
       newWindow.location.href = data.url;
-      setPaymentStatus('popupOpen');
     } catch (err: any) {
       console.error('PayPal error:', err);
       toast.error(err.message || 'Failed to start PayPal payment');
@@ -179,7 +190,6 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
 
   return (
     <div className="relative max-w-md mx-auto">
-      {/* Main UI */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

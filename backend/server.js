@@ -1,6 +1,3 @@
-Object.keys(require.cache).forEach(key => {
-  delete require.cache[key];
-});
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -19,6 +16,8 @@ const corsOptions = {
   origin: process.env.CORS_ORIGIN 
     ? process.env.CORS_ORIGIN.split(',') 
     : '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 };
 app.use(cors(corsOptions));
@@ -32,6 +31,12 @@ app.use(rateLimit({
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+
+// Middleware to enforce JSON responses
+app.use((req, res, next) => {
+  res.setHeader('Content-Type', 'application/json');
+  next();
+});
 
 // Database Connection
 mongoose.connect(process.env.DB_URI, {
@@ -55,12 +60,14 @@ const routes = {
   zellePayment: require('./routes/zellePaymentRoutes')
 };
 
-// Mount routes
+// Correct route mounting
+app.use('/api/paypal', routes.paypal); // Fixed to match frontend path
+
+// Mount other routes
 app.use('/api/subscribers', routes.subscriber);
 app.use('/api/contacts', routes.contact);
 app.use('/api/bookings', routes.bookings);
 app.use('/api/volunteers', routes.volunteer);
-app.use('/api/paypal', routes.paypal);
 app.use('/api/nigerian-bank-transfer', routes.nigerianBank);
 app.use('/api/zelle-payment', routes.zellePayment);
 
