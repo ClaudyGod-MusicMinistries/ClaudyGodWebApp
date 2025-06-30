@@ -3,7 +3,6 @@ const router = express.Router();
 const Payment = require("../models/Payment");
 const Order = require("../models/Order");
 const { validateZellePayment } = require("../validators/paymentValidators");
-const { sendPaymentConfirmationEmail } = require("../services/emailService");
 
 // Confirm Zelle Payment
 router.post("/zelle/confirm", async (req, res) => {
@@ -43,7 +42,7 @@ router.post("/zelle/confirm", async (req, res) => {
       confirmationId,
       amount,
       paymentMethod: "zelle",
-      status: "pending",
+      status: "confirmed",
       userEmail: order.shippingInfo.email,
       metadata: {
         orderDetails: {
@@ -53,33 +52,23 @@ router.post("/zelle/confirm", async (req, res) => {
       }
     });
 
-    // Update order with payment info
-    const updatedOrder = await Order.findOneAndUpdate(
+    // Update order status immediately
+    await Order.findOneAndUpdate(
       { orderId },
       { 
         $set: { 
           "paymentInfo.zelleConfirmation": confirmationId,
-          "paymentInfo.status": "pending",
-          status: "processing"
+          "paymentInfo.status": "completed",
+          status: "completed"
         } 
-      },
-      { new: true }
+      }
     );
-
-    // Send confirmation email
-    await sendPaymentConfirmationEmail({
-      email: order.shippingInfo.email,
-      orderId,
-      amount,
-      paymentMethod: "zelle",
-      confirmationId
-    });
 
     return res.json({ 
       success: true, 
       orderId,
       paymentId: payment._id,
-      status: "pending"
+      status: "confirmed"
     });
 
   } catch (err) {
@@ -96,7 +85,6 @@ router.get("/zelle/status/:orderId", async (req, res) => {
   try {
     const { orderId } = req.params;
     
-    // Find payment and order
     const [payment, order] = await Promise.all([
       Payment.findOne({ orderId }),
       Order.findOne({ orderId })
@@ -106,45 +94,6 @@ router.get("/zelle/status/:orderId", async (req, res) => {
       return res.status(404).json({ 
         success: false,
         error: "Order not found" 
-      });
-    }
-
-    // Automatically confirm after 15 seconds (simulating bank verification)
-    const isExpired = new Date() - payment.createdAt > 15000;
-    if (payment.status === "pending" && isExpired) {
-      const [updatedPayment, updatedOrder] = await Promise.all([
-        Payment.findOneAndUpdate(
-          { _id: payment._id, status: "pending" },
-          { $set: { status: "confirmed" } },
-          { new: true }
-        ),
-        Order.findOneAndUpdate(
-          { orderId },
-          { 
-            $set: { 
-              "paymentInfo.status": "completed",
-              status: "completed"
-            } 
-          },
-          { new: true }
-        )
-      ]);
-
-      if (updatedPayment && updatedOrder) {
-        await sendPaymentConfirmationEmail({
-          email: order.shippingInfo.email,
-          orderId,
-          amount: payment.amount,
-          paymentMethod: "zelle",
-          confirmationId: payment.confirmationId,
-          status: "confirmed"
-        });
-      }
-
-      return res.json({ 
-        success: true,
-        status: updatedPayment?.status || payment.status,
-        orderStatus: updatedOrder?.status || order.status
       });
     }
 
@@ -159,30 +108,6 @@ router.get("/zelle/status/:orderId", async (req, res) => {
     return res.status(500).json({ 
       success: false,
       error: "Server error checking status" 
-    });
-  }
-});
-
-// Get Payment Details
-router.get("/:paymentId", async (req, res) => {
-  try {
-    const payment = await Payment.findById(req.params.paymentId);
-    if (!payment) {
-      return res.status(404).json({ 
-        success: false,
-        error: "Payment not found" 
-      });
-    }
-    
-    return res.json({ 
-      success: true,
-      payment 
-    });
-  } catch (err) {
-    console.error("Payment details error:", err);
-    return res.status(500).json({ 
-      success: false,
-      error: "Server error fetching payment details" 
     });
   }
 });

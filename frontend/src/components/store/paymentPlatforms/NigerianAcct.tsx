@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useOrderStore } from '../store/orderStore';
+// import { useOrderStore } from '../store/orderStore';
 
 interface NigerianBankTransferProps {
   amount: number;
@@ -13,7 +13,7 @@ export const NigerianBankTransfer: React.FC<NigerianBankTransferProps> = ({ amou
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { currentOrder, confirmPayment } = useOrderStore();
+  // const { currentOrder, confirmPayment } = useOrderStore();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {

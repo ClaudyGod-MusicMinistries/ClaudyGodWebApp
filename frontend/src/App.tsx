@@ -16,13 +16,15 @@ import { StoreData } from './pages/StoreData';
 import { Blog } from './pages/Blogpost';
 import { MinistryData } from './pages/Ministry';
 import { News } from './pages/News';
+import DonationComplete from './components/DonatePayment/DonationSuccess';
+
 
 // Store components
 import { Checkout } from './components/store/Checkout';
 import { CartPage } from './components/store/CartPage';
 import ZellePaymentWrapper from './components/store/paymentPlatforms/ZelleWrapper';
 import { PaymentPending } from './components/store/status/PaymentPending';
-import { OrderSuccess } from './components/store/status/OrderSuccess';
+import OrderSuccess from './components/store/status/OrderSuccess';
 
 
 function AppRoutes() {
@@ -46,6 +48,7 @@ function AppRoutes() {
           <Route path="ministry" element={<MinistryData />} />
           <Route path="news" element={<News />} />
           <Route path="cart" element={<CartPage />} />
+          <Route path="donation-complete" element={<DonationComplete />} />
 
           {/* Payment routes */}
           <Route path="checkout/zelle" element={<ZellePaymentWrapper />} />

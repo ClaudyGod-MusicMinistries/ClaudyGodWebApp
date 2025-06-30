@@ -22,15 +22,14 @@ const paymentSchema = new Schema(
   }
 );
 
-// Indexes for faster queries
+// Indexes
 paymentSchema.index({ orderId: 1, status: 1 });
 paymentSchema.index({ confirmationId: 1 }, { unique: true });
 
-// Add virtual for formatted amount
+// Virtual for formatted amount
 paymentSchema.virtual('amountFormatted').get(function() {
   return `$${this.amount.toFixed(2)}`;
 });
 
 const Payment = mongoose.models.Payment || mongoose.model("Payment", paymentSchema);
-
 module.exports = Payment;
