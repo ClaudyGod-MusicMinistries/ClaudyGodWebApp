@@ -439,7 +439,7 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
             <li>Make sure you've sent the exact amount to <span className="font-semibold">{zelleEmail}</span></li>
             <li>Transaction ID must be exactly 9 alphanumeric characters</li>
             <li>Use the same email you registered with Zelle</li>
-            <li>Processing may take 1-2 business days</li>
+            {/* <li>Processing may take 1-2 business days</li> */}
             <li>Contact support@claudygod.org for assistance</li>
           </ul>
         </div>

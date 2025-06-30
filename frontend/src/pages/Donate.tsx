@@ -265,14 +265,14 @@ export const DonateData: React.FC = () => {
       
       {isCheckout ? (
         <div className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75' : ''}`}>
-          <div className="text-center mb-10">
+          {/* <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 roboto-condensed">
               Complete Your Donation
             </h2>
             <p className="text-gray-600 mt-3 max-w-2xl mx-auto">
               Thank you for supporting our ministry. Please select your preferred payment method below.
             </p>
-          </div>
+          </div> */}
           
           {currency === 'NGN' ? (
             <div className="max-w-2xl mx-auto">
