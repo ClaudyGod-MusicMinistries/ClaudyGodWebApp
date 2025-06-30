@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
-const fetch = require('node-fetch');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -32,12 +32,6 @@ app.use(rateLimit({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Middleware to enforce JSON responses
-app.use((req, res, next) => {
-  res.setHeader('Content-Type', 'application/json');
-  next();
-});
-
 // Database Connection
 mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true,
@@ -49,21 +43,17 @@ mongoose.connect(process.env.DB_URI, {
   process.exit(1);
 });
 
-// Import routes
+// Import routes (PayPal removed)
 const routes = {
   subscriber: require('./routes/SubscriberRoutes'),
   contact: require('./routes/ContactRoutes'),
   bookings: require('./routes/bookingsRoutes'),
   volunteer: require('./routes/volunteerRoutes'),
-  paypal: require('./routes/paypalRoutes'),
   nigerianBank: require('./routes/nigerianBankTransferRoutes'),
   zellePayment: require('./routes/zellePaymentRoutes')
 };
 
-// Correct route mounting
-app.use('/api/paypal', routes.paypal); // Fixed to match frontend path
-
-// Mount other routes
+// Mount routes
 app.use('/api/subscribers', routes.subscriber);
 app.use('/api/contacts', routes.contact);
 app.use('/api/bookings', routes.bookings);
@@ -77,26 +67,34 @@ app.get('/health', (_, res) => res.json({
   db: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected' 
 }));
 
-// Keep-alive endpoint for Render.com
+// Keep-alive endpoint
 app.get('/keep-alive', (_, res) => {
   res.send('Server awake');
 });
+
+// Serve frontend in production - MUST be after API routes
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+  
+  // SPA fallback handler
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
+  });
+} else {
+  // Dev-only root endpoint
+  app.get('/', (req, res) => {
+    res.json({ 
+      message: 'ClaudyGod API Service',
+      status: 'running',
+      version: '1.0.0'
+    });
+  });
+}
 
 // Start Server
 const server = app.listen(PORT, () => 
   console.log(`🚀 Server running on port ${PORT}`)
 );
-
-// Ping self to prevent idle on Render
-if (process.env.KEEP_ALIVE_URL) {
-  setInterval(() => {
-    console.log('Pinging self to keep alive...');
-    fetch(process.env.KEEP_ALIVE_URL)
-      .then(res => res.text())
-      .then(console.log)
-      .catch(console.error);
-  }, 300000); // Every 5 minutes
-}
 
 // Graceful Shutdown
 ['SIGINT', 'SIGTERM'].forEach(signal => {
