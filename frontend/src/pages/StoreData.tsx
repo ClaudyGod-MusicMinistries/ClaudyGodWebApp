@@ -5,7 +5,8 @@ import { faShoppingBag, faShoppingCart } from '@fortawesome/free-solid-svg-icons
 import NewsletterForm from '../components/Utils/Newsletter';
 import { Cart } from '../components/store/Cart';
 import { SEO } from '../components/Utils/SEO';
-import { useCartStore } from '../Context/Cartcontext';
+// import { useCartStore } from '../Context/Cartcontext';
+import { useCartStore } from '../contexts/Cartcontext';
 import { StoreHero } from '../components/store/StoreHero';
 import { CategoryFilter } from '../components/store/CategoryFilter';
 import { ProductCarousel } from '../components/store/ProductCarousel';
