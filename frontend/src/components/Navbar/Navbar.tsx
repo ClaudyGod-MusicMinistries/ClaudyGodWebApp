@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Log } from '../../assets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import StreamingModal from '../StreamingModel';
-import { useNavContext } from '../../context/NavContext';
+import { useNavContext } from '../../contexts/NavContext';
 import {
   faUser,
   faMusic,
