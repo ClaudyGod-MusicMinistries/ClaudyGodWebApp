@@ -1,8 +1,8 @@
 // src/components/payments/PaymentPlatforms.tsx
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion} from 'framer-motion';
 import { useForm } from 'react-hook-form';
-import { FaPaypal, FaBuilding, FaArrowLeft, FaGlobe, FaInfoCircle, FaCheck } from 'react-icons/fa';
+import { FaPaypal, FaBuilding, FaArrowLeft, FaGlobe, FaInfoCircle } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 
 import PayPalStep from './Paypal';
@@ -158,7 +158,6 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
         </div>
 
         <form onSubmit={handleSubmit(submitDonorInfo)} className="space-y-5">
-          {/* Email Field */}
           <div>
             <label className="block text-sm font-medium mb-2 text-gray-700">
               Email Address <span className="text-red-500">*</span>
@@ -190,8 +189,6 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
               </p>
             )}
           </div>
-
-          {/* Phone Country */}
           <div>
             <label className="block text-sm font-medium mb-2 text-gray-700">
               Phone Country

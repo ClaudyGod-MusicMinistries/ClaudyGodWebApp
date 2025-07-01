@@ -47,7 +47,7 @@ const HeroSlide = ({
           className="max-w-4xl text-white"
         >
           {slide.type === 'quote' && <QuoteSlide slide={slide} />}
-          {slide.type === 'cta' && <CTASlide />}
+          {slide.type === 'cta' && <CtaSlide navigate={undefined} />}
           {slide.type === 'music' && (
             <MusicSlide slide={slide} setIsModalOpen={setIsModalOpen} />
           )}

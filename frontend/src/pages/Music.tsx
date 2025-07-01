@@ -1,10 +1,10 @@
-import { SEO } from '../components/Utils/SEO';
+import { SEO } from '../components/util/SEO';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { AudioMackComponent } from '../components/Homepage/audioMack';
 import { Cover } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DownloadSection } from '../components/Utils/download';
+import { DownloadSection } from '../components/util/Download';
 import { 
   faExternalLinkAlt,
   faShieldAlt,
@@ -21,7 +21,7 @@ import {
   faDeezer, 
   faAmazon,
 } from '@fortawesome/free-brands-svg-icons';
-import  NewsletterForm  from '../components/Utils/Newsletter';
+import  {NewsletterForm}  from '../components/util/Newsletter';
 
 // Music platforms for main section
 const securedMusicPlatforms = [

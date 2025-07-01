@@ -1,7 +1,7 @@
 
 import { Outlet } from 'react-router-dom'
 import { TopBanner } from '../Topbanner'
-import { Navbar } from '../../components/Navbar/Navbar'
+import { Navbar } from '../navbar/Navbar'
 import { Footer } from '../footer/footer'
 
 

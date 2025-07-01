@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Herosection } from '../components/Utils/Herosection';
+import { Herosection } from '../components/util/Herosection';
 import { Log } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ContactForm from '../components/contact/ContactForm';
 import ContactInfo from '../components/contact/ContactInfo';
 import SuccessModal from '../components/contact/SuccessModal';
-import NewsletterForm from '../components/Utils/Newsletter';
+import {NewsletterForm} from '../components/util/Newsletter';
 
 import {
   faFacebookF,

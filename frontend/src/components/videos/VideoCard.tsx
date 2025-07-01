@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import { VideoType } from './VideoCardTypes'; // Update path if needed
+import { VideoType } from '../types/video'; // Update path if needed
 
 const VideoCard: React.FC<{ 
   content: VideoType;

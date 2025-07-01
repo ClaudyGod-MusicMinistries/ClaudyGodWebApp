@@ -8,7 +8,6 @@ import {
   FaCopy, 
   FaPaste,
   FaCheck,
-  FaTimes,
   FaExclamationTriangle
 } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';

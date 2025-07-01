@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 
 // Interfaces
-interface HeroSlide {
+export interface HeroSlide {
   id: number;
   imageUrl?: string;
   imageUrlMobile?: string; 
@@ -18,18 +18,18 @@ interface HeroSlide {
   };
 }
 
-interface TextVariantsProps {
-  children: React.ReactNode;
-  className?: string;
-}
+// interface TextVariantsProps {
+//   children: React.ReactNode;
+//   className?: string;
+// }
 
-interface SlideContentProps {
-  slide: HeroSlide;
-  isMuted: boolean;
-  toggleMute: () => void;
-  navigate: ReturnType<typeof useNavigate>;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+// interface SlideContentProps {
+//   slide: HeroSlide;
+//   isMuted: boolean;
+//   toggleMute: () => void;
+//   navigate: ReturnType<typeof useNavigate>;
+//   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+// }
 
 // Animation Variants
 export const textVariants = {

@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { SecurityUtils, TRUSTED_DOMAINS } from './Utils/securityUtils';
+import { SecurityUtils, TRUSTED_DOMAINS } from './util/securityUtils';
+import { MusicPlatform } from './types/types';
 // import { MusicPlatform } from '../types';
 
 interface SecuredLinkProps {

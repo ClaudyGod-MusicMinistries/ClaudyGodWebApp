@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { newsBanner } from '../../assets/';
-import { TourDetailsModal } from '../News/TourDetailsModal'
+import { TourDetailsModal } from '../news/TourDetailsModal';
 
 export const TourSection = ({ 
   onCitySelect 

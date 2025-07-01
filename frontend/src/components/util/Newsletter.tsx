@@ -7,7 +7,7 @@ type FormData = {
   email: string;
 };
 
-const NewsletterForm: React.FC = () => {
+export const NewsletterForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -140,5 +140,3 @@ const NewsletterForm: React.FC = () => {
     </div>
   );
 };
-
-export default NewsletterForm;

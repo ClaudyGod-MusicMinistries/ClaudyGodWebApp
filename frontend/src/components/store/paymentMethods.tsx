@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CreditCard, Smartphone, Building, ArrowLeft, Globe, Landmark } from 'lucide-react';
-import { StripePayment } from './payments/StripePayment';
-import { PayPalPayment } from './payments/PayPalPayment';
-import { ZellePayment } from './payments/ZellePayment';
-import { PaystackPayment } from './payments/PaystackPayment';
-import { NigerianBankTransfer } from './payments/NigerianBankTransfer';
+import { StripePayment } from './paymentPlatforms/stripe';
+import { PayPalPayment } from './paymentPlatforms/paypal';
+import { ZellePayment } from './paymentPlatforms/zelle';
+import { PaystackPayment } from './paymentPlatforms/paystack';
+import { NigerianBankTransfer } from './paymentPlatforms/NigerianAcct';
 
 interface PaymentMethodsProps {
   paymentMethod: string;

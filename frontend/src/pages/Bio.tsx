@@ -1,10 +1,10 @@
 // src/components/Bio/Biography.tsx
-import { SEO } from '../components/Utils/SEO';
+import { SEO } from '../components/util/SEO';
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Herosection } from '../components/Utils/Herosection';
+import { Herosection } from '../components/util/Herosection';
 import { About1, About2 } from '../assets';
-import NewsletterForm from '../components/Utils/Newsletter';
+import {NewsletterForm} from '../components/util/Newsletter';
 import { BioSection } from '../components/Bio/BioSectio';
 import { firstSectionTexts, secondSectionTexts } from '../components/data/Biography';
 

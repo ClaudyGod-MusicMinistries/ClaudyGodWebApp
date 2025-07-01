@@ -3,20 +3,20 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Herosection } from '../components/Utils/Herosection';
+import { Herosection } from '../components/util/Herosection';
 import { Back3 } from '../assets/';
-import NewsletterForm from '../components/Utils/Newsletter';
+import {NewsletterForm} from '../components/util/Newsletter';
 import { Modal } from '../components/Modal';
 import { submitBooking } from '../components/api/bookingApi';
 import { bookingSchema } from '../components/schemas/bookingSchema';
 import { CountryCode } from '../components/types/booking';
-import { COUNTRY_STATE_CITY_DATA, MONTHS } from '../components/Utils/bookingConstants';
+import { COUNTRY_STATE_CITY_DATA, MONTHS } from '../components/util/bookingConstants';
 import { PersonalInfoSection } from '../components/Bookings/PersonalInfo';
 import { EventInfoSection } from '../components/Bookings/EventInfo';
 import { LocationSection } from '../components/Bookings/LocationInfo';
 import { TermsSection } from '../components/Bookings/TermsSubmit';
-import { DownloadSection } from '../components/Utils/download';
-import { SEO } from '../components/Utils/SEO';
+import { DownloadSection } from '../components/util/Download';
+import { SEO } from '../components/util/SEO';
 
 export const Bookings: React.FC = () => {
   const [showThankYouModal, setShowThankYouModal] = useState(false);

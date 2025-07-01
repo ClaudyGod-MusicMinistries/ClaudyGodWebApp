@@ -1,8 +1,7 @@
 
 import * as yup from 'yup';
 import { CountryCode } from '../types/booking';
-import { COUNTRY_STATE_CITY_DATA, ZIP_CODE_PATTERNS } from '../Utils/bookingConstants';
-
+import { COUNTRY_STATE_CITY_DATA, ZIP_CODE_PATTERNS } from '../util/bookingConstants';
 export const bookingSchema = yup.object().shape({
   firstName: yup.string().required('First name is required'),
   lastName: yup.string().required('Last name is required'),

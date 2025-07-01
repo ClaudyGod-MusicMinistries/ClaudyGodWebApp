@@ -6,9 +6,9 @@ import VideoPlayerModal from '../components/videos/VideoPlayerModel';
 import VideoCard from '../components/videos/VideoCard';
 import PaginationControls from '../components/videos/PaginationControls';
 import DiagonalSection from '../components/videos/DiagonalSection';
-import  NewsletterForm  from '../components/Utils/Newsletter';
+import  {NewsletterForm} from '../components/util/Newsletter';
 import { AudioMackComponent } from '../components/Homepage/audioMack';
-import { DownloadSection } from '../components/Utils/download';
+import { DownloadSection } from '../components/util/Download';
 
 
 type VideoType = {

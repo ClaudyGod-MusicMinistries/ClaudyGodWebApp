@@ -2,7 +2,7 @@
 import { useState, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Cover,musicCover6 , VideoArt, veryGlorious } from '../assets/';
+import {musicCover6 , VideoArt, veryGlorious } from '../assets/';
 import {
   
  faArrowDown
@@ -15,13 +15,13 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 
 // Components
-import { HeroSlider } from '../components/News/Slider';
-import { ArtistQuote } from '../components/News/ArtistQuote';
-import { TourSection } from '../components/News/TourSection';
-import { VolunteerForm } from '../components/News/VolunteerForm';
-import { LiveSession } from '../components/News/LiveSession';
-import { TourCityModal } from '../components/News/TourCityModal';
-import NewsletterForm from '../components/Utils/Newsletter';
+import { HeroSlider } from '../components/news/Slider';
+import { ArtistQuote } from '../components/news/ArtistQuote';
+import { TourSection } from '../components/news/TourSection';
+import { VolunteerForm } from '../components/news/VolunteerForm';
+import { LiveSession } from '../components/news/LiveSession';
+import { TourCityModal } from '../components/news/TourCityModal';
+import {NewsletterForm} from '../components/util/Newsletter';
 
 export const News = () => {
   const [showTourModal, setShowTourModal] = useState(false);

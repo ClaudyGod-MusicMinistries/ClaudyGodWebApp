@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Herosection } from '../components/Utils/Herosection';
-import NewsletterForm from '../components/Utils/Newsletter';
+import { Herosection } from '../components/util/Herosection';
+import { NewsletterForm } from '../components/util/Newsletter';
 import { About1, music6, music7, music9, } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faTimes } from '@fortawesome/free-solid-svg-icons';

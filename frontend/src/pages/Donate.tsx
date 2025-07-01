@@ -1,20 +1,25 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faWallet, 
-  faArrowDown, 
+import {  
   faInfoCircle,
   faGlobe,
   faCreditCard,
   faHandHoldingUsd,
   faShieldAlt
 } from '@fortawesome/free-solid-svg-icons';
-import { Herosection } from '../components/Utils/Herosection';    
+// import { Herosection } from '../components/utils/Herosection';    
 import { Donate1, Donate2 } from '../assets/';
+// import { useNavContext } from '../contexts/NavContext';
+// import { SEO } from '../components/utils/SEO';
+// import { PaymentPlatforms } from '../components/DonatePayment/payment';
+// import {HeroSection} from '../components/HomeHero/HeroSection';
+
 import { useNavContext } from '../contexts/NavContext';
-import { SEO } from '../components/Utils/SEO';
-import { PaymentPlatforms } from '../components/DonatePayment/payment';
-import { NigerianBankTransfer } from '../components/DonatePayment/NigeriaAcct';
+import { SEO } from '../components/util/SEO';
+import { PaymentPlatforms } from '../components/donate/payment';
+import { NigerianBankTransfer } from '../components/store/paymentPlatforms/NigerianAcct';
+import { Herosection } from '../components/util/Herosection';
+
 
 // Currency selector component
 const CurrencySelector = ({ currency, setCurrency }: { currency: string, setCurrency: React.Dispatch<React.SetStateAction<string>> }) => {

@@ -1,16 +1,16 @@
-import { SEO } from '../components/Utils/SEO';
+import { SEO } from '../components/util/SEO';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 // import { Hero } from '../components/HomepageHero';
 import LatestRelease from '../components/Homepage/latestRelease';
 import { FeaturedVideos } from '../components/Homepage/Featuredvideos';
 import { ShopPreview } from '../components/Homepage/ShopPreview';
-import NewsletterForm  from '../components/Utils/Newsletter';
+import {NewsletterForm}  from '../components/util/Newsletter';
 import { AudioMackComponent } from '../components/Homepage/audioMack';
 import { ScrollToTop } from '../components/Homepage/ScrollToTop';
 import { Welcome } from '../components/Homepage/welcome';
 import { Hero } from '../components/HomeHero/MainHero';
-import { DownloadSection } from '../components/Utils/download';
+import { DownloadSection } from '../components/util/Download';
 
 
 const ScrollAnimationWrapper = ({ children }: { children: React.ReactNode }) => {

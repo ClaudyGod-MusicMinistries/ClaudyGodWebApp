@@ -6,7 +6,7 @@ import { PaginationDots } from './Pagination';
 import StreamingModal from '../StreamingModel';
 
 
-const HeroSection = () => {
+export const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isMuted, setIsMuted] = useState(true);
@@ -56,5 +56,3 @@ const HeroSection = () => {
     </section>
   );
 };
-
-export default HeroSection;

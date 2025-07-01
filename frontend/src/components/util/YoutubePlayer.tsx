@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
-import { PlayerModal } from './PlayerModal';
+import { PlayerModal } from '../PlayerModal';
 
 interface YouTubePlayerProps {
   videoId: string;

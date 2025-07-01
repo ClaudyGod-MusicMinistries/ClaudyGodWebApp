@@ -1,15 +1,15 @@
 import React, { useState, useEffect, lazy, Suspense, useCallback, useMemo } from 'react';
 import { Heroblog } from '../components/blog/blogHero';
 import { blogPosts } from '../components/blog/blogsData';
-import Pagination from '../components/Utils/pagination';
+import Pagination from '../components/util/pagination';
 import Interview from '../components/Interview';
 
 // Lazy load components
 const LazyBlogWelcome = lazy(() => import('../components/blog/blogWelcome'));
-const LazyWelcomeImage = lazy(() => import('../components/Utils/WelcomeImage'));
+const LazyWelcomeImage = lazy(() => import('../components/util/WelcomeImage'));
 const LazyBlogPost = lazy(() => import('../components/mainBlog'));
 const LazyChatbot = lazy(() => import('../components/Chatbot'));
-const LazyNewsletterForm = lazy(() => import('../components/Utils/Newsletter'));
+// const LazyNewsletterForm = lazy(() => import('../components/util/Newsletter'));
 
 interface Comment {
   id: string;
@@ -194,11 +194,11 @@ export const Blog: React.FC = () => {
       <div className={`max-w-4xl mx-auto px-4 py-16 ${fadeInClass} ${isMounted ? 'opacity-100 delay-500' : 'opacity-0'}`}>
         <Suspense fallback={<div className="h-60 bg-gradient-to-r from-gray-100 to-gray-50 rounded-3xl animate-pulse" />}>
           <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-xl p-8 border border-gray-100">
-            <LazyNewsletterForm 
+            {/* <LazyNewsletterForm 
               className="rounded-2xl"
               title="Join Our Knowledge Community"
               description="Get exclusive insights and early access to our latest research and articles"
-            />
+            /> */}
           </div>
         </Suspense>
       </div>

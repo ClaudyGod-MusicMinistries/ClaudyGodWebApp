@@ -16,7 +16,8 @@ import { StoreData } from './pages/StoreData';
 import { Blog } from './pages/Blogpost';
 import { MinistryData } from './pages/Ministry';
 import { News } from './pages/News';
-import DonationComplete from './components/DonatePayment/DonationSuccess';
+import DonationComplete from './components/donate/DonationSuccess';
+
 
 
 // Store components

@@ -1,4 +1,4 @@
-// src/pages/donation-complete.tsx
+
 import { useEffect } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 
