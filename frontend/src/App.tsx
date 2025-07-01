@@ -1,6 +1,6 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { AnimatePresence } from 'framer-motion';
-import { Routes, Route, useLocation, BrowserRouter as Router } from 'react-router-dom';
+import { Routes, Route, useLocation, HashRouter as Router } from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout/Mainlayout';
 
