@@ -15,7 +15,7 @@ import {
   selectCartItems,
   selectCartTotal,
   selectCartCount
-} from '../../Context/Cartcontext';
+} from '../../contexts/Cartcontext';
 
 interface CartProps {
   isOpen?: boolean;

@@ -11,7 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Herosection } from '../components/Utils/Herosection';    
 import { Donate1, Donate2 } from '../assets/';
-import { useNavContext } from '../context/NavContext';
+import { useNavContext } from '../contexts/NavContext';
 import { SEO } from '../components/Utils/SEO';
 import { PaymentPlatforms } from '../components/DonatePayment/payment';
 import { NigerianBankTransfer } from '../components/DonatePayment/NigeriaAcct';

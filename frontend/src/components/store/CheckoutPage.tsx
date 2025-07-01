@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useCartStore } from '../../Context/Cartcontext';
+import { useCartStore } from '../../contexts/Cartcontext';
 import { useNavigate } from 'react-router-dom';
 import { Truck, CreditCard, ArrowLeft, Building, Smartphone, Landmark } from 'lucide-react';
 import toast from 'react-hot-toast';

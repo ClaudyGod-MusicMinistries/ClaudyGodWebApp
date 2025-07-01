@@ -2,8 +2,8 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-// import { useCartStore, selectCartItems } from '../../contexts/CartContext';
-import { useCartStore, selectCartItems } from '../../Context/Cartcontext';
+
+import { useCartStore, selectCartItems } from '../../contexts/Cartcontext';
 import { CheckoutPage } from './CheckoutPage';
 import { useNavigate } from 'react-router-dom';
 
