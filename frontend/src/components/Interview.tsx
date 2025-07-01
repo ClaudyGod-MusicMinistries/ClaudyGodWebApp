@@ -1,165 +1,267 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import YouTube from 'react-youtube';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAnglesDown, faPlay } from '@fortawesome/free-solid-svg-icons';
-import UpdateModal from '../components/updateModel';
+import { faAnglesDown, faPlay, faXmark, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons';
 
-// Define type for video objects
-interface VideoItem {
-  id: string;
-  title: string;
-}
+// Import data and types from external file
+import { VideoItem, videos, playerOptions } from '../components/data/InterviewData';
 
 const Interview = () => {
-  const [currentVideo, setCurrentVideo] = useState<string>('Eom1qlm4ork');
-  const [showPlayer, setShowPlayer] = useState<boolean>(false);
+  const [currentVideo, setCurrentVideo] = useState<string>(videos[0].id);
+  const [showPlayer, setShowPlayer] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [loadingThumbnails, setLoadingThumbnails] = useState<boolean>(true);
+  const videoSectionRef = useRef<HTMLDivElement>(null);
+  const thumbnailRefs = useRef<(HTMLImageElement | null)[]>([]);
 
-  const videos: VideoItem[] = [
-    { id: 'Eom1qlm4ork', title: 'ClaudyGod Interview - NTA10-Lagos' },
-    { id: 'rGVHMpPIkY8', title: 'ClaudyGod Interview - Rhythm Station' },
-    { id: 'jeY9ULX3wtY', title: 'ClaudyGod Interview - Rhema Station' },
-  ];
-
-  const playerOptions = {
-    height: '390',
-    width: '100%',
-    playerVars: {
-      autoplay: 1,
-      modestbranding: 1,
-      rel: 0,
-    },
+  // Handle thumbnail loading with optimized fallbacks
+  const handleThumbnailError = (index: number, videoId: string) => {
+    const img = thumbnailRefs.current[index];
+    if (img) {
+      // If HQ thumbnail fails, try MQ
+      if (img.src.includes('hqdefault')) {
+        img.src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+      } 
+      // If MQ fails, use a placeholder
+      else {
+        // Use a gradient placeholder
+        img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180" viewBox="0 0 320 180"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23672994"/><stop offset="100%" stop-color="%23b83280"/></linearGradient></defs><rect width="320" height="180" fill="url(%23grad)"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="16" fill="%23ffffff">Thumbnail Loading</text></svg>';
+      }
+    }
   };
 
-  // Fixed type for videoId parameter
   const handleVideoClick = (videoId: string) => {
     setCurrentVideo(videoId);
     setShowPlayer(true);
-
-    setTimeout(() => {
-      const videoSection = document.getElementById('video-section');
-      if (videoSection) {
-        videoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 100);
+    scrollToSection();
   };
 
-  const scrollToVideos = () => {
-    const videoSection = document.getElementById('video-section');
-    if (videoSection) {
-      videoSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const scrollToSection = () => {
+    setTimeout(() => {
+      videoSectionRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 100);
   };
 
   const toggleModal = () => setShowModal(!showModal);
 
-  return (
-    <div className="max-w-7xl mx-auto mb-30 px-4 py-8 bg-purple-900 rounded-2xl relative">
-      {/* Header Section */}
-      <div className="text-center mb-20 mt-12">
-        <h1 className="text-4xl roboto-condensed text-white mb-4">Our Latest Updates</h1>
-        <p className="text-gray-200 work-sans md:text-base max-md:text-xs max-w-xl mx-auto">
-          Catch up with all our interviews, press releases, May God be glorified in all things.
-        </p>
-      </div>
+  // Set all thumbnails to load
+  useEffect(() => {
+    setLoadingThumbnails(true);
+    const timer = setTimeout(() => {
+      setLoadingThumbnails(false);
+    }, 800);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
-      {/* CTA Section */}
-      <div className="text-center mb-20">
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-purple-900 text-white">
+      {/* Hero Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500 mb-6">
+              Ministry Interviews
+            </h1>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+              Exclusive conversations and insights from Minister ClaudyGod's ministry journey
+            </p>
+            
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <button 
+                onClick={scrollToSection}
+                className="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-medium text-white transition-all duration-300 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+              >
+                <span className="relative text-lg tracking-wider">Watch Interviews</span>
+                <FontAwesomeIcon 
+                  icon={faAnglesDown} 
+                  className="ml-3 h-5 w-5 animate-bounce group-hover:animate-none transition-all" 
+                />
+              </button>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Video Player Section */}
         <div 
-          className="bg-purple-900 text-white py-6 px-8 rounded-lg inline-block cursor-pointer transition-transform hover:scale-105"
-          onClick={scrollToVideos}
+          id="video-section" 
+          ref={videoSectionRef}
+          className="mb-20"
         >
-          <div className="flex flex-col items-center bg-white rounded-2xl p-5">
-            <span className="text-2xl roboto-condensed mt-2 mb-1 p-5 px-10 py-5 pb-0 text-red-500">Watch Now</span>
-            <FontAwesomeIcon 
-              icon={faAnglesDown} 
-              className="h-6 w-6 animate-bounce text-red-500" 
-            />
+          <div className="relative bg-gradient-to-br from-black/50 to-purple-900/50 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl border border-gray-700 p-4">
+            <AnimatePresence mode="wait">
+              {showPlayer ? (
+                <motion.div
+                  key={currentVideo}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="mb-6"
+                >
+                  <div className="relative">
+                    <YouTube videoId={currentVideo} opts={playerOptions} />
+                    <button 
+                      onClick={() => setShowPlayer(false)}
+                      className="absolute top-4 right-4 bg-black/70 rounded-full p-2 z-10 hover:bg-black transition-colors"
+                      aria-label="Close player"
+                    >
+                      <FontAwesomeIcon icon={faXmark} className="text-white h-4 w-4" />
+                    </button>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="placeholder"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="bg-gradient-to-br from-gray-800 to-purple-900 border-2 border-dashed border-gray-600 rounded-xl w-full aspect-video flex flex-col items-center justify-center space-y-6 p-8"
+                >
+                  <div className="text-center">
+                    <h3 className="text-2xl font-medium text-gray-300 mb-2">Video Player</h3>
+                    <p className="text-gray-400 max-w-md">
+                      Select an interview below to watch Minister ClaudyGod's inspiring conversations
+                    </p>
+                  </div>
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform">
+                    <FontAwesomeIcon 
+                      icon={faPlay} 
+                      className="text-white text-2xl ml-1" 
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Current Video Info */}
+            {showPlayer && (
+              <div className="mt-6 px-2">
+                {videos.filter(v => v.id === currentVideo).map(video => (
+                  <div key={video.id} className="space-y-3">
+                    <h2 className="text-2xl font-bold text-white">{video.title}</h2>
+                    <div className="flex flex-wrap gap-4 text-gray-300">
+                      <span className="flex items-center">
+                        <FontAwesomeIcon icon={faCalendarAlt} className="h-4 w-4 mr-2 text-purple-400" />
+                        {video.date}
+                      </span>
+                      <span className="flex items-center">
+                        <FontAwesomeIcon icon={faClock} className="h-4 w-4 mr-2 text-purple-400" />
+                        {video.duration}
+                      </span>
+                      <span className="bg-purple-900/50 px-3 py-1 rounded-full text-sm">
+                        {video.channel}
+                      </span>
+                    </div>
+                    <p className="text-gray-400 mt-2">{video.description}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
-      </div>
 
-      {/* Video Player Section */}
-      <div id="video-section" className="mb-16">
-        {showPlayer ? (
-          <motion.div 
-            className="mb-10 rounded-xl overflow-hidden shadow-xl"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            <YouTube videoId={currentVideo} opts={playerOptions} />
-          </motion.div>
-        ) : (
-          <div className="bg-gray-200 raleway-light border-2 border-dashed rounded-xl w-full h-96 flex flex-col items-center justify-center text-gray-500 space-y-4">
-            <h2 className="text-xl">Video Will Play Here</h2>
-            <div className="w-18 h-18 p-5 rounded-2xl cursor-pointer bg-red-600 flex items-center justify-center">
-              <FontAwesomeIcon 
-                icon={faPlay} 
-                className="text-white text-xl" 
-              />
-            </div>
+        {/* Video Gallery */}
+        <section className="mb-20">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-3">
+           Our Latest Updates
+            </h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              Catch up with all our interviews, Press releases, May God be glorified in all things.
+            </p>
           </div>
-        )}
 
-        {/* Video Slider */}
-        <div className="mt-12">
-         <h2 className="text-2xl roboto-condensed mt-20 mb-10 md:text-center max-md:text-left text-white">
-  Interview Session – Catch Up on Minister ClaudyGod’s Interviews
-</h2>
-
-          
-          {/* Centered video grid */}
-          <div className="flex justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl">
-              {videos.map((video) => (
-                <div 
-                  key={video.id}
-                  className="cursor-pointer group"
-                  onClick={() => handleVideoClick(video.id)}
-                >
-                  <div className="relative rounded-lg overflow-hidden shadow-md group-hover:shadow-xl transition-shadow">
-                    <div className="relative pb-[56.25%]">
-                      <img 
-                        src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`} 
-                        alt={video.title}
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="h-16 w-16 rounded-full bg-red-600 flex items-center justify-center group-hover:opacity-100 transition-opacity opacity-80">
-                          <FontAwesomeIcon 
-                            icon={faPlay} 
-                            className="text-white text-2xl ml-1"
-                          />
-                        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {videos.map((video, index) => (
+              <motion.div
+                key={video.id}
+                whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                className="group cursor-pointer"
+                onClick={() => handleVideoClick(video.id)}
+              >
+                <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 transition-all duration-300 group-hover:border-purple-500 h-full flex flex-col">
+                  <div className="relative aspect-video">
+                    {loadingThumbnails && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-purple-900 to-pink-900 animate-pulse flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-full bg-purple-700 animate-ping"></div>
+                      </div>
+                    )}
+                    <img 
+                      ref={el => thumbnailRefs.current[index] = el}
+                      src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                      alt={video.title}
+                      className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${loadingThumbnails ? 'opacity-0' : 'opacity-100'}`}
+                      onError={() => handleThumbnailError(index, video.id)}
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-80 transition-opacity group-hover:opacity-90" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="h-16 w-16 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all">
+                        <FontAwesomeIcon 
+                          icon={faPlay} 
+                          className="text-white text-xl ml-1"
+                        />
                       </div>
                     </div>
-                    <div className="p-4 bg-white">
-                      <h3 className="work-sans text-xs text-gray-900 group-hover:text-purple-700 transition-colors">
-                        {video.title}
-                      </h3>
+                    <div className="absolute bottom-0 left-0 w-full p-4">
+                      <div className="flex justify-between items-start">
+                        <h3 className="text-lg font-semibold text-white">{video.title}</h3>
+                        <span className="text-xs text-gray-300 bg-gray-800/80 px-2 py-1 rounded">
+                          {video.duration}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="p-5 flex-grow flex flex-col">
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-xs text-gray-400 flex items-center">
+                        <FontAwesomeIcon icon={faCalendarAlt} className="h-3 w-3 mr-1 text-purple-400" />
+                        {video.date}
+                      </span>
+                      <span className="text-xs bg-purple-900/40 px-2 py-1 rounded-full">
+                        {video.channel}
+                      </span>
+                    </div>
+                    <p className="text-gray-400 text-sm mb-4 flex-grow">{video.description}</p>
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-purple-400 font-medium">Watch Interview</span>
+                      <span className="text-gray-500 text-xs flex items-center">
+                        <FontAwesomeIcon icon={faClock} className="h-3 w-3 mr-1" />
+                        {video.duration}
+                      </span>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </motion.div>
+            ))}
           </div>
-          
-          {/* See More Button */}
-          <div className="mt-12 text-center">
-            <button 
-              className="bg-gray-100 hover:bg-gray-300 cursor-pointer text-bg-purple-900 font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105 shadow-lg"
-              onClick={toggleModal}
-            >
-              See More Updates
-            </button>
-          </div>
-        </div>
-      </div>
 
-      {/* Modal Popup */}
-      <UpdateModal isOpen={showModal} onClose={toggleModal} />
+          <div className="mt-16 text-center">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={toggleModal}
+              className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium rounded-full hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg shadow-purple-900/30"
+            >
+              View All Updates
+            </motion.button>
+          </div>
+        </section>
+      </div>
     </div>
   );
 };
