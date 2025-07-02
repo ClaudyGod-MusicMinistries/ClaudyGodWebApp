@@ -1,7 +1,7 @@
 import { SEO } from '../components/util/SEO';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { AudioMackComponent } from '../components/Homepage/audioMack';
+import { AudioMackComponent } from '../components/Homepage/AmazonMusic';
 import { Cover } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DownloadSection } from '../components/util/Download';
@@ -71,8 +71,6 @@ const securedMusicPlatforms = [
     safeRedirect: true
   }
 ];
-
-// Music platforms for latest release section buttons
 const latestReleasePlatforms = [
   { 
     name: 'Spotify', 
@@ -135,8 +133,6 @@ const albums = [
     ]
   },
 ];
-
-// Security utility functions
 const SecurityUtils = {
   sanitizeUrl: (url: string) => {
     try {
@@ -166,8 +162,6 @@ const TRUSTED_DOMAINS = [
   'deezer.com',
   'amazon.com'
 ];
-
-// SecureStreamButton Component
 
 export const MusicData = () => {
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
@@ -294,9 +288,11 @@ export const MusicData = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-5xl roboto-condensed mb-6">Music</h1>
+            <h1 className="md:text-8xl max-md:text-4xl font-roboto-condensed
+ mb-6">Music</h1>
             <div className="w-20 h-1 bg-white mb-8"></div>
-            <p className="text-sm max-w-2xl work-sans">
+            <p className="text-sm max-w-2xl font-work-sans
+">
               Experience the divine fusion of American Contemporary Christian Music and Afro-Gospel Songs through ClaudyGod's Inspirational Journey.
             </p>
           </motion.div>
@@ -307,13 +303,15 @@ export const MusicData = () => {
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl roboto-condensed mb-4">Available On All Platforms</h2>
-            <p className="text-gray-600 mt-2  md:text-xl max-md:text-sm work-sans">
+            <h2 className="text-3xl md:text-4xl font-roboto-condensed mb-4">Available On All Platforms</h2>
+            <p className="text-gray-600 mt-2  md:text-xl max-md:text-sm font-work-sans
+">
               Stream ClaudyGod's music everywhere, Anytime, Anyday, Anywhere.
             </p>
           </div>
           
-          <div className="flex flex-wrap raleway-medium justify-center gap-4">
+          <div className="flex flex-wrap font-raleway-light
+ justify-center gap-4">
             {securedMusicPlatforms.map((platform) => (
               <SecuredLink key={platform.name} platform={platform} />
             ))}
@@ -322,7 +320,7 @@ export const MusicData = () => {
           <div className="mt-8 text-center">
             <div className="inline-flex items-center bg-blue-50 px-4 py-2 rounded-full">
               <FontAwesomeIcon icon={faInfoCircle} className="mr-2 text-blue-500" />
-              <span className="text-sm text-blue-700 work-sans">
+              <span className="text-sm text-blue-700 font-work-sans">
                 We verify all external links for your security
               </span>
             </div>
@@ -331,7 +329,7 @@ export const MusicData = () => {
       </section>
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="bg-purple-900 p-10 text-white max-md:text-sm  md:text-5xl roboto-condensed mb-12 text-center rounded-lg">
+          <h2 className="bg-purple-900 p-10 text-white max-md:text-3xl  md:text-5xl font-roboto-condensed mb-12 text-center rounded-lg">
             Latest Release: You Are Our Everything
           </h2>
           <div className="space-y-10">
@@ -355,11 +353,14 @@ export const MusicData = () => {
                 </div>
                 
                 <div className="md:col-span-2">
-                  <h3 className="text-2xl roboto-condensed mb-2">{album.title}</h3>
-                  <p className="text-gray-600 work-sans mb-6">Released: {album.year}</p>
+                  <h3 className="text-2xl font-roboto-condensed
+ mb-2">{album.title}</h3>
+                  <p className="text-gray-600 font-work-sans
+ mb-6">Released: {album.year}</p>
                   
                   <div className="mt-8 text-center flex flex-col items-center">
-                    <p className="text-gray-700 work-sans mb-4 italic max-w-md mx-auto">
+                    <p className="text-gray-700 font-work-sans
+ mb-4 italic max-w-md mx-auto">
                       Now available on all major streaming platforms
                     </p>
                     
@@ -372,7 +373,8 @@ export const MusicData = () => {
                   </div>
                   
                   <div className="mt-6">
-                    <h3 className="text-xl font-bold mb-4 text-center text-gray-800 roboto-condensed">
+                    <h3 className="max-md:text-2xl md:text-5xl mb-4 text-center text-gray-800 font-roboto-condensed
+">
                       Experience the Sound - Stream Now!
                     </h3>
                     
@@ -395,7 +397,8 @@ export const MusicData = () => {
                                 : 'border-red-300 text-red-700 hover:bg-red-50'
                             }`}
                           >
-                            <span className="font-medium">Play on {platform.name}</span>
+                            <span className="font-raleway-medium
+">Play on {platform.name}</span>
                             <FontAwesomeIcon 
                               icon={faExternalLinkAlt} 
                               className="ml-2 text-xs"

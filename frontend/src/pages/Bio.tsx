@@ -67,7 +67,7 @@ export const Biography: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="max-md:text-2xl md:text-5xl lg:text-[45px] text-purple-900 text-left roboto-condensed px-2 leading-tight sm:leading-snug md:leading-normal"
+            className="max-md:text-2xl md:text-5xl lg:text-[45px] text-purple-900 text-left font-roboto-condensed px-2 leading-tight sm:leading-snug md:leading-normal"
           >
             ClaudyGod: American Contemporary Christian music and Afro-Gospel Songs
           </motion.h2>
@@ -75,6 +75,7 @@ export const Biography: React.FC = () => {
             imageSrc={About2}
             altText="ClaudyGod portrait"
             texts={firstSectionTexts}
+           
           />
           <BioSection
             imageSrc={About2}

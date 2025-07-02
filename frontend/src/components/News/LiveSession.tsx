@@ -10,7 +10,7 @@ export const LiveSession = () => {
       transition={{ duration: 0.6, delay: 0.2 }}
       className="bg-[#1a0a2e] rounded-2xl p-6 md:p-8 shadow-xl h-full"
     >
-      <h3 className="text-3xl sm:text-4xl md:text-5xl roboto-condensed text-white mb-6 text-center">
+      <h3 className="text-3xl sm:text-4xl md:text-5xl font-roboto-condensed text-white mb-6 text-center">
        Latest Release: You Are Our Everything.
       </h3>
 
@@ -37,13 +37,15 @@ export const LiveSession = () => {
         </div>
       </div>
 
-      <p className="text-purple-200 mb-4 text-sm md:text-base">
+      <p className="text-purple-200 font-work-sans
+ mb-4 text-sm md:text-base">
         Discover the latest gospel singles now featured on our Gospel News page! Stay updated with fresh releases, 
         inspiring messages, and uplifting melodies. Don’t miss out!
       </p>
 
      
-      <div className="mt-6 md:mt-8 grid grid-cols-2 gap-3">
+      <div className="mt-6 md:mt-8 grid grid-cols-2 gap-3 font-raleway-light
+">
   
         <a
           href="#"

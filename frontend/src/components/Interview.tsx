@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesDown, faPlay, faXmark, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons';
 
 // Import data and types from external file
-import { VideoItem, videos, playerOptions } from '../components/data/InterviewData';
+import {  videos, playerOptions } from '../components/data/InterviewData';
 
 const Interview = () => {
   const [currentVideo, setCurrentVideo] = useState<string>(videos[0].id);
@@ -68,10 +68,10 @@ const Interview = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500 mb-6">
+            <h1 className="text-4xl md:text-5xl font-roboto-condensed lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500 mb-6">
               Ministry Interviews
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+            <p className="text-xl text-gray-300 font-work-sans max-w-3xl mx-auto mb-10">
               Exclusive conversations and insights from Minister ClaudyGod's ministry journey
             </p>
             
@@ -176,10 +176,10 @@ const Interview = () => {
         {/* Video Gallery */}
         <section className="mb-20">
           <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-3">
+            <h2 className=" font-roboto-condensed text-transparent text-3xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-3 ">
            Our Latest Updates
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
+            <p className="text-gray-400 font-work-sans max-w-2xl mx-auto">
               Catch up with all our interviews, Press releases, May God be glorified in all things.
             </p>
           </div>
@@ -218,7 +218,7 @@ const Interview = () => {
                     </div>
                     <div className="absolute bottom-0 left-0 w-full p-4">
                       <div className="flex justify-between items-start">
-                        <h3 className="text-lg font-semibold text-white">{video.title}</h3>
+                        <h3 className="text-lg font-raleway-medium text-white">{video.title}</h3>
                         <span className="text-xs text-gray-300 bg-gray-800/80 px-2 py-1 rounded">
                           {video.duration}
                         </span>
@@ -229,18 +229,20 @@ const Interview = () => {
                   <div className="p-5 flex-grow flex flex-col">
                     <div className="flex justify-between items-center mb-3">
                       <span className="text-xs text-gray-400 flex items-center">
-                        <FontAwesomeIcon icon={faCalendarAlt} className="h-3 w-3 mr-1 text-purple-400" />
+                        <FontAwesomeIcon icon={faCalendarAlt} className="h-3 w-3 mr-1 font-raleway-light text-purple-400" />
                         {video.date}
                       </span>
-                      <span className="text-xs bg-purple-900/40 px-2 py-1 rounded-full">
+                      <span className="text-xs font-work-sans
+ bg-purple-900/40 px-2 py-1 rounded-full">
                         {video.channel}
                       </span>
                     </div>
-                    <p className="text-gray-400 text-sm mb-4 flex-grow">{video.description}</p>
+                    <p className="text-gray-400 text-sm mb-4 font-raleway-light
+ flex-grow">{video.description}</p>
                     <div className="flex justify-between items-center text-sm">
-                      <span className="text-purple-400 font-medium">Watch Interview</span>
+                      <span className="text-purple-400 font-raleway-medium">Watch Interview</span>
                       <span className="text-gray-500 text-xs flex items-center">
-                        <FontAwesomeIcon icon={faClock} className="h-3 w-3 mr-1" />
+                        <FontAwesomeIcon icon={faClock} className="h-3 w-3 mr-1 font-raleway-light" />
                         {video.duration}
                       </span>
                     </div>
@@ -255,7 +257,7 @@ const Interview = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={toggleModal}
-              className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium rounded-full hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg shadow-purple-900/30"
+              className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-roboto-condensed rounded-full hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg shadow-purple-900/30"
             >
               View All Updates
             </motion.button>

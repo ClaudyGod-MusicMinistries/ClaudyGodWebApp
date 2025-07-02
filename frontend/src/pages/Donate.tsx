@@ -1,3 +1,4 @@
+// src/pages/Donate.tsx
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  
@@ -7,19 +8,12 @@ import {
   faHandHoldingUsd,
   faShieldAlt
 } from '@fortawesome/free-solid-svg-icons';
-// import { Herosection } from '../components/utils/Herosection';    
 import { Donate1, Donate2 } from '../assets/';
-// import { useNavContext } from '../contexts/NavContext';
-// import { SEO } from '../components/utils/SEO';
-// import { PaymentPlatforms } from '../components/DonatePayment/payment';
-// import {HeroSection} from '../components/HomeHero/HeroSection';
-
 import { useNavContext } from '../contexts/NavContext';
 import { SEO } from '../components/util/SEO';
 import { PaymentPlatforms } from '../components/donate/payment';
-import { NigerianBankTransfer } from '../components/store/paymentPlatforms/NigerianAcct';
+import { NigerianBankTransfer } from '../components/donate/NigeriaAcct';
 import { Herosection } from '../components/util/Herosection';
-
 
 // Currency selector component
 const CurrencySelector = ({ currency, setCurrency }: { currency: string, setCurrency: React.Dispatch<React.SetStateAction<string>> }) => {
@@ -96,19 +90,6 @@ const DonateHeroSlider: React.FC = () => {
                 className="h-[400px] w-[400px] object-cover rounded-lg shadow-xl border-4 border-white"
               />
             </div>
-            
-            {/* <div className="absolute inset-0 bg-black/60 z-60 flex flex-col items-center justify-center">
-              <h1 className="text-white text-2xl font-bold mb-4 roboto-condensed text-center">
-                Support Gospel Music Ministry
-              </h1>
-              <p className="text-white text-base mb-6 text-center px-4 max-w-md">
-                Your generosity helps spread the gospel through music worldwide
-              </p>
-              <button className="bg-purple-700 hover:bg-purple-800 cursor-pointer text-white font-medium py-3 px-8 rounded-lg transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl">
-                <FontAwesomeIcon icon={faWallet} className="h-5 w-5" />
-                Donate Now
-              </button>
-            </div> */}
           </div>
         ))}
       </div>
@@ -131,18 +112,6 @@ const DonateHeroSlider: React.FC = () => {
           </div>
         ))}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-purple-900/30 z-10" />
-        {/* <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
-          <h1 className="text-white text-4xl md:text-5xl font-bold mb-6 roboto-condensed max-w-3xl">
-            Support Gospel Music Ministry
-          </h1>
-          <p className="text-white text-xl mb-8 max-w-2xl">
-            Your generosity helps spread the gospel through music worldwide
-          </p>
-          <button className="bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl">
-            <FontAwesomeIcon icon={faWallet} className="h-5 w-5" />
-            Donate Now
-          </button>
-        </div> */}
       </div>
     </div>
   );
@@ -198,6 +167,11 @@ export const DonateData: React.FC = () => {
   const [name, setName] = useState('');
   const [currency, setCurrency] = useState('USD');
   const [isCheckout, setIsCheckout] = useState(false);
+
+  // Reset amount when currency changes
+  useEffect(() => {
+    setAmount('');
+  }, [currency]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -270,15 +244,6 @@ export const DonateData: React.FC = () => {
       
       {isCheckout ? (
         <div className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75' : ''}`}>
-          {/* <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 roboto-condensed">
-              Complete Your Donation
-            </h2>
-            <p className="text-gray-600 mt-3 max-w-2xl mx-auto">
-              Thank you for supporting our ministry. Please select your preferred payment method below.
-            </p>
-          </div> */}
-          
           {currency === 'NGN' ? (
             <div className="max-w-2xl mx-auto">
               <NigerianBankTransfer 

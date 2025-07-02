@@ -1,408 +1,132 @@
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faPlay, 
+  faTimes,
+  faChevronLeft,
+  faChevronRight
+} from '@fortawesome/free-solid-svg-icons';
 import { Herosection } from '../components/util/Herosection';
 import { NewsletterForm } from '../components/util/Newsletter';
-import { About1, music6, music7, music9, } from '../assets/';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { About1 } from '../assets/';
+import { teachingsData, TeachingType } from '../components/data/MinistryData';
 
-type TeachingType = {
-  id: number;
-  title: string;
-  thumbnail: string;
-  youtubeId: string;
-  scripture: string;
-  teacher: string;
-  date: string;
-};
-
-const teachingsData: TeachingType[] = [
-  {
-    id: 1,
-    title: "Discussing Matters that affect the Modern day church",
-    thumbnail: music6,
-    youtubeId: '0e-JsLgoa00',
-    scripture: "Live Teachings",
-    teacher: "ClaudyGodTeachings",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 2,
-    title: "Three Operations of the Gift of Tongues",
-    thumbnail: music7,
-    youtubeId: 'EQGJdGfS9Ak',
-    scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 3,
-    title: "How to identify a demon in a person. What is God will for such person.",
-    thumbnail: music9,
-    youtubeId: 'ZmIt4Pk1y2o',
-     scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 4,
-    title: "How to Start Living Holy",
-   thumbnail: music7,
-    youtubeId: '9VlbbmHlzFc',
-   scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 5,
-    title: "Walking by the Spirit (ClaudyGod's Nugget of Truth)",
-      thumbnail: music6,
-    youtubeId: 'HUMjBLKTq7Q',
-   scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 6,
-    title: "God's Plan for Israel",
-    thumbnail: music9,
-    youtubeId: 'swOlMakN570',
-      scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 7,
-    title: "Don't be stuck in moments - (ClaudyGod's Nugget of Truth)",
-thumbnail: music6,
-    youtubeId: 'tyxSeRXxaSE',
- scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 8,
-    title: "The Day of the Lord according to the Book of Malachi - (Series on the Coming of the Lord).",
-     thumbnail: music7,
-    youtubeId: '95N205rkScs',
-     scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 9,
-    title: "Not all storms are from the devil",
-  thumbnail: music9,
-    youtubeId: 'EtAvn6NAwMY',
-     scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-    {
-    id: 10,
-    title: "Faith like Abraham's",
-    thumbnail: music7,
-    youtubeId: 'U_Is76egy9I',
-        scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-   {
-    id: 11,
-    title: "When God goes against normal - He defies regular! ",
- thumbnail: music6,
-    youtubeId: 'DmGi7BVtS8U',
-    scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 12,
-    title: "When God Hides His Face From Us",
-   thumbnail: music9,
-    youtubeId: 'lEBNS-rP8D4',
-     scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-  {
-    id: 13,
-    title: "The love of this world is hostility to God. James 4:4",
-   thumbnail: music6,
-    youtubeId: 'Tm8b1ZP-P5g',
-    scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-    {
-    id: 14,
-    title: "Who are the 144,000 in the book of Revelation?",
-      thumbnail: music7,
-    youtubeId: '/l3iEa2tbdvU',
-scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-     {
-    id: 15,
-    title: "How's your ASK?(You do not have what you want because you don't ask)",
-   thumbnail: music9,
-    youtubeId: 'SHwQVf35oxM',
-    scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-     {
-    id: 16,
-    title: "The Lord is a Jealous God",
-   thumbnail: music7,
-    youtubeId: 'VDPSqmpFRs8',
-    scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-     {
-    id: 17,
-    title: "How the Lord expects us to behave",
-    thumbnail: music6,
-    youtubeId: 'FlHxLnpwyNk',
-  scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-     {
-    id: 18,
-    title: "What's your Motive for Asking God for help?",
-       thumbnail: music9,
-    youtubeId: 'hishWNwR1v8',
-  scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-     {
-    id: 19,
-    title: "Why God blesses us (ClaudyGod's Nugget of Truth)",
-    thumbnail: music6,
-    youtubeId: 'qrruANQhLKI',
-scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  },
-     {
-    id: 20,
-    title: "What kind of relationship do you have with God - a Mary or Martha kind?",
-    thumbnail: music7,
-    youtubeId: 'PhVKzo1IKrU',
-scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  }
-  ,
-     {
-    id: 21,
-    title: "Understanding God's Endtime plan for Israel",
-   thumbnail: music9,
-    youtubeId: '/swOlMakN570',
-scripture: "CGM Podcasts",
-    teacher: "Min. Claudy",
-    date: new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  }
-];
-
-
-const VideoCard: React.FC<{
-  content: TeachingType;
-  onClick: () => void;
-}> = ({ content, onClick }) => {
-  // Dynamically build YouTube thumbnail URL
-  const ytThumbnail = `https://img.youtube.com/vi/${content.youtubeId}/hqdefault.jpg`;
-  const [imgSrc, setImgSrc] = useState<string>(ytThumbnail);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [hasError, setHasError] = useState<boolean>(false);
-
-  const handleError = () => {
-    if (!hasError) {
-      setImgSrc(fallbackThumbnail);
-      setHasError(true);
-    }
-    setLoading(false);
-  };
-
+const VideoCard = ({ 
+  content, 
+  onClick 
+}: { 
+  content: TeachingType; 
+  onClick: () => void; 
+}) => {
   return (
-    <div
-      className="relative cursor-pointer group transition-all duration-300 hover:shadow-lg"
+    <motion.div
+      className="relative cursor-pointer group overflow-hidden rounded-xl shadow-lg"
       onClick={onClick}
+      whileHover={{ y: -5 }}
+      transition={{ duration: 0.3 }}
     >
-      <figure className="relative aspect-video overflow-hidden rounded-lg bg-gray-100">
-        {loading && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="loader"></div>
-          </div>
-        )}
-
-        <img
-          src={imgSrc}
-          alt={content.title}
-          className={
-            `w-full h-full object-cover transform transition-transform duration-300 ` +
-            (loading ? 'opacity-0' : 'opacity-100 group-hover:scale-105')
-          }
-          onLoad={() => setLoading(false)}
-          onError={handleError}
-        />
-
-        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-          <FontAwesomeIcon
-            icon={faPlay}
-            className="text-white text-4xl opacity-80 hover:opacity-100 transition-opacity"
+      <div className="relative aspect-video overflow-hidden">
+        <div className="relative h-full">
+          <img
+            src={`https://img.youtube.com/vi/${content.youtubeId}/hqdefault.jpg`}
+            alt={content.title}
+            className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
           />
-        </div>
-      </figure>
-
-      <div className="mt-4 space-y-2">
-        <h3 className="text-lg roboto-condensed text-gray-800">{content.title}</h3>
-        <p className="text-sm text-purple-600 robotoMedium">{content.scripture}</p>
-        <div className="flex justify-between raleway-slider text-sm text-gray-500">
-          <span>{content.teacher}</span>
-          <span>{content.date}</span>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30">
+              <FontAwesomeIcon
+                icon={faPlay}
+                className="text-white text-xl pl-1"
+              />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+
+      <div className="p-4 bg-white">
+        <div className="flex items-center mb-2">
+          <span className="inline-block px-2 py-1 text-xs font-semibold text-purple-700 bg-purple-100 rounded-full">
+            {content.scripture}
+          </span>
+          <span className="ml-2 text-xs text-gray-500">{content.date}</span>
+        </div>
+        <h3 className="font-bold text-gray-800 line-clamp-2 leading-tight mb-1">
+          {content.title}
+        </h3>
+        <p className="text-sm text-purple-600 font-medium">{content.teacher}</p>
+      </div>
+    </motion.div>
   );
 };
 
-const VideoModal: React.FC<{
-  videoId: string | null;
-  onClose: () => void;
-}> = ({ videoId, onClose }) => {
+const VideoModal = ({ 
+  videoId, 
+  onClose 
+}: { 
+  videoId: string | null; 
+  onClose: () => void; 
+}) => {
   if (!videoId) return null;
 
   return (
-    <div 
-      className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
-      onClick={onClose}
-    >
-      <div 
-        className="relative w-full max-w-4xl"
-        onClick={e => e.stopPropagation()}
+    <AnimatePresence>
+      <motion.div
+        className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
       >
-        <button
-          className="cursor-pointer absolute -top-12 right-0 text-white text-2xl z-10 hover:text-purple-300 transition-colors"
-          onClick={onClose}
+        <motion.div
+          className="relative w-full max-w-4xl"
+          initial={{ scale: 0.9, y: 20 }}
+          animate={{ scale: 1, y: 0 }}
+          transition={{ type: "spring", damping: 25 }}
+          onClick={e => e.stopPropagation()}
         >
-          <FontAwesomeIcon icon={faTimes} size="lg" />
-        </button>
-        
-        <div className="aspect-video w-full">
-          <iframe
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-            className="w-full h-full"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            title="YouTube video player"
-          ></iframe>
-        </div>
-      </div>
-    </div>
+          <button
+            className="cursor-pointer absolute -top-12 right-0 text-white text-2xl z-10 hover:text-purple-300 transition-colors"
+            onClick={onClose}
+          >
+            <FontAwesomeIcon icon={faTimes} size="lg" />
+          </button>
+          
+          <div className="aspect-video w-full rounded-xl overflow-hidden shadow-2xl">
+            <iframe
+              src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+              className="w-full h-full"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="YouTube video player"
+            ></iframe>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
-const ContentSection: React.FC<{
-  title: string;
-  description: string;
-  contents: TeachingType[];
-}> = ({ title, description, contents }) => {
+const ContentSection = ({ 
+  title, 
+  description, 
+  contents 
+}: { 
+  title: string; 
+  description: string; 
+  contents: TeachingType[]; 
+}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1024) {
+      if (window.innerWidth >= 1280) {
+        setItemsPerPage(4);
+      } else if (window.innerWidth >= 1024) {
         setItemsPerPage(3);
       } else if (window.innerWidth >= 768) {
         setItemsPerPage(2);
@@ -427,102 +151,113 @@ const ContentSection: React.FC<{
   );
 
   return (
-        <div className="mt-16 space-y-8 px-4 max-w-7xl mx-auto">
-      <VideoModal 
-        videoId={selectedVideo} 
-        onClose={() => setSelectedVideo(null)} 
-      />
-      
-      <div className="text-left">
-        <h2 className="text-2xl md:text-xl roboto-condensed text-purple-900">{title}</h2>
-        <div className="w-[150px] h-2 bg-purple-900 my-4"></div>
-        <p className="text-gray-600 work-sans  md:text-base max-md:text-xx  max-w-2xl">{description}</p>
-      </div>
+    <section className="py-16 px-4 bg-gray-50">
+      <div className="max-w-7xl mx-auto">
+        <VideoModal 
+          videoId={selectedVideo} 
+          onClose={() => setSelectedVideo(null)} 
+        />
+        
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center mb-4">
+            <div className="w-12 h-0.5 bg-purple-600 mr-4"></div>
+            <h2 className="text-xl font-semibold text-purple-600 tracking-wider">
+              {title}
+            </h2>
+            <div className="w-12 h-0.5 bg-purple-600 ml-4"></div>
+          </div>
+          <p className="text-3xl font-bold roboto-condensed text-gray-900 max-w-3xl mx-auto leading-tight mb-6">
+           Min. ClaudyGod Teachings & Podcasts
+          </p>
+          <p className="text-base text-gray-600 work-sans max-w-2xl mx-auto">
+            {description}
+          </p>
+        </div>
 
-      <div className="relative">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {visibleItems.map(content => (
-            <div key={content.id} className="w-full">
+        <div className="relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {visibleItems.map(content => (
               <VideoCard
+                key={content.id}
                 content={content}
                 onClick={() => setSelectedVideo(content.youtubeId)}
               />
+            ))}
+          </div>
+
+          {totalSlides > 1 && (
+            <div className="flex justify-center mt-12">
+              <div className="flex items-center space-x-6">
+                <button
+                  onClick={prevSlide}
+                  className="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-purple-50 transition-colors"
+                  disabled={currentSlide === 0}
+                >
+                  <FontAwesomeIcon 
+                    icon={faChevronLeft} 
+                    className={`text-lg ${currentSlide === 0 ? 'text-gray-300' : 'text-purple-600'}`}
+                  />
+                </button>
+                
+                <div className="flex space-x-2">
+                  {Array.from({ length: totalSlides }).map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentSlide(index)}
+                      className={`w-3 h-3 rounded-full transition-colors ${
+                        index === currentSlide ? 'bg-purple-600' : 'bg-gray-300'
+                      }`}
+                    />
+                  ))}
+                </div>
+                
+                <button
+                  onClick={nextSlide}
+                  className="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-purple-50 transition-colors"
+                  disabled={currentSlide === totalSlides - 1}
+                >
+                  <FontAwesomeIcon 
+                    icon={faChevronRight} 
+                    className={`text-lg ${currentSlide === totalSlides - 1 ? 'text-gray-300' : 'text-purple-600'}`}
+                  />
+                </button>
+              </div>
             </div>
-          ))}
-        </div>
-
-       
-
-         <div className="flex items-center p-3 justify-between mt-6 md:mt-8">
-  {/* Moved button group to left side */}
-  <div className="flex items-center space-x-3 md:space-x-4">
-    <button
-      onClick={prevSlide}
-      className="bg-purple-900 text-white p-1.5 md:p-2 rounded-full hover:bg-purple-800 transition-colors"
-      disabled={currentSlide === 0}
-    >
-      <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-      </svg>
-    </button>
-    
-    <span className="text-sm md:text-base text-gray-600">
-      {currentSlide + 1} / {totalSlides}
-    </span>
-
-    <button
-      onClick={nextSlide}
-      className="bg-purple-900 text-white p-1.5 md:p-2 rounded-full hover:bg-purple-800 transition-colors"
-      disabled={currentSlide === totalSlides - 1}
-    >
-      <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-      </svg>
-    </button>
-  </div>
-
-  {/* Pagination indicators remain centered */}
-  <div className="hidden md:flex justify-center w-full absolute left-0">
-    <div className="flex space-x-2">
-      {Array.from({ length: totalSlides }).map((_, index) => (
-        <button
-          key={index}
-          onClick={() => setCurrentSlide(index)}
-          className={`h-2 w-6 md:w-8 rounded-full transition-colors ${
-            index === currentSlide ? 'bg-purple-900' : 'bg-gray-300'
-          }`}
-        />
-      ))}
-    </div>
-  </div>
-</div>
+          )}
         </div>
       </div>
-
+    </section>
   );
 };
 
-export const MinistryData: React.FC = () => {
+export const MinistryData = () => {
   return (
     <div className="bg-white">
-      <div className="relative">
-        <div className="absolute inset-0  z-10"></div>
-        <Herosection 
-          title="ClaudyGod Music & Ministries"
-          backgroundImage={About1}
-          className="relative z-0"
-        />
-      </div>
+      <Herosection 
+        title="ClaudyGod Music & Ministries"
+        subtitle="Spiritual Teachings & Podcasts"
+        backgroundImage={About1}
+        overlayColor="rgba(79, 70, 229, 0.85)"
+        className="h-[70vh]"
+      />
       
       <ContentSection
-        title="ClaudyGod Podcasts"
-       
-        description="Minister Claudy's passion for sharing the Gospel radiates through both her writing and speaking. As a gospel artist, devoted teacher, and lover of God, she has also shared her inspiring presence on national television, guest-hosting programs such as Breakfast in Bed and The Sunday Show."
+        title="PODCASTS & TEACHINGS"
+        description="Minister Claudy's passion for sharing the Gospel radiates through both her writing and speaking. As a gospel artist, devoted teacher, and lover of God, she has also shared her inspiring presence on national television."
         contents={teachingsData}
       />
       
-      <hr className="h-px w-full bg-purple-900 border-0 mt-4" />
-      <NewsletterForm />
+      <div className="py-16 bg-gradient-to-r from-purple-900 to-indigo-800">
+        <div className="max-w-4xl mx-auto text-center px-4">
+          <h3 className="text-3xl font-bold text-white mb-6">
+            Stay Connected With Our Ministry
+          </h3>
+          <p className="text-lg text-purple-200 mb-8 max-w-2xl mx-auto">
+            Subscribe to receive updates on new teachings, podcasts, and ministry events
+          </p>
+          <NewsletterForm />
+        </div>
+      </div>
     </div>
   );
 };

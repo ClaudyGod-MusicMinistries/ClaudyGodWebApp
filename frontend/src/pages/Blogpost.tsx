@@ -4,7 +4,6 @@ import { blogPosts } from '../components/blog/blogsData';
 import Pagination from '../components/util/pagination';
 import Interview from '../components/Interview';
 import { NewsletterForm } from '../components/util/Newsletter';
-// Lazy load components
 const LazyBlogWelcome = lazy(() => import('../components/blog/blogWelcome'));
 const LazyWelcomeImage = lazy(() => import('../components/util/WelcomeImage'));
 const LazyBlogPost = lazy(() => import('../components/mainBlog'));
@@ -28,8 +27,6 @@ export const Blog: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   const POSTS_PER_PAGE = 6;
-  
-  // Calculate current posts and total pages
   const currentPosts = useMemo(() => {
     const indexOfLastPost = currentPage * POSTS_PER_PAGE;
     const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
@@ -37,8 +34,6 @@ export const Blog: React.FC = () => {
   }, [currentPage]);
 
   const totalPages = Math.ceil(blogPosts.length / POSTS_PER_PAGE);
-
-  // Load saved data from localStorage
   useEffect(() => {
     const savedReactions = localStorage.getItem('blogReactions');
     const savedComments = localStorage.getItem('blogComments');
@@ -47,20 +42,14 @@ export const Blog: React.FC = () => {
     if (savedComments) setComments(JSON.parse(savedComments));
     setIsMounted(true);
   }, []);
-
-  // Save data to localStorage when it changes
   useEffect(() => {
     localStorage.setItem('blogReactions', JSON.stringify(reactions));
     localStorage.setItem('blogComments', JSON.stringify(comments));
   }, [reactions, comments]);
-
-  // Handle page change
   const handlePageChange = useCallback((pageNumber: number) => {
     setCurrentPage(pageNumber);
     window.scrollTo({ top: 600, behavior: 'smooth' });
   }, []);
-
-  // Handle adding a reaction to a post
   const handleAddReaction = useCallback((postId: string, emoji: string) => {
     setReactions(prev => ({
       ...prev,
@@ -70,8 +59,6 @@ export const Blog: React.FC = () => {
       }
     }));
   }, []);
-
-  // Handle adding a comment to a post
   const handleAddComment = useCallback((postId: string, commentText: string) => {
     setComments(prev => ({
       ...prev,
@@ -85,8 +72,6 @@ export const Blog: React.FC = () => {
       ]
     }));
   }, []);
-
-  // Handle share functionality
   const handleShare = useCallback(async () => {
     try {
       if (navigator.share) {
@@ -102,8 +87,6 @@ export const Blog: React.FC = () => {
       console.error('Error sharing content:', error);
     }
   }, []);
-
-  // Animation classes based on mount state
   const fadeInClass = "transition-all duration-700 ease-out";
   const fadeInUpClass = `${fadeInClass} translate-y-8 opacity-0 ${isMounted ? '!translate-y-0 !opacity-100' : ''}`;
   const staggerClass = (index: number) => 
@@ -133,7 +116,7 @@ export const Blog: React.FC = () => {
           <div className="w-full border-t border-gray-200"></div>
         </div>
         <div className="relative flex justify-center">
-          <span className={`bg-gradient-to-r from-indigo-600 to-purple-700 text-transparent bg-clip-text px-6 roboto-condensed text-4xl md:text-5xl font-bold text-center ${fadeInUpClass}`}>
+          <span className={`bg-gradient-to-r from-indigo-600 to-purple-700 text-transparent bg-clip-text px-6 font-roboto-condensed md:text-6xl max-md:text-4xl text-center ${fadeInUpClass}`}>
             LATEST BLOG POSTS
           </span>
         </div>

@@ -4,10 +4,10 @@ export const Heroblog: React.FC = () => {
   return (
     <div className="relative bg-gradient-to-r from-purple-800 to-purple-600 text-white">
       <div className="max-w-7xl mx-auto px-4 py-16 sm:py-24 sm:px-6 lg:px-8 flex flex-col items-center text-center">
-        <h1 className="text-4xl roboto-condensed sm:text-5xl lg:text-6xl tracking-tight mb-6">
+        <h1 className="font-roboto-condensed md:text-8xl max-md:text-5xl  tracking-tight mb-6">
           Our Blog
         </h1>
-        <p className="text-lg sm:text-xl raleway-medium max-w-2xl mx-auto mb-10">
+        <p className="text-lg sm:text-xl font-work-sans max-w-2xl mx-auto mb-10">
           Feel free to share your thoughts in our community
         </p>
         <div className="relative max-w-lg w-full">

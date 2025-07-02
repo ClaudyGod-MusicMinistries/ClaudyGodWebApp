@@ -315,30 +315,15 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
               </div>
             </div>
 
-            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <h4 className="font-semibold text-blue-800 mb-2">Important Transaction Name</h4>
-              <p className="text-sm text-gray-700 mb-3">
-                You <span className="font-bold text-red-600">MUST</span> use this exact transaction name in your bank transfer:
-              </p>
-              
-              <div className="bg-white p-3 rounded border border-blue-300 flex items-center justify-between">
-                <div>
-                  <span className="font-medium text-gray-800">
-                    {TRANSACTION_NAME}
-                  </span>
-                </div>
-                <button 
-                  onClick={() => copyToClipboard(TRANSACTION_NAME)}
-                  className="text-blue-600 hover:text-blue-800 transition-colors"
-                  title="Copy transaction name"
-                >
-                  <FaCopy />
-                </button>
-              </div>
-              
-              <p className="mt-3 text-xs text-gray-600">
-                This unique name helps us identify your payment. Without it, your donation may not be processed.
-              </p>
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-100 rounded-lg text-sm text-blue-700">
+              <p className="font-medium">Important Notes:</p>
+              <ul className="list-disc pl-5 space-y-1 mt-1">
+                <li>Your donation will be processed after payment validation</li>
+                <li>You <span className="font-bold">MUST</span> include the transaction name in your transfer</li>
+                <li>Please upload a clear PDF of your payment slip</li>
+                <li>Transaction reference must be unique and exactly 20 digits</li>
+                <li>Contact support@claudygod.org for assistance</li>
+              </ul>
             </div>
 
             <div className="mt-6">
@@ -508,17 +493,6 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             </div>
           </form>
         )}
-        
-        <div className="mt-4 p-3 bg-blue-50 border border-blue-100 rounded-lg text-sm text-blue-700">
-          <p className="font-medium">Important Notes:</p>
-          <ul className="list-disc pl-5 space-y-1 mt-1">
-            <li>Your donation will be processed after payment validation</li>
-            <li>You <span className="font-bold">MUST</span> include the transaction name in your transfer</li>
-            <li>Please upload a clear PDF of your payment slip</li>
-            <li>Transaction reference must be unique and exactly 20 digits</li>
-            <li>Contact support@claudygod.org for assistance</li>
-          </ul>
-        </div>
       </motion.div>
     </div>
   );

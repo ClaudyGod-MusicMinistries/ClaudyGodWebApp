@@ -71,16 +71,16 @@ export const HeroSlider = () => {
             className="bg-black/30 backdrop-blur-sm p-8 md:p-10 rounded-2xl max-w-2xl lg:max-w-3xl"
           >
        
-            <h2 className="md:text-8xl sm:text-4xl  lg:text-6xl text-white font-bold tracking-tight roboto-condensed mb-4 md:mb-5">
+            <h2 className="md:text-8xl sm:text-4xl font-roboto-condensed lg:text-6xl text-white tracking-tight roboto-condensed mb-4 md:mb-5">
               {slide.title}
             </h2>
-            <p className="text-gray-200 text-base sm:text-lg md:text-xl lg:text-2xl font-medium md:font-semibold leading-relaxed work-sans mb-6 md:mb-8">
+            <p className="text-gray-200 text-base sm:text-lg md:text-xl lg:text-2xl font-work-sans md:font-work-sans leading-relaxed work-sans mb-6 md:mb-8">
               {slide.description}
             </p>
             <button className="mt-2 bg-purple-700 cursor-pointer
              hover:bg-purple-800 text-white max-md:text-xx
               px-8 py-4 text-base md:text-lg
-               raleway-medium rounded-md shadow-xl transition duration-300 
+              font-raleway-medium rounded-md shadow-xl transition duration-300 
             transform hover:scale-105">
               {slide.buttonText}
             </button>

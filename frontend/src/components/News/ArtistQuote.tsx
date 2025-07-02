@@ -24,11 +24,11 @@ export const ArtistQuote = () => {
             <div className="bg-gray-200 border-2 border-dashed rounded-xl w-10 h-10 md:w-12 md:h-12 animate-pulse" />
           )}
         </div>
-        <blockquote className="text-base md:text-xl work-sans mb-4 md:mb-6 text-[#e2e1f3]">
+        <blockquote className="text-base md:text-xl font-work-sans mb-4 md:mb-6 text-[#e2e1f3]">
          My Vision is to reach the world with the love of Jesus, to proclaim truth always, and to
           redirect mankind to God through Worship and the Word.
         </blockquote>
-        <p className="font-bold text-lg md:text-xl text-[#ff4d94]">
+        <p className="font-raleway-medium text-lg md:text-xl text-[#ff4d94]">
           — Min. ClaudyGod
         </p>
       </div>

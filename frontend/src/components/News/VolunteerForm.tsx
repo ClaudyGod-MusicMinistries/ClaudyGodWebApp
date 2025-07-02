@@ -52,7 +52,7 @@ export const VolunteerForm = () => {
           theme="dark"
         />
         
-        <h3 className="text-3xl sm:text-4xl md:text-5xl roboto-condensed lg:text-6xl text-white mb-6 text-center">
+        <h3 className="text-3xl sm:text-4xl md:text-5xl font-roboto-condensed lg:text-6xl text-white mb-6 text-center">
           Volunteer to be part of our Music Tour
         </h3>
 
@@ -61,7 +61,8 @@ export const VolunteerForm = () => {
             <div>
               <label
                 htmlFor="firstName"
-                className="block text-purple-200 mb-2 text-sm md:text-base"
+                className="block text-purple-200 font-work-sans
+ mb-2 text-sm md:text-base"
               >
                 First Name
               </label>
@@ -81,7 +82,8 @@ export const VolunteerForm = () => {
             <div>
               <label
                 htmlFor="lastName"
-                className="block text-purple-200 mb-2 text-sm md:text-base"
+                className="block text-purple-200 mb-2 font-work-sans
+ text-sm md:text-base"
               >
                 Last Name
               </label>
@@ -103,7 +105,8 @@ export const VolunteerForm = () => {
           <div>
             <label
               htmlFor="email"
-              className="block text-purple-200 mb-2 text-sm md:text-base"
+              className="block text-purple-200 mb-2 font-work-sans
+ text-sm md:text-base"
             >
               Email Address
             </label>
@@ -131,13 +134,15 @@ export const VolunteerForm = () => {
           <div>
             <label
               htmlFor="role"
-              className="block text-purple-200 mb-2 text-sm md:text-base"
+              className="block text-purple-200 mb-2  font-work-sans
+ text-sm md:text-base"
             >
               Volunteering as
             </label>
             <select
               id="role"
-              className={`w-full px-3 py-2 md:px-4 md:py-3 bg-[#0a061a] border ${
+              className={`w-full px-3 py-2 font-work-sans
+ md:px-4 md:py-3 bg-[#0a061a] border ${
                 errors.role ? 'border-red-500' : 'border-purple-800'
               } rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 text-white text-sm md:text-base appearance-none`}
               {...register('role', { required: 'Please select a role' })}
@@ -159,7 +164,8 @@ export const VolunteerForm = () => {
           <div>
             <label
               htmlFor="reason"
-              className="block text-purple-200 mb-2 text-sm md:text-base"
+              className="block text-purple-200 font-work-sans
+  mb-2 text-sm md:text-base"
             >
               Reason for Volunteering
             </label>

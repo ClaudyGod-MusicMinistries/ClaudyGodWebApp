@@ -33,16 +33,19 @@ export const TourSection = ({
           transition={{ duration: 0.8 }}
           className="text-center lg:text-left"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl roboto-condensed text-white mb-6">
+          <h2 className=" md:text-8xl max-md:text-5xl  font-roboto-condensed
+ text-white mb-6">
            Exciting News !
           </h2>
-        <p className="md:text-base work-sans text-purple-200 mb-8">
+        <p className="md:text-base font-work-sans
+ text-purple-200 mb-8">
   Min. ClaudyGod is coming to Nigeria for an inspiring music tour, evangelism, and outreach. 
   Stay tuned for upcoming dates, our curated list of gospel concerts, worship nights, and join us for a transformative experience!
 </p>
 
           
-          <p className="work-sans text-white mb-4">
+          <p className="font-work-sans
+ text-white mb-4">
             Select a city to see event details:
           </p>
           

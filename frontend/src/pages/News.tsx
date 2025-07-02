@@ -1,4 +1,3 @@
-// src/pages/news.tsx
 import { useState, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,8 +29,6 @@ export const News = () => {
   return (
     <>
       <HeroSlider />
-
-      {/* ─────────────── UPCOMING EVENTS SECTION ─────────────────────────────── */}
       <div className="w-full py-16 bg-gradient-to-b from-[#0a061a] to-[#1a0a2e]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -39,7 +36,7 @@ export const News = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-3xl sm:text-4xl md:text-5xl roboto-condensed lg:text-6xl text-white"
+              className="md:text-4xl max-md:text-3xl font-roboto-condensed lg:text-6xl text-white"
             >
               Upcoming Events
             </motion.h1>
@@ -57,24 +54,20 @@ export const News = () => {
               setShowTourModal(true);
             }} 
           />
-
           <hr className="border-purple-800 my-16" />
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <VolunteerForm />
             <LiveSession />
           </div>
         </div>
       </div>
-
-      {/* ──────────── "CLAUDYGOD LATEST NEWS" SECTION ───────────────────────────── */}
       <div className="min-h-screen text-white p-4 sm:p-6 md:p-8">
         <div className="max-w-7xl mx-auto text-center py-12 md:py-16 lg:py-20">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-3xl sm:text-4xl md:text-5xl roboto-condensed lg:text-6xl text-purple-950 bg-clip-text"
+            className=" max-md:text-4xl md:text-6xl font-roboto-condensed text-purple-950 bg-clip-text"
           >
             Latest Albums
           </motion.h1>
@@ -88,21 +81,20 @@ export const News = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="text-lg md:text-xl work-sans text-[#72709e] max-w-3xl mx-auto"
+            className="md:text-xl max-md:text-xl font-work-sans text-[#72709e] max-w-3xl mx-auto"
           >
       We’ve just released three new gospel albums, packed with inspiring messages and soulful melodies.
           </motion.p>
         </div>
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
-          {/* New Singles Card */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="bg-[#1a0a2e] rounded-2xl p-6 md:p-8 shadow-xl h-full"
           >
-            <h3 className="sm:text-sm md:text-xl  roboto-condensed text-white mb-6 text-left">
+            <h3 className="sm:text-sm md:text-xl font-roboto-condensed text-white mb-6 text-left">
               Album: Lover of my Soul
             </h3>
 
@@ -129,13 +121,9 @@ export const News = () => {
                 </div>
               </div>
             </div>
-
-            <div className="mt-6 md:mt-8 grid grid-cols-2 gap-3">
-    
-              <a
-                href="#"
-                className="flex items-center justify-center p-3 bg-green-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
-              >
+            <div className="mt-6 md:mt-8 grid grid-cols-2 gap-3 font-raleway-light
+">
+     <a href="#" className="flex items-center justify-center p-3 bg-green-600 rounded-lg shadow-lg hover:opacity-90 transition-all">
                 <FontAwesomeIcon icon={faSpotify} className="w-5 h-5 mr-2 text-white" />
                 <span className="text-white text-sm font-medium">Spotify</span>
               </a>
@@ -167,9 +155,10 @@ export const News = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="bg-[#1a0a2e] rounded-2xl p-6 md:p-8 shadow-xl h-full"
+            className="bg-[#1a0a2e] rounded-2xl p-6 md:p-8 font-raleway-light
+shadow-xl h-full"
           >
-            <h3 className="sm:text-sm md:text-xl  roboto-condensed text-white mb-6 text-left">
+            <h3 className="sm:text-sm md:text-xl font-roboto-condensed text-white mb-6 text-left">
            Album: Very Glorious
             </h3>
 
@@ -232,9 +221,10 @@ export const News = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-[#1a0a2e] rounded-2xl p-6 md:p-8 shadow-xl h-full"
+            className="bg-[#1a0a2e] rounded-2xl p-6 font-raleway-light
+md:p-8 shadow-xl h-full"
           >
-            <h3 className="sm:text-sm md:text-xl  roboto-condensed text-white mb-6 text-left">
+            <h3 className="sm:text-sm md:text-xl  font-roboto-condensed text-white mb-6 text-left">
               Album: King of heavens
             </h3>
 
@@ -302,7 +292,7 @@ export const News = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-3xl sm:text-4xl md:text-5xl roboto-condensed lg:text-6xl text-white"
+        className="max-md:text-2xl md:text-5xl font-roboto-condensed lg:text-6xl text-white"
       >
         Check Out Our Live Sessions
       </motion.h2>
@@ -316,7 +306,7 @@ export const News = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        className="md:text-sm max-md:text-xx  work-sans text-[#72709e] max-w-3xl mx-auto"
+        className="md:text-sm max-md:text-xx  font-work-sans text-[#72709e] max-w-3xl mx-auto"
       >
         We recently hosted vibrant live gospel sessions in Nigeria, bringing soulful performances and spiritual inspiration to the community.
         Stay connected for more updates and unforgettable moments of praise and worship!

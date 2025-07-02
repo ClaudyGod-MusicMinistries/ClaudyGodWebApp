@@ -61,15 +61,17 @@ const DiagonalSection: React.FC<{
           transition={{ duration: 0.8 }}
         >
           <div className="mb-6">
-            <div className="w-16 h-1 bg-gray-500 mb-4"></div>
-            <h2 className="text-3xl md:text-4xl roboto-condensed text-purple-900 mb-4">{title}</h2>
+            <div className="w-16 h-2 bg-orange-500 mb-4"></div>
+            <h2 className=" max-md:text-3xl md:text-8xl font-roboto-condensed
+ text-purple-900 mb-4">{title}</h2>
           </div>
-          <p className="text-gray-700 mb-8 raleway-medium">{description}</p>
+          <p className="text-gray-700 mb-8 font-raleway-medium
+">{description}</p>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onExplore}
-            className="px-8 py-3 bg-purple-900 text-white rounded-full flex items-center gap-2"
+            className="px-8 py-3 bg-purple-900 font-raleway-medium text-white rounded-full flex items-center gap-2"
           >
             Explore Content <FontAwesomeIcon icon={faArrowRight} />
           </motion.button>

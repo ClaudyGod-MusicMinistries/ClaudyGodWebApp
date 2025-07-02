@@ -7,7 +7,7 @@ import VideoCard from '../components/videos/VideoCard';
 import PaginationControls from '../components/videos/PaginationControls';
 import DiagonalSection from '../components/videos/DiagonalSection';
 import  {NewsletterForm} from '../components/util/Newsletter';
-import { AudioMackComponent } from '../components/Homepage/audioMack';
+import { AudioMackComponent } from '../components/Homepage/AmazonMusic';
 import { DownloadSection } from '../components/util/Download';
 
 
@@ -260,9 +260,9 @@ export const VideosData: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <h1 className="text-4xl md:text-5xl roboto-condensed mb-6">Videos</h1>
+                <h1 className="md:text-8xl max-md:text-4xl font-roboto-condensed mb-6">Videos</h1>
                 <div className="w-20 h-1 bg-white mb-8"></div>
-                <p className="text-sm max-w-2xl work-sans">
+                <p className="text-sm max-w-2xl font-work-sans">
                       Experience the divine fusion of American Contemporary Christian Music and Afro-Gospel Songs through ClaudyGod's Inspirational Journey.
                 </p>
               </motion.div>
@@ -315,7 +315,8 @@ export const VideosData: React.FC = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={scrollToVideoGrid}
-          className="px-10 py-4 bg-white text-purple-900 md:text-2xl rounded-full roboto-condensed flex items-center gap-3 mx-auto"
+          className="px-10 py-4 bg-white text-purple-900 md:text-2xl rounded-full font-roboto-condensed
+ flex items-center gap-3 mx-auto"
         >
           Browse All Videos <FontAwesomeIcon icon={faArrowRight} />
         </motion.button>
@@ -323,7 +324,8 @@ export const VideosData: React.FC = () => {
 
       <div ref={videoGridRef} className="pt-16 pb-24">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="flex flex-wrap justify-center max-md:text-sm  work-sans gap-4 mb-12">
+          <div className="flex flex-wrap justify-center max-md:text-sm  font-work-sans
+ gap-4 mb-12">
             {(['All', 'Music Videos', 'Visualizers', 'Live Sessions'] as const).map((category) => (
               <motion.button
                 key={category}
@@ -333,10 +335,11 @@ export const VideosData: React.FC = () => {
                   setActiveCategory(category);
                   setCurrentPage(1);
                 }}
-                className={`px-6 py-3 rounded-full md:text-sm work-sans max-md:text-purple-900 cursor-pointer  transition-colors ${
+                className={`px-6 py-3 rounded-full md:text-sm font-work-sans
+ max-md:text-purple-900 cursor-pointer  transition-colors ${
                   activeCategory === category
-                    ? 'bg-black text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-purple-200'
+                    ? 'bg-gray-600 text-white'
+                    : 'bg-gray-200 text-white hover:bg-purple-200'
                 }`}
               >
                 {category}
@@ -345,7 +348,8 @@ export const VideosData: React.FC = () => {
           </div>
 
           <motion.div 
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 font-work-sans
+ sm:grid-cols-2 lg:grid-cols-3 gap-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}

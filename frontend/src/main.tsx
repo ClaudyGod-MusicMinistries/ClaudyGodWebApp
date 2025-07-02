@@ -1,8 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import Root from './App';
-// import {  } from './context/NavContext';
-// import { NavProvider} from '../../contexts/NavContext';
 import { NavProvider } from './contexts/NavContext';
 import './index.css';
 import 'slick-carousel/slick/slick.css';

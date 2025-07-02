@@ -30,7 +30,7 @@ const VideoCard: React.FC<{
           </button>
         </div>
         <div className="absolute bottom-0 left-0 right-0 p-4">
-          <h3 className="text-white robotoMedium">{content.title}</h3>
+          <h3 className="text-white font-roboto-condensed">{content.title}</h3>
           <p className="text-gray-300 slider-font">{content.date}</p>
         </div>
       </div>

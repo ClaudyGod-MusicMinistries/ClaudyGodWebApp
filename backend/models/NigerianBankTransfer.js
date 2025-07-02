@@ -1,27 +1,29 @@
 const mongoose = require('mongoose');
 
-const NigerianBankTransferSchema = new mongoose.Schema({
+const transferSchema = new mongoose.Schema({
   reference: {
     type: String,
-    required: true,
+    required: [true, 'Reference is required'],
     unique: true,
-    minlength: 20,
-    maxlength: 20
+    trim: true,
+    minlength: [20, 'Reference must be 20 characters'],
+    maxlength: [20, 'Reference must be 20 characters']
   },
   senderName: {
     type: String,
-    required: true,
-    minlength: 3
+    required: [true, 'Sender name is required'],
+    trim: true
   },
   amount: {
     type: Number,
-    required: true,
-    min: 1
+    required: [true, 'Amount is required'],
+    min: [0.01, 'Amount must be at least 0.01']
   },
   currency: {
     type: String,
     required: true,
-    enum: ['NGN']
+    default: 'NGN',
+    enum: ['NGN', 'USD']
   },
   slipFile: {
     data: Buffer,
@@ -29,13 +31,20 @@ const NigerianBankTransferSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'verified', 'rejected'],
+    enum: ['pending', 'validated', 'rejected'],
     default: 'pending'
   },
-  createdAt: {
+  validatedAt: {
     type: Date,
     default: Date.now
   }
+}, {
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 });
 
-module.exports = mongoose.model('NigerianBankTransfer', NigerianBankTransferSchema);
+// Index for faster duplicate checks
+transferSchema.index({ reference: 1 }, { unique: true });
+
+module.exports = mongoose.model('NigerianBankTransfer', transferSchema);

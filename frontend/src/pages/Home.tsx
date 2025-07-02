@@ -6,7 +6,7 @@ import LatestRelease from '../components/Homepage/latestRelease';
 import { FeaturedVideos } from '../components/Homepage/Featuredvideos';
 import { ShopPreview } from '../components/Homepage/ShopPreview';
 import {NewsletterForm}  from '../components/util/Newsletter';
-import { AudioMackComponent } from '../components/Homepage/audioMack';
+import { AudioMackComponent } from '../components/Homepage/AmazonMusic';
 import { ScrollToTop } from '../components/Homepage/ScrollToTop';
 import { Welcome } from '../components/Homepage/welcome';
 import { Hero } from '../components/HomeHero/MainHero';
