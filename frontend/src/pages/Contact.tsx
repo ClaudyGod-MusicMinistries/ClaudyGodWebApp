@@ -22,7 +22,7 @@ export const ContactData: React.FC = () => {
   useEffect(() => {
     const checkBackendHealth = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/health`);
+      const res = await fetch(`${import.meta.env.VITE_API_BASE}/health`);
         const data = await res.json();
         console.log("Backend status:", data.status);
         console.log("Environment:", data.environment);

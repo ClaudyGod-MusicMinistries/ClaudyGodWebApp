@@ -1,15 +1,12 @@
 import axios from "axios";
 import { ContactFormInputs } from "../types/contact";
-const getApiBase = () => {
-  if (import.meta.env.PROD) {
-    return 'https://cgm-backend-5qvj.onrender.com';
-  }
-  return window.location.origin.includes('localhost') 
-    ? 'http://localhost:10000' 
-    : 'https://cgm-backend-5qvj.onrender.com';
-};
-const API_BASE = getApiBase();
-const CONTACT_ENDPOINT = `${API_BASE}/api/subscribers`;
+const API_BASE =
+  import.meta.env.VITE_API_BASE || 
+  (import.meta.env.PROD
+    ? "https://cgm-backend-5qvj.onrender.com"
+    : "http://localhost:10000");
+
+const CONTACT_ENDPOINT = `${API_BASE}/api/contact`;
 
 export const submitContactForm = async (data: ContactFormInputs) => {
   try {
