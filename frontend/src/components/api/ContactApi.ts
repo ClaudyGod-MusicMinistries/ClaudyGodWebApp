@@ -6,7 +6,7 @@ const API_BASE =
     ? "https://cgm-backend-5qvj.onrender.com"
     : "http://localhost:10000");
 
-const CONTACT_ENDPOINT = `${API_BASE}/api/contact`;
+const CONTACT_ENDPOINT = `${API_BASE}/api/contacts`;
 
 export const submitContactForm = async (data: ContactFormInputs) => {
   try {
