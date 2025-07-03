@@ -1,4 +1,3 @@
-// src/components/Bookings/LocationInfo.tsx
 import { useFormContext } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CountryCode } from '@/components/types/booking';

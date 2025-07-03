@@ -345,9 +345,7 @@ md:p-8 shadow-xl h-full"
     </div>
   </div>
 </div>
-      {/* ─────────────── ARTIST QUOTE ───────────────────────────────────────────── */}
     <ArtistQuote  />
-
       {showTourModal && selectedTourCity && (
         <Suspense fallback={<div>Loading...</div>}>
           <TourCityModal
@@ -360,7 +358,6 @@ md:p-8 shadow-xl h-full"
           />
         </Suspense>
       )}
-
       <hr className="bg-purple-500" />
       <NewsletterForm />
     </>

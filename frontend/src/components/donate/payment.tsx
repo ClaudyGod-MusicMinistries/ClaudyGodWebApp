@@ -1,4 +1,3 @@
-// src/components/payments/PaymentPlatforms.tsx
 import React, { useState, useEffect } from 'react';
 import { motion} from 'framer-motion';
 import { useForm } from 'react-hook-form';
@@ -75,10 +74,8 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
   const phoneCountry = watch('phoneCountry') || 'US';
   const phoneNumber = watch('phoneNumber') || '';
   
-  // Get the current country's pattern
   const countryPattern = countryOptions.find(c => c.code === phoneCountry)?.pattern;
   
-  // Format phone number as user types
   useEffect(() => {
     if (phoneNumber && countryPattern) {
       const formatted = formatPhoneNumber(phoneNumber, countryPattern);
@@ -96,7 +93,6 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
     }).format(value);
 
   const submitDonorInfo = () => {
-    // Re-validate all fields
     trigger().then(isValid => {
       if (!isValid) {
         toast.error('Please fix the errors in the form');

@@ -57,11 +57,11 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
 
   const getApiBase = () => {
     if (import.meta.env.PROD) {
-      return 'https://claudygodwebapp-1.onrender.com';
+      return 'https://cgm-backend-5qvj.onrender.com';
     }
     return window.location.origin.includes('localhost') 
       ? 'http://localhost:10000' 
-      : 'https://claudygodwebapp-1.onrender.com';
+      : 'https://cgm-backend-5qvj.onrender.com';
   };
 
   const VALIDATE_ENDPOINT = `${getApiBase()}/api/zelle-payment/validate`;
@@ -76,8 +76,6 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
       console.error('Copy failed:', err);
     }
   };
-
-  // Copy transaction ID to clipboard
   const copyTransactionId = async () => {
     try {
       await navigator.clipboard.writeText(transactionIdRef.current?.value || '');
@@ -87,8 +85,6 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
       console.error('Copy failed:', err);
     }
   };
-
-  // Paste transaction ID from clipboard
   const pasteTransactionId = async () => {
     try {
       const text = await navigator.clipboard.readText();
@@ -98,8 +94,6 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
       console.error('Paste failed:', err);
     }
   };
-
-  // Handle paste event to convert to uppercase
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     const pastedText = e.clipboardData.getData('text');
@@ -113,7 +107,6 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
 
   const onSubmit = async (data: ZelleFormData) => {
     try {
-      // Show processing dialog
       setDialogType('processing');
       setDialogMessage('Validating your payment details...');
       setShowDialog(true);
@@ -159,7 +152,6 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
 
   return (
     <div className="relative">
-      {/* Dialog Overlay */}
       <AnimatePresence>
         {showDialog && (
           <motion.div
@@ -226,8 +218,6 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Payment Form */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -276,7 +266,7 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Sender Email Field */}
+     
           <div>
             <label htmlFor="zelleSenderEmail" className="block text-sm font-medium text-gray-700 mb-2">
               Your Zelle Email <span className="text-red-500">*</span>
@@ -309,8 +299,6 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
               <p className="mt-1.5 text-sm text-red-600">{errors.zelleSenderEmail.message}</p>
             )}
           </div>
-
-          {/* Transaction ID Field */}
           <div>
             <div className="flex items-center justify-between mb-2">
               <label htmlFor="zelleConfirmation" className="block text-sm font-medium text-gray-700">
@@ -388,8 +376,6 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
               You can find this in your Zelle payment confirmation
             </p>
           </div>
-
-          {/* Submit Button */}
           <div className="pt-4">
             <div className="flex gap-3">
               <button

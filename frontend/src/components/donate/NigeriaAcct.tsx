@@ -21,11 +21,11 @@ const TRANSACTION_NAME = "ClaudyGod - Donations";
 // API helper function - matches your contact page pattern
 const getApiBase = () => {
   if (import.meta.env.PROD) {
-    return 'https://claudygodwebapp-1.onrender.com';
+    return 'https://cgm-backend-5qvj.onrender.com';
   }
   return window.location.origin.includes('localhost') 
     ? 'http://localhost:10000' 
-    : 'https://claudygodwebapp-1.onrender.com';
+    : 'https://cgm-backend-5qvj.onrender.com';
 };
 
 const VALIDATE_ENDPOINT = `${getApiBase()}/api/nigerian-bank-transfer/validate`;

@@ -1,10 +1,10 @@
 const getApiBase = () => {
   if (import.meta.env.PROD) {
-    return 'https://claudygodwebapp-1.onrender.com';
+    return 'https://cgm-backend-5qvj.onrender.com';
   }
   return window.location.origin.includes('localhost') 
     ? 'http://localhost:10000' 
-    : 'https://claudygodwebapp-1.onrender.com';
+    : 'https://cgm-backend-5qvj.onrender.com';
 };
 
 const API_BASE = getApiBase();
