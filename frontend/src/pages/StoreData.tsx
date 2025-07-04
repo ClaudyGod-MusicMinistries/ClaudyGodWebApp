@@ -8,15 +8,13 @@ import {
   faShoppingCart,
   faChevronLeft,
   faChevronRight
-} from '@fortawesome/free-solid-svg-icons';// Added faShoppingCart
+} from '@fortawesome/free-solid-svg-icons';
 import {NewsletterForm} from '../components/util/Newsletter';
 import { Cart } from '../components/store/Cart';
 import { SEO } from '../components/util/SEO';
 import { useCartStore } from '../contexts/Cartcontext';
 import { StoreHero } from '../components/store/StoreHero';
 import { CategoryFilter } from '../components/store/CategoryFilter';
-// import { ProductCarousel } from '../components/store/ProductCarousel';
-// import { ProductGrid } from '../components/store/ProductGrid';
 import { products, categories } from '../components/data/storeData';
 import { AddToCartDialog } from '../components/store/AddToCartDialog';
 import { Product } from '@/components/types/storeTypes';
@@ -24,13 +22,13 @@ import { Product } from '@/components/types/storeTypes';
 export const StoreData = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isScrolling, setIsScrolling] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [visibleProducts, setVisibleProducts] = useState(4);
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [dialogProduct, setDialogProduct] = useState<Product | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { items, addItem } = useCartStore(); // Added items from cart context
+  const [slideDirection, setSlideDirection] = useState<'left'|'right'>('right');
+  const [slideCount, setSlideCount] = useState(4);
+  const { items, addItem } = useCartStore();
 
   // Calculate cart items count
   const cartItemsCount = items.reduce((total, item) => total + item.quantity, 0);
@@ -40,11 +38,16 @@ export const StoreData = () => {
       ? products
       : products.filter((p) => p.category === activeCategory);
 
- useEffect(() => {
+  // Calculate responsive slide count
+  const calculateSlideCount = () => {
+    if (window.innerWidth < 640) return 1;
+    if (window.innerWidth < 1024) return 2;
+    return 4;
+  };
+
+  useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) setVisibleProducts(1);
-      else if (window.innerWidth < 1024) setVisibleProducts(2);
-      else setVisibleProducts(4);
+      setSlideCount(calculateSlideCount());
     };
 
     handleResize();
@@ -67,21 +70,29 @@ export const StoreData = () => {
       return () => carousel.removeEventListener('scroll', handleScroll);
     }
   }, []);
+
   const handleAddToCart = (product: Product) => {
     addItem(product);
     setDialogProduct(product);
   };
 
+  const totalSlides = Math.ceil(filteredProducts.length / slideCount);
+  const startIndex = currentSlide * slideCount;
+  const endIndex = startIndex + slideCount;
+  const visibleProducts = filteredProducts.slice(startIndex, endIndex);
+
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % Math.ceil(filteredProducts.length / 2));
+    setSlideDirection('right');
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + Math.ceil(filteredProducts.length / 2)) % Math.ceil(filteredProducts.length / 2));
+    setSlideDirection('left');
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
 
   return (
-   <div className="bg-gradient-to-b from-purple-50 to-white min-h-screen">
+    <div className="bg-gradient-to-b from-purple-50 to-white min-h-screen">
       <SEO
         title="ClaudyGod Store - Gospel Merchandise & Products"
         description="Shop official ClaudyGod merchandise. Uplifting apparel, music albums, and faith-inspired products."
@@ -105,7 +116,7 @@ export const StoreData = () => {
       />
       
       {/* Floating Cart Button */}
-         <motion.button
+      <motion.button
         onClick={() => setIsCartOpen(true)}
         className="fixed bottom-8 right-8 bg-gradient-to-r from-purple-700 to-purple-900 text-white p-4 rounded-full shadow-2xl hover:shadow-purple-500/40 z-50 flex items-center justify-center ring-2 ring-white/50"
         aria-label="Open cart"
@@ -127,7 +138,7 @@ export const StoreData = () => {
 
       <StoreHero />
 
-         <motion.section 
+      <motion.section 
         className="bg-gradient-to-r from-purple-900 to-purple-700 text-white py-16 relative overflow-hidden"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -162,7 +173,7 @@ export const StoreData = () => {
         </div>
       </motion.section>
 
-    <motion.div
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
@@ -174,8 +185,8 @@ export const StoreData = () => {
         />
       </motion.div>
 
-   {/* Product Carousel */}
-      <section className="py-12 px-4">
+      {/* Featured Products Section - Responsive Carousel */}
+      <section className="py-12 px-4 relative">
         <div className="container mx-auto">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
@@ -186,7 +197,12 @@ export const StoreData = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={prevSlide}
-                className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-purple-900 hover:bg-purple-50 transition-colors"
+                disabled={currentSlide === 0}
+                className={`w-10 h-10 rounded-full flex items-center justify-center text-purple-900 transition-colors ${
+                  currentSlide === 0 
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+                    : 'bg-white shadow-md hover:bg-purple-50'
+                }`}
               >
                 <FontAwesomeIcon icon={faChevronLeft} />
               </motion.button>
@@ -194,58 +210,100 @@ export const StoreData = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={nextSlide}
-                className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-purple-900 hover:bg-purple-50 transition-colors"
+                disabled={currentSlide === totalSlides - 1}
+                className={`w-10 h-10 rounded-full flex items-center justify-center text-purple-900 transition-colors ${
+                  currentSlide === totalSlides - 1
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+                    : 'bg-white shadow-md hover:bg-purple-50'
+                }`}
               >
                 <FontAwesomeIcon icon={faChevronRight} />
               </motion.button>
             </div>
           </div>
           
-          <div 
-            ref={carouselRef}
-            className={`overflow-x-auto pb-8 scrollbar-hide ${isScrolling ? 'cursor-grabbing' : 'cursor-grab'}`}
-            style={{ scrollBehavior: 'smooth' }}
-          >
-            <div className="flex space-x-6 min-w-max">
-              {filteredProducts.map((product) => (
-                <motion.div
-                  key={product.id}
-                  className="w-72 flex-shrink-0"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  whileHover={{ y: -10 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
-                    <div className="relative overflow-hidden group">
-                      <img 
-                        src={product.image} 
-                        alt={product.name} 
-                        className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => handleAddToCart(product)}
-                        className="absolute bottom-4 right-4 bg-gradient-to-r from-purple-600 to-purple-800 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg hover:from-purple-700 hover:to-purple-900 transition-all"
-                      >
-                        Add to Cart
-                      </motion.button>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-lg font-bold text-gray-800">{product.name}</h3>
-                      <p className="text-gray-600 mt-2 line-clamp-2">{product.description}</p>
-                      <div className="mt-4 flex justify-between items-center">
-                        <span className="text-xl font-bold text-purple-900">${product.price}</span>
-                        <span className="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded-full">
-                          {product.category}
-                        </span>
+          <div className="relative overflow-hidden h-[420px] md:h-[450px]">
+            <AnimatePresence mode="wait" custom={slideDirection}>
+              <motion.div
+                key={currentSlide}
+                custom={slideDirection}
+                initial={{ 
+                  opacity: 0, 
+                  x: slideDirection === 'right' ? 100 : -100 
+                }}
+                animate={{ 
+                  opacity: 1, 
+                  x: 0,
+                  transition: { duration: 0.5, ease: "easeInOut" } 
+                }}
+                exit={{ 
+                  opacity: 0, 
+                  x: slideDirection === 'right' ? -100 : 100,
+                  transition: { duration: 0.3, ease: "easeInOut" } 
+                }}
+                className="absolute inset-0"
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {visibleProducts.map((product) => (
+                    <motion.div
+                      key={product.id}
+                      className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 h-full flex flex-col"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5 }}
+                      whileHover={{ y: -10 }}
+                    >
+                      <div className="relative overflow-hidden group flex-grow">
+                        <img 
+                          src={product.image} 
+                          alt={product.name} 
+                          className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handleAddToCart(product)}
+                          className="absolute bottom-4 right-4 bg-gradient-to-r from-purple-600 to-purple-800 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg hover:from-purple-700 hover:to-purple-900 transition-all"
+                        >
+                          Add to Cart
+                        </motion.button>
                       </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                      <div className="p-6 flex flex-col justify-between flex-grow">
+                        <div>
+                          <h3 className="text-lg font-bold text-gray-800">{product.name}</h3>
+                          <p className="text-gray-600 mt-2 line-clamp-2">{product.description}</p>
+                        </div>
+                        <div className="mt-4 flex justify-between items-center">
+                          <span className="text-xl font-bold text-purple-900">${product.price}</span>
+                          <span className="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded-full">
+                            {product.category}
+                          </span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Slide Indicators */}
+          <div className="flex justify-center mt-8">
+            {Array.from({ length: totalSlides }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  setSlideDirection(index > currentSlide ? 'right' : 'left');
+                  setCurrentSlide(index);
+                }}
+                className={`mx-1 w-3 h-3 rounded-full transition-all ${
+                  index === currentSlide 
+                    ? 'bg-purple-700 w-6' 
+                    : 'bg-gray-300'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -298,7 +356,7 @@ export const StoreData = () => {
         </div>
       </section>
 
-       <motion.div 
+      <motion.div 
         className="py-16 bg-gradient-to-r from-purple-900 to-purple-700 text-center"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
