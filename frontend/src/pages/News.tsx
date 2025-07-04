@@ -22,7 +22,7 @@ import { LiveSession } from '../components/news/LiveSession';
 import { TourCityModal } from '../components/news/TourCityModal';
 import {NewsletterForm} from '../components/util/Newsletter';
 import { DonationCallToAction } from '../components/util/DonationSupport';
-
+import {TourHighlights} from '../components/news/Tournews'
 
 export const News = () => {
   const [showTourModal, setShowTourModal] = useState(false);
@@ -286,7 +286,7 @@ md:p-8 shadow-xl h-full"
           </motion.div>
         </div>
       </div>
-
+<TourHighlights />
 <div className="w-full py-20 mb-20 bg-[#0a061a]">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div className="text-center mb-16">
