@@ -248,7 +248,13 @@ export const MinistryData = () => {
         description="Minister Claudy's passion for sharing the Gospel radiates through both her writing and speaking. As a gospel artist, devoted teacher, and lover of God, she has also shared her inspiring presence on national television."
         contents={teachingsData}
       />
-      
+      <DonationCallToAction
+  title="Partner with Our Ministry"
+  subtitle="Your Support Makes a Difference"
+  description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+  goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+  donateUrl="/donate"
+/>
       <div className="py-16 bg-gradient-to-r from-purple-900 to-indigo-800">
         <div className="max-w-4xl mx-auto text-center px-4">
           <h3 className="text-3xl font-bold text-white mb-6">
