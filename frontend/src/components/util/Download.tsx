@@ -11,15 +11,15 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: { 
-      staggerChildren: 0.15, 
+      staggerChildren: 0.1,
       when: "beforeChildren",
-      duration: 0.6
+      duration: 0.4
     }
   }
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 15 },
   visible: {
     opacity: 1,
     y: 0,
@@ -27,7 +27,7 @@ const itemVariants = {
       type: 'spring', 
       stiffness: 120, 
       damping: 15,
-      duration: 0.7
+      duration: 0.4
     }
   }
 };
@@ -35,7 +35,7 @@ const itemVariants = {
 const iconVariants = {
   hover: { 
     scale: 1.03,
-    y: -3,
+    y: -2,
     transition: { 
       type: "spring", 
       stiffness: 400,
@@ -47,9 +47,9 @@ const iconVariants = {
 
 const phoneVariants = {
   float: {
-    y: [0, -15, 0],
+    y: [0, -8, 0],
     transition: {
-      duration: 3.5,
+      duration: 3,
       repeat: Infinity,
       ease: "easeInOut"
     }
@@ -60,10 +60,8 @@ export const DownloadSection = () => {
   const videoRef = useRef(null);
   
   useEffect(() => {
-    // Start video playback when component mounts
     if (videoRef.current) {
       videoRef.current.play().catch(error => {
-        console.log("Autoplay prevented, attempting with sound muted");
         videoRef.current.muted = true;
         videoRef.current.play();
       });
@@ -74,52 +72,55 @@ export const DownloadSection = () => {
     <motion.section 
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.1 }}
       variants={containerVariants}
-      className="relative min-h-[80vh] overflow-hidden py-16 px-4 bg-gradient-to-br from-gray-900 to-black"
+      className="relative min-h-[45vh] overflow-hidden py-10 px-4 bg-gradient-to-br from-gray-900 to-black"
     >
+      {/* Background elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full"
             style={{
               background: `radial-gradient(circle, rgba(142, 45, 226, 0.3) 0%, transparent 70%)`,
-              width: `${Math.random() * 60 + 20}px`,
-              height: `${Math.random() * 60 + 20}px`,
+              width: `${Math.random() * 30 + 10}px`,
+              height: `${Math.random() * 30 + 10}px`,
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
             }}
             animate={{
-              y: [0, -100, 0],
-              x: [0, Math.random() * 100 - 50, 0],
+              y: [0, -60, 0],
+              x: [0, Math.random() * 40 - 20, 0],
               opacity: [0.3, 0.6, 0.3],
             }}
             transition={{
-              duration: Math.random() * 8 + 4,
+              duration: Math.random() * 5 + 3,
               repeat: Infinity,
               ease: "easeInOut",
-              delay: Math.random() * 2
+              delay: Math.random() * 1.5
             }}
           />
         ))}
       </div>
       
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 items-center">
+          {/* Phone Mockup - Left Column */}
           <motion.div 
-            className="flex justify-center lg:justify-end"
-            variants={itemVariants} >
-            <div className="relative w-full max-w-md">
+            className="flex justify-center max-w-[180px] sm:max-w-[220px] mx-auto lg:mx-0"
+            variants={itemVariants}
+          >
+            <div className="relative w-full">
               <motion.div 
                 className="relative"
                 variants={phoneVariants}
                 animate="float"
               >
-                <div className="absolute inset-0 rounded-[40px] border-[14px] border-gray-800 shadow-2xl"></div>
+                <div className="absolute inset-0 rounded-[30px] border-[8px] border-gray-800 shadow-lg"></div>
                 
                 {/* Phone screen with video */}
-                <div className="absolute top-[4.5%] left-[8%] w-[84%] h-[91%] rounded-[32px] overflow-hidden border-4 border-gray-800">
+                <div className="absolute top-[3%] left-[6%] w-[88%] h-[94%] rounded-[24px] overflow-hidden border-2 border-gray-800">
                   <video 
                     ref={videoRef}
                     className="w-full h-full object-cover"
@@ -135,32 +136,32 @@ export const DownloadSection = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                   
                   {/* App branding */}
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-700 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-6 h-6 fill-white">
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-700 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4 fill-white">
                           <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-white font-roboto-condensed text-xl">ClaudyGod</h3>
-                        <p className="text-purple-300 text-sm font-work-sans">Premium Music Experience</p>
+                        <h3 className="text-white font-roboto-condensed text-base">ClaudyGod</h3>
+                        <p className="text-purple-300 text-xs font-work-sans">Premium Music</p>
                       </div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="relative pt-[180%] rounded-[40px] overflow-hidden"></div>
+                <div className="relative pt-[180%] rounded-[30px] overflow-hidden"></div>
               </motion.div>
               
-              {/* Floating elements */}
+              {/* Floating download icon */}
               <motion.div 
-                className="absolute -top-6 -right-6 w-16 h-16 rounded-full flex items-center justify-center shadow-xl bg-gradient-to-r from-purple-600 to-indigo-700"
-                initial={{ y: 30, opacity: 0 }}
+                className="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center shadow-md bg-gradient-to-r from-purple-600 to-indigo-700"
+                initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1, type: "spring" }}
+                transition={{ delay: 0.6, type: "spring" }}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-6 h-6 fill-white">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4 fill-white">
                   <path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/>
                 </svg>
               </motion.div>
@@ -174,31 +175,30 @@ export const DownloadSection = () => {
           >
             <motion.div variants={itemVariants}>
               <motion.h2 
-                className="text-4xl md:text-5xl font-roboto-condensed mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-300"
+                className="text-2xl sm:text-3xl font-roboto-condensed mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-300"
               >
                 ClaudyGod Music On the Go
               </motion.h2>
               
               <motion.p 
-                className="text-lg mb-10 max-w-xl mx-auto lg:mx-0 font-raleway-light text-gray-300"
+                className="text-sm sm:text-base mb-4 sm:mb-5 max-w-md mx-auto lg:mx-0 font-raleway-light text-gray-300"
                 variants={itemVariants}
               >
-                Experience premium music streaming with our exclusive mobile app. Download now to enjoy unlimited access to your favorite tracks anytime, anywhere.
+                Experience premium music streaming with our mobile app. Download now to enjoy your favorite tracks anytime.
               </motion.p>
             </motion.div>
             
             <motion.div 
-              className="flex flex-col md:flex-row gap-6 max-w-lg mx-auto lg:mx-0"
+              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto lg:mx-0"
               variants={containerVariants}
             >
               <motion.div 
-                className="flex-1"
+                className="flex-1 min-w-[160px]"
                 variants={itemVariants}
               >
                 <motion.a
                   href="https://www.claudygod.com/claudygod-tv-apple"
-                  className="flex items-center font-work-sans
- justify-center gap-4 py-5 px-6 rounded-xl transition-all shadow-lg h-full"
+                  className="flex items-center font-work-sans justify-center gap-2 py-3 px-4 rounded-lg transition-all shadow-md h-full"
                   style={{ 
                     background: 'linear-gradient(135deg, #000 0%, #3a0ca3 100%)',
                     border: '1px solid rgba(255, 255, 255, 0.1)'
@@ -209,25 +209,22 @@ export const DownloadSection = () => {
                 >
                   <FontAwesomeIcon 
                     icon={faApple} 
-                    className="text-3xl text-white" 
+                    className="text-xl text-white" 
                   />
                   <div className="text-left">
-                    <div className="text-xs tracking-wide font-work-sans
- text-gray-300">Download on the</div>
-                    <div className="text-xl tracking-tight font-roboto-condensed
- text-white">App Store</div>
+                    <div className="text-[10px] tracking-wide font-work-sans text-gray-300">Download on the</div>
+                    <div className="text-base tracking-tight font-roboto-condensed text-white">App Store</div>
                   </div>
                 </motion.a>
               </motion.div>
               
-              {/* Google Play Button */}
               <motion.div 
-                className="flex-1"
+                className="flex-1 min-w-[160px]"
                 variants={itemVariants}
               >
                 <motion.a
                   href="https://www.claudygod.com/claudygod-tv-andrioid"
-                  className="flex items-center justify-center gap-4 py-5 px-6 rounded-xl transition-all shadow-lg h-full"
+                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-lg transition-all shadow-md h-full"
                   style={{ 
                     background: 'linear-gradient(135deg, #4285F4 0%, #34A853 33%, #FBBC05 66%, #EA4335 100%)',
                     border: '1px solid rgba(255, 255, 255, 0.1)'
@@ -238,37 +235,35 @@ export const DownloadSection = () => {
                 >
                   <FontAwesomeIcon 
                     icon={faGooglePlay} 
-                    className="text-3xl text-white" 
+                    className="text-xl text-white" 
                   />
                   <div className="text-left">
-                    <div className="text-xs tracking-wide uppercase font-work-sans text-gray-100">Get it on</div>
-                    <div className="text-xl font-bold tracking-tight font-roboto-condensed
- text-white">Google Play</div>
+                    <div className="text-[10px] tracking-wide uppercase font-work-sans text-gray-100">Get it on</div>
+                    <div className="text-base font-bold tracking-tight font-roboto-condensed text-white">Google Play</div>
                   </div>
                 </motion.a>
               </motion.div>
             </motion.div>
             
             <motion.div 
-              className="mt-12 pt-8 border-t border-opacity-10 max-w-lg mx-auto lg:mx-0 border-gray-600"
+              className="mt-6 pt-4 border-t border-opacity-10 max-w-md mx-auto lg:mx-0 border-gray-600"
               variants={itemVariants}
             >
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-3">
                 {[
-                  {icon: '🎧', text: 'High Quality Audio'},
-                  {icon: '📱', text: 'Offline Playback'},
-                  {icon: '🔒', text: 'Ad-Free Experience'},
+                  {icon: '🎧', text: 'HQ Audio'},
+                  {icon: '📱', text: 'Offline'},
+                  {icon: '🔒', text: 'Ad-Free'},
                 ].map((feature, index) => (
                   <motion.div 
                     key={index}
                     className="text-center"
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8 + index * 0.1 }}
+                    transition={{ delay: 0.5 + index * 0.1 }}
                   >
-                    <div className="text-2xl mb-2">{feature.icon}</div>
-                    <div className="text-sm font-work-sans
- text-gray-400">{feature.text}</div>
+                    <div className="text-xl mb-1">{feature.icon}</div>
+                    <div className="text-xs font-work-sans text-gray-400">{feature.text}</div>
                   </motion.div>
                 ))}
               </div>

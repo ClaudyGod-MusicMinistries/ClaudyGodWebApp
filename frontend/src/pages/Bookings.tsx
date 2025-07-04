@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,28 +27,43 @@ export const Bookings: React.FC = () => {
   const methods = useForm({
     resolver: yupResolver(bookingSchema),
     defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
       countryCode: 'US' as CountryCode,
-      agreeTerms: false,
-      address2: '',
+      organization: '',
+      orgType: '',
+      eventType: '',
+      eventDetails: '',
       eventDate: {
         day: 1,
         month: 'January',
         year: new Date().getFullYear()
-      }
+      },
+      address: {
+        address1: '',
+        address2: '',
+        country: '',
+        state: '',
+        city: '',
+        zipCode: ''
+      },
+      agreeTerms: false
     }
   });
 
   const { watch, setValue, reset, handleSubmit } = methods;
-  const country = watch('country') as CountryCode;
-  const state = watch('state');
+  const country = watch('address.country') as CountryCode;
+  const state = watch('address.state');
   const countryCode = watch('countryCode') as CountryCode;
 
   useEffect(() => {
     if (country && COUNTRY_STATE_CITY_DATA[country]) {
       const countryStates = Object.keys(COUNTRY_STATE_CITY_DATA[country].states);
       setStates(countryStates);
-      setValue('state', '');
-      setValue('city', '');
+      setValue('address.state', '');
+      setValue('address.city', '');
     } else {
       setStates([]);
       setCities([]);
@@ -59,7 +74,7 @@ export const Bookings: React.FC = () => {
     if (country && state && COUNTRY_STATE_CITY_DATA[country]) {
       const stateCities = COUNTRY_STATE_CITY_DATA[country].states[state] || [];
       setCities(stateCities);
-      setValue('city', '');
+      setValue('address.city', '');
     } else {
       setCities([]);
     }
@@ -67,27 +82,28 @@ export const Bookings: React.FC = () => {
 
   const onSubmit = async (data: any) => {
     setIsSubmitting(true);
+    console.log('Submitting booking data:', data);
+    
     try {
       const response = await submitBooking(data);
-      if (response.status === 201) {
-        toast.success(response.data.message || 'Booking submitted successfully!');
-        reset();
-        setShowThankYouModal(true);
-      }
+      console.log('Booking response:', response);
+      toast.success('Booking submitted successfully!');
+      reset();
+      setShowThankYouModal(true);
     } catch (error: any) {
-      let errorMessage = 'Failed to submit booking';
-      if (error.response) {
-        if (error.response.data.errors) {
-          errorMessage = error.response.data.errors.join(', ');
-        } else {
-          errorMessage = error.response.data.message || errorMessage;
-        }
-      } else if (error.request) {
-        errorMessage = 'No response from server';
+      console.error('Booking error:', error);
+      
+      if (error.errors) {
+        Object.entries(error.errors).forEach(([field, message]) => {
+          methods.setError(field, {
+            type: 'manual',
+            message: message as string
+          });
+        });
+        toast.error('Please fix the validation errors');
       } else {
-        errorMessage = error.message || errorMessage;
+        toast.error(error.message || 'Failed to submit booking');
       }
-      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -189,12 +205,7 @@ export const Bookings: React.FC = () => {
                   <h3 className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
                     Event Details
                   </h3>
-                  <EventInfoSection 
-                    states={states} 
-                    cities={cities} 
-                    country={country} 
-                    MONTHS={MONTHS} 
-                  />
+                  <EventInfoSection MONTHS={MONTHS} />
                 </div>
                 
                 <div>

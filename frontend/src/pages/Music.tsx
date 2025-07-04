@@ -10,115 +10,11 @@ import {
   faShieldAlt,
   faInfoCircle,
   faTimes, 
-  // faMusic, 
   faArrowDown,
-  // faSpinner
 } from '@fortawesome/free-solid-svg-icons';
-import { 
-  faSpotify, 
-  faApple, 
-  faYoutube, 
-  faDeezer, 
-  faAmazon,
-} from '@fortawesome/free-brands-svg-icons';
+import { latestReleasePlatforms,securedMusicPlatforms } from '../components/data/musicData';
 import  {NewsletterForm}  from '../components/util/Newsletter';
-
-// Music platforms for main section
-const securedMusicPlatforms = [
-  { 
-    name: 'Spotify', 
-    url: 'https://open.spotify.com/album/2MY5xlrYfuvKXaYfdB5v2A?referral=labelaffiliate&utm_source=1101lBmnzTP8&utm_medium=Indie_CDBaby&utm_campaign=labelaffiliate', 
-    icon: faSpotify,
-    bgColor: 'bg-[#1DB954]',
-    textColor: 'text-white',
-    verified: true,
-    safeRedirect: true
-  },
-  { 
-    name: 'Apple Music', 
-    url: 'https://music.apple.com/ng/album/very-glorious/1789665669', 
-    icon: faApple,
-    bgColor: 'bg-[#000]',
-    textColor: 'text-white',
-    verified: true,
-    safeRedirect: true
-  },
-  { 
-    name: 'YouTube', 
-    url: 'https://youtube.com/@claudygodministries?si=6Ne99tTC48Ihv44s', 
-    icon: faYoutube,
-    bgColor: 'bg-[#FF0000]',
-    textColor: 'text-white',
-    verified: true,
-    safeRedirect: true
-  },
-  { 
-    name: 'Deezer', 
-    url: 'https://www.deezer.com/us/album/695949191', 
-    icon: faDeezer,
-    bgColor: 'bg-[#FEAA2D]',
-    textColor: 'text-black',
-    verified: true,
-    safeRedirect: true
-  },
-  { 
-    name: 'Amazon Music', 
-    url: 'https://music.amazon.com/albums/B0DSM7QGLF?tag=fndcmpgns-20', 
-    icon: faAmazon,
-    bgColor: 'bg-[#FF9900]',
-    textColor: 'text-black',
-    verified: true,
-    safeRedirect: true
-  }
-];
-const latestReleasePlatforms = [
-  { 
-    name: 'Spotify', 
-    url: 'https://open.spotify.com/album/1zCT0YUVggnzkZJK5VP0yd', 
-    icon: faSpotify,
-    bgColor: 'bg-[#1DB954]',
-    textColor: 'text-white',
-    verified: true,
-    safeRedirect: true
-  },
-  { 
-    name: 'Apple Music', 
-    url: 'https://music.apple.com/ng/album/you-are-our-everything-single/1803827230', 
-    icon: faApple,
-    bgColor: 'bg-[#000]',
-    textColor: 'text-white',
-    verified: true,
-    safeRedirect: true
-  },
-  { 
-    name: 'YouTube', 
-    url: 'https://www.youtube.com/watch?v=fK_tCBcnqGs&list=OLAK5uy_nO6i6o85ojjKvu8QQlrV0keV4M_T7PPe4', 
-    icon: faYoutube,
-    bgColor: 'bg-[#FF0000]',
-    textColor: 'text-white',
-    verified: true,
-    safeRedirect: true
-  },
-  { 
-    name: 'Deezer', 
-    url: 'https://www.deezer.com/us/album/695949191', 
-    icon: faDeezer,
-    bgColor: 'bg-[#FEAA2D]',
-    textColor: 'text-black',
-    verified: true,
-    safeRedirect: true
-  },
-  { 
-    name: 'Amazon Music', 
-    url: 'https://music.amazon.com/albums/B0DSM7QGLF?tag=fndcmpgns-20', 
-    icon: faAmazon,
-    bgColor: 'bg-[#FF9900]',
-    textColor: 'text-black',
-    verified: true,
-    safeRedirect: true
-  }
-];
-
+ 
 const albums = [
   {
     id: 1,
@@ -184,24 +80,29 @@ export const MusicData = () => {
     const isTrusted = SecurityUtils.isTrustedDomain(sanitizedUrl, TRUSTED_DOMAINS);
     
     return (
-      
       <motion.a
         href={sanitizedUrl}
         onClick={(e) => handleLinkClick(platform.url, e)}
-        className={`flex items-center px-6 py-3 rounded-lg shadow-md transition-shadow ${platform.bgColor} ${platform.textColor} ${
-          isHovered ? 'shadow-lg' : ''
-        } ${isTrusted ? '' : 'opacity-80'}`}
+        className={`flex items-center px-6 py-4 rounded-xl shadow-lg transition-all ${platform.bgColor} ${platform.textColor} ${
+          isHovered ? 'scale-[1.03] shadow-xl -translate-y-1' : ''
+        } ${isTrusted ? 'ring-2 ring-white/30' : 'opacity-80'}`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 * securedMusicPlatforms.indexOf(platform) }}
+        transition={{ 
+          delay: 0.1 * securedMusicPlatforms.indexOf(platform),
+          type: "spring",
+          stiffness: 300
+        }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.98 }}
       >
         <FontAwesomeIcon 
           icon={platform.icon} 
-          className="mr-2 text-lg"
+          className="mr-3 text-xl"
         />
-        <span>
+        <span className="font-medium">
           {platform.name}
           {!isTrusted && <span className="text-xs ml-1">(unverified)</span>}
         </span>
@@ -210,9 +111,8 @@ export const MusicData = () => {
   };
 
   return (
-    
-    <div className="bg-white min-h-screen relative">
-       <SEO
+    <div className="bg-gradient-to-br from-gray-50 to-white min-h-screen relative overflow-x-hidden">
+      <SEO
         title="ClaudyGod Music - Stream Gospel Albums & Singles"
         description="Stream ClaudyGod's gospel music on all platforms. New albums 'Very Glorious', 'Lover of My Soul', and 'King of Heaven' available now."
         keywords="gospel music, christian albums, worship songs, claudygod music"
@@ -229,70 +129,82 @@ export const MusicData = () => {
           ]
         }}
       />
+      
+      {/* Security Modal */}
       {isModalOpen && (
         <motion.div 
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black/70 backdrop-blur-lg flex items-center justify-center z-50 p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
           <motion.div 
-            className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6"
+            className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
             initial={{ scale: 0.9, y: 20 }}
             animate={{ scale: 1, y: 0 }}
             transition={{ type: "spring", damping: 25 }}
           >
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold text-purple-900 flex items-center">
-                <FontAwesomeIcon icon={faShieldAlt} className="mr-2" />
-                Security Notice
-              </h3>
-              <button 
-                onClick={() => setIsModalOpen(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </button>
-            </div>
-            
-            <div className="mb-6">
-              <p className="text-gray-700 mb-3">
-                Stream our Music on various Streaming Platforms
-              </p>
-              <div className="bg-gray-100 p-3 rounded-lg break-words text-sm font-mono">
-                {redirectUrl}
+            <div className="bg-gradient-to-r from-purple-800 to-purple-600 p-5">
+              <div className="flex justify-between items-center">
+                <h3 className="text-xl font-bold text-white flex items-center">
+                  <FontAwesomeIcon icon={faShieldAlt} className="mr-3 text-amber-300" />
+                  Security Notice
+                </h3>
+                <button 
+                  onClick={() => setIsModalOpen(false)}
+                  className="text-white/80 hover:text-white transition-colors"
+                >
+                  <FontAwesomeIcon icon={faTimes} className="text-xl" />
+                </button>
               </div>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="flex-1 py-3 px-4 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-800 font-medium transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleRedirect}
-                className="flex-1 py-3 px-4 bg-purple-700 hover:bg-purple-800 rounded-lg text-white font-medium transition-colors"
-              >
-                Continue to Site
-              </button>
+            <div className="p-6">
+              <div className="mb-6">
+                <p className="text-gray-700 mb-4">
+                  Stream our Music on various Streaming Platforms
+                </p>
+                <div className="bg-gray-50 border border-gray-200 p-3 rounded-lg break-words text-sm font-mono">
+                  {redirectUrl}
+                </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="flex-1 py-3 px-4 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-800 font-medium transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleRedirect}
+                  className="flex-1 py-3 px-4 bg-gradient-to-r from-purple-700 to-purple-900 hover:from-purple-800 hover:to-purple-950 rounded-lg text-white font-medium transition-all shadow-md"
+                >
+                  Continue to Site
+                </button>
+              </div>
             </div>
           </motion.div>
         </motion.div>
       )}
       
-      <section className="pt-32 pb-20 bg-purple-900 text-white">
-        <div className="container mx-auto px-4">
+      {/* Hero Section */}
+      <section className="pt-32 pb-24 bg-gradient-to-br from-purple-900 to-indigo-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-purple-500 blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-indigo-600 blur-3xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="md:text-8xl max-md:text-4xl font-roboto-condensed
- mb-6">Music</h1>
-            <div className="w-20 h-1 bg-white mb-8"></div>
-            <p className="text-sm max-w-2xl font-work-sans
-">
+            <h1 className="md:text-7xl max-md:text-4xl font-bold font-roboto-condensed mb-6 tracking-tight">
+              Music
+            </h1>
+            <div className="w-24 h-1.5 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full mb-8"></div>
+            <p className="text-lg max-w-2xl font-work-sans opacity-90">
               Experience the divine fusion of American Contemporary Christian Music and Afro-Gospel Songs through ClaudyGod's Inspirational Journey.
             </p>
           </motion.div>
@@ -300,110 +212,159 @@ export const MusicData = () => {
       </section>
 
       {/* Streaming Platforms - Main Section */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-16 relative">
+        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-purple-900/10 to-transparent -translate-y-full"></div>
         <div className="container mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-roboto-condensed mb-4">Available On All Platforms</h2>
-            <p className="text-gray-600 mt-2  md:text-xl max-md:text-sm font-work-sans
-">
+          <div className="text-center mb-12">
+            <motion.h2 
+              className="text-3xl md:text-4xl font-bold font-roboto-condensed mb-4"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              Available On All Platforms
+            </motion.h2>
+            <motion.p 
+              className="text-gray-600 md:text-xl max-md:text-base font-work-sans max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
               Stream ClaudyGod's music everywhere, Anytime, Anyday, Anywhere.
-            </p>
+            </motion.p>
           </div>
           
-          <div className="flex flex-wrap font-raleway-light
- justify-center gap-4">
+          <motion.div 
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 max-w-5xl mx-auto"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ staggerChildren: 0.1 }}
+          >
             {securedMusicPlatforms.map((platform) => (
               <SecuredLink key={platform.name} platform={platform} />
             ))}
-          </div>
+          </motion.div>
           
-          <div className="mt-8 text-center">
-            <div className="inline-flex items-center bg-blue-50 px-4 py-2 rounded-full">
-              <FontAwesomeIcon icon={faInfoCircle} className="mr-2 text-blue-500" />
+          <motion.div 
+            className="mt-10 text-center"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+          >
+            <div className="inline-flex items-center bg-blue-50 px-5 py-3 rounded-full border border-blue-100">
+              <FontAwesomeIcon icon={faInfoCircle} className="mr-3 text-blue-500 text-lg" />
               <span className="text-sm text-blue-700 font-work-sans">
                 We verify all external links for your security
               </span>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
-      <section className="py-16">
+
+      {/* Latest Release Section */}
+      <section className="py-16 bg-gradient-to-br from-gray-50 to-white">
         <div className="container mx-auto px-4">
-          <h2 className="bg-purple-900 p-10 text-white max-md:text-3xl  md:text-5xl font-roboto-condensed mb-12 text-center rounded-lg">
-            Latest Release: You Are Our Everything
-          </h2>
-          <div className="space-y-10">
+          <motion.div
+            className="bg-gradient-to-r from-purple-900 to-indigo-800 p-8 rounded-2xl shadow-xl mb-16 text-center overflow-hidden relative"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute top-0 left-0 w-48 h-48 rounded-full bg-purple-500 blur-3xl"></div>
+              <div className="absolute bottom-0 right-0 w-64 h-64 rounded-full bg-indigo-600 blur-3xl"></div>
+            </div>
+            <h2 className="max-md:text-3xl md:text-5xl font-bold font-roboto-condensed mb-2 text-white relative z-10">
+              Latest Release: You Are Our Everything
+            </h2>
+            <div className="w-32 h-1 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full mx-auto mt-4"></div>
+          </motion.div>
+          
+          <div className="space-y-16">
             {albums.map((album) => (
               <motion.div
                 key={album.id}
-                className="grid md:grid-cols-3 gap-8 items-start"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                className="grid md:grid-cols-3 gap-10 items-start bg-white rounded-2xl shadow-lg p-6 max-w-6xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
+                transition={{ duration: 0.6 }}
               >
                 <div className="md:col-span-1">
-                  <div className="bg-gray-200 p-3  shadow-lg">
+                  <div className="overflow-hidden rounded-xl shadow-xl">
                     <img 
                       src={album.image} 
                       alt={album.title} 
-                      className="w-full h-100 object-cover rounded"
+                      className="w-full h-auto object-cover transition-transform duration-500 hover:scale-105"
                     />
                   </div>
                 </div>
                 
                 <div className="md:col-span-2">
-                  <h3 className="text-2xl font-roboto-condensed
- mb-2">{album.title}</h3>
-                  <p className="text-gray-600 font-work-sans
- mb-6">Released: {album.year}</p>
+                  <h3 className="text-3xl font-bold font-roboto-condensed mb-2 text-gray-900">
+                    {album.title}
+                  </h3>
+                  <p className="text-gray-600 font-work-sans mb-8">
+                    Released: <span className="font-medium text-purple-700">{album.year}</span>
+                  </p>
                   
-                  <div className="mt-8 text-center flex flex-col items-center">
-                    <p className="text-gray-700 font-work-sans
- mb-4 italic max-w-md mx-auto">
+                  <div className="my-10 text-center">
+                    <p className="text-gray-700 font-work-sans mb-6 italic max-w-md mx-auto text-lg">
                       Now available on all major streaming platforms
                     </p>
                     
                     <div className="flex flex-col items-center">
-                      <FontAwesomeIcon 
-                        icon={faArrowDown} 
-                        className="text-blue-500 mb-3 text-xl animate-bounce" 
-                      />
+                      <motion.div
+                        animate={{ y: [0, -10, 0] }}
+                        transition={{ repeat: Infinity, duration: 1.5 }}
+                      >
+                        <FontAwesomeIcon 
+                          icon={faArrowDown} 
+                          className="text-blue-500 mb-3 text-2xl" 
+                        />
+                      </motion.div>
                     </div>
                   </div>
                   
-                  <div className="mt-6">
-                    <h3 className="max-md:text-2xl md:text-5xl mb-4 text-center text-gray-800 font-roboto-condensed
-">
+                  <div className="mt-10">
+                    <h3 className="max-md:text-2xl md:text-4xl mb-6 text-center text-gray-800 font-bold font-roboto-condensed">
                       Experience the Sound - Stream Now!
                     </h3>
                     
-                    <div className="flex flex-wrap gap-3 justify-center">
-                      {latestReleasePlatforms.slice(0, 3).map((platform, i) => {
+                    <div className="flex flex-wrap gap-4 justify-center">
+                      {latestReleasePlatforms.map((platform, i) => {
                         const sanitizedUrl = SecurityUtils.sanitizeUrl(platform.url);
                         const isTrusted = SecurityUtils.isTrustedDomain(sanitizedUrl, TRUSTED_DOMAINS);
                         
                         return (
-                          <button 
+                          <motion.button 
                             key={i}
                             onClick={(e) => {
                               e.preventDefault();
                               setRedirectUrl(sanitizedUrl);
                               setIsModalOpen(true);
                             }}
-                            className={`inline-flex items-center text-sm px-4 py-2 border rounded-full transition-all ${
+                            className={`inline-flex items-center px-5 py-3 rounded-full transition-all shadow-md ${
                               isTrusted 
-                                ? 'border-blue-300 text-blue-700 hover:bg-blue-50 hover:shadow-sm' 
-                                : 'border-red-300 text-red-700 hover:bg-red-50'
+                                ? 'bg-gradient-to-br from-blue-50 to-white text-blue-700 hover:from-blue-100 hover:to-blue-50 hover:shadow-lg border border-blue-100' 
+                                : 'bg-gradient-to-br from-red-50 to-white text-red-700 hover:from-red-100 hover:to-red-50 border border-red-100'
                             }`}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.98 }}
                           >
-                            <span className="font-raleway-medium
-">Play on {platform.name}</span>
+                            <span className="font-medium font-raleway">
+                              Play on {platform.name}
+                            </span>
                             <FontAwesomeIcon 
                               icon={faExternalLinkAlt} 
-                              className="ml-2 text-xs"
+                              className="ml-3 text-sm"
                             />
-                          </button>
+                          </motion.button>
                         );
                       })}
                     </div>

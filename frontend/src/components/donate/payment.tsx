@@ -1,14 +1,24 @@
+// PaymentPlatforms.tsx
 import React, { useState, useEffect } from 'react';
-import { motion} from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
-import { FaPaypal, FaBuilding, FaArrowLeft, FaGlobe, FaInfoCircle } from 'react-icons/fa';
+import { 
+  FaPaypal, 
+  FaBuilding, 
+  FaArrowLeft, 
+  FaGlobe, 
+  FaInfoCircle,
+  FaCreditCard
+} from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 
 import PayPalStep from './Paypal';
 import { ZellePayment } from './ZellePayment';
+import { StripePayment } from './Stripe';
 
 export interface PaymentFormData {
   email: string;
+  name?: string;
   phoneCountry?: string;
   phoneNumber?: string;
 }
@@ -54,9 +64,13 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
   onComplete,
 }) => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [paymentMethod, setPaymentMethod] = useState<'paypal' | 'zelle' | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<'paypal' | 'zelle' | 'stripe' | null>(null);
   const [selectedCountry, setSelectedCountry] = useState('US');
-  const [showInfo, setShowInfo] = useState(false);
+  const [donorInfo, setDonorInfo] = useState({
+    email: '',
+    name: '',
+    phone: ''
+  });
 
   const {
     register,
@@ -99,23 +113,32 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
         return;
       }
       
-      const email = getValues('email');
+      const formData = getValues();
+      const email = formData.email;
+      
       if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
         toast.error('Please enter a valid email address');
         return;
       }
 
-      const phoneNumber = getValues('phoneNumber');
-      if (phoneNumber) {
-        const cntry = getValues('phoneCountry') || 'US';
+      let phone = '';
+      if (formData.phoneNumber) {
+        const cntry = formData.phoneCountry || 'US';
         const pattern = countryOptions.find(c => c.code === cntry)?.pattern;
-        if (pattern && !pattern.test(phoneNumber)) {
+        if (pattern && !pattern.test(formData.phoneNumber)) {
           toast.error('Please enter a valid phone number for the selected country');
           return;
         }
-        const full = `${countryCallingCodes[cntry]}${phoneNumber}`;
-        setValue('phoneNumber', full);
+        phone = `${countryCallingCodes[cntry]}${formData.phoneNumber}`;
+        setValue('phoneNumber', phone);
       }
+
+      // Save donor info for Stripe prefilling
+      setDonorInfo({
+        email,
+        name: formData.name || '',
+        phone
+      });
 
       setStep(2);
     });
@@ -154,6 +177,25 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
         </div>
 
         <form onSubmit={handleSubmit(submitDonorInfo)} className="space-y-5">
+          <div>
+            <label className="block text-sm font-medium mb-2 text-gray-700">
+              Full Name (Optional)
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                {...register('name')}
+                className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                placeholder="John Doe"
+              />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+          
           <div>
             <label className="block text-sm font-medium mb-2 text-gray-700">
               Email Address <span className="text-red-500">*</span>
@@ -306,6 +348,14 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
       color: 'from-purple-500 to-purple-600',
       bg: 'bg-purple-100'
     },
+    { 
+      id: 'stripe',  
+      name: 'Credit/Debit Card',  
+      description: 'Visa, Mastercard, Amex',         
+      icon: FaCreditCard, 
+      color: 'from-indigo-500 to-indigo-600',
+      bg: 'bg-indigo-100'
+    },
   ] as const;
 
   const PaymentMethodStep: React.FC = () => (
@@ -332,7 +382,7 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
           <motion.button
             key={m.id}
             onClick={() => {
-              setPaymentMethod(m.id as 'paypal' | 'zelle');
+              setPaymentMethod(m.id as 'paypal' | 'zelle' | 'stripe');
               setStep(3);
             }}
             whileHover={{ y: -5 }}
@@ -345,7 +395,11 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
           >
             <div className="flex items-center">
               <div className={`${m.bg} p-3 rounded-lg`}>
-                <m.icon className={`h-6 w-6 ${m.id === 'paypal' ? 'text-blue-600' : 'text-purple-600'}`} />
+                <m.icon className={`h-6 w-6 ${
+                  m.id === 'paypal' ? 'text-blue-600' : 
+                  m.id === 'zelle' ? 'text-purple-600' : 
+                  'text-indigo-600'
+                }`} />
               </div>
               <div className="ml-4">
                 <h3 className="font-bold text-gray-900 text-lg">{m.name}</h3>
@@ -424,6 +478,15 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
             currency={currency}
             onBack={handleBack}
             onComplete={onComplete}
+          />
+        )}
+        {step === 3 && paymentMethod === 'stripe' && (
+          <StripePayment
+            amount={amount}
+            currency={currency}
+            onBack={handleBack}
+            onSuccess={onComplete}
+            donorInfo={donorInfo}
           />
         )}
       </motion.div>

@@ -1,7 +1,6 @@
 import { SEO } from '../components/util/SEO';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-// import { Hero } from '../components/HomepageHero';
 import LatestRelease from '../components/Homepage/latestRelease';
 import { FeaturedVideos } from '../components/Homepage/Featuredvideos';
 import { ShopPreview } from '../components/Homepage/ShopPreview';
@@ -67,7 +66,9 @@ export const Home = () => {
         <ShopPreview />
       </ScrollAnimationWrapper>
 
- 
+  <ScrollAnimationWrapper>
+        <FeaturedVideos />
+      </ScrollAnimationWrapper>
 
       <ScrollAnimationWrapper>
         <AudioMackComponent />
@@ -75,9 +76,7 @@ export const Home = () => {
  <ScrollAnimationWrapper>
      <DownloadSection />
       </ScrollAnimationWrapper>
-      <ScrollAnimationWrapper>
-        <FeaturedVideos />
-      </ScrollAnimationWrapper>
+     
 
       <ScrollAnimationWrapper>
         <NewsletterForm />
