@@ -1,7 +1,8 @@
 // src/components/news/HeroSlider.tsx
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { newsBanner } from '../../assets/';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 
 export const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -12,14 +13,12 @@ export const HeroSlider = () => {
     {
       title: 'MUSIC TOUR IN NIGERIA',
       description: `We will be sharing God's love and messages across 5 states in Nigeria.`,
-      buttonText: 'Stay Updated with the latest',
-      bgImage: newsBanner,
+      bgImage: '/path/to/image.jpg',
     },
     {
       title: 'UPCOMING WORSHIP EXPERIENCE',
       description: `Join us for an unforgettable night of worship and praise.`,
-      buttonText: 'Subscribe to our Newsletter',
-      bgImage: newsBanner,
+      bgImage: '/path/to/image.jpg',
     },
   ];
 
@@ -70,23 +69,44 @@ export const HeroSlider = () => {
             transition={{ duration: 0.8 }}
             className="bg-black/30 backdrop-blur-sm p-8 md:p-10 rounded-2xl max-w-2xl lg:max-w-3xl"
           >
-       
             <h2 className="md:text-8xl sm:text-4xl font-roboto-condensed lg:text-6xl text-white tracking-tight roboto-condensed mb-4 md:mb-5">
               {slide.title}
             </h2>
             <p className="text-gray-200 text-base sm:text-lg md:text-xl lg:text-2xl font-work-sans md:font-work-sans leading-relaxed work-sans mb-6 md:mb-8">
               {slide.description}
             </p>
-            <button className="mt-2 bg-purple-700 cursor-pointer
-             hover:bg-purple-800 text-white max-md:text-xx
-              px-8 py-4 text-base md:text-lg
-              font-raleway-medium rounded-md shadow-xl transition duration-300 
-            transform hover:scale-105">
-              {slide.buttonText}
-            </button>
           </motion.div>
         </AnimatePresence>
       </div>
+      
+      {/* Floating dropdown arrow */}
+      <motion.div 
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 cursor-pointer"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ 
+          opacity: 1, 
+          y: 0,
+          transition: { 
+            delay: 1.5,
+            duration: 0.5 
+          } 
+        }}
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 0.9 }}
+        animate={{
+          y: [0, -10, 0],
+          transition: {
+            repeat: Infinity,
+            duration: 1.5,
+            ease: "easeInOut"
+          }
+        }}
+      >
+        <FontAwesomeIcon 
+          icon={faArrowDown} 
+          className="w-8 h-8 text-purple-400" 
+        />
+      </motion.div>
     </div>
   );
 };

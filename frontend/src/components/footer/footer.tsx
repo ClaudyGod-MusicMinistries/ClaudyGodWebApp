@@ -6,11 +6,21 @@ import {
   faPhone,
   faCopyright
 } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom'; // Import Link component
 import { Social } from '../Social';
 import { Streaming } from '../Streaming';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  
+  // Define route paths for each link
+  const quickLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/biography' },
+    { name: 'Music', path: '/music' },
+    { name: 'Store', path: '/store' },
+    { name: 'Contact', path: '/contact' }
+  ];
   
   return (
     <footer className="bg-[#0d0219] text-white w-full">
@@ -27,8 +37,7 @@ export const Footer: React.FC = () => {
                 </div>
               </div>
               <div>
-                <h2 className="text-3xl font-roboto-condensed
- tracking-tight bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                <h2 className="text-3xl font-roboto-condensed tracking-tight bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
                   ClaudyGod
                 </h2>
                 <p className="text-gray-400 font-work-sans-light text-sm">Music & Ministries</p>
@@ -42,25 +51,24 @@ export const Footer: React.FC = () => {
             <div className="flex space-x-3">
               <div className="bg-gray-800 p-3 rounded-lg flex items-center justify-center">
                 <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse mr-2"></div>
-                <span className="text-xs text-gray-300 font-raleway-medium
-">Connect with us</span>
+                <span className="text-xs text-gray-300 font-raleway-medium">Connect with us</span>
               </div>
             </div>
           </div>
 
+          {/* Updated Quick Links with routing */}
           <div className="flex flex-col">
             <h3 className="text-lg font-roboto-condensed mb-6 pb-2 border-b border-gray-700 tracking-wide">Quick Links</h3>
             <ul className="space-y-3">
-              {['Home', 'About', 'Music', 'Events', 'Ministries', 'Gallery', 'Contact'].map((item) => (
-                <li key={item}>
-                  <a 
-                    href="#" 
-                    className="text-gray-300 font-work-sans
- hover:text-purple-400 transition-all duration-300 flex items-center group"
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <Link 
+                    to={link.path}
+                    className="text-gray-300 font-work-sans hover:text-purple-400 transition-all duration-300 flex items-center group"
                   >
                     <span className="w-1 h-1 bg-purple-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {item}
-                  </a>
+                    {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -117,8 +125,7 @@ export const Footer: React.FC = () => {
             <h3 className="text-4xl font-roboto-condensed text-white tracking-wide mb-3">
               Join Our Newsletter
             </h3>
-            <p className="text-gray-300 font-raleway-medium
- text-sm max-w-lg mx-auto">
+            <p className="text-gray-300 font-raleway-medium text-sm max-w-lg mx-auto">
               Stay updated with our latest music releases, ministry events, and inspirational content.
             </p>
           </div>
@@ -152,16 +159,13 @@ export const Footer: React.FC = () => {
           </div>
           
           <div className="flex space-x-6">
-            <a href="#" className="text-gray-500 font-work-sans
- hover:text-purple-400 transition duration-300 text-sm">
+            <a href="#" className="text-gray-500 font-work-sans hover:text-purple-400 transition duration-300 text-sm">
               Privacy Policy
             </a>
-            <a href="#" className="text-gray-500 font-work-sans
- hover:text-purple-400 transition duration-300 text-sm">
+            <a href="#" className="text-gray-500 font-work-sans hover:text-purple-400 transition duration-300 text-sm">
               Terms of Service
             </a>
-            <a href="#" className="text-gray-500 font-work-sans
- hover:text-purple-400 transition duration-300 text-sm">
+            <a href="#" className="text-gray-500 font-work-sans hover:text-purple-400 transition duration-300 text-sm">
               Cookies
             </a>
           </div>

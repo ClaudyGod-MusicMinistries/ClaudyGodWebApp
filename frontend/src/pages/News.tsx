@@ -1,17 +1,10 @@
 import { useState, Suspense } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {musicCover6 , VideoArt, veryGlorious } from '../assets/';
-import {
-  
- faArrowDown
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  faYoutube,
-  faSpotify,
-  faApple,
-  faDeezer,
-} from '@fortawesome/free-brands-svg-icons';
+import { albums } from '../components/data/newsData';
+
+import { faArrowDown, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faYoutube, faSpotify, faApple, faDeezer } from '@fortawesome/free-brands-svg-icons';
 
 // Components
 import { HeroSlider } from '../components/news/Slider';
@@ -27,8 +20,23 @@ import {TourHighlights} from '../components/news/Tournews'
 export const News = () => {
   const [showTourModal, setShowTourModal] = useState(false);
   const [selectedTourCity, setSelectedTourCity] = useState<string | null>(null);
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [currentVideoUrl, setCurrentVideoUrl] = useState('');
+  const [currentAlbum, setCurrentAlbum] = useState('');
 
-  return (
+  const openVideoModal = (url: string, album: string) => {
+    setCurrentVideoUrl(url);
+    setCurrentAlbum(album);
+    setShowVideoModal(true);
+  };
+
+  const closeVideoModal = () => {
+    setShowVideoModal(false);
+    setCurrentVideoUrl('');
+    setCurrentAlbum('');
+  };
+
+   return (
     <>
       <HeroSlider />
       <div className="w-full py-16 bg-gradient-to-b from-[#0a061a] to-[#1a0a2e]">
@@ -85,207 +93,142 @@ export const News = () => {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="md:text-xl max-md:text-xl font-work-sans text-[#72709e] max-w-3xl mx-auto"
           >
-      We’ve just released three new gospel albums, packed with inspiring messages and soulful melodies.
+            We've just released three new gospel albums, packed with inspiring messages and soulful melodies.
           </motion.p>
         </div>
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-[#1a0a2e] rounded-2xl p-6 md:p-8 shadow-xl h-full"
-          >
-            <h3 className="sm:text-sm md:text-xl font-roboto-condensed text-white mb-6 text-left">
-              Album: Lover of my Soul
-            </h3>
+          {albums.map((album, index) => (
+            <motion.div
+              key={album.title}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 * index }}
+              className="bg-[#1a0a2e] rounded-2xl p-6 md:p-8 shadow-xl h-full"
+            >
+              <h3 className="sm:text-sm md:text-xl font-roboto-condensed text-white mb-6 text-left">
+                Album: {album.title}
+              </h3>
 
-            <div className="relative aspect-video rounded-xl overflow-hidden mb-6">
-              <img
-                src={musicCover6}
-                alt="Latest Release"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-center">
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                  <svg
-                    className="w-6 h-6 md:w-8 md:h-8 text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
+              <div className="relative aspect-video rounded-xl overflow-hidden mb-6">
+                <img
+                  src={album.image}
+                  alt={album.title}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-center">
+                  <motion.div 
+                    className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => openVideoModal(album.links.youtube, album.title)}
                   >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                    <svg
+                      className="w-6 h-6 md:w-8 md:h-8 text-white"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </motion.div>
                 </div>
               </div>
-            </div>
-            <div className="mt-6 md:mt-8 grid grid-cols-2 gap-3 font-raleway-light
-">
-     <a href="#" className="flex items-center justify-center p-3 bg-green-600 rounded-lg shadow-lg hover:opacity-90 transition-all">
-                <FontAwesomeIcon icon={faSpotify} className="w-5 h-5 mr-2 text-white" />
-                <span className="text-white text-sm font-medium">Spotify</span>
-              </a>
-          
-              <a
-                href="#"
-                className="flex items-center justify-center p-3 bg-red-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
-              >
-                <FontAwesomeIcon icon={faYoutube} className="w-5 h-5 mr-2 text-white" />
-                <span className="text-white text-sm font-medium">YouTube</span>
-              </a>
-              <a
-                href="#"
-                className="flex items-center justify-center p-3 bg-black rounded-lg shadow-lg hover:opacity-90 transition-all"
-              >
-                <FontAwesomeIcon icon={faApple} className="w-5 h-5 mr-2 text-white" />
-                <span className="text-white text-sm font-medium">Apple Music</span>
-              </a>
-              <a
-                href="#"
-                className="flex items-center justify-center p-3 bg-[#feaa2d] rounded-lg shadow-lg hover:opacity-90 transition-all"
-              >
-                <FontAwesomeIcon icon={faDeezer} className="w-5 h-5 mr-2 text-white" />
-                <span className="text-white text-sm font-medium">Deezer</span>
-              </a>
-            </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="bg-[#1a0a2e] rounded-2xl p-6 md:p-8 font-raleway-light
-shadow-xl h-full"
-          >
-            <h3 className="sm:text-sm md:text-xl font-roboto-condensed text-white mb-6 text-left">
-           Album: Very Glorious
-            </h3>
-
-            <div className="relative aspect-video rounded-xl overflow-hidden mb-6">
-              <img
-                src={veryGlorious}
-                alt="New Album"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-center">
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                  <svg
-                    className="w-6 h-6 md:w-8 md:h-8 text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
+              
+              <div className="mt-6 md:mt-8 grid grid-cols-2 gap-3 font-raleway-light">
+                <a 
+                  href={album.links.spotify} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center p-3 bg-green-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
+                >
+                  <FontAwesomeIcon icon={faSpotify} className="w-5 h-5 mr-2 text-white" />
+                  <span className="text-white text-sm font-medium">Spotify</span>
+                </a>
+                
+                <button
+                  onClick={() => openVideoModal(album.links.youtube, album.title)}
+                  className="flex items-center justify-center p-3 bg-red-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
+                >
+                  <FontAwesomeIcon icon={faYoutube} className="w-5 h-5 mr-2 text-white" />
+                  <span className="text-white text-sm font-medium">YouTube</span>
+                </button>
+                
+                <a 
+                  href={album.links.apple} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center p-3 bg-black rounded-lg shadow-lg hover:opacity-90 transition-all"
+                >
+                  <FontAwesomeIcon icon={faApple} className="w-5 h-5 mr-2 text-white" />
+                  <span className="text-white text-sm font-medium">Apple Music</span>
+                </a>
+                
+                <a 
+                  href={album.links.deezer} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center p-3 bg-[#feaa2d] rounded-lg shadow-lg hover:opacity-90 transition-all"
+                >
+                  <FontAwesomeIcon icon={faDeezer} className="w-5 h-5 mr-2 text-white" />
+                  <span className="text-white text-sm font-medium">Deezer</span>
+                </a>
               </div>
-            </div>
-            <div className="mt-6 md:mt-8 grid grid-cols-2 gap-3">
-              <a
-                href="#"
-                className="flex items-center justify-center p-3 bg-green-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
-              >
-                <FontAwesomeIcon icon={faSpotify} className="w-5 h-5 mr-2 text-white" />
-                <span className="text-white text-sm font-medium">Spotify</span>
-              </a>
-              <a
-                href="#"
-                className="flex items-center justify-center p-3 bg-red-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
-              >
-                <FontAwesomeIcon icon={faYoutube} className="w-5 h-5 mr-2 text-white" />
-                <span className="text-white text-sm font-medium">YouTube</span>
-              </a>
-              <a
-                href="#"
-                className="flex items-center justify-center p-3 bg-black rounded-lg shadow-lg hover:opacity-90 transition-all"
-              >
-                <FontAwesomeIcon icon={faApple} className="w-5 h-5 mr-2 text-white" />
-                <span className="text-white text-sm font-medium">Apple Music</span>
-              </a>
-              <a
-                href="#"
-                className="flex items-center justify-center p-3 bg-[#feaa2d] rounded-lg shadow-lg hover:opacity-90 transition-all"
-              >
-                <FontAwesomeIcon icon={faDeezer} className="w-5 h-5 mr-2 text-white" />
-                <span className="text-white text-sm font-medium">Deezer</span>
-              </a>
-            </div>
-          </motion.div>
-
-         <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-[#1a0a2e] rounded-2xl p-6 font-raleway-light
-md:p-8 shadow-xl h-full"
-          >
-            <h3 className="sm:text-sm md:text-xl  font-roboto-condensed text-white mb-6 text-left">
-              Album: King of heavens
-            </h3>
-
-            <div className="relative aspect-video rounded-xl overflow-hidden mb-6">
-              <img
-                src={VideoArt}
-                alt="Latest Release"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-center">
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                  <svg
-                    className="w-6 h-6 md:w-8 md:h-8 text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div className="mt-6 md:mt-8 grid grid-cols-2 gap-3">
-              <a
-                href="#"
-                className="flex items-center justify-center p-3 bg-green-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
-              >
-                <FontAwesomeIcon icon={faSpotify} className="w-5 h-5 mr-2 text-white" />
-                <span className="text-white text-sm font-medium">Spotify</span>
-              </a>
-              <a
-                href="#"
-                className="flex items-center justify-center p-3 bg-red-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
-              >
-                <FontAwesomeIcon icon={faYoutube} className="w-5 h-5 mr-2 text-white" />
-                <span className="text-white text-sm font-medium">YouTube</span>
-              </a>
-              <a
-                href="#"
-                className="flex items-center justify-center p-3 bg-black rounded-lg shadow-lg hover:opacity-90 transition-all"
-              >
-                <FontAwesomeIcon icon={faApple} className="w-5 h-5 mr-2 text-white" />
-                <span className="text-white text-sm font-medium">Apple Music</span>
-              </a>
-              <a
-                href="#"
-                className="flex items-center justify-center p-3 bg-[#feaa2d] rounded-lg shadow-lg hover:opacity-90 transition-all"
-              >
-                <FontAwesomeIcon icon={faDeezer} className="w-5 h-5 mr-2 text-white" />
-                <span className="text-white text-sm font-medium">Deezer</span>
-              </a>
-            </div>
-          </motion.div>
+            </motion.div>
+          ))}
         </div>
       </div>
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {showVideoModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4"
+            onClick={closeVideoModal}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-[#1a0a2e] rounded-xl border border-purple-700 w-full max-w-4xl relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="absolute top-4 right-4 z-10">
+                <button 
+                  onClick={closeVideoModal}
+                  className="w-10 h-10 rounded-full bg-purple-800/50 backdrop-blur-sm flex items-center justify-center hover:bg-purple-700 transition-colors"
+                >
+                  <FontAwesomeIcon icon={faTimes} className="text-white" />
+                </button>
+              </div>
+              
+              <div className="p-4 text-center">
+                <h3 className="text-xl md:text-2xl font-roboto-condensed text-purple-400 mb-2">
+                  {currentAlbum}
+                </h3>
+              </div>
+              
+              <div className="aspect-video w-full">
+                <iframe
+                  src={currentVideoUrl.replace('youtu.be', 'youtube.com/embed').replace('watch?v=', 'embed/')}
+                  className="w-full h-full"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
 <TourHighlights />
 <div className="w-full py-20 mb-20 bg-[#0a061a]">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
