@@ -11,6 +11,8 @@ import { Herosection } from '../components/util/Herosection';
 import { NewsletterForm } from '../components/util/Newsletter';
 import { About1 } from '../assets/';
 import { teachingsData, TeachingType } from '../components/data/MinistryData';
+import { DonationCallToAction } from '../components/util/DonationSupport';
+
 
 const VideoCard = ({ 
   content, 

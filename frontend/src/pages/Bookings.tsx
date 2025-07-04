@@ -17,6 +17,8 @@ import { LocationSection } from '../components/Bookings/LocationInfo';
 import { TermsSection } from '../components/Bookings/TermsSubmit';
 import { DownloadSection } from '../components/util/Download';
 import { SEO } from '../components/util/SEO';
+import { DonationCallToAction } from '../components/util/DonationSupport';
+
 
 export const Bookings: React.FC = () => {
   const [showThankYouModal, setShowThankYouModal] = useState(false);

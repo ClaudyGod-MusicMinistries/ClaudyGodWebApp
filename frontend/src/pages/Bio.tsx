@@ -9,6 +9,7 @@ import { BioSection } from '../components/Bio/BioSectio';
 import { firstSectionTexts, secondSectionTexts } from '../components/data/Biography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophoneAlt, faHandsPraying, faQuoteRight } from '@fortawesome/free-solid-svg-icons';
+import { DonationCallToAction } from '../components/util/DonationSupport';
 
 export const Biography: React.FC = () => {
   return (
@@ -188,7 +189,13 @@ export const Biography: React.FC = () => {
             </span>
           </div>
         </div>
-
+      <DonationCallToAction
+  title="Partner with Our Ministry"
+  subtitle="Your Support Makes a Difference"
+  description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+  goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+  donateUrl="/donate"
+/>
         {/* Newsletter Section */}
         <div className="bg-gradient-to-br from-purple-50 to-gray-50 py-16 sm:py-20 md:py-24">
           <div className="max-w-3xl mx-auto px-4 sm:px-6">

@@ -11,7 +11,7 @@ import {
 const ContactInfo: React.FC = () => {
   return (
     <div>
-      <h3 className="text-xl md:text-2xl roboto-condensed text-gray-900 mb-6">
+      <h3 className="text-xl md:text-2xl font-roboto-condensed text-yellow-200 mb-6">
         Management & General Inquiries
       </h3>
       <div className="space-y-4">
@@ -42,7 +42,7 @@ const ContactInfo: React.FC = () => {
       </div>
 
       <div className="mt-8">
-        <h4 className="text-lg font-medium text-gray-900 mb-3">Connect With Us</h4>
+        <h4 className="text-lg font-medium text-yellow-200 mb-3">Connect With Us</h4>
         <div className="flex space-x-4">
           <a
             href="https://www.facebook.com/yourpage"

@@ -8,7 +8,7 @@ const LazyBlogWelcome = lazy(() => import('../components/blog/blogWelcome'));
 const LazyWelcomeImage = lazy(() => import('../components/util/WelcomeImage'));
 const LazyBlogPost = lazy(() => import('../components/mainBlog'));
 const LazyChatbot = lazy(() => import('../components/Chatbot'));
-
+import { DonationCallToAction } from '../components/util/DonationSupport';
 
 interface Comment {
   id: string;
@@ -167,7 +167,13 @@ export const Blog: React.FC = () => {
           </div>
         </Suspense>
       </div>
-      
+            <DonationCallToAction
+        title="Partner with Our Ministry"
+        subtitle="Your Support Makes a Difference"
+        description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+        goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+        donateUrl="/donate"
+      />
       <div className={`fixed bottom-8 right-8 z-50 ${fadeInClass} ${isMounted ? 'opacity-100 delay-700' : 'opacity-0'}`}>
         <Suspense fallback={<div className="w-16 h-16 rounded-full bg-indigo-600 animate-pulse" />}>
           <LazyChatbot className="transform transition-all hover:scale-105" />

@@ -10,7 +10,7 @@ import { ScrollToTop } from '../components/Homepage/ScrollToTop';
 import { Welcome } from '../components/Homepage/welcome';
 import { Hero } from '../components/HomeHero/MainHero';
 import { DownloadSection } from '../components/util/Download';
-
+import { DonationCallToAction } from '../components/util/DonationSupport';
 
 const ScrollAnimationWrapper = ({ children }: { children: React.ReactNode }) => {
   const [ref, inView] = useInView({
@@ -65,7 +65,13 @@ export const Home = () => {
       <ScrollAnimationWrapper>
         <ShopPreview />
       </ScrollAnimationWrapper>
-
+<DonationCallToAction
+  title="Partner with Our Ministry"
+  subtitle="Your Support Makes a Difference"
+  description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+  goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+  donateUrl="/donate"
+/>
   <ScrollAnimationWrapper>
         <FeaturedVideos />
       </ScrollAnimationWrapper>

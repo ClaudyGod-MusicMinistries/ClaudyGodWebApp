@@ -21,6 +21,8 @@ import { VolunteerForm } from '../components/news/VolunteerForm';
 import { LiveSession } from '../components/news/LiveSession';
 import { TourCityModal } from '../components/news/TourCityModal';
 import {NewsletterForm} from '../components/util/Newsletter';
+import { DonationCallToAction } from '../components/util/DonationSupport';
+
 
 export const News = () => {
   const [showTourModal, setShowTourModal] = useState(false);
@@ -358,8 +360,14 @@ md:p-8 shadow-xl h-full"
           />
         </Suspense>
       )}
-      <hr className="bg-purple-500" />
-      <NewsletterForm />
+      <DonationCallToAction
+  title="Partner with Our Ministry"
+  subtitle="Your Support Makes a Difference"
+  description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+  goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+  donateUrl="/donate"
+/>
+         <NewsletterForm />
     </>
   );
 };

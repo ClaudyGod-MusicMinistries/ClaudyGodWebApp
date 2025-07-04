@@ -14,6 +14,7 @@ import { SEO } from '../components/util/SEO';
 import { PaymentPlatforms } from '../components/donate/payment';
 import { NigerianBankTransfer } from '../components/donate/NigeriaAcct';
 import { Herosection } from '../components/util/Herosection';
+import { DonationCallToAction } from '../components/util/DonationSupport';
 
 // Currency selector component
 const CurrencySelector = ({ currency, setCurrency }: { currency: string, setCurrency: React.Dispatch<React.SetStateAction<string>> }) => {
@@ -25,11 +26,11 @@ const CurrencySelector = ({ currency, setCurrency }: { currency: string, setCurr
   ];
 
   return (
-    <div className="relative flex-shrink-0">
+    <div className="relative flex-shrink-0 w-full sm:w-auto">
       <select 
         value={currency}
         onChange={(e) => setCurrency(e.target.value)}
-        className="appearance-none h-full px-3 py-2 text-sm text-gray-900 bg-gray-100 border border-r-0 border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-purple-600 cursor-pointer shadow-sm"
+        className="appearance-none w-full h-full px-3 py-2 text-sm text-gray-900 bg-gray-100 border border-r-0 border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-purple-600 cursor-pointer shadow-sm"
       >
         {currencies.map((curr) => (
           <option key={curr.code} value={curr.code}>
@@ -75,7 +76,7 @@ const DonateHeroSlider: React.FC = () => {
   return (
     <div className={`relative w-full ${isNavOpen ? 'filter blur-sm opacity-75 transition-all duration-300' : ''}`}>
       {/* Mobile Version */}
-      <div className="md:hidden relative h-[60vh] min-h-[400px] w-full overflow-hidden bg-black">
+      <div className="md:hidden relative h-[50vh] min-h-[300px] w-full overflow-hidden bg-black">
         {images.map((img, index) => (
           <div
             key={index}
@@ -87,7 +88,7 @@ const DonateHeroSlider: React.FC = () => {
               <img
                 src={img}
                 alt="Donation slide"
-                className="h-[400px] w-[400px] object-cover rounded-lg shadow-xl border-4 border-white"
+                className="h-full w-full object-cover"
               />
             </div>
           </div>
@@ -95,7 +96,7 @@ const DonateHeroSlider: React.FC = () => {
       </div>
 
       {/* Desktop Version */}
-      <div className="hidden md:block relative h-[60vh] min-h-[400px] w-full overflow-hidden">
+      <div className="hidden md:block relative h-[60vh] min-h-[500px] w-full overflow-hidden">
         {images.map((img, index) => (
           <div
             key={index}
@@ -118,7 +119,7 @@ const DonateHeroSlider: React.FC = () => {
 };
 
 const DonationGuide = () => (
-  <div className="bg-purple-50 border-l-4 border-purple-600 rounded-lg p-5 mb-10 shadow-sm">
+  <div className="bg-purple-50 border-l-4 border-purple-600 rounded-lg p-4 sm:p-5 mb-8 sm:mb-10 shadow-sm">
     <div className="flex items-start">
       <FontAwesomeIcon 
         icon={faInfoCircle} 
@@ -126,7 +127,7 @@ const DonationGuide = () => (
       />
       <div>
         <h3 className="text-lg font-semibold text-purple-900 mb-2">How to Donate</h3>
-        <ul className="list-disc pl-5 space-y-2 text-gray-700">
+        <ul className="list-disc pl-5 space-y-2 text-gray-700 text-sm sm:text-base">
           <li>
             <span className="font-medium">Select your currency</span> - Choose from USD, EUR, GBP or NGN using 
             the dropdown menu
@@ -152,12 +153,12 @@ const FeatureCard = ({ icon, title, description }: {
   title: string, 
   description: string 
 }) => (
-  <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-    <div className="bg-purple-100 w-14 h-14 rounded-full flex items-center justify-center mb-4">
-      <FontAwesomeIcon icon={icon} className="text-purple-700 text-xl" />
+  <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow h-full">
+    <div className="bg-purple-100 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+      <FontAwesomeIcon icon={icon} className="text-purple-700 text-lg sm:text-xl" />
     </div>
-    <h3 className="text-xl font-bold mb-2 text-gray-800">{title}</h3>
-    <p className="text-gray-600">{description}</p>
+    <h3 className="text-lg sm:text-xl font-bold mb-2 text-gray-800">{title}</h3>
+    <p className="text-gray-600 text-sm sm:text-base">{description}</p>
   </div>
 );
 
@@ -264,12 +265,12 @@ export const DonateData: React.FC = () => {
         </div>
       ) : (
         <div className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75 transition-all duration-300' : ''}`}>
-          <div className="text-center mb-16">
-            <h2 className="roboto-condensed text-3xl md:text-4xl font-bold text-gray-900">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="roboto-condensed text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
               Support Our Ministry
             </h2>
-            <div className="w-24 h-1 bg-purple-600 mx-auto mt-4 mb-8"></div>
-            <p className="md:text-lg max-md:text-base text-gray-700 work-sans max-w-3xl mx-auto leading-relaxed">
+            <div className="w-24 h-1 bg-purple-600 mx-auto mt-4 mb-6 md:mb-8"></div>
+            <p className="text-base sm:text-lg text-gray-700 work-sans max-w-3xl mx-auto leading-relaxed">
               "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver." (2 Corinthians 9:7)
               <br /><br />
               We appreciate your support and donations towards the ministry. You partner with us to advance the gospel through music. 
@@ -277,7 +278,7 @@ export const DonateData: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 md:mb-16">
             <FeatureCard 
               icon={faGlobe}
               title="Global Support"
@@ -295,24 +296,24 @@ export const DonateData: React.FC = () => {
             />
           </div>
 
-          <div className="flex justify-center my-10">
+          <div className="flex justify-center my-8 md:my-10">
             <div className="bg-purple-700 h-1 w-16 rounded-full"></div>
           </div>
 
-          <div className="max-w-4xl mx-auto px-4 py-8 bg-white rounded-xl shadow-sm">
-            <div className="text-center mb-10">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 roboto-condensed">
+          <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8 bg-white rounded-xl shadow-sm">
+            <div className="text-center mb-8 md:mb-10">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4 roboto-condensed">
                 Make a Donation
               </h2>
-              <p className="text-gray-600 max-w-xl mx-auto">
+              <p className="text-gray-600 max-w-xl mx-auto text-sm sm:text-base">
                 Select your currency and amount to support our gospel music ministry
               </p>
             </div>
 
             <DonationGuide />
 
-            <form onSubmit={handleSubmit} className="bg-purple-50 p-6 md:p-8 rounded-lg">
-              <div className="mb-6">
+            <form onSubmit={handleSubmit} className="bg-purple-50 p-4 sm:p-6 md:p-8 rounded-lg">
+              <div className="mb-4 sm:mb-6">
                 <label htmlFor="name" className="block text-base font-medium text-gray-800 mb-2 roboto-condensed">
                   Your Name
                 </label>
@@ -321,24 +322,24 @@ export const DonateData: React.FC = () => {
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                   placeholder="Enter your name"
                   required
                 />
               </div>
               
-              <div className="mb-8">
+              <div className="mb-6 sm:mb-8">
                 <label className="block text-base font-medium text-gray-800 mb-2 roboto-condensed">
                   Select Amount ({currency})
                 </label>
                 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3 mb-4">
                   {suggestedAmounts.map((amt) => (
                     <button
                       key={amt}
                       type="button"
                       onClick={() => setAmount(amt.toString())}
-                      className={`py-3 px-2 rounded-lg border transition-all ${
+                      className={`py-2 sm:py-3 px-2 rounded-lg border transition-all text-sm sm:text-base ${
                         amount === amt.toString() 
                           ? 'bg-purple-600 text-white border-purple-600' 
                           : 'bg-white text-gray-700 border-gray-300 hover:border-purple-400'
@@ -349,18 +350,20 @@ export const DonateData: React.FC = () => {
                   ))}
                 </div>
                 
-                <div className="mb-6">
+                <div className="mb-4 sm:mb-6">
                   <label htmlFor="amount" className="block text-sm text-gray-700 mb-2">
                     Or enter a custom amount
                   </label>
-                  <div className="flex">
-                    <CurrencySelector currency={currency} setCurrency={setCurrency} />
+                  <div className="flex flex-col sm:flex-row">
+                    <div className="w-full sm:w-auto mb-2 sm:mb-0">
+                      <CurrencySelector currency={currency} setCurrency={setCurrency} />
+                    </div>
                     <input
                       type="number"
                       id="amount"
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
-                      className="flex-1 px-4 py-3 border border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                      className="flex-1 w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                       placeholder="Enter amount"
                       min="1"
                       step="0.01"
@@ -372,27 +375,34 @@ export const DonateData: React.FC = () => {
               
               <button 
                 type="submit"
-                className="w-full bg-purple-700 hover:bg-purple-800 text-white font-bold py-4 px-6 rounded-lg text-lg transition-all duration-300 flex items-center justify-center gap-3 shadow-md hover:shadow-lg"
+                className="w-full bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 sm:py-4 px-6 rounded-lg text-base sm:text-lg transition-all duration-300 flex items-center justify-center gap-3 shadow-md hover:shadow-lg"
               >
-                <FontAwesomeIcon icon={faHandHoldingUsd} className="h-5 w-5" />
+                <FontAwesomeIcon icon={faHandHoldingUsd} className="h-4 w-4 sm:h-5 sm:w-5" />
                 Donate Now
               </button>
             </form>
             
-            <div className="mt-8 text-center text-sm text-gray-500">
+            <div className="mt-6 sm:mt-8 text-center text-xs sm:text-sm text-gray-500">
               <p>Your donation is securely processed. All major cards and payment methods accepted.</p>
             </div>
           </div>
           
-          <div className="mt-16 text-center">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Have questions about donating?</h3>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+          <div className="mt-12 sm:mt-16 text-center">
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3 sm:mb-4">Have questions about donating?</h3>
+            <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
               Contact us at <span className="text-purple-700">info@ClaudyGod.com</span> or call 
               <span className="text-purple-700"> +1 (385) 219‑6632</span> for assistance with your donation.
             </p>
           </div>
         </div>
       )}
+      <DonationCallToAction
+        title="Partner with Our Ministry"
+        subtitle="Your Support Makes a Difference"
+        description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+        goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+        donateUrl="/donate"
+      />
     </div>
   );
 };

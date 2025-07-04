@@ -14,7 +14,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { latestReleasePlatforms,securedMusicPlatforms } from '../components/data/musicData';
 import  {NewsletterForm}  from '../components/util/Newsletter';
- 
+import { DonationCallToAction } from '../components/util/DonationSupport'; 
+
+
 const albums = [
   {
     id: 1,
@@ -375,7 +377,13 @@ export const MusicData = () => {
           </div>
         </div>
       </section>
-      
+      <DonationCallToAction
+  title="Partner with Our Ministry"
+  subtitle="Your Support Makes a Difference"
+  description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+  goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+  donateUrl="/donate"
+/>
       <AudioMackComponent />
       <DownloadSection />
       <NewsletterForm />
