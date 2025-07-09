@@ -141,9 +141,8 @@ const LatestRelease: React.FC = () => {
                 </div>
                 
                 <p className="text-gray-300 max-w-xl mb-6 md:mb-8 font-work-sans leading-relaxed text-sm md:text-base">
-                  Experience the divine harmonies of ClaudyGod's latest worship masterpiece. 
-                  This soul-stirring collection features 12 tracks of celestial melodies that 
-                  will elevate your spirit and bring you closer to the divine.
+                Experience the divine harmony of ClaudyGod’s latest worship release — 
+                a soul-stirring single that captures the essence of true devotion.
                 </p>
               </motion.div>
 

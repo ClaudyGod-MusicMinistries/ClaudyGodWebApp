@@ -93,14 +93,14 @@ export const HeroSlider = () => {
         }}
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.9 }}
-        animate={{
-          y: [0, -10, 0],
-          transition: {
-            repeat: Infinity,
-            duration: 1.5,
-            ease: "easeInOut"
-          }
-        }}
+        // animate={{
+        //   y: [0, -10, 0],
+        //   transition: {
+        //     repeat: Infinity,
+        //     duration: 1.5,
+        //     ease: "easeInOut"
+        //   }
+        // }}
       >
         <FontAwesomeIcon 
           icon={faArrowDown} 

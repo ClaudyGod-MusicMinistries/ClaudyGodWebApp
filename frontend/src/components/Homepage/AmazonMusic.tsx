@@ -38,13 +38,14 @@ export const AudioMackComponent = () => {
             <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
               <div className="w-full md:w-1/2">
                 <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 md:p-6">
-                  <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-3 md:mb-4 font-roboto-condensed">
+                  <h3 className=" md:text-3xl max-md:text-2xl text-purple-800 mb-3 md:mb-4 font-roboto-condensed">
                     Latest Release
                   </h3>
                   <div className="flex items-center mb-4 md:mb-6">
                     <div className="ml-3 md:ml-4">
-                      <p className="font-work-sans text-gray-800 text-base md:text-lg">You Are Our Everything</p>
-                      <p className="text-xs md:text-sm font-work-sans-light text-gray-600">12 tracks • 45 minutes</p>
+                      <p className="font-raleway-medium text-gray-800 text-xl md:text-lg mb-3">You Are Our Everything</p>
+                      <p className="text-xs md:text-sm font-raleway-medium text-gray-600 mb-1">Experience the divine harmony of ClaudyGod’s latest worship release — 
+                a soul-stirring single that captures the essence of true devotion.</p>
                     </div>
                   </div>
                 </div>
