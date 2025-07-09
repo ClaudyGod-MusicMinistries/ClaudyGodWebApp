@@ -1,4 +1,3 @@
-// src/components/Bookings/TermsSubmit.tsx
 import { useFormContext } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ClipboardCheck } from 'lucide-react';

@@ -1,4 +1,3 @@
-// src/components/Bookings/PersonalInfo.tsx
 import { useFormContext } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, User, Mail, Building } from 'lucide-react';
