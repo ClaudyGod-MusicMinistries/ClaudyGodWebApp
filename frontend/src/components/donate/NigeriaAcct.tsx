@@ -381,7 +381,7 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
             <div className="mb-4">
               <label htmlFor="reference" className="block text-sm font-medium text-gray-700 mb-2">
-                Transaction Reference Number
+                Transaction Account Number
               </label>
               <input
                 id="reference"
@@ -389,25 +389,25 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                 {...register('reference', { 
                   required: 'Reference number is required',
                   minLength: {
-                    value: 20,
-                    message: 'Reference must be exactly 20 characters'
+                    value: 10,
+                    message: 'Reference must be exactly 10 characters'
                   },
                   maxLength: {
-                    value: 20,
-                    message: 'Reference must be exactly 20 characters'
+                    value: 10,
+                    message: 'Reference must be exactly 10 characters'
                   }
                 })}
                 className={`w-full px-4 py-3 border ${
                   errors.reference ? 'border-red-500' : 'border-gray-300'
                 } rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent`}
-                placeholder="Enter your bank's 20-digit transaction reference"
+                placeholder="Enter your bank's Account Number here...."
                 disabled={isSubmitting}
               />
               {errors.reference && (
                 <p className="mt-1 text-sm text-red-600">{errors.reference.message}</p>
               )}
               <p className="mt-1 text-xs text-gray-500">
-                Must be a unique 20-digit reference from your bank
+                Must be your bank account number
               </p>
             </div>
 

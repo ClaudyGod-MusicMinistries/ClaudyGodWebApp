@@ -21,6 +21,7 @@ interface ZellePaymentProps {
 
 interface ZelleFormData {
   zelleSenderEmail: string;
+  zelleSenderPhone: string;
   zelleConfirmation: string;
 }
 
@@ -39,6 +40,7 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
   
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedId, setCopiedId] = useState(false);
+  const [activeTab, setActiveTab] = useState<'email' | 'phone'>('email');
   const transactionIdRef = useRef<HTMLInputElement | null>(null);
   const zelleEmail = "info@claudygod.com";
   
@@ -111,16 +113,18 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
       setDialogMessage('Validating your payment details...');
       setShowDialog(true);
 
+      const payload = {
+        ...data,
+        amount,
+        currency
+      };
+
       const response = await fetch(VALIDATE_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          ...data,
-          amount,
-          currency
-        })
+        body: JSON.stringify(payload)
       });
 
       if (!response.ok) {
@@ -265,40 +269,101 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
           </p>
         </div>
 
+        {/* Tab Navigation */}
+        <div className="flex border-b border-gray-200 mb-6">
+          <button
+            type="button"
+            className={`flex-1 py-3 font-medium text-center ${
+              activeTab === 'email'
+                ? 'text-purple-700 border-b-2 border-purple-700'
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('email')}
+          >
+            Email
+          </button>
+          <button
+            type="button"
+            className={`flex-1 py-3 font-medium text-center ${
+              activeTab === 'phone'
+                ? 'text-purple-700 border-b-2 border-purple-700'
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('phone')}
+          >
+            Phone
+          </button>
+        </div>
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-     
-          <div>
-            <label htmlFor="zelleSenderEmail" className="block text-sm font-medium text-gray-700 mb-2">
-              Your Zelle Email <span className="text-red-500">*</span>
-            </label>
-            <div className="relative">
-              <input
-                id="zelleSenderEmail"
-                type="email"
-                {...register('zelleSenderEmail', {
-                  required: 'Email is required',
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'Invalid email address'
-                  }
-                })}
-                className={`w-full pl-3 pr-10 py-2.5 border rounded-lg focus:outline-none focus:ring-2 ${
-                  errors.zelleSenderEmail
-                    ? 'border-red-500 focus:ring-red-500'
-                    : 'border-gray-300 focus:ring-purple-500 focus:border-transparent'
-                }`}
-                placeholder="your.email@example.com"
-              />
-              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
+          {activeTab === 'email' ? (
+            <div>
+              <label htmlFor="zelleSenderEmail" className="block text-sm font-medium text-gray-700 mb-2">
+                Your Zelle Email <span className="text-red-500">*</span>
+              </label>
+              <div className="relative">
+                <input
+                  id="zelleSenderEmail"
+                  type="email"
+                  {...register('zelleSenderEmail', {
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: 'Invalid email address'
+                    }
+                  })}
+                  className={`w-full pl-3 pr-10 py-2.5 border rounded-lg focus:outline-none focus:ring-2 ${
+                    errors.zelleSenderEmail
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-purple-500 focus:border-transparent'
+                  }`}
+                  placeholder="your.email@example.com"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
               </div>
+              {errors.zelleSenderEmail && (
+                <p className="mt-1.5 text-sm text-red-600">{errors.zelleSenderEmail.message}</p>
+              )}
             </div>
-            {errors.zelleSenderEmail && (
-              <p className="mt-1.5 text-sm text-red-600">{errors.zelleSenderEmail.message}</p>
-            )}
-          </div>
+          ) : (
+            <div>
+              <label htmlFor="zelleSenderPhone" className="block text-sm font-medium text-gray-700 mb-2">
+                Your Zelle Phone <span className="text-red-500">*</span>
+              </label>
+              <div className="relative">
+                <input
+                  id="zelleSenderPhone"
+                  type="tel"
+                  {...register('zelleSenderPhone', {
+                    required: 'Phone number is required',
+                    pattern: {
+                      value: /^[0-9]{10}$/,
+                      message: 'Invalid phone number (10 digits)'
+                    }
+                  })}
+                  className={`w-full pl-3 pr-10 py-2.5 border rounded-lg focus:outline-none focus:ring-2 ${
+                    errors.zelleSenderPhone
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-purple-500 focus:border-transparent'
+                  }`}
+                  placeholder="1234567890"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                </div>
+              </div>
+              {errors.zelleSenderPhone && (
+                <p className="mt-1.5 text-sm text-red-600">{errors.zelleSenderPhone.message}</p>
+              )}
+            </div>
+          )}
+          
           <div>
             <div className="flex items-center justify-between mb-2">
               <label htmlFor="zelleConfirmation" className="block text-sm font-medium text-gray-700">
@@ -423,8 +488,7 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
           <ul className="list-disc pl-6 space-y-2">
             <li>Make sure you've sent the exact amount to <span className="font-semibold">{zelleEmail}</span></li>
             <li>Transaction ID must be exactly 9 alphanumeric characters</li>
-            <li>Use the same email you registered with Zelle</li>
-            {/* <li>Processing may take 1-2 business days</li> */}
+            <li>Use the same email or phone you registered with Zelle</li>
             <li>Contact support@claudygod.org for assistance</li>
           </ul>
         </div>

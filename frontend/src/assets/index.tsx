@@ -83,13 +83,15 @@ import veryGlorious from './veryGlorious.jpg'
 // tour
 import Aba1 from './aba1.jpg';
 import Aba2 from './aba2.jpg';
+import owerri1 from './news_imsu.jpg';
+import ph from './news_ph.jpg';
 
 // video
 import bgVideo from '/mainBanner.webm'
 
 
 
-export {Log, Back1, Isr, Back2, Back3,  Back4, About1, blog,
+export {Log, Back1, Isr, Back2, Back3,  Back4, About1, blog,owerri1,ph,
     About2, Cover, Shop1, Shop2,Shop3, Donate1 , Donate2, veryGlorious,DesktopBg,
     Shop4, bgresize, VideoBanner1, VideoBanner2,newsBanner, musicCover6,newbanner,
     VideoBanner3,StoreBanner, newsBan,musicCover2, musicCover3,musicCover4, bgVideo,Main,

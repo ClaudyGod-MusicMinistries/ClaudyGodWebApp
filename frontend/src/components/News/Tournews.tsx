@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Aba1, Aba2, newbanner, Log } from '../../assets';
+import { Aba1, Aba2, owerri1, Log, ph, newbanner } from '../../assets';
 
 const tourImages: Record<string, string[]> = {
   Abia: [Aba1, Aba2],
-  Portharcourt: [newbanner, Log],
+  Portharcourt: [ph, Log],
   Abuja: [Log, newbanner],
-  Owerri: [newbanner, Log],
+  Owerri: [owerri1, Log],
   Lagos: [Log, newbanner],
 };
 
