@@ -73,20 +73,16 @@ export const ContactData: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          Get In Touch With Us
-        </motion.h3>
+        > Get In Touch With Us </motion.h3>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white rounded-2xl shadow-xl p-6 md:p-8"
-          >
+            className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
             <ContactForm onSuccess={() => setIsModalOpen(true)} />
           </motion.div>
-          
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -96,7 +92,6 @@ export const ContactData: React.FC = () => {
             <ContactInfo />
           </motion.div>
         </div>
-        
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -111,16 +106,13 @@ export const ContactData: React.FC = () => {
             donateUrl="/donate"
           />
         </motion.div>
-        
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
           className="bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl shadow-lg p-6 md:p-8 max-w-4xl mx-auto"
         >
-          {/* <h3 className="text-2xl md:text-3xl font-bold text-purple-900 mb-6 text-center roboto-condensed">
-            Stay Connected
-          </h3> */}
+         
           <NewsletterForm />
         </motion.div>
       </div>

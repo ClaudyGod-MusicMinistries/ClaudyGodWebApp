@@ -40,6 +40,7 @@ export const submitBooking = async (data: BookingFormData) => {
       timeout: 20000
     });
     return response.data;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     let errorMessage = 'Failed to submit booking';
     if (axios.isAxiosError(error)) {
@@ -62,6 +63,7 @@ export const checkApiHealth = async () => {
   try {
     const response = await axios.get(`${API_BASE}/api/health`, { timeout: 5000 });
     return { status: 'healthy', data: response.data };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     return { status: 'unhealthy', error: error.message || 'Unknown error' };
   }

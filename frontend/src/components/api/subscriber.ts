@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const getApiBase = () => {
   if (import.meta.env.PROD) {
     return 'https://cgm-backend-5qvj.onrender.com';
