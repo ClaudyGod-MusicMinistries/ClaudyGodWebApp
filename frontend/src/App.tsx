@@ -17,6 +17,7 @@ import { Blog } from './pages/Blogpost';
 import { MinistryData } from './pages/Ministry';
 import { News } from './pages/News';
 import DonationComplete from './components/donate/DonationSuccess';
+import StreamingPlatforms from './components/Homepage/Streaming';
 
 
 
@@ -50,7 +51,7 @@ function AppRoutes() {
           <Route path="news" element={<News />} />
           <Route path="cart" element={<CartPage />} />
           <Route path="donation-complete" element={<DonationComplete />} />
-
+           <Route path="stream" element={<StreamingPlatforms />} />
           {/* Payment routes */}
           <Route path="checkout/zelle" element={<ZellePaymentWrapper />} />
           <Route path="payment-pending" element={<PaymentPending />} />

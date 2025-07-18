@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Cover } from '../../assets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faCompactDisc, faMusic } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const LatestRelease: React.FC = () => {
   return (
@@ -152,50 +153,20 @@ const LatestRelease: React.FC = () => {
                 transition={{ duration: 0.6, delay: 0.5 }}
                 className="flex flex-wrap justify-center gap-3 md:gap-4"
               >
-                <motion.a
-                  href="#"
-                  className="inline-flex items-center bg-gradient-to-r from-purple-700 to-red-700 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl gap-2 font-medium hover:from-purple-800 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <FontAwesomeIcon icon={faPlay} className="text-lg md:text-xl" />
-                  <span className="text-sm md:text-base tracking-wider">STREAM NOW</span>
-                </motion.a>
-                
-                {/* <a
-                  href="#"
-                  className="inline-flex items-center bg-white/10 text-white px-5 py-2.5 md:px-6 md:py-3.5 rounded-xl gap-2 font-medium backdrop-blur-md hover:bg-white/20 transition-all duration-300 border border-white/20"
-                >
-                  <span className="text-xs md:text-sm tracking-wider">VIEW TRACKLIST</span>
-                </a> */}
+                <Link to="/stream">
+  <motion.div
+    className="inline-flex items-center bg-gradient-to-r from-purple-700 to-red-700 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl gap-2 font-medium hover:from-purple-800 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+  >
+    <FontAwesomeIcon icon={faPlay} className="text-lg md:text-xl" />
+    <span className="text-sm md:text-base tracking-wider">STREAM NOW</span>
+  </motion.div>
+</Link>
+
               </motion.div>
               
-              <div className="mt-8 md:mt-10 pt-6 md:pt-8 border-t border-white/10">
-                <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-                  {[
-                    { name: "Spotify", color: "#1DB954" },
-                    { name: "Apple Music", color: "#FA2C56" },
-                    { name: "YouTube Music", color: "#FF0000" },
-                    { name: "Amazon Music", color: "#00A8E1" },
-                  ].map((platform, index) => (
-                    <motion.div 
-                      key={index}
-                      className="flex items-center"
-                      initial={{ opacity: 0, x: 20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.6 + index * 0.1 }}
-                    >
-                      <div 
-                        className="w-6 h-6 md:w-8 md:h-8 rounded-full mr-2 md:mr-3 flex items-center justify-center"
-                        style={{ backgroundColor: platform.color }}
-                      >
-                        <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full"></div>
-                      </div>
-                      <span className="text-xs md:text-sm text-gray-300">{platform.name}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+             
             </motion.div>
           </div>
         </motion.div>
