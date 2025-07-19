@@ -213,5 +213,16 @@ export const videos: VideoType[] = [
       day: 'numeric' 
     })
   },
-  
+   {
+    id: 18,
+    title: 'Thank you (My midnight cry). Live session by ClaudyGod & Band',
+    youtubeId: 'd7qZ32829gg',
+    category: 'Live Sessions',
+    description: ' Song By Min. ClaudyGod and Her Worship Team.',
+    date: new Date().toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })
+  }
 ]
