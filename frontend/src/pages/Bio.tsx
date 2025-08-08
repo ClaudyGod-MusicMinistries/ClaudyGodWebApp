@@ -2,6 +2,7 @@
 import { SEO } from '../components/util/SEO';
 import React from 'react';
 import { motion } from 'framer-motion';
+// import { HeroSection } from '../components/util/Herosection';
 import { Herosection } from '../components/util/Herosection';
 import { About1, About2 } from '../assets';
 import { NewsletterForm } from '../components/util/Newsletter';
@@ -10,8 +11,12 @@ import { firstSectionTexts, secondSectionTexts } from '../components/data/Biogra
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophoneAlt, faHandsPraying, faQuoteRight } from '@fortawesome/free-solid-svg-icons';
 import { DonationCallToAction } from '../components/util/DonationSupport';
+import { SemiBoldText, LightText, ExtraBoldText } from '../components/ui/fonts/typography';
+import { useTheme } from '../contexts/ThemeContext';
 
 export const Biography: React.FC = () => {
+  const { colorScheme } = useTheme();
+  
   return (
     <>
       <SEO
@@ -47,94 +52,166 @@ export const Biography: React.FC = () => {
         }}
       />
       
-      <div className="bg-white">
+      <div>
         {/* Enhanced Hero Section */}
         <Herosection
           title="ClaudyGod Music & Ministries"
           backgroundImage={About1}
-          className="relative"
+          className="relative "
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-black/80 z-10" />
+          <div className="absolute inset-0 z-10" />
           <motion.div 
-            className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4"
+            className="absolute inset-0 z-20 flex flex-col items-center
+             justify-center text-center px-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <motion.h1
+            <motion.div
               initial={{ y: -20 }}
               animate={{ y: 0 }}
               transition={{ delay: 0.2, duration: 0.7 }}
-              className="text-3xl md:text-5xl lg:text-6xl font-bold text-white font-roboto-condensed mb-4"
             >
-              ClaudyGod
-            </motion.h1>
+              <ExtraBoldText 
+                style={{
+                  color: colorScheme.text,
+                  fontSize: "3rem",
+                  lineHeight: "1.2"
+                }}
+                useThemeColor={false}
+              >
+                ClaudyGod
+              </ExtraBoldText>
+            </motion.div>
+            
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="w-24 h-1 bg-gradient-to-r from-purple-500 to-red-500 mb-6"
+              style={{ 
+                width: "6rem",
+                height: "0.25rem",
+                background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.primary})`,
+                marginBottom: "1.5rem"
+              }}
             />
-            <motion.p
+            
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8 }}
-              className="text-xl md:text-2xl text-white font-work-sans max-w-3xl"
             >
-              American Contemporary Christian Music & Afro-Gospel Artist
-            </motion.p>
+              <SemiBoldText 
+                style={{ 
+                  color: colorScheme.text,
+                  fontSize: "1.5rem",
+                  maxWidth: "48rem"
+                }}
+                useThemeColor={false}
+              >
+                American Contemporary Christian Music & Afro-Gospel Artist
+              </SemiBoldText>
+            </motion.div>
           </motion.div>
         </Herosection>
 
         {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 xs:px-5 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-24">
+        <div style={{ 
+          maxWidth: "80rem",
+          margin: "0 auto",
+          padding: "3rem 1rem",
+          // backgroundColor: colorScheme.body
+        }}>
           {/* Section Header */}
-          <div className="mb-16">
+          <div style={{ marginBottom: "4rem" }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-3 bg-purple-100 px-5 py-2 rounded-full mb-6"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.75rem",
+                // backgroundColor: colorScheme.gray[100],
+                padding: "0.5rem 1.25rem",
+                borderRadius: "9999px",
+                // marginBottom: "1.5rem"
+              }}
             >
-              <FontAwesomeIcon icon={faMicrophoneAlt} className="text-purple-700" />
-              <span className="text-sm font-medium text-purple-800 tracking-wider">
+              <FontAwesomeIcon 
+                icon={faMicrophoneAlt} 
+                style={{ 
+                  color: colorScheme.primary 
+                }} 
+              />
+              <LightText 
+                style={{ 
+                  color: colorScheme.primary,
+                  fontSize: "0.875rem",
+                  letterSpacing: "0.05em"
+                }}
+                useThemeColor={false}
+              >
                 ARTIST BIOGRAPHY
-              </span>
+              </LightText>
             </motion.div>
             
-            <motion.h1
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-purple-900 font-roboto-condensed mb-4 leading-tight"
             >
-              The Journey of Faith & Music
-            </motion.h1>
+              <ExtraBoldText 
+                style={{ 
+                  color: colorScheme.primary,
+                  fontSize: "3rem",
+                  lineHeight: "1.2",
+                  marginBottom: "1rem"
+                }}
+                useThemeColor={false}
+              >
+                The Journey of Faith & Music
+              </ExtraBoldText>
+            </motion.div>
             
-            {/* ADDED HEADER SECTION */}
-            <motion.h2
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-xl md:text-2xl lg:text-3xl text-purple-800 font-work-sans mb-8 leading-relaxed max-w-4xl"
             >
-              ClaudyGod: American Contemporary Christian music and Afro-Gospel Artist
-            </motion.h2>
+              <SemiBoldText 
+                style={{ 
+                  color: colorScheme.accent,
+                  fontSize: "1.5rem",
+                  lineHeight: "1.6",
+                  // marginBottom: "2rem",
+                  maxWidth: "64rem"
+                }}
+                useThemeColor={false}
+              >
+                ClaudyGod: American Contemporary Christian music and Afro-Gospel Artist
+              </SemiBoldText>
+            </motion.div>
             
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="w-24 h-1 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full"
+              style={{ 
+                width: "6rem",
+                height: "0.25rem",
+                // background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.accent})`,
+                borderRadius: "9999px"
+              }}
             />
           </div>
 
           {/* Biography Sections */}
-          <div className="space-y-20">
+          <div style={{ display: "grid", gap: "5rem" }}>
             <BioSection
               imageSrc={About2}
               altText="ClaudyGod portrait"
@@ -147,24 +224,60 @@ export const Biography: React.FC = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="relative my-16 py-8 md:py-12 px-4 xs:px-6 sm:px-8 rounded-xl md:rounded-2xl bg-gradient-to-br from-purple-50 to-gray-50 border border-purple-100"
+              style={{
+                position: "relative",
+                margin: "4rem 0",
+                padding: "2rem",
+                borderRadius: colorScheme.borderRadius.large,
+                background: `linear-gradient(to bottom right, 
+                ${colorScheme.primary}, 
+                ${colorScheme.gray[100]})`,
+                border: `1px solid ${colorScheme.gray[200]}`
+              }}
             >
-              <div className="absolute top-4 right-4 text-purple-200 text-3xl md:text-5xl lg:text-6xl">
+              <div style={{
+                position: "absolute",
+                top: "1rem",
+                right: "1rem",
+                color: colorScheme.gray[300],
+                fontSize: "3rem"
+              }}>
                 <FontAwesomeIcon icon={faQuoteRight} />
               </div>
-              <div className="max-w-3xl mx-auto">
-                <div className="flex items-start">
+              <div style={{ maxWidth: "48rem", margin: "0 auto" }}>
+                <div style={{ display: "flex", alignItems: "flex-start" }}>
                   <FontAwesomeIcon 
                     icon={faHandsPraying} 
-                    className="text-purple-500 mt-1 mr-3 text-lg md:text-xl" 
+                    style={{ 
+                      color: colorScheme.accent,
+                      marginTop: "0.25rem",
+                      marginRight: "0.75rem",
+                      fontSize: "1.25rem"
+                    }} 
                   />
-                  <blockquote className="text-lg md:text-xl lg:text-2xl text-purple-800 font-work-sans leading-relaxed italic">
+                  <LightText 
+                    style={{ 
+                      color: colorScheme.text,
+                      fontSize: "1.25rem",
+                      lineHeight: "1.6",
+                      fontStyle: "italic"
+                    }}
+                    useThemeColor={false}
+                  >
                     "I heard God say to me, 'I love your worship.' That moment defined my calling and ministry."
-                  </blockquote>
+                  </LightText>
                 </div>
-                <p className="text-right mt-4 text-purple-900 font-medium text-base md:text-lg">
+                <SemiBoldText 
+                  style={{ 
+                    textAlign: "right",
+                    marginTop: "1rem",
+                    color: colorScheme.primary,
+                    fontSize: "1rem"
+                  }}
+                  useThemeColor={false}
+                >
                   - ClaudyGod
-                </p>
+                </SemiBoldText>
               </div>
             </motion.div>
             
@@ -179,26 +292,57 @@ export const Biography: React.FC = () => {
         </div>
 
         {/* Divider */}
-        <div className="relative my-10">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-200"></div>
+        <div style={{ 
+          position: "relative", 
+          margin: "2.5rem 0",
+          // backgroundColor: colorScheme.body
+        }}>
+          <div style={{ 
+            position: "absolute",
+            inset: "0",
+            display: "flex",
+            alignItems: "center"
+          }}>
+            <div style={{ 
+              width: "100%", 
+              borderTop: `1px solid ${colorScheme.gray[200]}`
+            }}></div>
           </div>
-          <div className="relative flex justify-center">
-            <span className="bg-white px-4 text-gray-500">
-              <FontAwesomeIcon icon={faMicrophoneAlt} className="text-purple-600" />
+          <div style={{ 
+            position: "relative",
+            display: "flex",
+            justifyContent: "center"
+          }}>
+            <span style={{ 
+              // backgroundColor: colorScheme.body,
+              padding: "0 1rem"
+            }}>
+              <FontAwesomeIcon 
+                icon={faMicrophoneAlt} 
+                style={{ color: colorScheme.primary }} 
+              />
             </span>
           </div>
         </div>
-      <DonationCallToAction
-  title="Partner with Our Ministry"
-  subtitle="Your Support Makes a Difference"
-  description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
-  goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
-  donateUrl="/donate"
-/>
+
+        <DonationCallToAction
+          title="Partner with Our Ministry"
+          subtitle="Your Support Makes a Difference"
+          description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+          goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+          donateUrl="/donate"
+        />
+
         {/* Newsletter Section */}
-        <div className="bg-gradient-to-br from-purple-50 to-gray-50 py-16 sm:py-20 md:py-24">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6">
+        <div style={{ 
+          background: `linear-gradient(to bottom right, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
+          padding: "4rem 0"
+        }}>
+          <div style={{ 
+            maxWidth: "48rem",
+            margin: "0 auto",
+            padding: "0 1rem"
+          }}>
             <NewsletterForm />
           </div>
         </div>

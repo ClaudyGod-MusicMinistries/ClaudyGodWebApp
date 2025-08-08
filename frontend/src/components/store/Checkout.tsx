@@ -218,16 +218,6 @@ export const Checkout: React.FC = () => {
                     </div>
                   </div>
                   
-                  {/* {shipping > 0 && (
-                    <div className="mt-3 bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                      <div className="flex items-center text-sm text-yellow-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                        </svg>
-                        <span>Spend ${(50 - subtotal).toFixed(2)} more for FREE shipping</span>
-                      </div>
-                    </div>
-                  )} */}
                 </motion.div>
 
                 <motion.div 
@@ -236,13 +226,7 @@ export const Checkout: React.FC = () => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1 }}
                 >
-                  {/* <h3 className="text-sm font-bold text-gray-900 mb-3">Accepted Payment Methods</h3>
-                  <div className="flex space-x-2">
-                    <div className="bg-gray-200 border-2 border-dashed rounded-xl w-10 h-6" />
-                    <div className="bg-gray-200 border-2 border-dashed rounded-xl w-10 h-6" />
-                    <div className="bg-gray-200 border-2 border-dashed rounded-xl w-10 h-6" />
-                    <div className="bg-gray-200 border-2 border-dashed rounded-xl w-10 h-6" />
-                  </div> */}
+              
                   
                   <div className="mt-6 flex items-center gap-2 bg-purple-50 rounded-lg p-3">
                     <div className="flex-shrink-0">
@@ -251,7 +235,7 @@ export const Checkout: React.FC = () => {
                       </svg>
                     </div>
                     <span className="text-sm text-purple-700">
-                      Secure SSL Encryption • 256-bit Security
+                      Secure SSL Encryption
                     </span>
                   </div>
                 </motion.div>

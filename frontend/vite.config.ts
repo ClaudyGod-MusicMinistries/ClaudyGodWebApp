@@ -8,7 +8,7 @@ export default defineConfig({
   publicDir: 'public',
   plugins: [react(), tailwindcss()],
   server: {
-    port: 3000,
+    port: 1005,
     proxy: {
       // Correct proxy configuration
       '/api': {

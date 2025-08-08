@@ -1,61 +1,108 @@
-// src/components/FeaturedVideos.tsx
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { About2 } from '../../assets';
-import { VideoProps, videos } from '../../components/data/FeaturedData'; // Import from data folder
+import { VideoProps, videos } from '../../components/data/FeaturedData';
+import { 
+  SemiBoldText,
+  BoldText,
+  LightText,
+  ExtraBoldText,
+  ExtraLightText 
+} from '../ui/fonts/typography';
+import { useTheme } from '../../contexts/ThemeContext';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faChevronLeft, faChevronRight, faClock } from '@fortawesome/free-solid-svg-icons';
 
-const VideoCard: React.FC<VideoProps> = ({ title, thumbnailUrl, duration, youtubeUrl }) => (
-  <motion.div
-    className="group relative flex flex-col w-full"
-    whileHover={{ y: -10 }}
-    transition={{ duration: 0.3 }}
-  >
-    <a
-      href={youtubeUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block relative rounded-xl overflow-hidden aspect-video shadow-lg"
+const VideoCard: React.FC<VideoProps> = ({ title, thumbnailUrl, duration, youtubeUrl }) => {
+  const { colorScheme } = useTheme();
+
+  return (
+    <motion.div
+      className="group relative flex flex-col w-full"
+      whileHover={{ y: -10 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: "0px 0px -100px 0px" }}
     >
-      <div className="relative overflow-hidden rounded-xl">
-        <img
-          src={thumbnailUrl}
-          alt={title}
-          className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-4">
-          <span className="text-white bg-purple-700/80 px-2 py-1 rounded-md text-xs font-medium">
-            {duration}
-          </span>
-        </div>
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-          <div className="bg-purple-700 rounded-full p-4 shadow-xl">
-            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-            </svg>
+      <a
+        href={youtubeUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block relative rounded-xl overflow-hidden aspect-video shadow-lg"
+      >
+        <div className="relative overflow-hidden rounded-xl" style={{ borderRadius: colorScheme.borderRadius.large }}>
+          <img
+            src={thumbnailUrl}
+            alt={title}
+            className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+            loading="lazy"
+          />
+          <div 
+            className="absolute inset-0 flex items-end p-4"
+            style={{ 
+              background: `linear-gradient(to top, ${colorScheme.black}/80, transparent 60%)`,
+              borderRadius: colorScheme.borderRadius.large
+            }}
+          >
+            <div 
+              className="flex items-center gap-2 px-3 py-1 rounded-md"
+              style={{ 
+                backgroundColor: colorScheme.accent + '80',
+                backdropFilter: 'blur(4px)'
+              }}
+            >
+              <FontAwesomeIcon icon={faClock} className="text-xs" style={{ color: colorScheme.white }} />
+              <ExtraLightText fontSize="12px" style={{ color: colorScheme.white }}>
+                {duration}
+              </ExtraLightText>
+            </div>
+          </div>
+          <div 
+            className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+            style={{ borderRadius: colorScheme.borderRadius.large }}
+          >
+            <motion.div 
+              className="rounded-full p-4 shadow-xl"
+              style={{ backgroundColor: colorScheme.accent }}
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <FontAwesomeIcon icon={faPlay} className="w-5 h-5" style={{ color: colorScheme.white }} />
+            </motion.div>
           </div>
         </div>
+      </a>
+      <div className="mt-4 px-2">
+        <SemiBoldText fontSize="18px" style={{ color: colorScheme.white }}>
+          {title}
+        </SemiBoldText>
       </div>
-    </a>
-    <div className="mt-4 px-2">
-      <h3 className="text-lg font-work-sans text-white roboto-condensed">{title}</h3>
-    </div>
-  </motion.div>
-);
+    </motion.div>
+  );
+};
 
 export const FeaturedVideos: React.FC = () => {
+  const { colorScheme } = useTheme();
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState<'left' | 'right'>('right');
   const [itemsPerSlide, setItemsPerSlide] = useState(4);
   const [autoPlay, setAutoPlay] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Timing controls
+  const AUTO_PLAY_INTERVAL = 8000; // 8 seconds between slides
+  const SLIDE_TRANSITION_DURATION = 0.8; // 800ms slide animation
+  const SLIDE_EASE = [0.25, 1, 0.5, 1]; // Custom easing curve
 
   useEffect(() => {
     const handleResize = () => {
       const w = window.innerWidth;
       if (w >= 1280) setItemsPerSlide(4);
-      else if (w >= 768) setItemsPerSlide(3);
-      else if (w >= 640) setItemsPerSlide(2);
+      else if (w >= 1024) setItemsPerSlide(3);
+      else if (w >= 768) setItemsPerSlide(2);
       else setItemsPerSlide(1);
     };
     handleResize();
@@ -64,13 +111,13 @@ export const FeaturedVideos: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!autoPlay) return;
+    if (!autoPlay || isHovered) return;
     const iv = setInterval(() => {
       setDirection('right');
       setActiveIndex((i) => (i + 1) % Math.ceil(videos.length / itemsPerSlide));
-    }, 5000);
+    }, AUTO_PLAY_INTERVAL);
     return () => clearInterval(iv);
-  }, [autoPlay, itemsPerSlide]);
+  }, [autoPlay, itemsPerSlide, isHovered]);
 
   const totalSlides = Math.ceil(videos.length / itemsPerSlide);
   const visibleVideos = videos.slice(
@@ -82,114 +129,216 @@ export const FeaturedVideos: React.FC = () => {
     setDirection('left');
     setActiveIndex((i) => (i - 1 + totalSlides) % totalSlides);
   };
+
   const handleNext = () => {
     setDirection('right');
     setActiveIndex((i) => (i + 1) % totalSlides);
   };
 
   return (
-    <section className="relative py-16 md:py-24 min-h-screen flex items-center overflow-hidden">
-     
-      <div 
+    <section 
+      className="relative py-16 md:py-24 min-h-screen flex items-center overflow-hidden"
+      style={{ backgroundColor: colorScheme.black }}
+    >
+      {/* Background with parallax effect */}
+      <motion.div 
         className="absolute inset-0 z-0"
         style={{
           backgroundImage: `url(${About2})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
         }}
+        initial={{ scale: 1 }}
+        whileInView={{ scale: 1.05 }}
+        transition={{ duration: 10 }}
       >
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-purple-900/70 to-black/90" />
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: `linear-gradient(to bottom, ${colorScheme.black}/90, ${colorScheme.accent}/70, ${colorScheme.black}/90)`
+          }}
+        />
+      </motion.div>
+
+      {/* Floating particles */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              background: `radial-gradient(circle, ${colorScheme.accent} 0%, transparent 70%)`,
+              width: `${Math.random() * 100 + 50}px`,
+              height: `${Math.random() * 100 + 50}px`,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              opacity: 0.1
+            }}
+            animate={{
+              y: [0, -50, 0],
+              x: [0, Math.random() * 40 - 20, 0],
+              opacity: [0.05, 0.15, 0.05],
+            }}
+            transition={{
+              duration: Math.random() * 10 + 10,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
       </div>
 
-      <div className="container mx-auto relative z-10 px-4">
-        <div className="flex flex-col items-center text-center md:text-left md:flex-row md:justify-between md:items-end mb-12">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mb-8 md:mb-0"
-          >
-            <h2 className="text-6xl md:text-6xl max-md:text-2xl  font-roboto-condensed text-white mb-4">
-              Featured <span className="text-purple-400">Videos</span>
-            </h2>
-            <p className="text-gray-300 font-work-sans max-w-xl text-lg">
+      <div className="container mx-auto relative z-10 px-4 sm:px-6">
+        {/* Header section */}
+        <motion.div 
+          className="flex flex-col items-center text-center md:text-left md:flex-row md:justify-between md:items-end mb-12 md:mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <div className="mb-8 md:mb-0 max-w-2xl">
+            <ExtraBoldText 
+              fontSize="48px"
+              className="mb-4 leading-tight"
+              style={{ color: colorScheme.white }}
+            >
+              Featured <span style={{ color: colorScheme.accent }}>Videos</span>
+            </ExtraBoldText>
+            <LightText 
+              fontSize="18px"
+              style={{ color: colorScheme.background }}
+            >
               Experience our latest worship sessions and musical performances
-            </p>
-          </motion.div>
+            </LightText>
+          </div>
           
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-wrap gap-4 justify-center"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="flex flex-wrap gap-3 justify-center"
           >
-            <Link
-              to="/music"
-              className="relative inline-flex group items-center justify-center bg-gradient-to-r from-purple-700 to-purple-900 hover:from-purple-600 hover:to-purple-800 text-white font-medium rounded-full px-6 py-3 transition-all duration-300 shadow-lg hover:shadow-xl"
-            >
-              <span className="font-work-sans">Latest Release</span>
-              <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
+            <Link to="/music">
+              <CustomButton
+                variant="primary"
+                size="md"
+                icon={<FontAwesomeIcon icon={faPlay} />}
+                iconPosition="right"
+                className="group"
+              >
+                <SemiBoldText>Latest Release</SemiBoldText>
+              </CustomButton>
             </Link>
-            <Link
-              to="/videos"
-              className="relative inline-flex group items-center justify-center bg-transparent text-white font-medium rounded-full px-6 py-3 border-2 border-purple-600 hover:bg-purple-900/50 transition-all duration-300"
-            >
-             <span className="font-work-sans">View All</span>
-              <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clipRule="evenodd" />
-              </svg>
+            <Link to="/videos">
+              <CustomButton
+                variant="outline"
+                size="md"
+                style={{ borderColor: colorScheme.background, color: colorScheme.background }}
+                hoverStyle={{ backgroundColor: colorScheme.accent + '20' }}
+              >
+                <LightText style={{color: colorScheme.background}}>View All</LightText>
+              </CustomButton>
             </Link>
           </motion.div>
-        </div>
-        <div 
-          className="relative overflow-hidden py-8 rounded-2xl bg-gradient-to-r from-black/50 to-purple-900/30 backdrop-blur-sm border border-purple-500/30 shadow-2xl"
-          onMouseEnter={() => setAutoPlay(false)}
-          onMouseLeave={() => setAutoPlay(true)}
+        </motion.div>
+
+        {/* Video Slider */}
+        <motion.div
+          className="relative overflow-hidden py-8 rounded-2xl"
+          style={{ 
+            backgroundColor: colorScheme.black + '80',
+            backdropFilter: 'blur(16px)',
+            border: `1px solid ${colorScheme.accent}30`,
+            boxShadow: `0 20px 40px ${colorScheme.black}80`
+          }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
         >
-          <button
+          {/* Navigation Arrows */}
+          <motion.button
             onClick={handlePrev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-purple-700 p-3 rounded-full transition-all shadow-lg"
+            className="absolute left-6 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full shadow-lg"
+            style={{ 
+              backgroundColor: colorScheme.black + '80',
+              backdropFilter: 'blur(4px)',
+              border: `1px solid ${colorScheme.accent}30`
+            }}
+            whileHover={{ 
+              backgroundColor: colorScheme.accent + '80',
+              scale: 1.1
+            }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             aria-label="Previous videos"
           >
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
+            <FontAwesomeIcon 
+              icon={faChevronLeft} 
+              className="w-5 h-5" 
+              style={{ color: colorScheme.white }} 
+            />
+          </motion.button>
           
-          <button
+          <motion.button
             onClick={handleNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-purple-700 p-3 rounded-full transition-all shadow-lg"
+            className="absolute right-6 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full shadow-lg"
+            style={{ 
+              backgroundColor: colorScheme.black + '80',
+              backdropFilter: 'blur(4px)',
+              border: `1px solid ${colorScheme.accent}30`
+            }}
+            whileHover={{ 
+              backgroundColor: colorScheme.accent + '80',
+              scale: 1.1
+            }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             aria-label="Next videos"
           >
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+            <FontAwesomeIcon 
+              icon={faChevronRight} 
+              className="w-5 h-5" 
+              style={{ color: colorScheme.white }} 
+            />
+          </motion.button>
 
+          {/* Slider Content */}
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={activeIndex}
               initial={{ opacity: 0, x: direction === 'left' ? -100 : 100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: direction === 'left' ? 100 : -100 }}
-              transition={{ duration: 0.5 }}
-              className="px-4"
+              transition={{ 
+                duration: SLIDE_TRANSITION_DURATION,
+                ease: SLIDE_EASE
+              }}
+              className="px-4 sm:px-8"
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+              <div className={`grid gap-6 mx-auto ${
+                itemsPerSlide === 4 ? 'grid-cols-4' : 
+                itemsPerSlide === 3 ? 'grid-cols-3' : 
+                itemsPerSlide === 2 ? 'grid-cols-2' : 'grid-cols-1'
+              }`}>
                 {visibleVideos.map((video) => (
                   <VideoCard key={video.id} {...video} />
                 ))}
               </div>
             </motion.div>
           </AnimatePresence>
-        </div>
+        </motion.div>
 
         {/* Enhanced Pagination */}
-        <div className="flex justify-center mt-10 space-x-3">
+        <motion.div 
+          className="flex justify-center mt-10 gap-2"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
           {Array.from({ length: totalSlides }).map((_, i) => (
             <motion.button
               key={i}
@@ -197,16 +346,25 @@ export const FeaturedVideos: React.FC = () => {
                 setDirection(i > activeIndex ? 'right' : 'left');
                 setActiveIndex(i);
               }}
-              whileHover={{ scale: 1.2 }}
-              className={`w-3 h-3 rounded-full transition-all ${
-                i === activeIndex 
-                  ? 'bg-purple-500 scale-125' 
-                  : 'bg-gray-600 hover:bg-purple-400'
+              className={`rounded-full transition-all ${
+                i === activeIndex ? 'scale-125' : 'hover:scale-110'
               }`}
+              style={{
+                backgroundColor: i === activeIndex ? colorScheme.accent : colorScheme.gray[600],
+                width: i === activeIndex ? '1.5rem' : '0.75rem',
+                height: '0.75rem'
+              }}
+              whileHover={{ scale: 1.2 }}
               aria-label={`Go to slide ${i+1}`}
+              transition={{ 
+                type: 'spring', 
+                stiffness: 300,
+                damping: 15,
+                duration: 0.4
+              }}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,11 +1,31 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import { faAmazon } from '@fortawesome/free-brands-svg-icons';
+import { faAmazon, faAppStore, faDeezer, faSpotify, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
+import { NotAvailableModal } from '../util/modals/Notavailable';
+import { BoldText, ExtraBoldText } from '../ui/fonts/typography';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export const AudioMackComponent = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => setModalOpen(true);
+  const handleCloseModal = () => setModalOpen(false);
+
+  const { colorScheme } = useTheme();
+
+  const platforms = [
+    { name: "Spotify", icon: faSpotify, color: "#1DB954" },
+    { name: "Apple Music", icon: faAppStore, color: "#FA2C56" },
+    { name: "YouTube Music", icon: faYoutube, color: "#FF0000" },
+    { name: "Deezer", icon: faDeezer, color: "#00C7F2" },
+  ];
+
   return (
-    <section className="py-12 md:py-16 lg:py-20 bg-gray-50">
+    <section className="py-12 md:py-16 lg:py-20 bg-gray-50 relative">
       <div className="container mx-auto px-4">
         <motion.div 
           className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden border border-gray-100"
@@ -16,13 +36,12 @@ export const AudioMackComponent = () => {
           <div className="p-6 sm:p-8 md:p-10 lg:p-12">
             {/* Header */}
             <div className="flex flex-col items-center mb-6 md:mb-8">
-              <div className="mb-4 md:mb-6 p-3 md:p-4 bg-gray-100 rounded-full">
+              <div className="mb-4 md:mb-6 p-3 md:p-4 bg-primary rounded-full">
                 <FontAwesomeIcon
                   icon={faAmazon}
-                  className="text-yellow-500 text-4xl sm:text-5xl md:text-6xl"
+                  className="text-black text-4xl sm:text-5xl md:text-6xl"
                 />
               </div>
-              
               <div className="text-center">
                 <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-roboto-condensed text-gray-800 mb-2 md:mb-3">
                   ClaudyGod Music Now Available on Amazon Music
@@ -33,83 +52,73 @@ export const AudioMackComponent = () => {
                 </p>
               </div>
             </div>
-            
+
             {/* Content */}
-            <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
-              <div className="w-full md:w-1/2">
-                <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 md:p-6">
-                  <h3 className=" md:text-3xl max-md:text-2xl text-purple-800 mb-3 md:mb-4 font-roboto-condensed">
-                    Latest Release
-                  </h3>
-                  <div className="flex items-center mb-4 md:mb-6">
-                    <div className="ml-3 md:ml-4">
-                      <p className="font-raleway-medium text-gray-800 text-xl md:text-lg mb-3">You Are Our Everything</p>
-                      <p className="text-xs md:text-sm font-raleway-medium text-gray-600 mb-1">Experience the divine harmony of ClaudyGod’s latest worship release — 
-                a soul-stirring single that captures the essence of true devotion.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="w-full md:w-1/2">
-                <div className="space-y-4 md:space-y-6">
-                  <motion.a
-                    href="https://music.amazon.com/albums/B0DSM7QGLF?tag=fndcmpgns-20"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full px-4 py-3 md:px-6 md:py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white text-center rounded-lg hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 shadow-sm"
-                    whileHover={{ 
-                      scale: 1.02,
-                      boxShadow: "0 5px 15px rgba(245, 158, 11, 0.3)"
-                    }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <div className="flex items-center justify-center">
-                      <FontAwesomeIcon icon={faExternalLinkAlt} className="mr-2 md:mr-3 text-sm md:text-base" />
-                      <span className="text-sm md:text-base lg:text-lg font-roboto-condensed">
-                        Stream Now on Amazon Music
-                      </span>
-                    </div>
-                  </motion.a>
-                </div>
+            <div className="max-w-4xl mx-auto px-4 py-6 md:py-10">
+              <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 md:p-6">
+                <ExtraBoldText
+                  fontSize="20px"
+                  style={{ color: colorScheme.primary }}
+                  useThemeColor={false}
+                >
+                  <span style={{ color: colorScheme.button }}>Latest Release: You Are Our Everything</span>
+                </ExtraBoldText>
+
+                <p className="text-xs md:text-sm font-raleway-medium text-gray-600 mb-6">
+                  Experience the divine harmony of ClaudyGod's latest worship release — a soul-stirring single that captures the essence of true devotion.
+                </p>
+
+                <CustomButton
+                  href="https://music.amazon.com/albums/B0DSM7QGLF?tag=fndcmpgns-20"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="primary"
+                  size="md"
+                  fullWidth
+                >
+                  <FontAwesomeIcon
+                    icon={faExternalLinkAlt}
+                    className="mr-2 text-sm md:text-base"
+                  />
+                  <span className="text-sm md:text-base lg:text-lg">
+                    Stream Now on Amazon Music
+                  </span>
+                </CustomButton>
               </div>
             </div>
-            
-            {/* Available Platforms - Responsive Section */}
-            <div className="mt-8 md:mt-10 pt-6 md:pt-8 border-t border-gray-100">
+
+            {/* Platform Buttons */}
+            <div className=" md:mt-4 pt-2 border-t border-gray-100">
               <h3 className="text-base md:text-lg font-roboto-condensed text-center text-gray-700 mb-4 md:mb-6">
                 Also available on other platforms
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
-                {[
-                  { name: "Spotify", color: "#1DB954" },
-                  { name: "Apple Music", color: "#FA2C56" },
-                  { name: "YouTube Music", color: "#FF0000" },
-                  { name: "Deezer", color: "#00C7F2" },
-                ].map((platform, index) => (
-                  <motion.div 
-                    key={index}
-                    className="flex items-center justify-center p-2 md:p-3 bg-gray-50 rounded-lg border border-gray-200"
-                    whileHover={{ 
-                      y: -3,
-                      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.05)"
-                    }}
-                    transition={{ duration: 0.2 }}
+                {platforms.map((platform, idx) => (
+                  <CustomButton
+                    key={`platform-${idx}`}
+                    variant="outline"
+                    size="sm"
+                    fullWidth
+                    className="flex items-center justify-center p-2 md:p-3 bg-gray-50 border border-gray-200 rounded-lg"
+                    onClick={handleOpenModal}
                   >
-                    <div 
-                      className="w-5 h-5 md:w-6 md:h-6 rounded-full mr-2 md:mr-3 flex-shrink-0" 
-                      style={{ backgroundColor: platform.color }}
+                    <FontAwesomeIcon
+                      icon={platform.icon}
+                      color={platform.color}
+                      className="text-base md:text-lg"
                     />
-                    <span className="text-xs sm:text-sm md:text-base font-work-sans text-gray-700 truncate">
+                    <span className="ml-2 text-xs sm:text-sm md:text-base font-work-sans text-gray-700 truncate">
                       {platform.name}
                     </span>
-                  </motion.div>
+                  </CustomButton>
                 ))}
               </div>
             </div>
           </div>
         </motion.div>
       </div>
+
+      <NotAvailableModal isOpen={modalOpen} onClose={handleCloseModal} />
     </section>
   );
 };

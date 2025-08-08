@@ -4,6 +4,7 @@ import { Log } from '../../assets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import StreamingModal from '../StreamingModel';
 import { useNavContext } from '../../contexts/NavContext';
+import { useTheme } from '../../contexts/ThemeContext';
 import {
   faUser,
   faMusic,
@@ -20,9 +21,11 @@ import {
   faBars,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
+import { BoldText, ExtraLightText, LightText, SemiBoldText } from '../ui/fonts/typography';
 
 export const Navbar: React.FC = () => {
   const { isNavOpen, toggleNav, closeNav } = useNavContext();
+  const { colorScheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
@@ -56,9 +59,14 @@ export const Navbar: React.FC = () => {
   }, [location, closeNav]);
 
   return (
-    <header className={`sticky top-0 z-50 h-20 transition-all duration-300 ${
-      scrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
-    }`}>
+    <header 
+      className={`sticky top-0 z-50 h-20 transition-all duration-300 ${
+        scrolled ? 'shadow-md py-2' : 'py-4'
+      }`}
+      style={{
+        backgroundColor: scrolled ? colorScheme.background : colorScheme.background,
+      }}
+    >
       {/* Desktop Header */}
       <div className="container-custom grid grid-cols-3 items-center gap-4">
         {/* Logo */}
@@ -67,21 +75,23 @@ export const Navbar: React.FC = () => {
             <img src={Log} alt="Logo" className="h-12 w-12" />
           </div>
           <div className="ml-2">
-            <span className={`text-purple-900 text-lg roboto-condensed ${
-              !scrolled && 'text-white'
-            }`}>
+            <BoldText
+              variant="brand" 
+              style={{ color: scrolled ? colorScheme.text : 'white' }}
+              className="text-lg"
+            >
               ClaudyGod
-            </span>
-            <span className={`text-xs block -mt-1 raleway-light ${
-              !scrolled ? 'text-white/80' : 'text-gray-700'
-            }`}>
+            </BoldText>
+            <LightText 
+              style={{ color: scrolled ? colorScheme.secondaryText : 'rgba(255, 255, 255, 0.8)' }}
+            fontSize="12px"  >
               Music & Ministry
-            </span>
+            </LightText>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex justify-center items-center space-x-4 xl:space-x-8 work-sans">
+        <nav className="hidden lg:flex justify-center items-center space-x-4 xl:space-x-8">
           {[
             { to: "/", name: "Home", icon: faHouse },
             { to: "/biography", name: "About" },
@@ -94,7 +104,6 @@ export const Navbar: React.FC = () => {
             { to: "/store", name: "Store" },
             { to: "/contact", name: "Contact" },
             { to: "/donate", name: "Donate" },
-            // { to: "/help", name: "Help" },
           ].map((link) => (
             <NavLink
               key={link.to}
@@ -105,21 +114,26 @@ export const Navbar: React.FC = () => {
                   scrollToTop();
                 }
               }}
-              className={({ isActive }) => `flex items-center text-xs work-sans transition-colors ${
-                scrolled 
-                  ? (isActive 
-                      ? 'text-purple-800 roboto-condensed underline underline-offset-4' 
-                      : 'text-purple-900 hover:text-purple-700') 
-                  : (isActive 
-                      ? 'text-purple-900 roboto-condensed ' 
-                      : 'text-gray-700 hover:text-amber-500')
-              }`}
+              style={({ isActive }) => ({
+                color: isActive 
+                  ? colorScheme.accent 
+                  : scrolled 
+                    ? colorScheme.text 
+                    : 'white',
+                textDecoration: isActive ? 'underline' : 'none',
+                textUnderlineOffset: isActive ? '4px' : 'none'
+              })}
+              className="flex items-center text-xs transition-colors hover:opacity-80"
             >
-              {link.icon && <FontAwesomeIcon 
-                icon={link.icon} 
-                className={`${link.name === 'Home' ? 'mr-2' : 'mr-1'} text-sm`} 
-              />}
-              <span>{link.name}</span>
+              {link.icon && (
+                <FontAwesomeIcon 
+                  icon={link.icon} 
+                  className={`${link.name === 'Home' ? 'mr-2' : 'mr-1'} text-sm`} 
+                />
+              )}
+              <LightText fontSize='13px'>
+                {link.name}
+              </LightText>
             </NavLink>
           ))}
         </nav>
@@ -133,7 +147,11 @@ export const Navbar: React.FC = () => {
           <div className="lg:hidden flex justify-end flex-1">
             <button
               onClick={toggleNav}
-              className="p-3 bg-purple-900 hover:bg-purple-800 text-white rounded-lg shadow-sm transition-colors absolute right-4 top-4"
+              style={{
+                backgroundColor: scrolled ? colorScheme.button : 'white',
+                color: scrolled ? colorScheme.buttonText : 'trans'
+              }}
+              className="p-3 hover:opacity-80 rounded-lg shadow-sm transition-colors absolute right-4 top-4"
             >
               <FontAwesomeIcon 
                 icon={isNavOpen ? faTimes : faBars} 
@@ -144,26 +162,45 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu - Updated with larger icons */}
+      {/* Mobile Menu */}
       <div className={`lg:hidden fixed inset-0 z-50 transition-transform duration-300 ${
         isNavOpen ? 'translate-x-0' : 'translate-x-full'
       }`}>
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={toggleNav} />
         
-        <div className="relative bg-white/95 w-3/4 h-full ml-auto transform transition-all">
-          <div className="flex justify-between items-center p-4 border-b">
+        <div 
+          className="relative w-3/4 h-full ml-auto transform transition-all"
+          style={{ backgroundColor: colorScheme.background }}
+        >
+          <div className="flex justify-between items-center p-4 border-b" style={{ borderColor: colorScheme.border }}>
             <Link to="/" onClick={closeNav} className="flex items-center">
               <div className="h-10 w-10 flex items-center justify-center">
                 <img src={Log} alt="Logo" className="h-10 w-10" />
               </div>
               <div className="ml-2">
-                <span className="text-purple-900 font-bold text-lg">ClaudyGod</span>
-                <span className="text-gray-700 text-xs block -mt-1">Music & Ministry</span>
+                <LightText
+                  variant="brand" 
+                  style={{ color: colorScheme.text }}
+                 font-size='5px'
+                >
+                  ClaudyGod
+                </LightText>
+                <LightText 
+                  variant="caption" 
+                  style={{ color: colorScheme.secondaryText }}
+                  font-size='5px'
+                >
+                  Music & Ministry
+                </LightText>
               </div>
             </Link>
             <button 
               onClick={toggleNav} 
-              className="p-2 bg-purple-900 hover:bg-purple-800 text-white rounded-full"
+              style={{
+                backgroundColor: colorScheme.button,
+                color: colorScheme.buttonText
+              }}
+              className="p-2 hover:opacity-80 rounded-full"
             >
               <FontAwesomeIcon icon={faTimes} className="h-6 w-6" />
             </button>
@@ -187,18 +224,30 @@ export const Navbar: React.FC = () => {
                 <li key={link.to}>
                   <button
                     onClick={() => handleMobileNavigation(link.to)}
-                    className={`flex items-center w-full p-4 rounded-lg transition-colors ${
-                      location.pathname === link.to 
-                        ? 'bg-purple-900 text-white' 
-                        : 'text-gray-800 hover:bg-purple-900 hover:text-white'
-                    }`}
+                    style={{
+                      backgroundColor: location.pathname === link.to 
+                        ? colorScheme.primary 
+                        : 'transparent',
+                      color: location.pathname === link.to 
+                        ? colorScheme.buttonText 
+                        : colorScheme.text
+                    }}
+                    className="flex items-center w-full p-4 rounded-lg transition-colors hover:opacity-80"
                   >
                     <FontAwesomeIcon 
                       icon={link.icon} 
                       className="mr-4 text-xl"
-                      style={{ width: '24px', height: '24px' }}
+                      style={{ 
+                        width: '24px', 
+                        height: '24px',
+                        color: location.pathname === link.to 
+                          ? colorScheme.buttonText 
+                          : colorScheme.text
+                      }}
                     />
-                    <span className="text-lg">{link.name}</span>
+                    <LightText variant="mobileNav">
+                      {link.name}
+                    </LightText>
                   </button>
                 </li>
               ))}
@@ -210,14 +259,20 @@ export const Navbar: React.FC = () => {
                   setIsModalOpen(true);
                   closeNav();
                 }}
-                className="w-full bg-purple-900 hover:bg-purple-800 text-white px-4 py-3 rounded-full text-base font-medium flex items-center justify-center transition-colors"
+                style={{
+                  backgroundColor: colorScheme.button,
+                  color: colorScheme.buttonText
+                }}
+                className="w-full px-4 py-3 rounded-full text-base font-medium flex items-center justify-center transition-colors hover:opacity-80"
               >
                 <FontAwesomeIcon 
                   icon={faHeadset} 
                   className="mr-3 text-xl"
                   style={{ width: '24px', height: '24px' }}
                 />
-                Listen Now
+                <SemiBoldText variant="button">
+                  Listen Now
+                </SemiBoldText>
               </button>
             </div>
           </nav>

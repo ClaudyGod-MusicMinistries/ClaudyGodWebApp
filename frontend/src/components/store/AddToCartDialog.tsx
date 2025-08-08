@@ -1,4 +1,3 @@
-// src/components/store/AddToCartDialog.tsx
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Product } from '../types/storeTypes';

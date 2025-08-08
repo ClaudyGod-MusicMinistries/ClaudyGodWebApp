@@ -6,14 +6,22 @@ import {
   faPhone,
   faCopyright
 } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom'; // Import Link component
+import { Link } from 'react-router-dom';
 import { Social } from '../Social';
 import { Streaming } from '../Streaming';
+import { useTheme } from '../../contexts/ThemeContext';
+import { 
+  SemiBoldText,
+  LightText,
+  ExtraBoldText,
+  BoldText
+} from '../ui/fonts/typography';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
 
 export const Footer: React.FC = () => {
+  const { colorScheme } = useTheme();
   const currentYear = new Date().getFullYear();
   
-  // Define route paths for each link
   const quickLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/biography' },
@@ -23,51 +31,129 @@ export const Footer: React.FC = () => {
   ];
   
   return (
-    <footer className="bg-[#0d0219] text-white w-full">
-      <div className="h-1 bg-gradient-to-r from-purple-900 via-purple-600 to-purple-900"></div>   
+    <footer 
+      className="w-full"
+      style={{ 
+        backgroundColor: colorScheme.footer,
+        color: colorScheme.white
+      }}
+    >
+      {/* Top gradient border */}
+      <div 
+        className="h-1"
+        style={{ 
+          background: `linear-gradient(to right, ${colorScheme.accent}90, ${colorScheme.primary}, ${colorScheme.accent}90)`
+        }}
+      ></div>   
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* Brand Column */}
           <div className="flex flex-col">
             <div className="flex items-center mb-6">
-              <div className="bg-gradient-to-br from-purple-600 to-indigo-800 p-1 rounded-xl mr-4">
-                <div className="bg-[#0d0219] p-2 rounded-lg">
-                  <div className="bg-gradient-to-br from-purple-500 to-blue-400 w-12 h-12 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-xl">CG</span>
+              <div 
+                className="p-1 rounded-xl mr-4"
+                style={{ 
+                  background: `linear-gradient(to bottom right, ${colorScheme.accent}, ${colorScheme.accent})`
+                }}
+              >
+                <div 
+                  className="p-2 rounded-lg"
+                  style={{ backgroundColor: colorScheme.footer }}
+                >
+                  <div 
+                    className="w-12 h-12 rounded-lg flex items-center justify-center"
+                    style={{ 
+                      background: `linear-gradient(to bottom right, ${colorScheme.accent}, ${colorScheme.primary})`
+                    }}
+                  >
+                    <span 
+                      className="text-white font-bold text-xl"
+                      style={{ color: colorScheme.white }}
+                    >
+                      CG
+                    </span>
                   </div>
                 </div>
               </div>
               <div>
-                <h2 className="text-3xl font-roboto-condensed tracking-tight bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                <ExtraBoldText 
+                  fontSize="32px"
+                  style={{ 
+                    background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.secondary})`,
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent'
+                  }}
+                >
                   ClaudyGod
-                </h2>
-                <p className="text-gray-400 font-work-sans-light text-sm">Music & Ministries</p>
+                </ExtraBoldText>
+                <LightText 
+                  fontSize="14px"
+                  style={{ color: colorScheme.gray[400] }}
+                >
+                  Music & Ministries
+                </LightText>
               </div>
             </div>
             
-            <p className="text-gray-300 font-work-sans mb-6 text-sm leading-relaxed">
+            <LightText 
+              fontSize="14px"
+              style={{ color: colorScheme.gray[300] }}
+              className="mb-6 leading-relaxed"
+            >
               Creating inspirational music that uplifts the soul and brings people closer to faith through melody and message.
-            </p>
+            </LightText>
             
             <div className="flex space-x-3">
-              <div className="bg-gray-800 p-3 rounded-lg flex items-center justify-center">
-                <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse mr-2"></div>
-                <span className="text-xs text-gray-300 font-raleway-medium">Connect with us</span>
+              <div 
+                className="p-3 rounded-lg flex items-center justify-center"
+                style={{ backgroundColor: colorScheme.gray[800] }}
+              >
+                <div 
+                  className="w-3 h-3 rounded-full mr-2 animate-pulse"
+                  style={{ backgroundColor: colorScheme.success }}
+                ></div>
+                <LightText 
+                  fontSize="12px"
+                  style={{ color: colorScheme.gray[300] }}
+                >
+                  Connect with us
+                </LightText>
               </div>
             </div>
           </div>
 
-          {/* Updated Quick Links with routing */}
+          {/* Quick Links Column */}
           <div className="flex flex-col">
-            <h3 className="text-lg font-roboto-condensed mb-6 pb-2 border-b border-gray-700 tracking-wide">Quick Links</h3>
+            <SemiBoldText 
+              fontSize="18px"
+              className="mb-6 pb-2 tracking-wide"
+              style={{ 
+                color: colorScheme.accent,
+                borderBottom: `1px solid ${colorScheme.gray[700]}`
+              }}
+            >
+              Quick Links
+            </SemiBoldText>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link 
                     to={link.path}
-                    className="text-gray-300 font-work-sans hover:text-purple-400 transition-all duration-300 flex items-center group"
+                    className="transition-all duration-300 flex items-center group"
+                    style={{ color: colorScheme.gray[300] }}
                   >
-                    <span className="w-1 h-1 bg-purple-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {link.name}
+                    <span 
+                      className="w-1 h-1 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ backgroundColor: colorScheme.accent }}
+                    ></span>
+                    <LightText 
+                      fontSize="14px"
+                      className="group-hover:text-purple-400"
+                      style={{ color: 'inherit' }}
+                    >
+                      {link.name}
+                    </LightText>
                   </Link>
                 </li>
               ))}
@@ -76,97 +162,195 @@ export const Footer: React.FC = () => {
           
           {/* Contact Column */}
           <div className="flex flex-col">
-            <h3 className="text-lg font-roboto-condensed mb-6 pb-2 border-b border-gray-700 tracking-wide">Contact Us</h3>
+            <SemiBoldText 
+              fontSize="18px"
+              className="mb-6 pb-2 tracking-wide"
+              style={{ 
+                color: colorScheme.accent,
+                borderBottom: `1px solid ${colorScheme.gray[700]}`
+              }}
+            >
+              Contact Us
+            </SemiBoldText>
             <ul className="space-y-4">
               <li className="flex">
                 <div className="flex-shrink-0 mt-1">
-                  <FontAwesomeIcon icon={faLocationDot} className="text-purple-400" />
+                  <FontAwesomeIcon 
+                    icon={faLocationDot} 
+                    style={{ color: colorScheme.accent }} 
+                  />
                 </div>
                 <div className="ml-4">
-                  <h4 className="text-sm font-medium text-gray-300">Our Location</h4>
-                  <p className="text-gray-400 text-sm">San Ramon, California</p>
+                  <SemiBoldText fontSize="14px" style={{ color: colorScheme.gray[300] }}>
+                    Our Location
+                  </SemiBoldText>
+                  <LightText fontSize="14px" style={{ color: colorScheme.gray[400] }}>
+                    San Ramon, California
+                  </LightText>
                 </div>
               </li>
               
               <li className="flex">
                 <div className="flex-shrink-0 mt-1">
-                  <FontAwesomeIcon icon={faEnvelope} className="text-purple-400" />
+                  <FontAwesomeIcon 
+                    icon={faEnvelope} 
+                    style={{ color: colorScheme.accent }} 
+                  />
                 </div>
                 <div className="ml-4">
-                  <h4 className="text-sm font-medium text-gray-300">Email Address</h4>
-                  <a href="mailto:info@claudygod.com" className="text-gray-400 hover:text-purple-400 text-sm transition-colors">
-                    info@claudygod.com
+                  <SemiBoldText fontSize="14px" style={{ color: colorScheme.gray[300] }}>
+                    Email Address
+                  </SemiBoldText>
+                  <a 
+                    href="mailto:info@claudygod.com" 
+                    className="transition-colors"
+                    style={{ color: colorScheme.gray[400] }}
+                  >
+                    <LightText fontSize="14px" className="hover:text-purple-400">
+                      info@claudygod.com
+                    </LightText>
                   </a>
                 </div>
               </li>
               
               <li className="flex">
                 <div className="flex-shrink-0 mt-1">
-                  <FontAwesomeIcon icon={faPhone} className="text-purple-400" />
+                  <FontAwesomeIcon 
+                    icon={faPhone} 
+                    style={{ color: colorScheme.accent }} 
+                  />
                 </div>
                 <div className="ml-4">
-                  <h4 className="text-sm font-medium text-gray-300">Phone Number</h4>
-                  <p className="text-gray-400 text-sm">+1 (385) 219‑6632</p>
+                  <SemiBoldText fontSize="14px" style={{ color: colorScheme.gray[300] }}>
+                    Phone Number
+                  </SemiBoldText>
+                  <LightText fontSize="14px" style={{ color: colorScheme.gray[400] }}>
+                    +1 (385) 219‑6632
+                  </LightText>
                 </div>
               </li>
             </ul>
           </div>
           
-          {/* Connect With Us Column */}
+          {/* Social Column */}
           <div className="flex flex-col">
-            <h3 className="text-lg font-roboto-condensed mb-6 pb-2 border-b border-gray-700 tracking-wide">Connect With Us</h3>
+            <SemiBoldText 
+              fontSize="18px"
+              className="mb-6 pb-2 tracking-wide"
+              style={{ 
+                color: colorScheme.accent,
+                borderBottom: `1px solid ${colorScheme.gray[700]}`
+              }}
+            >
+              Connect With Us
+            </SemiBoldText>
             <div className="mb-8">
               <Social />
             </div>
           </div>
         </div>
+
+        {/* Newsletter Section */}
         <div className="mt-16 max-w-2xl mx-auto">
           <div className="text-center mb-8">
-            <h3 className="text-4xl font-roboto-condensed text-white tracking-wide mb-3">
+            <ExtraBoldText 
+              fontSize="36px"
+      
+              style={{ color: colorScheme.accent}}
+            >
               Join Our Newsletter
-            </h3>
-            <p className="text-gray-300 font-raleway-medium text-sm max-w-lg mx-auto">
+            </ExtraBoldText>
+            <LightText 
+              fontSize="14px"
+              style={{ color: colorScheme.gray[300] }}
+              className="max-w-lg mx-auto"
+            >
               Stay updated with our latest music releases, ministry events, and inspirational content.
-            </p>
+            </LightText>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-3">
             <input 
               type="email" 
               placeholder="Your email address" 
-              className="px-5 py-3 rounded-lg font-work-sans-light bg-gray-800 text-white focus:outline-none w-full text-base border border-gray-700 focus:border-purple-500"
+              className="px-5 py-3 rounded-lg focus:outline-none w-full text-base border focus:border-purple-500"
+              style={{
+                backgroundColor: colorScheme.gray[800],
+                color: colorScheme.white,
+                borderColor: colorScheme.gray[700]
+              }}
             />
-            <button className="bg-gradient-to-r font-work-sans from-purple-600 to-indigo-700 text-white px-6 py-3 rounded-lg transition duration-300 text-base font-medium hover:opacity-90 whitespace-nowrap">
-              Subscribe Now
-            </button>
+            <CustomButton
+              variant="primary"
+              size="md"
+              className="whitespace-nowrap"
+              style={{
+                background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.secondary})`
+              }}
+            >
+              <BoldText>Subscribe Now</BoldText>
+            </CustomButton>
           </div>
         </div>
         
-        {/* Divider before Streaming */}
-        <div className="w-full border-t border-gray-800 my-8"></div>
+        {/* Divider */}
+        <div 
+          className="w-full my-8"
+          style={{ borderTop: `1px solid ${colorScheme.gray[800]}` }}
+        ></div>
         
-        {/* Streaming Section - Centered */}
+        {/* Streaming Section */}
         <div className="w-full">
           <Streaming />
         </div>
         
         {/* Copyright Section */}
-        <div className="w-full border-t border-gray-800 my-8"></div>
+        <div 
+          className="w-full my-8"
+          style={{ borderTop: `1px solid ${colorScheme.gray[800]}` }}
+        ></div>
         <div className="flex flex-col md:flex-row justify-between items-center pt-4">
-          <div className="flex items-center text-gray-500 text-sm mb-4 md:mb-0 font-roboto-condensed">
-            <FontAwesomeIcon icon={faCopyright} className="mr-2 text-xs" />
-            <span>{currentYear} ClaudyGod Music & Ministries. All rights reserved.</span>
+          <div className="flex items-center mb-4 md:mb-0">
+            <FontAwesomeIcon 
+              icon={faCopyright} 
+              className="mr-2 text-xs"
+              style={{ color: colorScheme.gray[500] }}
+            />
+            <LightText 
+              fontSize="12px"
+              style={{ color: colorScheme.gray[500] }}
+            >
+              {currentYear} ClaudyGod Music & Ministries. All rights reserved.
+            </LightText>
           </div>
           
           <div className="flex space-x-6">
-            <a href="#" className="text-gray-500 font-work-sans hover:text-purple-400 transition duration-300 text-sm">
-              Privacy Policy
+            <a 
+              href="#" 
+              className="transition duration-300 text-sm"
+              style={{ color: colorScheme.gray[500] }}
+            >
+              <LightText fontSize="12px" className="hover:text-purple-400">
+                Privacy Policy
+              </LightText>
             </a>
-            <a href="#" className="text-gray-500 font-work-sans hover:text-purple-400 transition duration-300 text-sm">
-              Terms of Service
+            <a 
+              href="#" 
+              className="transition duration-300 text-sm"
+              style={{ color: colorScheme.gray[500] }}
+            >
+              <LightText fontSize="12px" className="hover:text-purple-400">
+                Terms of Service
+              </LightText>
             </a>
-            <a href="#" className="text-gray-500 font-work-sans hover:text-purple-400 transition duration-300 text-sm">
-              Cookies
+            <a 
+              href="#" 
+              className="transition duration-300 text-sm"
+              style={{ color: colorScheme.gray[500] }}
+            >
+              <LightText fontSize="12px" className="hover:text-purple-400">
+                Cookies
+              </LightText>
             </a>
           </div>
         </div>

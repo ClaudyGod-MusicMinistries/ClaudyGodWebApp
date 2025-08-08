@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { ContactFormInputs, ApiError } from '../types/contact';
 import { submitContactForm } from '../api/ContactApi';
+import { 
+  SemiBoldText, 
+  BoldText, 
+  LightText, 
+  ExtraLightText 
+} from '../ui/fonts/typography';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
+import { useTheme } from '../../contexts/ThemeContext';
 
 type ContactFormProps = {
   onSuccess: () => void;
@@ -17,6 +28,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
   } = useForm<ContactFormInputs>();
   
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { colorScheme } = useTheme();
 
   const onSubmit = async (data: ContactFormInputs) => {
     setIsSubmitting(true);
@@ -47,30 +59,62 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <motion.form 
+      onSubmit={handleSubmit(onSubmit)} 
+      className="space-y-6"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+        <LightText 
+          style={{ color: colorScheme.primary }}
+          fontSize="14px"
+          className="mb-1"
+        >
           Full Name
-        </label>
+        </LightText>
         <input
           id="name"
           type="text"
-          className={`mt-1 block w-full px-4 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-purple-900 focus:border-purple-900`}
+          style={{
+            borderColor: errors.name ? colorScheme.error : colorScheme.gray[300],
+            borderRadius: colorScheme.borderRadius.medium,
+            backgroundColor: colorScheme.white,
+            color: colorScheme.primary
+          }}
+          className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:outline-none"
           {...register('name', { required: 'Name is required' })}
         />
         {errors.name && (
-          <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+          <ExtraLightText 
+            style={{ color: colorScheme.error }}
+            fontSize="12px"
+            className="mt-1"
+          >
+            {errors.name.message}
+          </ExtraLightText>
         )}
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+        <LightText 
+          style={{ color: colorScheme.primary }}
+          fontSize="14px"
+          className="mb-1"
+        >
           Email Address
-        </label>
+        </LightText>
         <input
           id="email"
           type="email"
-          className={`mt-1 block w-full px-4 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-purple-900 focus:border-purple-900`}
+          style={{
+            borderColor: errors.email ? colorScheme.error : colorScheme.gray[300],
+            borderRadius: colorScheme.borderRadius.medium,
+            backgroundColor: colorScheme.white,
+            color: colorScheme.primary
+          }}
+          className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:outline-none"
           {...register('email', { 
             required: 'Email is required',
             pattern: {
@@ -80,18 +124,34 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
           })}
         />
         {errors.email && (
-          <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+          <ExtraLightText 
+            style={{ color: colorScheme.error }}
+            fontSize="12px"
+            className="mt-1"
+          >
+            {errors.email.message}
+          </ExtraLightText>
         )}
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+        <LightText 
+          style={{ color: colorScheme.primary }}
+          fontSize="14px"
+          className="mb-1"
+        >
           Your Message
-        </label>
+        </LightText>
         <textarea
           id="message"
           rows={4}
-          className={`mt-1 block w-full px-4 py-2 border ${errors.message ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-purple-900 focus:border-purple-900`}
+          style={{
+            borderColor: errors.message ? colorScheme.error : colorScheme.gray[300],
+            borderRadius: colorScheme.borderRadius.medium,
+            backgroundColor: colorScheme.white,
+            color: colorScheme.primary
+          }}
+          className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:outline-none"
           {...register('message', { 
             required: 'Message is required',
             minLength: {
@@ -101,34 +161,57 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
           })}
         ></textarea>
         {errors.message && (
-          <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
+          <ExtraLightText 
+            style={{ color: colorScheme.error }}
+            fontSize="12px"
+            className="mt-1"
+          >
+            {errors.message.message}
+          </ExtraLightText>
         )}
       </div>
 
       {errors.root && (
-        <div className="text-red-600 text-sm">
-          {errors.root.message}
-        </div>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          style={{ color: colorScheme.error }}
+          className="text-sm p-3 rounded-md"
+        >
+          <ExtraLightText fontSize="14px">
+            {errors.root.message}
+          </ExtraLightText>
+        </motion.div>
       )}
 
       <div>
-        <button
+        <CustomButton
           type="submit"
+          variant="primary"
+          size="lg"
           disabled={isSubmitting}
-          className="w-full flex justify-center py-3 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-900 hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-900 disabled:opacity-50"
+          icon={
+            isSubmitting ? (
+              <FontAwesomeIcon 
+                icon={faSpinner} 
+                spin 
+                className="h-4 w-4" 
+              />
+            ) : (
+              <FontAwesomeIcon 
+                icon={faPaperPlane} 
+                className="h-4 w-4" 
+              />
+            )
+          }
+          className="w-full"
         >
-          {isSubmitting ? (
-            <>
-              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Sending...
-            </>
-          ) : 'Send Message'}
-        </button>
+          <BoldText>
+            {isSubmitting ? 'Sending...' : 'Send Message'}
+          </BoldText>
+        </CustomButton>
       </div>
-    </form>
+    </motion.form>
   );
 };
 

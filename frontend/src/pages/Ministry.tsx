@@ -12,6 +12,9 @@ import { NewsletterForm } from '../components/util/Newsletter';
 import { About1 } from '../assets/';
 import { teachingsData, TeachingType } from '../components/data/MinistryData';
 import { DonationCallToAction } from '../components/util/DonationSupport';
+import { ExtraBoldText, RegularText } from '../components/ui/fonts/typography';
+import CustomButton from '../components/ui/fonts/buttons/CustomButton';
+import { useTheme } from '../contexts/ThemeContext';
 
 
 const VideoCard = ({ 
@@ -21,6 +24,8 @@ const VideoCard = ({
   content: TeachingType; 
   onClick: () => void; 
 }) => {
+  const { colorScheme } = useTheme();
+
   return (
     <motion.div
       className="relative cursor-pointer group overflow-hidden rounded-xl shadow-lg"
@@ -33,31 +38,68 @@ const VideoCard = ({
           <img
             src={`https://img.youtube.com/vi/${content.youtubeId}/hqdefault.jpg`}
             alt={content.title}
-            className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
+            className="w-full h-full object-cover 
+            transform transition-transform duration-500 
+            group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+          {/* <div 
+            className="absolute inset-0"
+            style={{
+              background: `linear-gradient(to top, ${colorScheme.primary}80, transparent)`
+            }}
+          /> */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30">
+            <div 
+              className="w-16 h-16 rounded-full flex items-center justify-center border-2"
+              style={{
+                backgroundColor: `${colorScheme.textSecondary}20`,
+                backdropFilter: 'blur(8px)',
+                borderColor: `${colorScheme.textSecondary}30`
+              }}
+            >
               <FontAwesomeIcon
                 icon={faPlay}
-                className="text-white text-xl pl-1"
+                className="text-xl pl-1"
+                style={{ color: colorScheme.text }}
               />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="p-4 bg-white">
+      <div 
+        className="p-4"
+        style={{ backgroundColor: colorScheme.surface }}
+      >
         <div className="flex items-center mb-2">
-          <span className="inline-block px-2 py-1 text-xs font-semibold text-purple-700 bg-purple-100 rounded-full">
+          <span 
+            className="inline-block px-2 py-1 text-xs font-semibold rounded-full"
+            style={{
+              color: colorScheme.primary,
+              backgroundColor: `${colorScheme.primary}20`
+            }}
+          >
             {content.scripture}
           </span>
-          <span className="ml-2 text-xs text-gray-500">{content.date}</span>
+          <span 
+            className="ml-2 text-xs"
+            style={{ color: colorScheme.textSecondary }}
+          >
+            {content.date}
+          </span>
         </div>
-        <h3 className="font-bold text-gray-800 line-clamp-2 leading-tight mb-1">
+        <h3 
+          className="font-bold line-clamp-2 leading-tight mb-1"
+          style={{ color: colorScheme.text }}
+        >
           {content.title}
         </h3>
-        <p className="text-sm text-purple-600 font-medium">{content.teacher}</p>
+        <p 
+          className="text-sm font-medium"
+          style={{ color: colorScheme.primary }}
+        >
+          {content.teacher}
+        </p>
       </div>
     </motion.div>
   );
@@ -70,12 +112,15 @@ const VideoModal = ({
   videoId: string | null; 
   onClose: () => void; 
 }) => {
+  const { colorScheme } = useTheme();
+
   if (!videoId) return null;
 
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        style={{ backgroundColor: `${colorScheme.background}90`, backdropFilter: 'blur(8px)' }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -88,14 +133,19 @@ const VideoModal = ({
           transition={{ type: "spring", damping: 25 }}
           onClick={e => e.stopPropagation()}
         >
-          <button
-            className="cursor-pointer absolute -top-12 right-0 text-white text-2xl z-10 hover:text-purple-300 transition-colors"
+          <CustomButton
             onClick={onClose}
+            variant="icon"
+            size="sm"
+            className="absolute -top-12 right-0 z-10"
           >
             <FontAwesomeIcon icon={faTimes} size="lg" />
-          </button>
+          </CustomButton>
           
-          <div className="aspect-video w-full rounded-xl overflow-hidden shadow-2xl">
+          <div 
+            className="aspect-video w-full rounded-xl overflow-hidden shadow-2xl"
+            style={{ border: `1px solid ${colorScheme.primary}50` }}
+          >
             <iframe
               src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
               className="w-full h-full"
@@ -120,6 +170,7 @@ const ContentSection = ({
   description: string; 
   contents: TeachingType[]; 
 }) => {
+  const { colorScheme } = useTheme();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
@@ -153,7 +204,10 @@ const ContentSection = ({
   );
 
   return (
-    <section className="py-16 px-4 bg-gray-50">
+    <section 
+      className="py-16 px-4"
+      style={{ backgroundColor: colorScheme.surfaceVariant }}
+    >
       <div className="max-w-7xl mx-auto">
         <VideoModal 
           videoId={selectedVideo} 
@@ -162,18 +216,38 @@ const ContentSection = ({
         
         <div className="text-center mb-16">
           <div className="inline-flex items-center mb-4">
-            <div className="w-12 h-0.5 bg-purple-600 mr-4"></div>
-            <h2 className="text-xl font-semibold text-purple-600 tracking-wider">
+            <div 
+              className="w-12 h-0.5 mr-4"
+              style={{ backgroundColor: colorScheme.primary }}
+            ></div>
+            <RegularText
+              fontSize="1rem"
+              bold
+              style={{ color: colorScheme.primary }}
+              className="tracking-wider"
+            >
               {title}
-            </h2>
-            <div className="w-12 h-0.5 bg-purple-600 ml-4"></div>
+            </RegularText>
+            <div 
+              className="w-12 h-0.5 ml-4"
+              style={{ backgroundColor: colorScheme.primary }}
+            ></div>
           </div>
-          <p className="text-3xl font-bold roboto-condensed text-gray-900 max-w-3xl mx-auto leading-tight mb-6">
-           Min. ClaudyGod Teachings & Podcasts
-          </p>
-          <p className="text-base text-gray-600 work-sans max-w-2xl mx-auto">
+          <ExtraBoldText
+            fontSize="2rem"
+            mdFontSize="2.5rem"
+            style={{ color: colorScheme.text }}
+            className="max-w-3xl mx-auto leading-tight mb-6"
+          >
+            Min. ClaudyGod Teachings & Podcasts
+          </ExtraBoldText>
+          <RegularText
+            fontSize="1rem"
+            style={{ color: colorScheme.textSecondary }}
+            className="max-w-2xl mx-auto"
+          >
             {description}
-          </p>
+          </RegularText>
         </div>
 
         <div className="relative">
@@ -190,39 +264,44 @@ const ContentSection = ({
           {totalSlides > 1 && (
             <div className="flex justify-center mt-12">
               <div className="flex items-center space-x-6">
-                <button
+                <CustomButton
                   onClick={prevSlide}
-                  className="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-purple-50 transition-colors"
+                  variant="icon"
+                  size="lg"
                   disabled={currentSlide === 0}
+                  style={{
+                    backgroundColor: colorScheme.surface,
+                    color: currentSlide === 0 ? colorScheme.textSecondary : colorScheme.primary
+                  }}
                 >
-                  <FontAwesomeIcon 
-                    icon={faChevronLeft} 
-                    className={`text-lg ${currentSlide === 0 ? 'text-gray-300' : 'text-purple-600'}`}
-                  />
-                </button>
+                  <FontAwesomeIcon icon={faChevronLeft} />
+                </CustomButton>
                 
                 <div className="flex space-x-2">
                   {Array.from({ length: totalSlides }).map((_, index) => (
                     <button
                       key={index}
                       onClick={() => setCurrentSlide(index)}
-                      className={`w-3 h-3 rounded-full transition-colors ${
-                        index === currentSlide ? 'bg-purple-600' : 'bg-gray-300'
-                      }`}
+                      className="w-3 h-3 rounded-full transition-colors"
+                      style={{
+                        backgroundColor: index === currentSlide ? colorScheme.primary : colorScheme.textSecondary
+                      }}
                     />
                   ))}
                 </div>
                 
-                <button
+                <CustomButton
                   onClick={nextSlide}
-                  className="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-purple-50 transition-colors"
+                  variant="icon"
+                  size="lg"
                   disabled={currentSlide === totalSlides - 1}
+                  style={{
+                    backgroundColor: colorScheme.surface,
+                    color: currentSlide === totalSlides - 1 ? colorScheme.textSecondary : colorScheme.primary
+                  }}
                 >
-                  <FontAwesomeIcon 
-                    icon={faChevronRight} 
-                    className={`text-lg ${currentSlide === totalSlides - 1 ? 'text-gray-300' : 'text-purple-600'}`}
-                  />
-                </button>
+                  <FontAwesomeIcon icon={faChevronRight} />
+                </CustomButton>
               </div>
             </div>
           )}
@@ -233,13 +312,15 @@ const ContentSection = ({
 };
 
 export const MinistryData = () => {
+  const { colorScheme } = useTheme();
+
   return (
-    <div className="bg-white">
+    <div style={{ backgroundColor: colorScheme.background }}>
       <Herosection 
         title="ClaudyGod Music & Ministries"
         subtitle="Spiritual Teachings & Podcasts"
         backgroundImage={About1}
-        overlayColor="rgba(79, 70, 229, 0.85)"
+        overlayColor={`${colorScheme.primary}dd`}
         className="h-[70vh]"
       />
       
@@ -248,21 +329,37 @@ export const MinistryData = () => {
         description="Minister Claudy's passion for sharing the Gospel radiates through both her writing and speaking. As a gospel artist, devoted teacher, and lover of God, she has also shared her inspiring presence on national television."
         contents={teachingsData}
       />
+
       <DonationCallToAction
-  title="Partner with Our Ministry"
-  subtitle="Your Support Makes a Difference"
-  description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
-  goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
-  donateUrl="/donate"
-/>
-      <div className="py-16 bg-gradient-to-r from-purple-900 to-indigo-800">
+        title="Partner with Our Ministry"
+        subtitle="Your Support Makes a Difference"
+        description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+        goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+        donateUrl="/donate"
+      />
+
+      <div 
+        className="py-16"
+        style={{
+          background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.accent})`
+        }}
+      >
         <div className="max-w-4xl mx-auto text-center px-4">
-          <h3 className="text-3xl font-bold text-white mb-6">
+          <ExtraBoldText
+            fontSize="2rem"
+            mdFontSize="2.5rem"
+            style={{ color: colorScheme.text }}
+            className="mb-6"
+          >
             Stay Connected With Our Ministry
-          </h3>
-          <p className="text-lg text-purple-200 mb-8 max-w-2xl mx-auto">
+          </ExtraBoldText>
+          <RegularText
+            fontSize="1.125rem"
+            style={{ color: colorScheme.textSecondary }}
+            className="mb-8 max-w-2xl mx-auto"
+          >
             Subscribe to receive updates on new teachings, podcasts, and ministry events
-          </p>
+          </RegularText>
           <NewsletterForm />
         </div>
       </div>

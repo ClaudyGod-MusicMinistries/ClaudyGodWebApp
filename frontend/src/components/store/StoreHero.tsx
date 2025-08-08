@@ -1,4 +1,3 @@
-// src/components/store/StoreHero.tsx
 import { Herosection } from '../util/Herosection';
 import { StoreBanner } from '../../assets';
 

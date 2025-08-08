@@ -1,4 +1,3 @@
-// src/components/payments/ZellePayment.tsx
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -11,6 +10,8 @@ import {
   FaExclamationTriangle
 } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
+import { BoldText, ExtraBoldText, RegularText } from '../ui/fonts/typography';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface ZellePaymentProps {
   amount: number;
@@ -31,6 +32,7 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
   onBack,
   onComplete,
 }) => {
+  const { colorScheme } = useTheme();
   const { 
     register, 
     handleSubmit, 
@@ -78,6 +80,7 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
       console.error('Copy failed:', err);
     }
   };
+
   const copyTransactionId = async () => {
     try {
       await navigator.clipboard.writeText(transactionIdRef.current?.value || '');
@@ -87,6 +90,7 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
       console.error('Copy failed:', err);
     }
   };
+
   const pasteTransactionId = async () => {
     try {
       const text = await navigator.clipboard.readText();
@@ -96,6 +100,7 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
       console.error('Paste failed:', err);
     }
   };
+
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     const pastedText = e.clipboardData.getData('text');
@@ -162,56 +167,99 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 flex items-center justify-center z-50 p-4"
+            style={{ background: colorScheme.text, opacity: 0.5 }}
             onClick={dialogType !== 'processing' ? closeDialog : undefined}
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-xl shadow-xl w-full max-w-md mx-4"
+              className="w-full max-w-md mx-4 rounded-xl shadow-xl"
+              style={{ 
+                background: colorScheme.background,
+                border: `1px solid ${colorScheme.border}`
+              }}
               onClick={e => e.stopPropagation()}
             >
               <div className="p-6 text-center">
                 {dialogType === 'processing' && (
                   <>
                     <div className="flex justify-center mb-4">
-                      <div className="w-16 h-16 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
+                      <div 
+                        className="w-16 h-16 rounded-full animate-spin"
+                        style={{
+                          border: `4px solid ${colorScheme.border}`,
+                          borderTopColor: colorScheme.primary
+                        }}
+                      ></div>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">Processing Payment</h3>
-                    <p className="text-gray-600">{dialogMessage}</p>
+                    <ExtraBoldText fontSize="20px" style={{ color: colorScheme.text }} className="mb-2">
+                      Processing Payment
+                    </ExtraBoldText>
+                    <RegularText style={{ color: colorScheme.textSecondary }}>
+                      {dialogMessage}
+                    </RegularText>
                   </>
                 )}
                 
                 {dialogType === 'success' && (
                   <>
-                    <div className="flex justify-center mb-4">
-                      <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-                        <FaCheck className="text-green-500 text-3xl" />
-                      </div>
+                    <div 
+                      className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                      style={{ background: colorScheme.success, opacity: 0.1 }}
+                    >
+                      <FaCheck 
+                        className="text-3xl" 
+                        style={{ color: colorScheme.success }} 
+                      />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">Success!</h3>
-                    <p className="text-gray-600 mb-4">{dialogMessage}</p>
+                    <ExtraBoldText fontSize="20px" style={{ color: colorScheme.text }} className="mb-2">
+                      Success!
+                    </ExtraBoldText>
+                    <RegularText style={{ color: colorScheme.textSecondary }} className="mb-4">
+                      {dialogMessage}
+                    </RegularText>
                     <div className="mt-4">
-                      <div className="w-12 h-1 bg-green-500 rounded-full mx-auto animate-pulse"></div>
+                      <div 
+                        className="w-12 h-1 rounded-full mx-auto animate-pulse"
+                        style={{ background: colorScheme.success }}
+                      ></div>
                     </div>
                   </>
                 )}
                 
                 {dialogType === 'error' && (
                   <>
-                    <div className="flex justify-center mb-4">
-                      <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
-                        <FaExclamationTriangle className="text-red-500 text-3xl" />
-                      </div>
+                    <div 
+                      className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                      style={{ background: colorScheme.error, opacity: 0.1 }}
+                    >
+                      <FaExclamationTriangle 
+                        className="text-3xl" 
+                        style={{ color: colorScheme.error }} 
+                      />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">Validation Failed</h3>
-                    <div className="text-gray-600 mb-4 whitespace-pre-line text-left bg-red-50 p-3 rounded">
+                    <ExtraBoldText fontSize="20px" style={{ color: colorScheme.text }} className="mb-2">
+                      Validation Failed
+                    </ExtraBoldText>
+                    <RegularText 
+                      style={{ 
+                        color: colorScheme.textSecondary,
+                        background: colorScheme.error + '10',
+                        textAlign: 'left'
+                      }} 
+                      className="mb-4 p-3 rounded"
+                    >
                       {dialogMessage}
-                    </div>
+                    </RegularText>
                     <button
                       onClick={closeDialog}
-                      className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                      className="px-4 py-2 rounded-lg transition-colors"
+                      style={{ 
+                        background: colorScheme.primary,
+                        color: colorScheme.buttonText
+                      }}
                     >
                       Try Again
                     </button>
@@ -222,41 +270,68 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
           </motion.div>
         )}
       </AnimatePresence>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white p-6 rounded-xl shadow-lg max-w-md mx-auto border border-purple-100"
+        className="p-6 rounded-xl max-w-md mx-auto"
+        style={{ 
+          background: colorScheme.background,
+          border: `1px solid ${colorScheme.border}`
+        }}
       >
         <div className="flex justify-between items-center mb-6">
           <button
             onClick={onBack}
-            className="text-purple-700 hover:text-purple-900 font-medium flex items-center gap-1 transition-colors"
+            className="flex items-center gap-1 transition-colors"
+            style={{ color: colorScheme.primary }}
           >
-            <FaArrowLeft className="mr-1" /> Back
+            <FaArrowLeft className="mr-1" /> 
+            <RegularText>Back</RegularText>
           </button>
           <div className="flex items-center gap-2">
-            <div className="bg-blue-100 p-2 rounded-lg">
-              <FaBuilding className="text-blue-600 text-xl" />
+            <div 
+              className="p-2 rounded-lg"
+              style={{ background: colorScheme.primary + '10' }}
+            >
+              <FaBuilding style={{ color: colorScheme.primary }} className="text-xl" />
             </div>
-            <h2 className="text-xl font-bold text-gray-800">Zelle Payment</h2>
+            <ExtraBoldText fontSize="20px" style={{ color: colorScheme.text }}>
+              Zelle Payment
+            </ExtraBoldText>
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl mb-6 border border-purple-200 shadow-sm">
-          <p className="text-center font-medium text-gray-700 mb-1">
+        <div 
+          className="p-5 rounded-xl mb-6 shadow-sm"
+          style={{ 
+            background: colorScheme.primary + '08',
+            border: `1px solid ${colorScheme.primary + '30'}`
+          }}
+        >
+          <RegularText className="text-center mb-1" style={{ color: colorScheme.text }}>
             Send {formatAmount(amount)} to:
-          </p>
+          </RegularText>
           
           <div className="flex items-center justify-center gap-2 mt-3">
-            <div className="bg-white px-4 py-2 rounded-lg border border-purple-300 flex items-center justify-between w-full max-w-xs">
-              <span className="font-mono text-purple-800 truncate">{zelleEmail}</span>
+            <div 
+              className="px-4 py-2 rounded-lg flex items-center justify-between w-full max-w-xs"
+              style={{ 
+                background: colorScheme.background,
+                border: `1px solid ${colorScheme.primary + '50'}`
+              }}
+            >
+              <RegularText className="truncate" style={{ color: colorScheme.primary }}>
+                {zelleEmail}
+              </RegularText>
               <button
                 onClick={copyZelleEmail}
                 className={`ml-2 p-1 rounded ${
                   copiedEmail 
-                    ? 'text-green-600 bg-green-100' 
-                    : 'text-purple-600 hover:bg-purple-100'
+                    ? `text-green-600 bg-green-100` 
+                    : `hover:${colorScheme.primary + '10'}`
                 }`}
+                style={{ color: colorScheme.primary }}
                 aria-label="Copy email"
               >
                 {copiedEmail ? <FaCheck /> : <FaCopy />}
@@ -264,42 +339,52 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
             </div>
           </div>
           
-          <p className="text-center text-sm text-gray-600 mt-3">
+          <RegularText className="text-center mt-3" style={{ color: colorScheme.textSecondary }}>
             Please use your registered Zelle email
-          </p>
+          </RegularText>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-gray-200 mb-6">
+        <div className="flex border-b mb-6" style={{ borderColor: colorScheme.border }}>
           <button
             type="button"
-            className={`flex-1 py-3 font-medium text-center ${
+            className={`flex-1 py-3 text-center ${
               activeTab === 'email'
-                ? 'text-purple-700 border-b-2 border-purple-700'
-                : 'text-gray-500 hover:text-gray-700'
+                ? `border-b-2 ${colorScheme.primary}`
+                : `hover:${colorScheme.textSecondary}`
             }`}
+            style={{ 
+              color: activeTab === 'email' ? colorScheme.primary : colorScheme.textSecondary,
+              borderColor: colorScheme.primary
+            }}
             onClick={() => setActiveTab('email')}
           >
-            Email
+            <BoldText>Email</BoldText>
           </button>
           <button
             type="button"
-            className={`flex-1 py-3 font-medium text-center ${
+            className={`flex-1 py-3 text-center ${
               activeTab === 'phone'
-                ? 'text-purple-700 border-b-2 border-purple-700'
-                : 'text-gray-500 hover:text-gray-700'
+                ? `border-b-2 ${colorScheme.primary}`
+                : `hover:${colorScheme.textSecondary}`
             }`}
+            style={{ 
+              color: activeTab === 'phone' ? colorScheme.primary : colorScheme.textSecondary,
+              borderColor: colorScheme.primary
+            }}
             onClick={() => setActiveTab('phone')}
           >
-            Phone
+            <BoldText>Phone</BoldText>
           </button>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {activeTab === 'email' ? (
             <div>
-              <label htmlFor="zelleSenderEmail" className="block text-sm font-medium text-gray-700 mb-2">
-                Your Zelle Email <span className="text-red-500">*</span>
+              <label htmlFor="zelleSenderEmail" className="block mb-2">
+                <RegularText>
+                  Your Zelle Email <span style={{ color: colorScheme.error }}>*</span>
+                </RegularText>
               </label>
               <div className="relative">
                 <input
@@ -312,27 +397,33 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
                       message: 'Invalid email address'
                     }
                   })}
-                  className={`w-full pl-3 pr-10 py-2.5 border rounded-lg focus:outline-none focus:ring-2 ${
+                  className={`w-full pl-3 pr-10 py-2.5 rounded-lg focus:outline-none ${
                     errors.zelleSenderEmail
-                      ? 'border-red-500 focus:ring-red-500'
-                      : 'border-gray-300 focus:ring-purple-500 focus:border-transparent'
+                      ? `border ${colorScheme.error} focus:ring-2 ${colorScheme.error}`
+                      : `border ${colorScheme.border} focus:ring-2 ${colorScheme.focusRing}`
                   }`}
                   placeholder="your.email@example.com"
+                  style={{ background: colorScheme.background }}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{ color: colorScheme.textSecondary }}>
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
               </div>
               {errors.zelleSenderEmail && (
-                <p className="mt-1.5 text-sm text-red-600">{errors.zelleSenderEmail.message}</p>
+                <RegularText className="mt-1.5 flex items-center" style={{ color: colorScheme.error }}>
+                  <FaExclamationTriangle className="mr-1" /> 
+                  {errors.zelleSenderEmail.message}
+                </RegularText>
               )}
             </div>
           ) : (
             <div>
-              <label htmlFor="zelleSenderPhone" className="block text-sm font-medium text-gray-700 mb-2">
-                Your Zelle Phone <span className="text-red-500">*</span>
+              <label htmlFor="zelleSenderPhone" className="block mb-2">
+                <RegularText>
+                  Your Zelle Phone <span style={{ color: colorScheme.error }}>*</span>
+                </RegularText>
               </label>
               <div className="relative">
                 <input
@@ -345,35 +436,45 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
                       message: 'Invalid phone number (10 digits)'
                     }
                   })}
-                  className={`w-full pl-3 pr-10 py-2.5 border rounded-lg focus:outline-none focus:ring-2 ${
+                  className={`w-full pl-3 pr-10 py-2.5 rounded-lg focus:outline-none ${
                     errors.zelleSenderPhone
-                      ? 'border-red-500 focus:ring-red-500'
-                      : 'border-gray-300 focus:ring-purple-500 focus:border-transparent'
+                      ? `border ${colorScheme.error} focus:ring-2 ${colorScheme.error}`
+                      : `border ${colorScheme.border} focus:ring-2 ${colorScheme.focusRing}`
                   }`}
                   placeholder="1234567890"
+                  style={{ background: colorScheme.background }}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{ color: colorScheme.textSecondary }}>
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                 </div>
               </div>
               {errors.zelleSenderPhone && (
-                <p className="mt-1.5 text-sm text-red-600">{errors.zelleSenderPhone.message}</p>
+                <RegularText className="mt-1.5 flex items-center" style={{ color: colorScheme.error }}>
+                  <FaExclamationTriangle className="mr-1" /> 
+                  {errors.zelleSenderPhone.message}
+                </RegularText>
               )}
             </div>
           )}
           
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label htmlFor="zelleConfirmation" className="block text-sm font-medium text-gray-700">
-                Transaction ID <span className="text-red-500">*</span>
+              <label htmlFor="zelleConfirmation">
+                <RegularText>
+                  Transaction ID <span style={{ color: colorScheme.error }}>*</span>
+                </RegularText>
               </label>
               <div className="flex gap-1">
                 <button
                   type="button"
                   onClick={pasteTransactionId}
-                  className="text-xs flex items-center gap-1 text-purple-700 hover:text-purple-900 px-2 py-1 rounded hover:bg-purple-50"
+                  className="text-xs flex items-center gap-1 px-2 py-1 rounded"
+                  style={{ 
+                    color: colorScheme.primary,
+                    background: colorScheme.primary + '10'
+                  }}
                 >
                   <FaPaste className="text-sm" /> Paste
                 </button>
@@ -382,9 +483,13 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
                   onClick={copyTransactionId}
                   className={`text-xs flex items-center gap-1 px-2 py-1 rounded ${
                     copiedId 
-                      ? 'text-green-700 bg-green-50' 
-                      : 'text-purple-700 hover:text-purple-900 hover:bg-purple-50'
+                      ? `text-green-700 bg-green-50` 
+                      : `text-purple-700 hover:text-purple-900 hover:bg-purple-50`
                   }`}
+                  style={{ 
+                    color: copiedId ? colorScheme.success : colorScheme.primary,
+                    background: copiedId ? colorScheme.success + '10' : colorScheme.primary + '10'
+                  }}
                 >
                   {copiedId ? <FaCheck /> : <FaCopy />} Copy
                 </button>
@@ -419,46 +524,64 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
                   e.target.value = value;
                   setValue('zelleConfirmation', value);
                 }}
-                className={`w-full pl-3 pr-24 py-2.5 border rounded-lg focus:outline-none focus:ring-2 ${
+                className={`w-full pl-3 pr-24 py-2.5 rounded-lg focus:outline-none ${
                   errors.zelleConfirmation
-                    ? 'border-red-500 focus:ring-red-500'
-                    : 'border-gray-300 focus:ring-purple-500 focus:border-transparent'
+                    ? `border ${colorScheme.error} focus:ring-2 ${colorScheme.error}`
+                    : `border ${colorScheme.border} focus:ring-2 ${colorScheme.focusRing}`
                 }`}
                 placeholder="Enter 9-character ID"
                 maxLength={9}
+                style={{ background: colorScheme.background }}
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                <span className="text-xs text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded">
+                <span 
+                  className="text-xs font-mono px-2 py-1 rounded"
+                  style={{ 
+                    color: colorScheme.textSecondary,
+                    background: colorScheme.border
+                  }}
+                >
                   {transactionIdRef.current?.value?.length || 0}/9
                 </span>
               </div>
             </div>
             
             {errors.zelleConfirmation && (
-              <p className="mt-1.5 text-sm text-red-600">{errors.zelleConfirmation.message}</p>
+              <RegularText className="mt-1.5 flex items-center" style={{ color: colorScheme.error }}>
+                <FaExclamationTriangle className="mr-1" /> 
+                {errors.zelleConfirmation.message}
+              </RegularText>
             )}
-            <p className="mt-1.5 text-xs text-gray-500">
+            <RegularText className="mt-1.5" style={{ color: colorScheme.textSecondary }}>
               You can find this in your Zelle payment confirmation
-            </p>
+            </RegularText>
           </div>
+
           <div className="pt-4">
             <div className="flex gap-3">
               <button
                 type="button"
                 onClick={onBack}
-                className="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center font-medium"
+                className="flex-1 px-4 py-3 rounded-lg flex items-center justify-center"
+                style={{ 
+                  color: colorScheme.text,
+                  background: colorScheme.border,
+                  border: `1px solid ${colorScheme.border}`
+                }}
               >
-                <FaArrowLeft className="mr-2" /> Back
+                <FaArrowLeft className="mr-2" /> 
+                <BoldText>Back</BoldText>
               </button>
               
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`flex-1 px-4 py-3 rounded-lg text-white font-medium flex items-center justify-center shadow-md ${
+                className={`flex-1 px-4 py-3 rounded-lg text-white flex items-center justify-center shadow-md ${
                   isSubmitting 
-                    ? 'bg-purple-400 cursor-not-allowed' 
-                    : 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700'
+                    ? `bg-${colorScheme.primary} opacity-70 cursor-not-allowed` 
+                    : `bg-gradient-to-r ${colorScheme.primaryGradient} hover:${colorScheme.primaryGradient}`
                 }`}
+                style={{ color: colorScheme.buttonText }}
               >
                 {isSubmitting ? (
                   <>
@@ -466,11 +589,12 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Validating...
+                    <BoldText>Validating...</BoldText>
                   </>
                 ) : (
                   <>
-                    <FaPaperPlane className="mr-2" /> Submit Payment
+                    <FaPaperPlane className="mr-2" /> 
+                    <BoldText>Submit Payment</BoldText>
                   </>
                 )}
               </button>
@@ -478,18 +602,42 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
           </div>
         </form>
         
-        <div className="mt-6 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-blue-700">
-          <p className="font-medium mb-3 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div 
+          className="mt-6 p-4 rounded-xl"
+          style={{ 
+            background: colorScheme.primary + '08',
+            border: `1px solid ${colorScheme.primary + '30'}`
+          }}
+        >
+          <div className="flex items-center mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{ color: colorScheme.primary }}>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            Important Notes:
-          </p>
+            <BoldText style={{ color: colorScheme.text }}>
+              Important Notes:
+            </BoldText>
+          </div>
           <ul className="list-disc pl-6 space-y-2">
-            <li>Make sure you've sent the exact amount to <span className="font-semibold">{zelleEmail}</span></li>
-            <li>Transaction ID must be exactly 9 alphanumeric characters</li>
-            <li>Use the same email or phone you registered with Zelle</li>
-            <li>Contact support@claudygod.org for assistance</li>
+            <li>
+              <RegularText style={{ color: colorScheme.textSecondary }}>
+                Make sure you've sent the exact amount to <span style={{ color: colorScheme.primary }}>{zelleEmail}</span>
+              </RegularText>
+            </li>
+            <li>
+              <RegularText style={{ color: colorScheme.textSecondary }}>
+                Transaction ID must be exactly 9 alphanumeric characters
+              </RegularText>
+            </li>
+            <li>
+              <RegularText style={{ color: colorScheme.textSecondary }}>
+                Use the same email or phone you registered with Zelle
+              </RegularText>
+            </li>
+            <li>
+              <RegularText style={{ color: colorScheme.textSecondary }}>
+                Contact support@claudygod.org for assistance
+              </RegularText>
+            </li>
           </ul>
         </div>
       </motion.div>

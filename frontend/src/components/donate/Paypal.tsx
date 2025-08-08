@@ -7,8 +7,10 @@ import {
   FaExternalLinkAlt,
   FaTimesCircle,
 } from 'react-icons/fa';
-import toast from 'react-hot-toast';
 import { Dialog } from '@headlessui/react';
+import { toast } from 'react-hot-toast';
+import { BoldText, ExtraBoldText, RegularText } from '../ui/fonts/typography';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export interface PayPalStepProps {
   amount: number;
@@ -25,16 +27,19 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
   onBack,
   onSuccess,
 }) => {
+  const { colorScheme } = useTheme();
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>('idle');
   const [paymentCompleted, setPaymentCompleted] = useState(false);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
   const paymentWindowRef = useRef<Window | null>(null);
+
   const formatAmount = (value: number) =>
     new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency,
       minimumFractionDigits: 2,
     }).format(value);
+
   const generatePayPalUrl = (): string => {
     const business = import.meta.env.VITE_PAYPAL_BUSINESS_EMAIL;
     if (!business) {
@@ -46,8 +51,7 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
       business,
       cmd: '_donations',
       currency_code: currency || 'USD',
-      item_name:
-        import.meta.env.VITE_PAYPAL_ITEM_NAME ?? 'Donation',
+      item_name: import.meta.env.VITE_PAYPAL_ITEM_NAME ?? 'Donation',
       amount: amount.toFixed(2),
       return: `${window.location.origin}${
         import.meta.env.VITE_PAYPAL_RETURN_PATH ?? '/'
@@ -55,6 +59,7 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
     });
     return `https://www.paypal.com/donate/?${params.toString()}`;
   };
+
   useEffect(() => {
     const handleMessage = (e: MessageEvent) => {
       if (e.data === 'paymentCompleted') handleComplete();
@@ -62,6 +67,7 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
   }, []);
+
   useEffect(() => {
     if (!paymentWindowRef.current) return;
     const timer = setInterval(() => {
@@ -76,6 +82,7 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
     }, 500);
     return () => clearInterval(timer);
   }, [paymentCompleted]);
+
   const handleRedirect = () => {
     if (paymentCompleted) return onSuccess();
     if (paymentStatus === 'canceled') {
@@ -113,72 +120,83 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
     setShowCancelDialog(false);
     setPaymentStatus('idle');
   };
+
   const statusContent = (() => {
     if (paymentStatus === 'popupOpen')
       return {
         title: 'Complete Payment in Popup',
         description: 'Finish your donation in the PayPal window',
-        icon: <FaExternalLinkAlt className="text-blue-500 text-3xl" />,
+        icon: <FaExternalLinkAlt className={`text-3xl`} style={{ color: colorScheme.primary }} />,
       };
     if (paymentStatus === 'canceled')
       return {
         title: 'Payment Canceled',
         description: 'You can retry or choose another method',
-        icon: <FaTimesCircle className="text-red-500 text-3xl" />,
+        icon: <FaTimesCircle className="text-3xl" style={{ color: colorScheme.error }} />,
       };
     if (paymentCompleted)
       return {
         title: 'Payment Completed!',
         description: 'Thank you for your donation',
-        icon: <FaCheckCircle className="text-green-500 text-3xl" />,
+        icon: <FaCheckCircle className="text-3xl" style={{ color: colorScheme.success }} />,
       };
     return {
       title: 'Donate with PayPal',
-      description: `You’re about to donate ${formatAmount(amount)}`,
-      icon: <FaPaypal className="text-blue-600 text-3xl" />,
+      description: `You're about to donate ${formatAmount(amount)}`,
+      icon: <FaPaypal className="text-3xl" style={{ color: colorScheme.primary }} />,
     };
   })();
+
   return (
     <div className="relative max-w-md mx-auto">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100"
+        className={`rounded-xl shadow-lg overflow-hidden border ${colorScheme.border}`}
+        style={{ background: colorScheme.background }}
       >
-        <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-5">
+        <div className={`p-5 bg-gradient-to-r ${colorScheme.primaryGradient}`}>
           <div className="flex justify-center">
-            <div className="bg-white p-3 rounded-full shadow-lg">
-              <FaPaypal className="h-8 w-8 text-blue-600" />
+            <div className="p-3 rounded-full shadow-lg" style={{ background: colorScheme.background }}>
+              <FaPaypal className="h-8 w-8" style={{ color: colorScheme.primary }} />
             </div>
           </div>
         </div>
         <div className="p-6">
           <div className="flex flex-col items-center text-center mb-6">
             <div className="mb-4">{statusContent.icon}</div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
+            <ExtraBoldText fontSize="20px" style={{ color: colorScheme.text }} className="mb-2">
               {statusContent.title}
-            </h3>
-            <p className="text-gray-600">{statusContent.description}</p>
+            </ExtraBoldText>
+            <RegularText style={{ color: colorScheme.textSecondary }}>
+              {statusContent.description}
+            </RegularText>
           </div>
+
           {paymentStatus === 'idle' && !paymentCompleted && (
-            <div className="bg-blue-50 rounded-lg p-4 mb-6 border border-blue-100">
+            <div className={`rounded-lg p-4 mb-6 border ${colorScheme.border}`} style={{ background: colorScheme.card }}>
               <div className="flex justify-between">
-                <span className="text-gray-700">Donation Amount:</span>
-                <span className="font-bold text-blue-700">
+                <RegularText style={{ color: colorScheme.textSecondary }}>Donation Amount:</RegularText>
+                <BoldText style={{ color: colorScheme.primary }}>
                   {formatAmount(amount)}
-                </span>
+                </BoldText>
               </div>
             </div>
           )}
+
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={onBack}
               disabled={paymentStatus !== 'idle' && paymentStatus !== 'canceled'}
-              className={`px-5 py-3 rounded-lg text-gray-700 border ${
+              className={`px-5 py-3 rounded-lg border ${
                 paymentStatus !== 'idle' && paymentStatus !== 'canceled'
                   ? 'opacity-50 cursor-not-allowed'
-                  : 'hover:bg-gray-50'
-              }`}
+                  : `hover:${colorScheme.buttonHover}`
+              } ${colorScheme.border}`}
+              style={{
+                color: colorScheme.text,
+                background: colorScheme.background
+              }}
             >
               Back
             </button>
@@ -203,10 +221,10 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
               }
               className={`px-5 py-3 rounded-lg text-white flex items-center justify-center gap-2 ${
                 paymentCompleted
-                  ? 'bg-green-600 hover:bg-green-700'
+                  ? `${colorScheme.success} hover:${colorScheme.success}`
                   : paymentStatus === 'canceled'
-                  ? 'bg-yellow-600 hover:bg-yellow-700'
-                  : 'bg-blue-600 hover:bg-blue-700'
+                  ? `${colorScheme.warning} hover:${colorScheme.warning}`
+                  : `${colorScheme.button} hover:${colorScheme.buttonHover}`
               } ${
                 paymentStatus === 'popupOpen' ||
                 (paymentStatus === 'idle' && paymentCompleted)
@@ -236,36 +254,48 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
         </div>
       </motion.div>
 
-      {/* cancel dialog */}
+      {/* Cancel Dialog */}
       <Dialog
         open={showCancelDialog}
         onClose={() => setShowCancelDialog(false)}
         className="fixed inset-0 z-10 overflow-y-auto"
       >
         <div className="min-h-screen px-4 text-center">
-          <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+          <Dialog.Overlay className="fixed inset-0" style={{ background: colorScheme.text, opacity: 0.3 }} />
           <span className="inline-block h-screen align-middle" aria-hidden="true">
             &#8203;
           </span>
-          <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle bg-white shadow-xl rounded-2xl">
+          <div 
+            className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle shadow-xl rounded-2xl" 
+            style={{ 
+              background: colorScheme.background,
+              border: `1px solid ${colorScheme.border}`
+            }}
+          >
             <div className="flex items-center mb-4">
-              <FaTimesCircle className="text-red-500 text-3xl mr-3" />
-              <Dialog.Title className="text-lg font-medium text-gray-900">
+              <FaTimesCircle className="text-3xl mr-3" style={{ color: colorScheme.error }} />
+              <Dialog.Title className="text-lg font-medium" style={{ color: colorScheme.text }}>
                 Payment Not Completed
               </Dialog.Title>
             </div>
-            <p className="text-sm text-gray-500">
+            <RegularText style={{ color: colorScheme.textSecondary }}>
               You closed PayPal before finishing. Want to try again?
-            </p>
+            </RegularText>
             <div className="mt-6 flex space-x-3">
               <button
-                className="flex-1 px-4 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                className="flex-1 px-4 py-2 text-sm rounded-md"
+                style={{
+                  color: colorScheme.text,
+                  background: colorScheme.background,
+                  border: `1px solid ${colorScheme.border}`
+                }}
                 onClick={() => setShowCancelDialog(false)}
               >
                 Cancel
               </button>
               <button
-                className="flex-1 px-4 py-2 text-sm text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                className="flex-1 px-4 py-2 text-sm text-white rounded-md"
+                style={{ background: colorScheme.primary }}
                 onClick={handleCancelRetry}
               >
                 Try Again

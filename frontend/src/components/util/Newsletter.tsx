@@ -1,7 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { subscribeToNewsletter } from '../../components/api/subscriber';
-import { Mail, User, Send, CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { 
+  
+  BoldText,
+  LightText,
+  ExtraBoldText,
+  SemiBoldText,
+} from '../ui/fonts/typography';
+import { useTheme } from '../../contexts/ThemeContext';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faEnvelope, faCheckCircle, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 type FormData = {
   name: string;
@@ -9,6 +20,7 @@ type FormData = {
 };
 
 export const NewsletterForm: React.FC = () => {
+  const { colorScheme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -36,41 +48,94 @@ export const NewsletterForm: React.FC = () => {
       reset();
       setIsSuccess(true);
     } catch (err) {
-      setError(err.message || 'An unexpected error occurred. Please try again later.');
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred. Please try again later.');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="mt-20 mb-20 w-full max-w-4xl mx-auto">
-      <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
-        <div className="p-6 sm:p-8 md:p-10">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-50 mb-4">
-              <Mail className="h-8 w-8 text-purple-700" />
+    <motion.div 
+      className="mt-20 mb-20 w-full max-w-4xl mx-auto px-4"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
+    >
+      <div 
+        className="rounded-xl shadow-lg overflow-hidden"
+        style={{
+          backgroundColor: colorScheme.text,
+          borderColor: colorScheme.gray[200],
+          borderRadius: colorScheme.borderRadius.xlarge,
+          borderWidth: '1px'
+        }}
+      >
+        <div className="p-8 sm:p-10 md:p-12">
+          <motion.div 
+            className="text-center mb-10"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <div 
+              className="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6 mx-auto"
+              style={{ 
+                backgroundColor: colorScheme.gray[200],
+                boxShadow: `0 4px 20px ${colorScheme.accent}20`
+              }}
+            >
+              <FontAwesomeIcon 
+                icon={faEnvelope} 
+                className="h-9 w-9"
+                style={{ color: colorScheme.accent }}
+                fontSize="25px"
+              />
             </div>
-            <h3 className="text-5xl md:text-5xl font-roboto-condensed  text-gray-900 mb-3">
+            <ExtraBoldText 
+              fontSize="42px"
+              className="mb-4"
+              style={{ color: colorScheme.primary }}
+            >
               Stay Updated
-            </h3>
-            <p className="text-gray-600 font-raleway-light md:text-xl max-md:text-sm max-w-md mx-auto">
+            </ExtraBoldText>
+            <LightText 
+              fontSize="18px"
+              style={{ color: colorScheme.gray[600] }}
+              className="max-w-md mx-auto leading-relaxed"
+            >
               Subscribe to our newsletter for the latest news and updates
-            </p>
-          </div>
+            </LightText>
+          </motion.div>
           
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="space-y-4 mb-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
+            <div className="space-y-5 mb-8">
+              {/* Name Input */}
               <div>
-                <label htmlFor="name" className="block text-sm font-roboto-condensed text-gray-700 mb-2">
+                <SemiBoldText 
+                  fontSize="1rem"
+                  style={{ color: colorScheme.background }}
+                  className="mb-2 block"
+                >
                   Your Name
-                </label>
+                </SemiBoldText>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <User className="h-5 w-5 text-gray-400" />
+                  <div 
+                    className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+                    style={{ color: colorScheme.gray[400] }}
+                  >
+                    <FontAwesomeIcon icon={faUser} className="h-5 w-5" />
                   </div>
                   <input
                     id="name"
-                    className="w-full pl-10 pr-4 font-work-sans-light py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full pl-12 pr-4 py-3.5 border rounded-lg focus:outline-none focus:ring-2"
+                    style={{
+                      borderColor: errors.name ? colorScheme.error : colorScheme.gray[300],
+                      backgroundColor: colorScheme.white,
+                      color: colorScheme.primary,
+                      borderRadius: colorScheme.borderRadius.medium,
+                      outlineColor: colorScheme.accent
+                    }}
                     placeholder="John Doe"
                     {...register('name', { 
                       required: 'Name is required',
@@ -86,27 +151,44 @@ export const NewsletterForm: React.FC = () => {
                   />
                 </div>
                 {errors.name && (
-                  <p className="mt-2 text-red-500 text-sm flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
+                  <LightText
+                    fontSize="9px"
+                    style={{ color: colorScheme.error }}
+                    className="mt-2 flex items-center pl-1"
+                  >
+                    <FontAwesomeIcon icon={faCircleExclamation} className="h-4 w-4 mr-2" />
                     {errors.name.message}
-                  </p>
+                  </LightText>
                 )}
               </div>
               
+              {/* Email Input */}
               <div>
-                <label htmlFor="email" className="block text-sm font-roboto-condensed text-gray-700 mb-2">
+                <SemiBoldText
+                  fontSize="14px"
+                  style={{ color: colorScheme.background }}
+                  className="mb-2 block"
+                >
                   Email Address
-                </label>
+                </SemiBoldText>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Mail className="h-5 w-5 text-gray-400" />
+                  <div 
+                    className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+                    style={{ color: colorScheme.gray[400] }}
+                  >
+                    <FontAwesomeIcon icon={faEnvelope} className="h-5 w-5" />
                   </div>
                   <input
                     id="email"
                     type="email"
-                    className="w-full pl-10 pr-4 py-3 font-work-sans-light border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full pl-12 pr-4 py-3.5 border rounded-lg focus:outline-none focus:ring-2"
+                    style={{
+                      borderColor: errors.email ? colorScheme.error : colorScheme.gray[300],
+                      backgroundColor: colorScheme.white,
+                      color: colorScheme.primary,
+                      borderRadius: colorScheme.borderRadius.medium,
+                      outlineColor: colorScheme.accent
+                    }}
                     placeholder="your.email@example.com"
                     {...register('email', { 
                       required: 'Email is required',
@@ -118,60 +200,86 @@ export const NewsletterForm: React.FC = () => {
                   />
                 </div>
                 {errors.email && (
-                  <p className="mt-2 text-red-500 text-sm flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
+                  <LightText 
+                    fontSize="9px"
+                    style={{ color: colorScheme.error }}
+                    className="mt-2 flex items-center pl-1"
+                  >
+                    <FontAwesomeIcon icon={faCircleExclamation} className="h-4 w-4 mr-2" />
                     {errors.email.message}
-                  </p>
+                  </LightText>
                 )}
               </div>
             </div>
+
+            {/* Error Message */}
             {error && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-100 text-red-700 rounded-lg flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-                {error}
-              </div>
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 p-4 rounded-lg flex items-start"
+                style={{
+                  backgroundColor: `${colorScheme.error}10`,
+                  borderColor: `${colorScheme.error}20`,
+                  color: colorScheme.error,
+                  borderRadius: colorScheme.borderRadius.medium,
+                  borderWidth: '1px'
+                }}
+              >
+                <FontAwesomeIcon icon={faCircleExclamation} className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
+                <span>{error}</span>
+              </motion.div>
             )}
             
+            {/* Success Message */}
             {isSuccess && (
-              <div className="mb-4 p-3 bg-green-50 border border-green-100 text-green-700 rounded-lg flex items-center">
-                <CheckCircle className="h-5 w-5 mr-2" />
-                <span  className=''>Thank you for subscribing! You'll receive updates soon.</span>
-              </div>
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 p-4 rounded-lg flex items-start"
+                style={{
+                  backgroundColor: `${colorScheme.success}10`,
+                  borderColor: `${colorScheme.success}20`,
+                  color: colorScheme.success,
+                  borderRadius: colorScheme.borderRadius.medium,
+                  borderWidth: '1px'
+                }}
+              >
+                <FontAwesomeIcon icon={faCheckCircle} className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
+                <span>Thank you for subscribing! You'll receive updates soon.</span>
+              </motion.div>
             )}
 
-            <div className="mt-8 text-center">
-              <button 
-                type="submit" 
+            {/* Submit Button */}
+            <div className="mt-10 text-center">
+              <CustomButton
+                type="submit"
+                variant="primary"
+                size="lg"
                 disabled={isLoading || !isValid}
-                className={`px-8 py-3.5 rounded-lg font-work-sans-light bg-purple-900 text-white transition-all duration-300 min-w-[200px] flex items-center justify-center mx-auto ${
-                  isLoading ? 'opacity-75 cursor-not-allowed' : ''
-                } ${
-                  !isValid ? 'opacity-50 cursor-not-allowed' : 
-                  'bg-gradient-to-r from-purple-700 to-purple-800 hover:from-purple-600 hover:to-purple-700 shadow-md hover:shadow-lg'
-                }`}
+                // icon={isLoading ? undefined : faPaperPlane}
+                isLoading={isLoading}
+                className="w-full max-w-xs mx-auto"
+                style={{
+                  backgroundColor: colorScheme.button,
+                  color: colorScheme.buttonText,
+                  borderRadius: colorScheme.borderRadius.large
+                }}
               >
-                {isLoading ? (
-                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                ) : (
-                  <Send className="h-5 w-5 mr-2" />
-                )}
-                {isLoading ? 'Processing...' : 'Subscribe Now'}
-              </button>
+                <BoldText>{isLoading ? 'Processing...' : 'Subscribe Now'}</BoldText>
+              </CustomButton>
               
-              <p className="text-gray-900 text-sm mt-4 font-work-sans-light">
+              <LightText 
+                fontSize="13px"
+                style={{ color: colorScheme.gray[500] }}
+                className="mt-5"
+              >
                 We respect your privacy. Unsubscribe anytime.
-              </p>
+              </LightText>
             </div>
           </form>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

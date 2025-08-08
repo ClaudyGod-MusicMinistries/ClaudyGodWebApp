@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { color, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { MusicBan1 } from '../../assets';
+import { ExtraBoldText, RegularText, SemiBoldText } from '../ui/fonts/typography';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export type VideoType = {
   id: number;
@@ -33,6 +35,7 @@ const DiagonalSection: React.FC<{
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const categoryVideos = videos.filter(video => video.category === category);
+  const { colorScheme } = useTheme();
 
   useEffect(() => {
     if (isHovered && categoryVideos.length > 0) {
@@ -52,8 +55,14 @@ const DiagonalSection: React.FC<{
     `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
 
   return (
-    <div className={`relative py-24 overflow-hidden ${reverse ? 'bg-gradient-to-br from-purple-50 to-indigo-50' : 'bg-gradient-to-br from-white to-gray-50'}`}>
-      <div className={`container mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center ${reverse ? 'flex-row-reverse' : ''}`}>
+    <div 
+      className={`relative py-24 overflow-hidden ${reverse ? 
+        `bg-gradient-to-br ${colorScheme.primaryGradientLight}` : 
+        'bg-gradient-to-br from-white to-gray-50'}`}
+      style={{ backgroundColor: colorScheme.background } }
+    >
+      <div className={`container mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-2 
+        gap-16 items-center ${reverse ? 'flex-row-reverse' : ''}`}>
         <motion.div
           className={`${reverse ? 'lg:order-2 lg:pl-16' : 'lg:pr-16'}`}
           initial={{ opacity: 0, x: reverse ? 50 : -50 }}
@@ -61,37 +70,46 @@ const DiagonalSection: React.FC<{
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="mb-8 relative">
-            <motion.div 
-              className="absolute w-24 h-1 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full mb-6"
-              initial={{ width: 0 }}
-              animate={{ width: 96 }}
-              transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
-            />
-            <h2 className="pt-8 max-md:text-4xl md:text-7xl font-bold font-roboto-condensed text-transparent bg-clip-text bg-gradient-to-r from-purple-900 to-indigo-800 mb-6">
+          
+            <ExtraBoldText 
+             style={{color:colorScheme.primary}}
+              fontSize="2rem"
+              lineHeight="1.2"
+            >
               {title}
-            </h2>
+            </ExtraBoldText>
           </div>
-          <p className="text-gray-700 text-lg leading-relaxed mb-10 font-raleway max-w-xl">
-            {description}
-          </p>
+         <RegularText 
+  className="mb-10 max-w-xl"
+  style={{ color: colorScheme.textTertiary }}
+  fontSize="1.125rem"
+  lineHeight="1.75"
+>
+  {description}
+</RegularText>
+
           <motion.button
             whileHover={{ 
               scale: 1.05,
-              background: 'linear-gradient(90deg, #6d28d9 0%, #4c1d95 100%)'
+              backgroundColor: colorScheme.buttonHover
             }}
             whileTap={{ scale: 0.98 }}
             onClick={onExplore}
-            className="relative px-8 py-4 font-raleway font-medium text-white rounded-full flex items-center gap-3 group overflow-hidden"
+            className="relative px-8 py-4 rounded-full flex items-center gap-3 group overflow-hidden"
             style={{
-              background: 'linear-gradient(90deg, #7e22ce 0%, #5b21b6 100%)'
+              backgroundColor: colorScheme.button,
+              color: colorScheme.buttonText
             }}
           >
-            <span className="relative z-10">Watch Now</span>
+            <SemiBoldText className="relative z-10">Watch Now</SemiBoldText>
             <FontAwesomeIcon 
               icon={faArrowRight} 
               className="relative z-10 transition-transform duration-300 group-hover:translate-x-1" 
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-violet-800 to-purple-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></div>
+            <div 
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer duration-300 z-0"
+              style={{ backgroundColor: colorScheme.buttonActive }}
+            />
           </motion.button>
         </motion.div>
 
@@ -123,13 +141,27 @@ const DiagonalSection: React.FC<{
               </div>
             ))}
 
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-100 transition-opacity duration-500" 
-                 style={{ opacity: isHovered ? 0.6 : 0.8 }} />
+            <div 
+              className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-100 transition-opacity duration-500" 
+              style={{ opacity: isHovered ? 0.6 : 0.8 }} 
+            />
 
-            <div className="absolute bottom-0 left-0 right-0 p-5 text-white transition-opacity duration-500" 
-                 style={{ opacity: isHovered ? 1 : 0 }}>
-              <h3 className="font-bold text-xl mb-1 truncate">{categoryVideos[currentSlideIndex]?.title}</h3>
-              <p className="text-sm text-purple-200 font-medium">{categoryVideos[currentSlideIndex]?.date}</p>
+            <div 
+              className="absolute bottom-0 left-0 right-0 p-5 transition-opacity duration-500" 
+              style={{ opacity: isHovered ? 1 : 0 }}
+            >
+              <ExtraBoldText 
+                className="text-xl mb-1 truncate"
+                color={colorScheme.text}
+              >
+                {categoryVideos[currentSlideIndex]?.title}
+              </ExtraBoldText>
+              <RegularText 
+                className="text-sm"
+                color={colorScheme.accent}
+              >
+                {categoryVideos[currentSlideIndex]?.date}
+              </RegularText>
             </div>
 
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-700/30">
@@ -144,7 +176,7 @@ const DiagonalSection: React.FC<{
 
             <div className="absolute inset-0 flex items-center justify-center">
               <motion.div
-                className="text-white text-5xl"
+                className="text-5xl"
                 animate={{ 
                   opacity: isHovered ? 0 : 1,
                   scale: isHovered ? 0.8 : [1, 1.1, 1]
@@ -154,7 +186,14 @@ const DiagonalSection: React.FC<{
                   scale: { duration: 1.5, repeat: Infinity, repeatType: "reverse" }
                 }}
               >
-                <div className="bg-gradient-to-br from-purple-900/70 to-indigo-900/80 rounded-full p-5 backdrop-blur-sm border border-white/10 shadow-lg">
+                <div 
+                  className="rounded-full p-5 backdrop-blur-sm border shadow-lg"
+                  style={{
+                    background: `linear-gradient(135deg, ${colorScheme.primaryDark}70, ${colorScheme.primary}80)`,
+                    borderColor: colorScheme.borderLight,
+                    color: colorScheme.textInverted
+                  }}
+                >
                   <FontAwesomeIcon icon={faPlay} className="pl-1" />
                 </div>
               </motion.div>
@@ -163,14 +202,24 @@ const DiagonalSection: React.FC<{
         </motion.div>
       </div>
 
-      <div className={`absolute inset-x-0 h-24 -z-10 ${
-        reverse
-          ? 'top-0 -skew-y-2 translate-y-[-30%] bg-gradient-to-b from-white to-purple-50'
-          : 'bottom-0 skew-y-2 translate-y-[30%] bg-gradient-to-t from-purple-50 to-white'
-      }`}></div>
+      <div 
+        className={`absolute inset-x-0 h-24 -z-10 ${
+          reverse
+            ? 'top-0 -skew-y-2 translate-y-[-30%] bg-gradient-to-b from-white to-purple-50'
+            : 'bottom-0 skew-y-2 translate-y-[30%] bg-gradient-to-t from-purple-50 to-white'
+        }`}
+        style={colorScheme === 'dark' ? { 
+          background: `linear-gradient(to bottom, ${colorScheme.background}, ${colorScheme.surface})` 
+        } : {}}
+      />
       
       {/* Decorative elements */}
-      <div className={`absolute ${reverse ? 'top-10 left-1/4' : 'bottom-10 right-1/4'} w-64 h-64 rounded-full bg-gradient-to-r from-purple-200/30 to-indigo-200/30 blur-3xl -z-10`}></div>
+      <div 
+        className={`absolute ${reverse ? 'top-10 left-1/4' : 'bottom-10 right-1/4'} w-64 h-64 rounded-full blur-3xl -z-10`}
+        style={{
+          background: `radial-gradient(circle, ${colorScheme.primaryLight}30, transparent 70%)`
+        }}
+      />
     </div>
   );
 };

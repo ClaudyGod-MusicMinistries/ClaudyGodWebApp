@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -5,7 +6,10 @@ import {
   faGooglePlay 
 } from '@fortawesome/free-brands-svg-icons';
 import { useEffect, useRef } from 'react';
-
+import { ExtraBoldText, LightText, RegularText, SemiBoldText } from '../ui/fonts/typography';
+import { useTheme } from '../../contexts/ThemeContext';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
+// Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -57,15 +61,39 @@ const phoneVariants = {
 };
 
 export const DownloadSection = () => {
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const { colorScheme } = useTheme();
   
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(error => {
-        videoRef.current.muted = true;
-        videoRef.current.play();
-      });
-    }
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handlePlay = async () => {
+      try {
+        // Try playing without mute first
+        video.muted = true;
+        await video.play();
+      } catch (err) {
+        // If that fails, mute and try again
+        try {
+          video.muted = true;
+          await video.play();
+        } catch (err) {
+          console.error('Video playback failed:', err);
+        }
+      }
+    };
+
+    // Add event listener for when video is loaded
+    video.addEventListener('loadedmetadata', handlePlay);
+    
+    // Cleanup function
+    return () => {
+      video.removeEventListener('loadedmetadata', handlePlay);
+      if (!video.paused) {
+        video.pause();
+      }
+    };
   }, []);
 
   return (
@@ -74,16 +102,17 @@ export const DownloadSection = () => {
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
       variants={containerVariants}
-      className="relative min-h-[45vh] overflow-hidden py-10 px-4 bg-gradient-to-br from-gray-900 to-black"
+      className="relative min-h-[45vh] overflow-hidden py-10 px-4"
+      style={{ background: `linear-gradient(135deg, ${colorScheme.background}, ${colorScheme.background})` }}
     >
-      {/* Background elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute rounded-full"
+            className="absolute rounded-full pointer-events-none"
             style={{
-              background: `radial-gradient(circle, rgba(142, 45, 226, 0.3) 0%, transparent 70%)`,
+              background: `radial-gradient(circle, ${colorScheme.primaryLight}30, transparent 70%)`,
               width: `${Math.random() * 30 + 10}px`,
               height: `${Math.random() * 30 + 10}px`,
               top: `${Math.random() * 100}%`,
@@ -127,9 +156,12 @@ export const DownloadSection = () => {
                     playsInline
                     loop
                     muted
+                    preload="auto"
+                    poster="/video-poster.jpg" // Add a poster frame
                   >
-                    <source src="https://assets.codepen.io/3364143/screen.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
+                    <source src="/mainBanner.mp4" type="video/mp4" />
+                    <source src="/mainBanner.webm" type="video/webm" />
+                    Your browser does not support HTML video.
                   </video>
                   
                   {/* Video overlay */}
@@ -144,8 +176,8 @@ export const DownloadSection = () => {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-white font-roboto-condensed text-base">ClaudyGod</h3>
-                        <p className="text-purple-300 text-xs font-work-sans">Premium Music</p>
+                        <SemiBoldText className="text-white text-sm">ClaudyGod</SemiBoldText>
+                        <RegularText className="text-purple-300 text-xs">Premium Music</RegularText>
                       </div>
                     </div>
                   </div>
@@ -160,6 +192,7 @@ export const DownloadSection = () => {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.6, type: "spring" }}
+                aria-label="Download app"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4 fill-white">
                   <path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/>
@@ -174,79 +207,79 @@ export const DownloadSection = () => {
             variants={containerVariants}
           >
             <motion.div variants={itemVariants}>
-              <motion.h2 
-                className="text-2xl sm:text-3xl font-roboto-condensed mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-300"
+              <ExtraBoldText 
+                className="mb-3 sm:mb-4"
+                fontSize="2rem"
+                lineHeight="1.2"
+                color={colorScheme.text}
               >
                 ClaudyGod Music On the Go
-              </motion.h2>
+              </ExtraBoldText>
               
-              <motion.p 
-                className="text-sm sm:text-base mb-4 sm:mb-5 max-w-md mx-auto lg:mx-0 font-raleway-light text-gray-300"
-                variants={itemVariants}
+              <LightText
+                className="mb-4 sm:mb-5 max-w-md mx-auto lg:mx-0"
+                color={colorScheme.textSecondary}
+                fontSize="0.9rem"
               >
                 Experience premium music streaming with our mobile app. Download now to enjoy your favorite tracks anytime.
-              </motion.p>
+              </LightText>
             </motion.div>
             
+           <motion.div 
+  className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto lg:mx-0"
+  variants={containerVariants}
+>
+  {/* App Store Button */}
+  <motion.div 
+    className="flex-1"
+    variants={itemVariants}
+  >
+    <CustomButton
+      href="https://www.claudygod.com/claudygod-tv-apple"
+      icon={<FontAwesomeIcon icon={faApple} />}
+      variant="appStore"
+      whileHover="hover"
+      whileTap="tap"
+    >
+      <div className="text-left">
+        <RegularText className="text-[10px] tracking-wide">
+          Download on the
+        </RegularText>
+        <SemiBoldText className="text-base tracking-tight">
+          App Store
+        </SemiBoldText>
+      </div>
+    </CustomButton>
+  </motion.div>
+
+  {/* Google Play Button */}
+  <motion.div 
+    className="flex-1"
+    variants={itemVariants}
+  >
+    <CustomButton
+      href="https://www.claudygod.com/claudygod-tv-andrioid"
+      icon={<FontAwesomeIcon icon={faGooglePlay} />}
+      variant="googlePlay"
+      whileHover="hover"
+      whileTap="tap"
+    >
+      <div className="text-left">
+        <RegularText 
+        style={{color:colorScheme.textSecondary}}
+        className="text-[10px] tracking-wide uppercase">
+          Get it on
+        </RegularText>
+        <SemiBoldText className="text-base tracking-tight">
+          Google Play
+        </SemiBoldText>
+      </div>
+    </CustomButton>
+  </motion.div>
+</motion.div>
             <motion.div 
-              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto lg:mx-0"
-              variants={containerVariants}
-            >
-              <motion.div 
-                className="flex-1 min-w-[160px]"
-                variants={itemVariants}
-              >
-                <motion.a
-                  href="https://www.claudygod.com/claudygod-tv-apple"
-                  className="flex items-center font-work-sans justify-center gap-2 py-3 px-4 rounded-lg transition-all shadow-md h-full"
-                  style={{ 
-                    background: 'linear-gradient(135deg, #000 0%, #3a0ca3 100%)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)'
-                  }}
-                  variants={iconVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                >
-                  <FontAwesomeIcon 
-                    icon={faApple} 
-                    className="text-xl text-white" 
-                  />
-                  <div className="text-left">
-                    <div className="text-[10px] tracking-wide font-work-sans text-gray-300">Download on the</div>
-                    <div className="text-base tracking-tight font-roboto-condensed text-white">App Store</div>
-                  </div>
-                </motion.a>
-              </motion.div>
-              
-              <motion.div 
-                className="flex-1 min-w-[160px]"
-                variants={itemVariants}
-              >
-                <motion.a
-                  href="https://www.claudygod.com/claudygod-tv-andrioid"
-                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-lg transition-all shadow-md h-full"
-                  style={{ 
-                    background: 'linear-gradient(135deg, #4285F4 0%, #34A853 33%, #FBBC05 66%, #EA4335 100%)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)'
-                  }}
-                  variants={iconVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                >
-                  <FontAwesomeIcon 
-                    icon={faGooglePlay} 
-                    className="text-xl text-white" 
-                  />
-                  <div className="text-left">
-                    <div className="text-[10px] tracking-wide uppercase font-work-sans text-gray-100">Get it on</div>
-                    <div className="text-base font-bold tracking-tight font-roboto-condensed text-white">Google Play</div>
-                  </div>
-                </motion.a>
-              </motion.div>
-            </motion.div>
-            
-            <motion.div 
-              className="mt-6 pt-4 border-t border-opacity-10 max-w-md mx-auto lg:mx-0 border-gray-600"
+              className="mt-6 pt-4 border-t border-opacity-10 max-w-md mx-auto lg:mx-0"
+              style={{ borderColor: colorScheme.border }}
               variants={itemVariants}
             >
               <div className="grid grid-cols-3 gap-3">
@@ -263,7 +296,9 @@ export const DownloadSection = () => {
                     transition={{ delay: 0.5 + index * 0.1 }}
                   >
                     <div className="text-xl mb-1">{feature.icon}</div>
-                    <div className="text-xs font-work-sans text-gray-400">{feature.text}</div>
+                    <RegularText className="text-xs" color={colorScheme.textSecondary}>
+                      {feature.text}
+                    </RegularText>
                   </motion.div>
                 ))}
               </div>
@@ -273,4 +308,4 @@ export const DownloadSection = () => {
       </div>
     </motion.section>
   );
-}
+};
