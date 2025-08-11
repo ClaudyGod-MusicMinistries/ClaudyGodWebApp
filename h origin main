@@ -1,0 +1,23 @@
+*   [33m388a898[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Merge branch 'develop' into main
+[31m|[m[32m\[m  
+[31m|[m * [33m8e6c611[m[33m ([m[1;32mdevelop[m[33m)[m updatedBuild
+* [32m|[m [33mdb4f1ee[m[33m ([m[1;31morigin/main[m[33m)[m UPDATE-ui
+* [32m|[m [33m1103a1d[m Merge pull request #1 from peterchims/develop
+[33m|[m[32m\[m[32m|[m 
+[33m|[m * [33me7fba51[m[33m ([m[1;31morigin/develop[m[33m)[m latestCommit
+[33m|[m[33m/[m  
+* [33m576b8fc[m VideosUpdated
+* [33m9fd7490[m StreamingBuild
+* [33m791fbf7[m  StreamPltform-QuickFix
+* [33m0f5cd85[m QuickFix-Email
+* [33m2eec628[m Donate-quickfix
+* [33mc847b3f[m QuickBookings-Fix
+* [33m98b659d[m latestChanges
+* [33m4f487b4[m BookingForm-SubmissionError Fixed
+* [33m19501ac[m LatestUpdates
+* [33m3b442a9[m latestUpdates
+* [33m41c776a[m Newssession-fix
+* [33m7b15cc2[m TourSection
+* [33m90b9fcd[m MinistyQuickFix
+* [33m1c69059[m GofundMe-Developed
+* [33ma8c735e[m StoreUi-quickFix

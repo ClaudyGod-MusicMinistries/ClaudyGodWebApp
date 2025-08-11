@@ -92,7 +92,8 @@ export const BlogPost: React.FC<BlogPostProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-4 opacity-0 translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0"
+          className="mt-4 opacity-0 translate-y-4
+           transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0"
         >
           <button
             onClick={() => onReadArticle(id)}
