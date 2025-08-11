@@ -82,7 +82,7 @@ export const BlogPost: React.FC<BlogPostProps> = ({
             }}
             useThemeColor={false}
           >
-            {title} 
+            {title}
           </ExtraBoldText>
         </motion.div>
         
