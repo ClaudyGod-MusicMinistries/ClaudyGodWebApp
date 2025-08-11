@@ -17,6 +17,7 @@ import {
   selectCartCount
 } from '../../contexts/Cartcontext';
 
+import { Back3 } from '../../assets';
 interface CartProps {
   isOpen?: boolean;
   onClose?: () => void;
@@ -48,8 +49,8 @@ export const Cart: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = fa
     };
   }, [isModal, isOpen]);
 
-  const tax = subtotal * 0.08;
-  const orderTotal = subtotal + tax;
+  // const tax = subtotal * 0.08;
+  const orderTotal = subtotal;
 
   const renderEmptyCart = () => (
     <div className="text-center py-8 px-4">
@@ -160,7 +161,7 @@ export const Cart: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = fa
         </div>
         <div className="flex justify-between text-base">
           <span className="text-gray-600">Tax</span>
-          <span className="font-medium">${tax.toFixed(2)}</span>
+           <span className="font-medium text-green-600">Free</span>
         </div>
         <div className="border-t border-gray-200 pt-3">
           <div className="flex justify-between text-lg font-bold">
@@ -205,53 +206,170 @@ export const Cart: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = fa
     </div>
   );
 
-  // Rest of your component remains the same...
-  // [Keep all the modal and full page view code exactly as you had it]
-  // Only the renderCartItems and renderOrderSummary functions were modified
 
-  if (isModal) {
+
+   if (isModal) {
     return (
-      <AnimatePresence>
-        {isOpen && (
+    <AnimatePresence>
+  {isOpen && (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex justify-end"
+      style={{
+        background: `
+          linear-gradient(135deg, rgba(106, 0, 168, 0.8) 0%, rgba(58, 0, 92, 0.9) 100%),
+          url(${Back3})
+        `,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Floating Music Note Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(12)].map((_, i) => (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end"
+            key={i}
+            className="absolute text-purple-300 opacity-30"
+            style={{
+              fontSize: `${Math.random() * 24 + 16}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
           >
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'tween', duration: 0.3 }}
-              className="relative h-full w-full max-w-md bg-white shadow-xl flex flex-col"
+            ♫
+          </motion.div>
+        ))}
+      </div>
+      
+      {/* Centered Brand Text with Glowing Effect */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="text-center px-4"
+        >
+          <motion.h1 
+            className="text-5xl md:text-7xl font-roboto-condensed text-white uppercase tracking-wider mb-3"
+            animate={{ 
+              textShadow: [
+                "0 0 5px rgba(255,255,255,0.3)",
+                "0 0 20px rgba(192, 132, 252, 0.8)",
+                "0 0 5px rgba(255,255,255,0.3)"
+              ]
+            }}
+            transition={{ 
+              duration: 4, 
+              repeat: Infinity 
+            }}
+          >
+            ClaudyGod Music & Ministries
+          </motion.h1>
+          <motion.div 
+            className="w-32 h-1 bg-purple-300 mx-auto mb-5 rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: "8rem" }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          ></motion.div>
+          <motion.p 
+            className="text-2xl md:text-3xl font-semibold text-purple-200 italic"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+          >
+            Music Store
+          </motion.p>
+        </motion.div>
+      </div>
+
+      {/* Cart Panel with Enhanced Animations */}
+      <motion.div
+        initial={{ x: '100%', opacity: 0 }}
+        animate={{ 
+          x: 0, 
+          opacity: 1,
+          transition: { 
+            type: 'spring', 
+            damping: 25, 
+            stiffness: 200,
+            delay: 0.2
+          }
+        }}
+        exit={{ 
+          x: '100%', 
+          opacity: 0,
+          transition: { 
+            duration: 0.4, 
+            ease: 'easeIn' 
+          }
+        }}
+        className="relative h-full w-full max-w-md bg-gradient-to-b from-white to-purple-50 shadow-[0_0_40px_10px_rgba(106,0,168,0.3)] flex flex-col border-l-4 border-purple-600"
+      >
+        <div className="p-4 flex justify-between items-center border-b border-purple-200 sticky top-0 bg-white/90 backdrop-blur-sm z-10">
+          <h2 className="text-xl font-bold flex items-center text-purple-900">
+            <motion.span
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ 
+                duration: 0.5,
+                repeat: itemCount > 0 ? Infinity : 0,
+                repeatDelay: 2
+              }}
             >
-              <div className="p-4 flex justify-between items-center border-b sticky top-0 bg-white z-10">
-                <h2 className="text-xl font-semibold flex items-center">
-                  <FontAwesomeIcon icon={faShoppingCart} className="mr-2" /> 
-                  Shopping Cart ({itemCount})
-                </h2>
-                <button 
-                  onClick={onClose}
-                  className="text-gray-500 hover:text-gray-700 p-2"
-                >
-                  <FontAwesomeIcon icon={faTimes} className="h-5 w-5" />
-                </button>
-              </div>
-              <div className="flex-1 overflow-y-auto p-4">
-                {items.length === 0 ? renderEmptyCart() : renderCartItems()}
-              </div>
-              {items.length > 0 && (
-                <div className="p-4 border-t bg-white">
-                  {renderOrderSummary()}
-                </div>
-              )}
-            </motion.div>
+              <FontAwesomeIcon icon={faShoppingCart} className="mr-3 text-purple-700" />
+            </motion.span>
+            Shopping Cart ({itemCount})
+          </h2>
+          <motion.button 
+            onClick={onClose}
+            className="text-gray-500 hover:text-purple-700 p-2 transition-colors duration-200 rounded-full hover:bg-purple-100"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <FontAwesomeIcon icon={faTimes} className="h-5 w-5" />
+          </motion.button>
+        </div>
+        
+        {/* Cart Content with Enhanced Scroll Area */}
+        <motion.div 
+          className="flex-1 overflow-y-auto p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          {items.length === 0 ? renderEmptyCart() : renderCartItems()}
+        </motion.div>
+        
+        {items.length > 0 && (
+          <motion.div 
+            className="p-4 border-t border-purple-200 bg-white/80 backdrop-blur-sm"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.7 }}
+          >
+            {renderOrderSummary()}
           </motion.div>
         )}
-      </AnimatePresence>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
     );
   }
+
 
   return (
     <>

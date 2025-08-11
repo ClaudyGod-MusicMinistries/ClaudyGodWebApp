@@ -1,8 +1,6 @@
 import { useState, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { albums } from '../components/data/newsData';
-
 import { faArrowDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faYoutube, faSpotify, faApple, faDeezer } from '@fortawesome/free-brands-svg-icons';
 
@@ -13,11 +11,20 @@ import { TourSection } from '../components/news/TourSection';
 import { VolunteerForm } from '../components/news/VolunteerForm';
 import { LiveSession } from '../components/news/LiveSession';
 import { TourCityModal } from '../components/news/TourCityModal';
-import {NewsletterForm} from '../components/util/Newsletter';
+import { NewsletterForm } from '../components/util/Newsletter';
 import { DonationCallToAction } from '../components/util/DonationSupport';
-import {TourHighlights} from '../components/news/Tournews'
+import { TourHighlights } from '../components/news/Tournews';
+import { Tours } from '../components/news/Tours';
+
+// Design System Components
+import { ExtraBoldText,RegularText } from '../components/ui/fonts/typography';
+import CustomButton from '../components/ui/fonts/buttons/CustomButton';
+import { useTheme } from '../contexts/ThemeContext';
+import { albums } from '../components/data/newsData';
+
 
 export const News = () => {
+  const { colorScheme } = useTheme();
   const [showTourModal, setShowTourModal] = useState(false);
   const [selectedTourCity, setSelectedTourCity] = useState<string | null>(null);
   const [showVideoModal, setShowVideoModal] = useState(false);
@@ -36,25 +43,30 @@ export const News = () => {
     setCurrentAlbum('');
   };
 
-   return (
+  return (
     <>
       <HeroSlider />
-      <div className="w-full py-16 bg-gradient-to-b from-[#0a061a] to-[#1a0a2e]">
+      <Tours />
+
+      {/* Events Section */}
+      <div className="w-full py-16" style={{ background: `linear-gradient(to bottom, ${colorScheme.background}, ${colorScheme.surfaceVariant})` }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <motion.h1
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="md:text-4xl max-md:text-3xl font-roboto-condensed lg:text-6xl text-white"
             >
-              Upcoming Events
-            </motion.h1>
+              <ExtraBoldText fontSize="3rem" mdFontSize="4rem" style={{ color: colorScheme.text }}>
+                Upcoming Events
+              </ExtraBoldText>
+            </motion.div>
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: '8rem' }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="h-1 bg-purple-500 mx-auto my-6"
+              className="h-1 mx-auto my-6"
+              style={{ backgroundColor: colorScheme.primary }}
             />
           </div>
 
@@ -64,37 +76,46 @@ export const News = () => {
               setShowTourModal(true);
             }} 
           />
-          <hr className="border-purple-800 my-16" />
+          
+          <hr className="my-16" style={{ borderColor: colorScheme.primary }} />
+          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <VolunteerForm />
             <LiveSession />
           </div>
         </div>
       </div>
-      <div className="min-h-screen text-white p-4 sm:p-6 md:p-8">
+     
+      {/* Albums Section */}
+      <div className="min-h-screen p-4 sm:p-6 md:p-8" style={{ color: colorScheme.text }}>
         <div className="max-w-7xl mx-auto text-center py-12 md:py-16 lg:py-20">
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className=" max-md:text-4xl md:text-6xl font-roboto-condensed text-purple-950 bg-clip-text"
           >
-            Latest Albums
-          </motion.h1>
+            <ExtraBoldText fontSize="3rem" mdFontSize="6rem" style={{ color: colorScheme.text }}>
+              Latest Albums
+            </ExtraBoldText>
+          </motion.div>
+          
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '8rem' }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="h-1 bg-gray-500 mx-auto my-6"
+            className="h-1 mx-auto my-6"
+            style={{ backgroundColor: colorScheme.secondary }}
           />
-          <motion.p
+          
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="md:text-xl max-md:text-xl font-work-sans text-[#72709e] max-w-3xl mx-auto"
           >
-            We've just released three new gospel albums, packed with inspiring messages and soulful melodies.
-          </motion.p>
+            <RegularText fontSize="1.25rem" style={{ color: colorScheme.textSecondary }}>
+              We've just released three new gospel albums, packed with inspiring messages and soulful melodies.
+            </RegularText>
+          </motion.div>
         </div>
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
@@ -104,11 +125,12 @@ export const News = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 * index }}
-              className="bg-[#1a0a2e] rounded-2xl p-6 md:p-8 shadow-xl h-full"
+              className="rounded-2xl p-6 md:p-8 shadow-xl h-full"
+              style={{ backgroundColor: colorScheme.surface }}
             >
-              <h3 className="sm:text-sm md:text-xl font-roboto-condensed text-white mb-6 text-left">
+              <ExtraBoldText fontSize="1.25rem" style={{ color: colorScheme.text }} className="mb-6 text-left">
                 Album: {album.title}
-              </h3>
+              </ExtraBoldText>
 
               <div className="relative aspect-video rounded-xl overflow-hidden mb-6">
                 <img
@@ -118,16 +140,17 @@ export const News = () => {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-center">
-                  <motion.div 
-                    className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
+                  <CustomButton
+                    variant="icon"
+                    size="xl"
                     onClick={() => openVideoModal(album.links.youtube, album.title)}
+                    className="hover:scale-105 transition-transform"
                   >
                     <svg
-                      className="w-6 h-6 md:w-8 md:h-8 text-white"
+                      className="w-6 h-6 md:w-8 md:h-8"
                       fill="currentColor"
                       viewBox="0 0 20 20"
+                      style={{ color: colorScheme.text }}
                     >
                       <path
                         fillRule="evenodd"
@@ -135,48 +158,60 @@ export const News = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                  </motion.div>
+                  </CustomButton>
                 </div>
               </div>
               
-              <div className="mt-6 md:mt-8 grid grid-cols-2 gap-3 font-raleway-light">
-                <a 
-                  href={album.links.spotify} 
+              <div className="mt-6 md:mt-8 grid grid-cols-2 gap-3">
+                <CustomButton
+                  href={album.links.spotify}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center p-3 bg-green-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
+                  variant="secondary"
+                  size="sm"
+                  className="justify-center gap-2"
+                  style={{ backgroundColor: '#1DB954' }}
                 >
-                  <FontAwesomeIcon icon={faSpotify} className="w-5 h-5 mr-2 text-white" />
-                  <span className="text-white text-sm font-medium">Spotify</span>
-                </a>
+                  <FontAwesomeIcon icon={faSpotify} />
+                  <span>Spotify</span>
+                </CustomButton>
                 
-                <button
+                <CustomButton
                   onClick={() => openVideoModal(album.links.youtube, album.title)}
-                  className="flex items-center justify-center p-3 bg-red-600 rounded-lg shadow-lg hover:opacity-90 transition-all"
+                  variant="secondary"
+                  size="sm"
+                  className="justify-center gap-2"
+                  style={{ backgroundColor: '#FF0000' }}
                 >
-                  <FontAwesomeIcon icon={faYoutube} className="w-5 h-5 mr-2 text-white" />
-                  <span className="text-white text-sm font-medium">YouTube</span>
-                </button>
+                  <FontAwesomeIcon icon={faYoutube} />
+                  <span>YouTube</span>
+                </CustomButton>
                 
-                <a 
-                  href={album.links.apple} 
+                <CustomButton
+                  href={album.links.apple}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center p-3 bg-black rounded-lg shadow-lg hover:opacity-90 transition-all"
+                  variant="secondary"
+                  size="sm"
+                  className="justify-center gap-2"
+                  style={{ backgroundColor: '#000000' }}
                 >
-                  <FontAwesomeIcon icon={faApple} className="w-5 h-5 mr-2 text-white" />
-                  <span className="text-white text-sm font-medium">Apple Music</span>
-                </a>
+                  <FontAwesomeIcon icon={faApple} />
+                  <span>Apple Music</span>
+                </CustomButton>
                 
-                <a 
-                  href={album.links.deezer} 
+                <CustomButton
+                  href={album.links.deezer}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center p-3 bg-[#feaa2d] rounded-lg shadow-lg hover:opacity-90 transition-all"
+                  variant="secondary"
+                  size="sm"
+                  className="justify-center gap-2"
+                  style={{ backgroundColor: '#FEAA2D' }}
                 >
-                  <FontAwesomeIcon icon={faDeezer} className="w-5 h-5 mr-2 text-white" />
-                  <span className="text-white text-sm font-medium">Deezer</span>
-                </a>
+                  <FontAwesomeIcon icon={faDeezer} />
+                  <span>Deezer</span>
+                </CustomButton>
               </div>
             </motion.div>
           ))}
@@ -190,29 +225,36 @@ export const News = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            style={{ backgroundColor: `${colorScheme.background}90`, backdropFilter: 'blur(8px)' }}
             onClick={closeVideoModal}
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-[#1a0a2e] rounded-xl border border-purple-700 w-full max-w-4xl relative"
+              className="rounded-xl w-full max-w-4xl relative"
+              style={{ 
+                backgroundColor: colorScheme.surface,
+                border: `1px solid ${colorScheme.primary}`
+              }}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="absolute top-4 right-4 z-10">
-                <button 
+                <CustomButton
                   onClick={closeVideoModal}
-                  className="w-10 h-10 rounded-full bg-purple-800/50 backdrop-blur-sm flex items-center justify-center hover:bg-purple-700 transition-colors"
+                  variant="icon"
+                  size="sm"
+                  style={{ backgroundColor: `${colorScheme.primary}80`, backdropFilter: 'blur(8px)' }}
                 >
-                  <FontAwesomeIcon icon={faTimes} className="text-white" />
-                </button>
+                  <FontAwesomeIcon icon={faTimes} />
+                </CustomButton>
               </div>
               
               <div className="p-4 text-center">
-                <h3 className="text-xl md:text-2xl font-roboto-condensed text-purple-400 mb-2">
+                <ExtraBoldText fontSize="1.5rem" style={{ color: colorScheme.primary }} className="mb-2">
                   {currentAlbum}
-                </h3>
+                </ExtraBoldText>
               </div>
               
               <div className="aspect-video w-full">
@@ -229,68 +271,78 @@ export const News = () => {
         )}
       </AnimatePresence>
 
-<TourHighlights />
-<div className="w-full py-20 mb-20 bg-[#0a061a]">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="text-center mb-16">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-md:text-2xl md:text-5xl font-roboto-condensed lg:text-6xl text-white"
-      >
-        Check Out Our Live Sessions
-      </motion.h2>
-      <motion.div
-        initial={{ width: 0 }}
-        animate={{ width: '8rem' }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        className="h-1 bg-purple-500 mx-auto my-6"
-      />
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
-        className="md:text-sm max-md:text-xx  font-work-sans text-[#72709e] max-w-3xl mx-auto"
-      >
-        We recently hosted vibrant live gospel sessions in Nigeria, bringing soulful performances and spiritual inspiration to the community.
-        Stay connected for more updates and unforgettable moments of praise and worship!
-      </motion.p>
-      
-      {/* Down arrow icon with YouTube link */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.8 }}
-        className="mt-12"
-      >
-        <a 
-          href="https://youtu.be/6pDDMP9Xprg?si=EjLow0PUYG7QvIWG" 
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block"
-        >
-          <motion.div
-            animate={{ y: [0, -10, 0] }}
-            transition={{ 
-              repeat: Infinity, 
-              duration: 1.5,
-              ease: "easeInOut"
-            }}
-            className="flex flex-col items-center"
-          >
-            <FontAwesomeIcon 
-              icon={faArrowDown} 
-              className="w-8 h-8 text-purple-500 mb-2" 
+      <TourHighlights />
+
+      {/* Live Sessions Section */}
+      <div className="w-full py-20 mb-20" style={{ backgroundColor: colorScheme.background }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <ExtraBoldText fontSize="3rem" mdFontSize="5rem" style={{ color: colorScheme.text }}>
+                Check Out Our Live Sessions
+              </ExtraBoldText>
+            </motion.div>
+            
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: '8rem' }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="h-1 mx-auto my-6"
+              style={{ backgroundColor: colorScheme.primary }}
             />
-            <span className="text-purple-400 text-sm font-medium">Watch Now</span>
-          </motion.div>
-        </a>
-      </motion.div>
-    </div>
-  </div>
-</div>
-    <ArtistQuote  />
+            
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <RegularText fontSize="1rem" style={{ color: colorScheme.textSecondary }} className="max-w-3xl mx-auto">
+                We recently hosted vibrant live gospel sessions in Nigeria, bringing soulful performances and spiritual inspiration to the community.
+                Stay connected for more updates and unforgettable moments of praise and worship!
+              </RegularText>
+            </motion.div>
+            
+            {/* Down arrow icon with YouTube link */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              className="mt-12"
+            >
+              <CustomButton
+                href="https://youtu.be/6pDDMP9Xprg?si=EjLow0PUYG7QvIWG"
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="text"
+              >
+                <motion.div
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ 
+                    repeat: Infinity, 
+                    duration: 1.5,
+                    ease: "easeInOut"
+                  }}
+                  className="flex flex-col items-center"
+                >
+                  <FontAwesomeIcon 
+                    icon={faArrowDown} 
+                    style={{ color: colorScheme.primary }}
+                    className="w-8 h-8 mb-2" 
+                  />
+                  <RegularText style={{ color: colorScheme.primary }}>Watch Now</RegularText>
+                </motion.div>
+              </CustomButton>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      <ArtistQuote />
+      
       {showTourModal && selectedTourCity && (
         <Suspense fallback={<div>Loading...</div>}>
           <TourCityModal
@@ -303,14 +355,16 @@ export const News = () => {
           />
         </Suspense>
       )}
+      
       <DonationCallToAction
-  title="Partner with Our Ministry"
-  subtitle="Your Support Makes a Difference"
-  description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
-  goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
-  donateUrl="/donate"
-/>
-         <NewsletterForm />
+        title="Partner with Our Ministry"
+        subtitle="Your Support Makes a Difference"
+        description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+        goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+        donateUrl="/donate"
+      />
+      
+      <NewsletterForm />
     </>
   );
 };

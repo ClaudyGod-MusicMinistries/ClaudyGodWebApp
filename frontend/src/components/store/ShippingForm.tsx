@@ -21,6 +21,28 @@ interface ShippingFormProps {
   isLoading?: boolean;
 }
 
+// Country-state mapping
+const COUNTRY_STATES: Record<string, string[]> = {
+  'Nigeria': ['Lagos', 'Abuja', 'Kano', 'Ogun', 'Rivers', 'Delta', 'Enugu', 'Anambra', 'Kaduna', 'Oyo', 'Imo', 'Katsina'],
+  'Ghana': ['Greater Accra', 'Ashanti', 'Western', 'Central', 'Eastern', 'Volta', 'Northern', 'Upper East', 'Upper West'],
+  'United States': [
+    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 
+    'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 
+    'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 
+    'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 
+    'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 
+    'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 
+    'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+  ],
+  'Canada': [
+    'Alberta', 'British Columbia', 'Manitoba', 'New Brunswick', 'Newfoundland and Labrador', 
+    'Nova Scotia', 'Ontario', 'Prince Edward Island', 'Quebec', 'Saskatchewan'
+  ],
+  'United Kingdom': [
+    'England', 'Scotland', 'Wales', 'Northern Ireland'
+  ]
+};
+
 export const ShippingForm: React.FC<ShippingFormProps> = ({
   shippingInfo,
   setShippingInfo,
@@ -29,35 +51,41 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
 }) => {
   const [phoneError, setPhoneError] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState(shippingInfo.country);
+  const [availableStates, setAvailableStates] = useState<string[]>([]);
+
+  useEffect(() => {
+    setSelectedCountry(shippingInfo.country);
+    setAvailableStates(COUNTRY_STATES[shippingInfo.country] || []);
+  }, [shippingInfo.country]);
 
   const handleChange = (field: keyof ShippingInfo, value: string) => {
     if (field === 'country') {
       setSelectedCountry(value);
+      // Reset state when country changes
+      setShippingInfo({ 
+        ...shippingInfo, 
+        [field]: value,
+        state: '' 
+      });
+      setAvailableStates(COUNTRY_STATES[value] || []);
+    } else {
+      setShippingInfo({ ...shippingInfo, [field]: value });
     }
-    setShippingInfo({ ...shippingInfo, [field]: value });
   };
 
   const validatePhoneNumber = (phone: string, country: string): boolean => {
-    // Remove all non-digit characters
     const cleanedPhone = phone.replace(/\D/g, '');
-
-    // Country-specific validation
     switch (country) {
       case 'Nigeria':
-        // Nigerian numbers: starts with 0, 7, 8, or 9 and 10-11 digits
         return /^(0|7|8|9)\d{9,10}$/.test(cleanedPhone);
       case 'Ghana':
-        // Ghanaian numbers: starts with 0 and 9 digits after
         return /^0\d{9}$/.test(cleanedPhone);
       case 'United States':
       case 'Canada':
-        // US/Canada: 10 digits
         return /^\d{10}$/.test(cleanedPhone);
       case 'United Kingdom':
-        // UK: 10-11 digits
         return /^\d{10,11}$/.test(cleanedPhone);
       default:
-        // Default validation for other countries
         return cleanedPhone.length >= 8 && cleanedPhone.length <= 15;
     }
   };
@@ -78,24 +106,17 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate phone number before submission
     if (!validatePhoneNumber(shippingInfo.phone, selectedCountry)) {
       setPhoneError(`Invalid phone number format for ${selectedCountry}`);
       return;
     }
 
-    // If validation passes, proceed with submission
     onSubmit(e);
   };
 
-  // Set initial country
-  useEffect(() => {
-    setSelectedCountry(shippingInfo.country);
-  }, [shippingInfo.country]);
-
   return (
     <form onSubmit={handleFormSubmit} className="space-y-6">
-      {/* Name Fields (unchanged) */}
+      {/* Name Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -191,7 +212,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
         </div>
       </div>
 
-      {/* Address Field (unchanged) */}
+      {/* Address Field */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Address *
@@ -212,38 +233,8 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
         </div>
       </div>
 
-      {/* Location Fields (unchanged) */}
+      {/* Location Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            City *
-          </label>
-          <input
-            type="text"
-            required
-            value={shippingInfo.city}
-            onChange={(e) => handleChange('city', e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            placeholder="Enter city"
-            disabled={isLoading}
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            State *
-          </label>
-          <input
-            type="text"
-            required
-            value={shippingInfo.state}
-            onChange={(e) => handleChange('state', e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            placeholder="Enter state"
-            disabled={isLoading}
-          />
-        </div>
-
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Country *
@@ -270,6 +261,43 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
         </div>
 
         <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            State *
+          </label>
+          {availableStates.length > 0 ? (
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <MapPin className="h-5 w-5 text-gray-400" />
+              </div>
+              <select
+                required
+                value={shippingInfo.state}
+                onChange={(e) => handleChange('state', e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none"
+                disabled={isLoading}
+              >
+                <option value="">Select state</option>
+                {availableStates.map((state) => (
+                  <option key={state} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ) : (
+            <input
+              type="text"
+              required
+              value={shippingInfo.state}
+              onChange={(e) => handleChange('state', e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              placeholder="Enter state"
+              disabled={isLoading}
+            />
+          )}
+        </div>
+
+        <div className="lg:col-span-2">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Nearest Location *
           </label>

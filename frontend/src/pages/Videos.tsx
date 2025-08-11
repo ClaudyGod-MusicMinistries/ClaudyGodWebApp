@@ -16,13 +16,21 @@ import { NewsletterForm } from '../components/util/Newsletter';
 import { AudioMackComponent } from '../components/Homepage/AmazonMusic';
 import { DownloadSection } from '../components/util/Download';
 import { videos } from '../components/data/videosData';
-import { DonationCallToAction } from '../components/util/DonationSupport';
+// import { DonationCallToAction } from '../components/util/DonationSupport';
 
-
+import { useTheme } from '../contexts/ThemeContext';
+import { 
+ 
+  LightText,
+  ExtraBoldText,
+  BoldText
+} from '../components/ui/fonts/typography';
+import CustomButton from '../components/ui/fonts/buttons/CustomButton';
 
 const VIDEOS_PER_PAGE = 6;
 
 export const VideosData: React.FC = () => {
+  const { colorScheme } = useTheme();
   const [activeCategory, setActiveCategory] = useState<'All' | 'Music Videos' | 'Visualizers' | 'Live Sessions'>('All');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
@@ -52,18 +60,29 @@ export const VideosData: React.FC = () => {
   };
 
   return (
-    <>
+    <div >
       {/* Enhanced Hero Section */}
       <motion.section 
-        className="pt-32 pb-24 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 text-white"
+        className="pt-32 pb-24  relative"
+        style={{
+          background: `linear-gradient(to bottom right, 
+          ${colorScheme.background}, ${colorScheme.background})`
+        }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
         <div className="container mx-auto px-4 relative">
           {/* Decorative elements */}
-          <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-          <div className="absolute top-10 right-10 text-purple-500/10 text-9xl">
+          <div 
+            className="absolute top-0 left-0 w-full h-full opacity-10"
+            style={{ 
+              backgroundImage: "url('https://www.transparenttextures.com/patterns/carbon-fibre.png')" }}
+          ></div>
+          <div 
+            className="absolute top-10 right-10 text-9xl"
+            style={{color: `${colorScheme.accent}30` }}
+          >
             <FontAwesomeIcon icon={faVideo} />
           </div>
           
@@ -73,51 +92,62 @@ export const VideosData: React.FC = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.7 }}
           >
-            <motion.h1 
-              className="text-4xl md:text-6xl lg:text-7xl font-bold font-roboto-condensed mb-6"
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
-              Video Collection
-            </motion.h1>
+               <ExtraBoldText fontSize='3rem' style={{ color: colorScheme.gray[300] }}>
+                       Videos
+               </ExtraBoldText>
+            </motion.div>
             
             <motion.div 
-              className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-500 mb-8"
+              className="h-1 mb-8"
+              style={{
+                background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary})`,
+                width: '6rem'
+              }}
               initial={{ width: 0 }}
               animate={{ width: '6rem' }}
               transition={{ delay: 0.4, duration: 0.8 }}
             />
             
-            <motion.p 
-              className="text-lg md:text-xl max-w-2xl font-work-sans mb-10"
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8 }}
             >
-              Experience the divine fusion of American Contemporary Christian Music and Afro-Gospel Songs through ClaudyGod's Inspirational Journey.
-            </motion.p>
+              <LightText className="text-lg md:text-xl max-w-2xl mb-10">
+                Experience the divine fusion of American Contemporary Christian Music and Afro-Gospel Songs through ClaudyGod's Inspirational Journey.
+              </LightText>
+            </motion.div>
             
-            <motion.button
-              whileHover={{ 
-                scale: 1.05,
-                backgroundColor: '#fff',
-                color: '#6d28d9'
-              }}
-              whileTap={{ scale: 0.98 }}
-              onClick={scrollToVideoGrid}
-              className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-roboto-condensed flex items-center gap-3"
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.8 }}
             >
-              Browse Videos <FontAwesomeIcon icon={faArrowRight} />
-            </motion.button>
+        <CustomButton
+  // variant="outline"
+  onClick={scrollToVideoGrid}
+  size="lg"
+  style={{ backgroundColor: colorScheme.background }}>
+
+  <BoldText fontSize="1rem">
+    <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
+      Browse more videos
+      <FontAwesomeIcon icon={faArrowRight} />
+    </span>
+  </BoldText>
+</CustomButton>
+
+            </motion.div>
           </motion.div>
         </div>
       </motion.section>
 
-      <div className="bg-white">
+      <div style={{ backgroundColor: colorScheme.background }}>
         <VideoPlayerModal 
           videoId={selectedVideoId} 
           onClose={() => setSelectedVideoId(null)} 
@@ -161,50 +191,63 @@ export const VideosData: React.FC = () => {
         </section>
 
         {/* CTA Section */}
-        <div className="py-16 bg-gradient-to-r from-purple-800 to-indigo-900 text-center">
-          <motion.button
+        <div 
+          className="py-16 text-center"
+          style={{
+            background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary})`
+          }}
+        >
+          <CustomButton
+            variant="primary"
+            onClick={scrollToVideoGrid}
+            className="px-10 py-4 text-xl md:text-2xl flex items-center gap-3 mx-auto"
             whileHover={{ 
               scale: 1.05,
-              backgroundColor: '#fff',
-              color: '#6d28d9'
+              backgroundColor: colorScheme.white,
+              color: colorScheme.primary
             }}
             whileTap={{ scale: 0.98 }}
-            onClick={scrollToVideoGrid}
-            className="px-10 py-4 bg-white text-purple-900 text-xl md:text-2xl rounded-full font-roboto-condensed flex items-center gap-3 mx-auto shadow-lg hover:shadow-xl"
           >
-            Explore Full Collection <FontAwesomeIcon icon={faArrowRight} />
-          </motion.button>
+            <BoldText>Explore Full Collection</BoldText>
+            <FontAwesomeIcon icon={faArrowRight} />
+          </CustomButton>
         </div>
 
         {/* Video Grid Section */}
-        <div ref={videoGridRef} className="pt-16 pb-24 bg-gradient-to-b from-white to-gray-50">
+        <div 
+          ref={videoGridRef} 
+          className="pt-16 pb-24"
+          style={{
+            background: `linear-gradient(to bottom, ${colorScheme.background}, ${colorScheme.gray[50]})`
+          }}
+        >
           <div className="container mx-auto px-4 md:px-8">
             {/* Category Filter */}
             <div className="flex flex-wrap justify-center gap-4 mb-16">
               {(['All', 'Music Videos', 'Visualizers', 'Live Sessions'] as const).map((category) => (
-                <motion.button
+                <motion.div
                   key={category}
                   whileHover={{ 
                     scale: 1.05,
-                    backgroundColor: hoveredCategory === category ? '#6d28d9' : '#f3f4f6',
-                    color: hoveredCategory === category ? '#fff' : '#6d28d9'
+                    backgroundColor: hoveredCategory === category ? colorScheme.primary : colorScheme.gray[100],
+                    color: hoveredCategory === category ? colorScheme.white : colorScheme.primary
                   }}
                   whileTap={{ scale: 0.95 }}
                   onMouseEnter={() => setHoveredCategory(category)}
                   onMouseLeave={() => setHoveredCategory(null)}
-                  onClick={() => {
-                    setActiveCategory(category);
-                    setCurrentPage(1);
-                  }}
-                  className={`px-6 py-3 rounded-full flex items-center gap-2 transition-all duration-300 ${
-                    activeCategory === category
-                      ? 'bg-purple-700 text-white shadow-lg'
-                      : 'bg-gray-100 text-purple-800 hover:bg-gray-200'
-                  }`}
                 >
-                  <FontAwesomeIcon icon={categoryIcons[category]} />
-                  {category}
-                </motion.button>
+                  <CustomButton
+                    variant={activeCategory === category ? "primary" : "secondary"}
+                    onClick={() => {
+                      setActiveCategory(category);
+                      setCurrentPage(1);
+                    }}
+                    className="px-6 py-3 rounded-full flex items-center gap-2"
+                  >
+                    <FontAwesomeIcon icon={categoryIcons[category]} />
+                    <BoldText>{category}</BoldText>
+                  </CustomButton>
+                </motion.div>
               ))}
             </div>
 
@@ -229,19 +272,29 @@ export const VideosData: React.FC = () => {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="inline-block p-6 bg-purple-50 rounded-full mb-6"
+                  className="inline-block p-6 rounded-full mb-6"
+                  style={{ backgroundColor: colorScheme.gray[100] }}
                 >
-                  <FontAwesomeIcon icon={faVideo} className="text-purple-700 text-4xl" />
+                  <FontAwesomeIcon 
+                    icon={faVideo} 
+                    className="text-4xl"
+                    style={{ color: colorScheme.primary }}
+                  />
                 </motion.div>
-                <h3 className="text-xl md:text-2xl text-purple-900 font-roboto-condensed mb-4">
-                  No videos found in this category
-                </h3>
-                <button
-                  onClick={() => setActiveCategory('All')}
-                  className="text-purple-700 hover:underline font-work-sans"
+                <ExtraBoldText 
+                  className="text-xl md:text-2xl mb-4"
+                  style={{ color: colorScheme.primary }}
                 >
-                  View all videos
-                </button>
+                  No videos found in this category
+                </ExtraBoldText>
+                <CustomButton
+                  variant="text"
+                  onClick={() => setActiveCategory('All')}
+                >
+                  <BoldText style={{ color: colorScheme.primary }}>
+                    View all videos
+                  </BoldText>
+                </CustomButton>
               </div>
             )}
 
@@ -263,17 +316,29 @@ export const VideosData: React.FC = () => {
         </div>
 
         {/* Divider */}
-        <div className="relative h-24 bg-gradient-to-r from-purple-900 to-indigo-900">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-24 h-1 bg-white/30"></div>
+        <div 
+          className="relative h-24"
+          style={{
+            backgroundColor: colorScheme.primary
+          }}
+        >
+          <div 
+            className="absolute inset-0 flex items-center justify-center"
+            style={{ backgroundColor: colorScheme.primary }}
+          >
+            <div 
+              className="w-24 h-1"
+              style={{ backgroundColor: `${colorScheme.white}30` }}
+            ></div>
           </div>
         </div>
 
         {/* Additional Sections */}
         <AudioMackComponent />
         <DownloadSection />
-        <NewsletterForm />
+        {/* 
+        <NewsletterForm /> */}
       </div>
-    </>
+    </div>
   );
 };

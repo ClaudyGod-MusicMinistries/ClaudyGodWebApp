@@ -1,5 +1,8 @@
 import { motion } from 'framer-motion';
 import { newsBanner } from '../../assets/';
+import { ExtraBoldText, RegularText } from '../ui/fonts/typography';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface UpcomingEvent {
   date: string;
@@ -18,28 +21,40 @@ const events: UpcomingEvent[] = [
     title: 'OPENS HEAVENS CALGARY 2024',
     location: 'BMO Centre: 338-13 A/ENUE SE, Calgary, Canada',
   },
-
 ];
 
 export const UpcomingEvents = () => {
+  const { colorScheme } = useTheme();
+
   return (
-    <div className="w-full py-16 bg-gradient-to-b from-[#0a061a] to-[#1a0a2e]">
+    <div 
+      className="w-full py-16"
+      style={{
+        background: `linear-gradient(to bottom, ${colorScheme.background}, ${colorScheme.surfaceVariant})`
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className=" md:text-6xl max-md:text-2xl font-roboto-condensed
- lg:text-6xl text-red-900"
           >
-            Upcoming Events
-          </motion.h1>
+            <ExtraBoldText 
+              fontSize="2rem"
+              mdFontSize="4rem"
+              lgFontSize="5rem"
+              style={{ color: colorScheme.text }}
+            >
+              Upcoming Events
+            </ExtraBoldText>
+          </motion.div>
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '8rem' }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="h-1 bg-purple-500 mx-auto my-6"
+            className="h-1 mx-auto my-6"
+            style={{ backgroundColor: colorScheme.primary }}
           />
         </div>
 
@@ -50,11 +65,29 @@ export const UpcomingEvents = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
-              className="bg-purple-900/30 p-6 rounded-lg"
+              className="p-6 rounded-lg"
+              style={{ 
+                backgroundColor: `${colorScheme.primary}30`,
+                backdropFilter: 'blur(8px)'
+              }}
             >
-              <h3 className="text-xl text-purple-300 mb-2">{event.date}</h3>
-              <h4 className="text-2xl text-white mb-3">{event.title}</h4>
-              <p className="text-purple-200">{event.location}</p>
+              <RegularText 
+                fontSize="1.25rem"
+                style={{ color: colorScheme.accent }}
+                className="mb-2"
+              >
+                {event.date}
+              </RegularText>
+              <ExtraBoldText 
+                fontSize="1.5rem"
+                style={{ color: colorScheme.text }}
+                className="mb-3"
+              >
+                {event.title}
+              </ExtraBoldText>
+              <RegularText style={{ color: colorScheme.textSecondary }}>
+                {event.location}
+              </RegularText>
             </motion.div>
           ))}
         </div>
@@ -80,29 +113,43 @@ export const UpcomingEvents = () => {
             transition={{ duration: 0.8 }}
             className="text-center lg:text-left"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl roboto-condensed text-white mb-6">
+            <ExtraBoldText 
+              fontSize="2rem"
+              mdFontSize="3rem"
+              lgFontSize="3.5rem"
+              style={{ color: colorScheme.text }}
+              className="mb-6"
+            >
               Min. ClaudyGod Visits Nigeria
-            </h2>
-            <p className="text-lg md:text-xl work-sans text-purple-200 mb-8">
+            </ExtraBoldText>
+            <RegularText 
+              fontSize="1.125rem"
+              mdFontSize="1.25rem"
+              style={{ color: colorScheme.textSecondary }}
+              className="mb-8"
+            >
               Min. ClaudyGod will be sharing the love of God through music in 5 different
               states in Nigeria.
-            </p>
+            </RegularText>
             <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8">
               {['Lagos', 'Aba', 'Owerri', 'Portharcourt', 'Abuja'].map((city) => (
-                <motion.button
+                <CustomButton
                   key={city}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-purple-900 to-purple-700 text-white rounded-lg shadow-lg hover:shadow-xl transition-all text-sm md:text-base"
+                  variant="secondary"
+                  size="sm"
                   onClick={() => {
                     /* will be wired up in News.tsx via props */
                   }}
                 >
                   {city}
-                </motion.button>
+                </CustomButton>
               ))}
             </div>
-            <a href="#" className="text-purple-400 hover:text-purple-300 transition-colors">
+            <a 
+              href="#" 
+              className="transition-colors"
+              style={{ color: colorScheme.accent }}
+            >
               Read more about the tour &rarr;
             </a>
           </motion.div>

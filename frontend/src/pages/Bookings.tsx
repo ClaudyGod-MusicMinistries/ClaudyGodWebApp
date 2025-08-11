@@ -136,7 +136,7 @@ export const Bookings: React.FC = () => {
         title="Book ClaudyGod for Your Event"
         subtitle="Fill out the form below to request a booking"
         backgroundImage={Back3}
-        overlay="rgba(0,0,0,0.5)"
+        // overlay="rgba(0,0,0,0.5)"
       />
 
       <div className="max-w-5xl mx-auto px-4 py-16">

@@ -3,8 +3,19 @@ import { Cover } from '../../assets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faCompactDisc, faMusic } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { 
+  SemiBoldText,
+  BoldText,
+  LightText,
+  ExtraBoldText,
+  ExtraLightText 
+} from '../ui/fonts/typography';
+import { useTheme } from '../../contexts/ThemeContext';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
 
 const LatestRelease: React.FC = () => {
+  const { colorScheme } = useTheme();
+
   return (
     <section className="relative h-auto md:h-[80vh] flex items-center justify-center overflow-hidden py-16 md:py-0">
       {/* Enhanced Background Video */}
@@ -34,7 +45,7 @@ const LatestRelease: React.FC = () => {
             key={i}
             className="absolute rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(220, 38, 38, 0.6) 0%, transparent 70%)',
+              background: `radial-gradient(circle, ${colorScheme.accent} 0%, transparent 70%)`,
               width: `${Math.random() * 40 + 10}px`,
               height: `${Math.random() * 40 + 10}px`,
               top: `${Math.random() * 100}%`,
@@ -63,6 +74,10 @@ const LatestRelease: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
+          style={{
+            borderRadius: colorScheme.borderRadius.xlarge,
+            borderColor: colorScheme.gray[100]
+          }}
         >
           {/* Glow Effect - Only on desktop */}
           <div className="absolute -top-20 -left-20 w-64 h-64 bg-purple-600 rounded-full mix-blend-soft-light filter blur-[100px] opacity-40 hidden md:block" />
@@ -78,7 +93,13 @@ const LatestRelease: React.FC = () => {
               viewport={{ once: true }}
             >
               <div className="relative">
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10">
+                <div 
+                  className="relative rounded-2xl overflow-hidden shadow-2xl border-4"
+                  style={{
+                    borderColor: colorScheme.gray[200],
+                    borderRadius: colorScheme.borderRadius.large
+                  }}
+                >
                   <img
                     src={Cover}
                     alt="Album Cover"
@@ -89,7 +110,13 @@ const LatestRelease: React.FC = () => {
                 
                 {/* Reflection Effect - Desktop Only */}
                 <div className="mt-6 opacity-60 hidden md:block">
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10 transform scale-y-[-1]">
+                  <div 
+                    className="relative rounded-2xl overflow-hidden shadow-2xl border-4 transform scale-y-[-1]"
+                    style={{
+                      borderColor: colorScheme.gray[200],
+                      borderRadius: colorScheme.borderRadius.large
+                    }}
+                  >
                     <img
                       src={Cover}
                       alt="Album Reflection"
@@ -114,37 +141,76 @@ const LatestRelease: React.FC = () => {
                 whileInView={{ scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                <div className="inline-flex items-center gap-2 bg-red-900/30 px-4 py-1.5 rounded-full mb-4 md:mb-6">
-                  <FontAwesomeIcon icon={faCompactDisc} className="text-red-300 text-lg" />
-                  <p className="text-sm work-sans text-red-300 tracking-widest">
+                <div 
+                  className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-4 md:mb-6"
+                  style={{
+                    backgroundColor: colorScheme.error + '30',
+                    borderRadius: colorScheme.borderRadius.full
+                  }}
+                >
+                  <FontAwesomeIcon 
+                    icon={faCompactDisc} 
+                    style={{ color: colorScheme.gray[200] }}
+                    fontSize="30px"
+                  />
+                  <LightText 
+                    style={{ color: colorScheme.gray[300] }}
+                    fontSize="20px"
+                    // className="tracking-widest"
+                  >
                     LATEST RELEASE
-                  </p>
+                  </LightText>
                 </div>
                 
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold roboto-condensed text-white leading-tight mb-3 md:mb-4">
+                <ExtraBoldText 
+                  style={{ color: colorScheme.accent }}
+                  fontSize="2.5rem"
+                  // className="mb-3 md:mb-4 leading-tight"
+                >
                   YOU ARE OUR EVERYTHING
-                </h2>
+                </ExtraBoldText>
                 
                 <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 md:gap-4 mb-6 md:mb-8">
                   <div className="flex items-center gap-2">
-                    <FontAwesomeIcon icon={faMusic} className="text-purple-400" />
-                    <h3 className="text-xl md:text-2xl raleway-medium text-purple-200">
+                    <FontAwesomeIcon 
+                      icon={faMusic} 
+                      style={{ color: colorScheme.accent }} 
+                    />
+                    <SemiBoldText 
+                      style={{ color: colorScheme.accent }}
+                      fontSize="20px"
+                    >
                       CLAUDYGOD
-                    </h3>
+                    </SemiBoldText>
                   </div>
                   
-                  <div className="w-px h-6 bg-white/30 hidden md:block"></div>
+                  <div 
+                    className="w-px h-6 hidden md:block"
+                    style={{ backgroundColor: colorScheme.gray[300] }}
+                  ></div>
                   
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <p className="text-sm work-sans text-green-300">Now Streaming</p>
+                    <div 
+                      className="w-2 h-2 rounded-full animate-pulse"
+                      style={{ backgroundColor: colorScheme.success }}
+                    ></div>
+                    <LightText 
+                      style={{ color: colorScheme.gray[100]}}
+                      fontSize="15px"
+                    >
+                      Now Streaming
+                    </LightText>
                   </div>
                 </div>
                 
-                <p className="text-gray-300 max-w-xl mb-6 md:mb-8 font-work-sans leading-relaxed text-sm md:text-base">
-                Experience the divine harmony of ClaudyGod’s latest worship release — 
-                a soul-stirring single that captures the essence of true devotion.
-                </p>
+                <LightText 
+                  style={{ color: colorScheme.gray[300] }}
+                  fontSize="14px"
+                  className="max-w-xl mb-6 md:mb-8 leading-relaxed"
+                >
+                  Experience the divine harmony of ClaudyGod's latest worship release — 
+                  a soul-stirring single that captures the essence of true devotion.
+                </LightText>
               </motion.div>
 
               <motion.div
@@ -154,19 +220,20 @@ const LatestRelease: React.FC = () => {
                 className="flex flex-wrap justify-center gap-3 md:gap-4"
               >
                 <Link to="/stream">
-  <motion.div
-    className="inline-flex items-center bg-gradient-to-r from-purple-700 to-red-700 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl gap-2 font-medium hover:from-purple-800 hover:to-red-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-  >
-    <FontAwesomeIcon icon={faPlay} className="text-lg md:text-xl" />
-    <span className="text-sm md:text-base tracking-wider">STREAM NOW</span>
-  </motion.div>
-</Link>
-
+                  <CustomButton
+                    variant="primary"
+                    size="lg"
+                    icon={<FontAwesomeIcon icon={faPlay} />}
+                    className="shadow-lg hover:shadow-xl"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <BoldText className="tracking-wider">
+                      STREAM NOW
+                    </BoldText>
+                  </CustomButton>
+                </Link>
               </motion.div>
-              
-             
             </motion.div>
           </div>
         </motion.div>

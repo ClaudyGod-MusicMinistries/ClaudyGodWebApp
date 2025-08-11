@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useTheme } from '../contexts/ThemeContext';
 import { Herosection } from '../components/util/Herosection';
 import { Log } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ContactForm from '../components/contact/ContactForm';
 import ContactInfo from '../components/contact/ContactInfo';
 import SuccessModal from '../components/contact/SuccessModal';
-import {NewsletterForm} from '../components/util/Newsletter';
+import { NewsletterForm } from '../components/util/Newsletter';
 import { DonationCallToAction } from '../components/util/DonationSupport';
 import { motion } from 'framer-motion';
 import {
@@ -14,11 +15,12 @@ import {
   faInstagram,
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
+import { SemiBoldText, BoldText, LightText, ExtraBoldText } from '../components/ui/fonts/typography';
 
-import 'react-toastify/dist/ReactToastify.css';
 
 export const ContactData: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { colorScheme } = useTheme();
 
   useEffect(() => {
     const checkBackendHealth = async () => {
@@ -35,11 +37,20 @@ export const ContactData: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-b from-white to-purple-50 relative overflow-hidden">
+    <div 
+      className="relative overflow-hidden"
+      style={{ background: `linear-gradient(to bottom, white, ${colorScheme.gray[50]})` }}
+    >
       {/* Decorative elements */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-purple-400 blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-indigo-300 blur-3xl"></div>
+        <div 
+          className="absolute top-0 left-0 w-64 h-64 rounded-full blur-3xl"
+          // style={{ backgroundColor: colorScheme.accent }}
+        ></div>
+        <div 
+          className="absolute bottom-0 right-0 w-80 h-80 rounded-full blur-3xl"
+          // style={{ backgroundColor: colorScheme.secondary }}
+        ></div>
       </div>
       
       <SuccessModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
@@ -49,7 +60,8 @@ export const ContactData: React.FC = () => {
         <Herosection
           title="ClaudyGod Music & Ministries / Contact"
           backgroundImage={Log}
-          className="relative rounded-2xl z-0"
+          className="relative z-0"
+          style={{ borderRadius: colorScheme.borderRadius.large }}
         />
       </div>
 
@@ -60,38 +72,61 @@ export const ContactData: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-2xl md:text-3xl lg:text-4xl roboto-condensed text-purple-900 mb-6 inline-block px-4 md:px-16 py-2 md:py-4 border-b-4 border-purple-900 font-bold">
+          <ExtraBoldText
+            style={{ color: colorScheme.primary }}
+         fontSize='2.5rem'          >
             We Are Here For You
-          </h2>
-          <p className="text-gray-700 robotoMedium mt-6 max-w-2xl mx-auto text-base md:text-lg">
+          </ExtraBoldText>
+          <LightText
+            style={{ color: colorScheme.background}}
+        fontSize='15px'
+          >
             Please leave a prayer request, testimony or a comment...
-          </p>
+          </LightText>
         </motion.div>
 
-        <motion.h3 
-          className="text-gray-900 mb-10 roboto-condensed text-2xl md:text-3xl lg:text-4xl text-center font-bold"
+        <motion.div 
+          className="text-center mb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-        > Get In Touch With Us </motion.h3>
+        >
+          <SemiBoldText 
+            style={{ color: colorScheme.accent }}
+            fontSize='1.5rem'
+          >
+            Get In Touch With Us
+          </SemiBoldText>
+        </motion.div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 
+        gap-12 mb-20">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+            className="bg-white rounded-2xl shadow-xl p-6 md:p-8"
+            style={{ 
+              borderRadius: colorScheme.borderRadius.large,
+              // backgroundColor: colorScheme.background
+            }}
+          >
             <ContactForm onSuccess={() => setIsModalOpen(true)} />
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="bg-gradient-to-br from-purple-900 to-indigo-800 text-white rounded-2xl shadow-xl p-6 md:p-8"
+            className="rounded-2xl shadow-xl p-6 md:p-8"
+            style={{
+              borderRadius: colorScheme.borderRadius.large,
+              background: `linear-gradient(to bottom right, ${colorScheme.primary}, ${colorScheme.secondary})`
+            }}
           >
             <ContactInfo />
           </motion.div>
         </div>
+        
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -106,50 +141,70 @@ export const ContactData: React.FC = () => {
             donateUrl="/donate"
           />
         </motion.div>
+        
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl shadow-lg p-6 md:p-8 max-w-4xl mx-auto"
+          className="rounded-2xl shadow-lg p-6 md:p-8 max-w-4xl mx-auto"
+          style={{
+            borderRadius: colorScheme.borderRadius.large,
+            background: `linear-gradient(to right, ${colorScheme.gray[100]}, ${colorScheme.gray[200]})`
+          }}
         >
-         
           <NewsletterForm />
         </motion.div>
       </div>
 
-      <div className="bg-gradient-to-r from-purple-900 to-indigo-800 text-white relative overflow-hidden">
+      <div 
+        className="relative overflow-hidden"
+        style={{
+          background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary})`
+        }}
+      >
         {/* Decorative elements */}
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-purple-500 blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-indigo-600 blur-3xl"></div>
+          <div 
+            className="absolute top-0 left-0 w-64 h-64 rounded-full blur-3xl"
+            style={{ backgroundColor: colorScheme.accent }}
+          ></div>
+          <div 
+            className="absolute bottom-0 right-0 w-80 h-80 rounded-full blur-3xl"
+            style={{ backgroundColor: colorScheme.secondary }}
+          ></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
           <div className="text-center">
-            <motion.h2 
-              className="text-3xl md:text-4xl font-bold mb-6 roboto-condensed"
+            <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              ClaudyGod Music & Ministries
-            </motion.h2>
+              <BoldText className="text-3xl md:text-4xl mb-6">
+                ClaudyGod Music & Ministries
+              </BoldText>
+            </motion.div>
             
             <motion.div 
-              className="w-24 h-1 bg-gradient-to-r from-amber-400 to-orange-500 mx-auto my-6 rounded-full"
+              className="w-24 h-1 rounded-full mx-auto my-6"
+              style={{
+                background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.highlight})`
+              }}
               initial={{ width: 0 }}
               animate={{ width: "6rem" }}
               transition={{ delay: 0.2, duration: 0.5 }}
             />
             
-            <motion.p 
-              className="text-lg mb-8 max-w-2xl mx-auto"
+            <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              Connect With Us On Various Social Platforms
-            </motion.p>
+              <LightText className="text-lg mb-8 max-w-2xl mx-auto">
+                Connect With Us On Various Social Platforms
+              </LightText>
+            </motion.div>
             
             <motion.div 
               className="flex justify-center space-x-4 sm:space-x-6"
@@ -168,7 +223,12 @@ export const ContactData: React.FC = () => {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white/10 backdrop-blur-sm w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white/20 hover:scale-110 border border-white/20"
+                  className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border"
+                  style={{
+                    backgroundColor: `${colorScheme.white}10`,
+                    backdropFilter: 'blur(10px)',
+                    borderColor: `${colorScheme.white}20`
+                  }}
                   aria-label={`Follow us on ${social.label}`}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
@@ -176,7 +236,11 @@ export const ContactData: React.FC = () => {
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
                 >
-                  <FontAwesomeIcon icon={social.icon} className="text-white text-xl" />
+                  <FontAwesomeIcon 
+                    icon={social.icon} 
+                    className="text-xl"
+                    style={{ color: colorScheme.white }}
+                  />
                 </motion.a>
               ))}
             </motion.div>

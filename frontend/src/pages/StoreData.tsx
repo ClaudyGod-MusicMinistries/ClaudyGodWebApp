@@ -18,6 +18,7 @@ import { CategoryFilter } from '../components/store/CategoryFilter';
 import { products, categories } from '../components/data/storeData';
 import { AddToCartDialog } from '../components/store/AddToCartDialog';
 import { Product } from '@/components/types/storeTypes';
+import { DonationCallToAction } from '../components/util/DonationSupport';
 
 
 
@@ -386,13 +387,14 @@ export const StoreData = () => {
           </p>
         </div>
       </motion.div>
-{/* <DonationCallToAction
+<DonationCallToAction
   title="Partner with Our Ministry"
   subtitle="Your Support Makes a Difference"
-  description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+  description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, 
+  and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
   goFundMeUrl="https://gofundme.com/your-campaign"
   donateUrl="/donate"
-/> */}
+/>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

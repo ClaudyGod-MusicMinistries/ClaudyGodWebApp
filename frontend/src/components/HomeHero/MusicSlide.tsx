@@ -1,121 +1,171 @@
 import { motion } from 'framer-motion';
+import { faPlayCircle, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faSpotify, 
+  faApple, 
+  faYoutube, 
+  faDeezer 
+} from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
-import HeroSlide from './HeroSlide';
+import { HeroSlide } from './HeroSlide';
 import { textVariants } from '../data/HeroSlide';
+import { ExtraBoldText, RegularText } from '../ui/fonts/typography';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export const MusicSlide = ({ 
-  slide, 
   setIsModalOpen 
 }: { 
   slide: HeroSlide; 
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>> 
-}) => (
-  <div className="space-y-4 md:space-y-8 w-full">
-    <motion.div 
-      variants={textVariants}
-      className="
-        text-3xl md:text-6xl 
-        font-bold 
-        roboto-condensed 
-        drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
-    >
-      MUSIC
-    </motion.div>
+}) => {
+  const { colorScheme } = useTheme();
 
-    <div className="md:hidden space-y-6 mt-6">
-      <motion.div variants={textVariants} className="w-16 h-1 bg-white rounded-full" />
-      
-      <motion.div 
-        variants={textVariants}
-        className="text-lg text-white/90 max-w-md leading-snug font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-      >
-        Dive into spiritual worship through sacred melodies that uplift the soul and glorify His name
-      </motion.div>
-      
+  const streamingPlatforms = [
+    { name: "Spotify", icon: faSpotify, url: "#" },
+    { name: "Apple Music", icon: faApple, url: "#" },
+    { name: "YouTube Music", icon: faYoutube, url: "#" },
+    { name: "Deezer", icon: faDeezer, url: "#" }
+  ];
+
+  return (
+    <div className="space-y-6 md:space-y-10 w-full">
+      {/* Title */}
       <motion.div variants={textVariants}>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setIsModalOpen(true)}
-          className="
-            bg-purple-700/90 
-            backdrop-blur-sm 
-            rounded-full 
-            px-8 py-4 
-            text-white 
-            font-bold 
-            shadow-lg
-            hover:bg-purple-800
-            transition-colors
-            text-lg"
+        <ExtraBoldText 
+          fontSize="3rem" 
+          fontSize="6rem"
+          style={{ color: colorScheme.heading }}
+          useThemeColor={false}
+          className="drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
         >
-          Stream across platforms
-        </motion.button>
+          MUSIC
+        </ExtraBoldText>
       </motion.div>
-    </div>
 
-    <div className="hidden md:block">
-      <div className="flex flex-col gap-6 md:gap-8">
-        <motion.div variants={textVariants} className="space-y-6">
-          <h3 className="md:text-4xl md:font-light md:italic md:text-purple-300 md:mb-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-            Experience the Divine Melody
-          </h3>
-          <p className="md:text-xl md:text-white/90 md:max-w-2xl md:leading-snug font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+      {/* Mobile View */}
+      <div className="md:hidden space-y-6 mt-6">
+        <motion.div variants={textVariants} className="w-16 h-1 bg-white rounded-full" />
+        
+        <motion.div variants={textVariants}>
+          <RegularText
+            fontSize="1.125rem"
+            style={{ color: colorScheme.textSecondary }}
+            className="max-w-md leading-snug drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+          >
             Dive into spiritual worship through sacred melodies that uplift the soul and glorify His name
-          </p>
-        </motion.div>
-
-        <motion.div variants={textVariants} className="flex flex-col items-start gap-6 mt-2">
-          <div className="w-[80px] h-[10px] bg-white"></div>
-          <motion.div className="relative group">
-            <div className="w-24 h-24 rounded-full bg-purple-900/40 backdrop-blur-sm flex items-center justify-center hover:bg-purple-900/50 transition-all transform hover:scale-105 shadow-lg">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-16 h-16 rounded-full bg-purple-800 flex items-center justify-center hover:bg-purple-700 transition-colors"
-              >
-                <FontAwesomeIcon 
-                  icon={faPlayCircle} 
-                  className="text-4xl text-white pl-1 cursor-pointer" 
-                />
-              </motion.button>
-            </div>
-          </motion.div>
-          <h3 className="text-white font-bold tracking-wider text-xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-            Play Latest Album
-          </h3>
+          </RegularText>
         </motion.div>
         
-        <motion.div variants={textVariants} className="space-y-4 md:space-y-6 mt-4 md:mt-12">
-          <h5 className="text-xl md:text-2xl font-bold text-purple-400 roboto-condensed drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-            STREAM EVERYWHERE
-          </h5>
-          
-          <div className="grid grid-cols-3 md:grid-cols-2 gap-4 md:gap-6">
-            {slide.content?.streamingPlatforms?.map((platform) => (
-              <motion.a
-                key={platform.name}
-                href={platform.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -5 }}
-                className="flex items-center gap-2 px-1 py-1 md:px-6 md:py-1 text-sm md:text-lg
-                           bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors
-                           shadow-md"
-              >
-                <FontAwesomeIcon 
-                  icon={platform.icon as IconDefinition} 
-                  className="text-lg md:text-2xl text-purple-700" 
-                />
-                <span className="font-medium text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-                  {platform.name}
-                </span>
-              </motion.a>
-            ))}
-          </div>
+        <motion.div variants={textVariants}>
+          <CustomButton
+            onClick={() => setIsModalOpen(true)}
+            variant="primary"
+            size="lg"
+            fullWidth
+            className="shadow-lg"
+          >
+            Stream across platforms
+          </CustomButton>
         </motion.div>
       </div>
+
+      {/* Desktop View */}
+      <div className="hidden md:block">
+        <div className="flex flex-col gap-8">
+          {/* Header Text */}
+          <motion.div variants={textVariants} className="space-y-4">
+            <RegularText
+              fontSize="2rem"
+              italic
+              style={{ color: colorScheme.accent }}
+              className="mb-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+            >
+              Experience the Divine Melody
+            </RegularText>
+            <RegularText
+              fontSize="1.25rem"
+              style={{ color: colorScheme.textSecondary }}
+              className="max-w-2xl leading-snug drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+            >
+              Dive into spiritual worship through sacred melodies that uplift the soul and glorify His name
+            </RegularText>
+          </motion.div>
+
+          {/* Play Button Section */}
+          <motion.div variants={textVariants} className="flex flex-col items-start gap-6 mt-2">
+            <div className="w-20 h-2" style={{ backgroundColor: colorScheme.heading }}></div>
+            <motion.div className="relative group">
+              <div 
+                className="w-24 h-24 rounded-full flex items-center justify-center shadow-lg"
+                style={{ 
+                  backgroundColor: `${colorScheme.primary}40`,
+                  backdropFilter: 'blur(8px)'
+                }}
+              >
+                <CustomButton
+                  onClick={() => setIsModalOpen(true)}
+                  variant="icon"
+                  size="xl"
+                  className="hover:scale-105 transition-transform"
+                >
+                  <FontAwesomeIcon 
+                    icon={faPlayCircle} 
+                    className="text-4xl pl-1" 
+                  />
+                </CustomButton>
+              </div>
+            </motion.div>
+            <ExtraBoldText
+              fontSize="1.25rem"
+              style={{ color: colorScheme.text }}
+              className="tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+            >
+              Play Latest Album
+            </ExtraBoldText>
+          </motion.div>
+          
+          {/* Streaming Platforms */}
+          <motion.div variants={textVariants} className="space-y-6 mt-8">
+            <ExtraBoldText
+              fontSize="1.5rem"
+              style={{ color: colorScheme.accent }}
+              className="roboto-condensed drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+            >
+              STREAM EVERYWHERE
+            </ExtraBoldText>
+            
+            <div className="grid grid-cols-2 gap-6">
+              {streamingPlatforms.map((platform) => (
+                <motion.div
+                  key={platform.name}
+                  whileHover={{ y: -5 }}
+                >
+                  <CustomButton
+                    href={platform.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="secondary"
+                    size="md"
+                    fullWidth
+                    className="justify-start gap-3 px-6 py-3 shadow-md"
+                  >
+                    <FontAwesomeIcon 
+                      icon={platform.icon} 
+                      className="text-2xl" 
+                    />
+                    <span>{platform.name}</span>
+                    <FontAwesomeIcon 
+                      icon={faExternalLinkAlt} 
+                      className="ml-auto text-sm" 
+                    />
+                  </CustomButton>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
     </div>
-  </div>
-);
+  );
+};

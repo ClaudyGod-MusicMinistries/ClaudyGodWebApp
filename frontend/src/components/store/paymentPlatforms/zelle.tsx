@@ -98,7 +98,7 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
             Send ${amount.toFixed(2)} using Zelle to complete your payment
           </p>
           <p className="text-xs text-blue-600 mt-1">
-            Your order #{orderId} will be processed after payment confirmation
+            Your order  will be processed after payment confirmation
           </p>
         </div>
       </div>
@@ -154,13 +154,13 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
               Enter the amount:{' '}
               <span className="font-bold">${amount.toFixed(2)}</span>
             </li>
-            <li>
+            {/* <li>
               Add your order number{' '}
               <span className="font-mono bg-gray-100 px-1 rounded">
                 #{orderId}
               </span>{' '}
               in the memo/notes
-            </li>
+            </li> */}
             <li>Complete the transaction and paste the confirmation ID below</li>
           </ol>
         )}
