@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useTheme } from "../../../../contexts/ThemeContext";
 import { ColorScheme } from "../color/colorScheme";
 
-
 type Variant = "primary" | "secondary" | "outline";
 type Size = "sm" | "md" | "lg" | "xl";
 
@@ -17,13 +16,14 @@ interface CustomButtonProps {
   className?: string;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
-  href?: string; // external navigation
-  to?: string;   // internal navigation
+  href?: string; 
+  to?: string;  
   target?: string;
   rel?: string;
   isLoading?: boolean;
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
+  style?: React.CSSProperties;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -42,6 +42,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   isLoading = false,
   icon,
   iconPosition = "left",
+  style = {},
 }) => {
   const { colorScheme } = useTheme();
   
@@ -123,7 +124,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 
   const sharedProps = {
     onClick: disabled || isLoading ? undefined : onClick,
-    style: baseStyle,
+    style: { ...baseStyle, ...style },
     className,
     target,
     rel,
