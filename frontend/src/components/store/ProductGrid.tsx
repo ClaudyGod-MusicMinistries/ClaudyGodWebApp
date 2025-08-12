@@ -1,7 +1,8 @@
-// src/components/store/ProductGrid.tsx
 import { Product } from '../types/storeTypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+import { RegularText } from '../ui/fonts/typography';
+import  CustomButton  from '../ui/fonts/buttons/CustomButton';
 
 interface ProductGridProps {
   products: Product[];
@@ -23,21 +24,37 @@ export const ProductGrid = ({ products, handleAddToCart }: ProductGridProps) => 
           />
         </div>
         <div className="p-6 flex flex-col flex-grow">
-          <h3 className="text-lg roboto-condensed text-purple-900 mb-2">
+          <RegularText 
+            as="h3"
+            fontSize="1.125rem"
+            fontWeight="bold"
+            className="mb-2 text-purple-900"
+          >
             {product.name}
-          </h3>
-          <p className="text-gray-600 text-xs work-sans mb-4 flex-grow">
+          </RegularText>
+          
+          <RegularText 
+            fontSize="0.75rem"
+            color="text-gray-600"
+            className="mb-4 flex-grow"
+          >
             {product.description}
-          </p>
+          </RegularText>
+          
           <div className="flex justify-between items-center">
-            <p className="work-sans text-xs">${product.price}</p>
-            <button
+            <RegularText fontSize="0.75rem" fontWeight="medium">
+              ${product.price.toFixed(2)}
+            </RegularText>
+            
+            <CustomButton
               onClick={() => handleAddToCart(product)}
-              className="bg-purple-900 hover:bg-purple-800 text-white px-4 py-2 rounded-md text-sm transition-colors flex items-center gap-2"
+              variant="primary"
+              size="sm"
+              className="flex items-center gap-2"
             >
-              <FontAwesomeIcon icon={faShoppingBag} size="lg" />
-              Add to Cart
-            </button>
+              <FontAwesomeIcon icon={faShoppingBag} size="sm" />
+              <span>Add to Cart</span>
+            </CustomButton>
           </div>
         </div>
       </div>

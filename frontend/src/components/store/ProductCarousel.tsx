@@ -1,6 +1,10 @@
 import { Product } from '../types/storeTypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { RegularText } from '../ui/fonts/typography';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
+import { IconButton } from '../ui/fonts/buttons/IconButton';
+
 
 interface ProductCarouselProps {
   products: Product[];
@@ -33,33 +37,56 @@ export const ProductCarousel = ({
               />
             </div>
             <div className="p-3">
-              <h3 className="text-xs roboto-condensed text-purple-900 mb-1">
+              <RegularText 
+                as="h3"
+                fontSize="0.75rem"
+                fontWeight="bold"
+                className="mb-1 text-purple-900"
+              >
                 {product.name}
-              </h3>
-              <p className="text-gray-600 text-[10px] mb-2">
+              </RegularText>
+              
+              <RegularText 
+                fontSize="0.625rem"
+                color="text-gray-600"
+                className="mb-2"
+              >
                 {product.description}
-              </p>
+              </RegularText>
+              
               <div className="flex justify-between items-center">
-                <p className="work-sans text-sm">${product.price}</p>
-                <button
+                <RegularText fontSize="0.875rem" fontWeight="medium">
+                  ${product.price.toFixed(2)}
+                </RegularText>
+                
+                <CustomButton
                   onClick={() => handleAddToCart(product)}
-                  className="bg-purple-900 hover:bg-purple-800 text-white px-2 py-1 rounded-md text-xs transition-colors flex items-center gap-1"
+                  variant="primary"
+                  size="xs"
+                  className="flex items-center gap-1"
                 >
-                  <FontAwesomeIcon icon={faShoppingBag} />
-                  Add
-                </button>
+                  <FontAwesomeIcon icon={faShoppingBag} size="xs" />
+                  <span>Add</span>
+                </CustomButton>
               </div>
             </div>
           </div>
         ))}
       </div>
+      
       <div className="flex justify-between mt-4">
-        <button onClick={prevSlide} className="text-purple-900">
-          <FontAwesomeIcon icon={faChevronLeft} size="lg" />
-        </button>
-        <button onClick={nextSlide} className="text-purple-900">
-          <FontAwesomeIcon icon={faChevronRight} size="lg" />
-        </button>
+        <IconButton 
+          onClick={prevSlide}
+          icon={<FontAwesomeIcon icon={faChevronLeft} size="lg" />}
+          variant="ghost"
+          color="purple"
+        />
+        <IconButton 
+          onClick={nextSlide}
+          icon={<FontAwesomeIcon icon={faChevronRight} size="lg" />}
+          variant="ghost"
+          color="purple"
+        />
       </div>
     </div>
   </section>

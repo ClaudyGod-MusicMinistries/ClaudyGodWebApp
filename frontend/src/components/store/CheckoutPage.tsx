@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // src/components/checkout/CheckoutPage.tsx
 import React, { useState } from 'react';
@@ -10,6 +11,8 @@ import CustomButton from '../ui/fonts/buttons/CustomButton';
 import { ShippingForm } from './ShippingForm';
 import { ZellePayment } from './paymentPlatforms/zelle';
 import { NigerianBankTransfer } from './paymentPlatforms/NigerianAcct';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faBuilding, faLandmark, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 
 interface ShippingInfo {
   firstName: string;
@@ -127,65 +130,62 @@ export const CheckoutPage: React.FC = () => {
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            <CustomButton
-              variant="text"
-              size="sm"
-              icon="arrow-left"
-              onClick={() => setStep(1)}
-              className="text-purple-600
-               hover:text-purple-700"
-            >
-              Back to Shipping
-            </CustomButton>
+           <CustomButton
+  variant="text"
+  size="sm"
+  icon={<FontAwesomeIcon icon={faArrowLeft} className="h-4 w-4" />}
+  onClick={() => setStep(1)}
+  className="text-purple-600 hover:text-purple-700"
+>
+  Back to Shipping
+</CustomButton>
 
-            <BoldText as="h2" fontSize="1.5rem" color={colorScheme.text}>
+            <BoldText as="h2" fontSize="1.5rem" color={colorScheme.background}>
               Select Payment Method
             </BoldText>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {paymentMethods.map((method) => (
-                <motion.div
-                  key={method.id}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <CustomButton
-                    variant="outline"
-                    fullWidth
-                    className={`p-4 rounded-xl flex items-center gap-2 ${
-                      paymentInfo.method === method.id 
-                        ? 'border-purple-500 bg-purple-50' 
-                        : 'hover:bg-gray-50'
-                    }`}
-                    onClick={() => {
-                      setPaymentInfo({ method: method.id as any });
-                      setShowZelleForm(false);
-                      setShowBankForm(false);
-                    }}
-                  >
-                    <div 
-                      className="h-6 w-6 text-white p-1 rounded-full flex items-center justify-center"
-                      style={{ backgroundColor: method.color }}
-                    >
-                      {method.icon === 'smartphone' && (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zm3 14a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-                        </svg>
-                      )}
-                      {method.icon === 'building' && (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clipRule="evenodd" />
-                        </svg>
-                      )}
-                      {method.icon === 'landmark' && (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M5 4a1 1 0 011-1h8a1 1 0 011 1v1h2a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h2V4zm2 2h6V5H7v1z" clipRule="evenodd" />
-                        </svg>
-                      )}
-                    </div>
-                    <SemiBoldText>{method.name}</SemiBoldText>
-                  </CustomButton>
-                </motion.div>
+          <motion.div
+  key={method.id}
+  whileHover={{ scale: 1.03 }}
+  whileTap={{ scale: 0.98 }}
+>
+  <CustomButton
+    variant="primary"
+    fullWidth
+    className={`p-4 rounded-xl flex items-center gap-3 ${
+      paymentInfo.method === method.id
+        ? 'border-purple-500 bg-red-500'
+        : 'hover:bg-red-500'
+    }`}
+    onClick={() => {
+      setPaymentInfo({ method: method.id as any });
+      setShowZelleForm(false);
+      setShowBankForm(false);
+    }}
+  >
+    {/* Icon with dynamic background color */}
+    <div
+      className="flex items-center justify-center rounded-full p-2"
+      style={{ backgroundColor: method.color }}
+    >
+      {method.icon === 'smartphone' && (
+        <FontAwesomeIcon icon={faMobileAlt} className="text-white h-4 w-4" />
+      )}
+      {method.icon === 'building' && (
+        <FontAwesomeIcon icon={faBuilding} className="text-white h-4 w-4" />
+      )}
+      {method.icon === 'landmark' && (
+        <FontAwesomeIcon icon={faLandmark} className="text-white h-4 w-4" />
+      )}
+    </div>
+
+    {/* Text */}
+    <SemiBoldText className="text-white">{method.name}</SemiBoldText>
+  </CustomButton>
+</motion.div>
+
               ))}
             </div>
 

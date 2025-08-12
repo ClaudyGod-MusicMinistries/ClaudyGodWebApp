@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { color, motion } from 'framer-motion';
 import { CreditCard, Smartphone, Building, ArrowLeft, Globe, Landmark } from 'lucide-react';
 import { StripePayment } from './paymentPlatforms/stripe';
 import { PayPalPayment } from './paymentPlatforms/paypal';
@@ -44,7 +44,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
       name: 'PayPal',
       description: 'Pay with your PayPal account',
       icon: Smartphone,
-      color: colorScheme.primaryLight
+      color: colorScheme.primary
     },
     {
       id: 'zelle',
@@ -150,12 +150,14 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
               <div className="flex items-center w-full">
                 <div 
                   className="p-3 rounded-lg mr-4 text-white"
-                  style={{ backgroundColor: option.color }}
+                  style={{ backgroundColor: colorScheme.accent }}
                 >
                   <option.icon className="h-6 w-6" />
                 </div>
                 <div className="text-left">
-                  <SemiBoldText>{option.name}</SemiBoldText>
+                  <SemiBoldText
+                  style={{ color: colorScheme.accent }}
+                  >{option.name}</SemiBoldText>
                   <RegularText fontSize="0.875rem" color={colorScheme.textSecondary}>
                     {option.description}
                   </RegularText>
