@@ -1,15 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  faShoppingBag, 
-  faShoppingCart,
-  faChevronLeft,
-  faChevronRight
-} from '@fortawesome/free-solid-svg-icons';
-import {NewsletterForm} from '../components/util/Newsletter';
+import { useTheme } from '../contexts/ThemeContext';
+
+import { BoldText, SemiBoldText, RegularText, LightText } from '../components/ui/fonts/typography';
+import CustomButton from '../components/ui/fonts/buttons/CustomButton';
+import { NewsletterForm } from '../components/util/Newsletter';
 import { Cart } from '../components/store/Cart';
 import { SEO } from '../components/util/SEO';
 import { useCartStore } from '../contexts/Cartcontext';
@@ -19,8 +16,8 @@ import { products, categories } from '../components/data/storeData';
 import { AddToCartDialog } from '../components/store/AddToCartDialog';
 import { Product } from '@/components/types/storeTypes';
 import { DonationCallToAction } from '../components/util/DonationSupport';
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight, faShoppingBag, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 export const StoreData = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -32,6 +29,7 @@ export const StoreData = () => {
   const [slideDirection, setSlideDirection] = useState<'left'|'right'>('right');
   const [slideCount, setSlideCount] = useState(4);
   const { items, addItem } = useCartStore();
+  const { colorScheme } = useTheme();
 
   // Calculate cart items count
   const cartItemsCount = items.reduce((total, item) => total + item.quantity, 0);
@@ -95,7 +93,7 @@ export const StoreData = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-purple-50 to-white min-h-screen">
+    <div style={{ backgroundColor: colorScheme.background }} className="min-h-screen">
       <SEO
         title="ClaudyGod Store - Gospel Merchandise & Products"
         description="Shop official ClaudyGod merchandise. Uplifting apparel, music albums, and faith-inspired products."
@@ -119,109 +117,96 @@ export const StoreData = () => {
       />
       
       {/* Floating Cart Button */}
-      <motion.button
-        onClick={() => setIsCartOpen(true)}
-        className="fixed bottom-8 right-8 bg-gradient-to-r from-purple-700 to-purple-900 text-white p-4 rounded-full shadow-2xl hover:shadow-purple-500/40 z-50 flex items-center justify-center ring-2 ring-white/50"
-        aria-label="Open cart"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <FontAwesomeIcon icon={faShoppingCart} className="h-6 w-6" />
-        {cartItemsCount > 0 && (
-          <motion.span 
-            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            key={cartItemsCount}
-          >
-            {cartItemsCount}
-          </motion.span>
-        )}
-      </motion.button>
+{cartItemsCount > 0 && (
+  <motion.div
+    onClick={() => setIsCartOpen(true)}
+    className="fixed bottom-8 right-8 z-50 rounded-full shadow-lg group"
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+  >
+    {/* Tooltip */}
+    <span className="absolute -top-8 right-1/2 translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+      {cartItemsCount} item{cartItemsCount > 1 ? "s" : ""} in cart
+    </span>
+
+    <CustomButton
+      variant="primary"
+      size="circle"
+      className="w-10 h-10 p-5 rounded-full flex items-center justify-center shadow-2xl ring-2 ring-white/50"
+      icon={<FontAwesomeIcon icon={faShoppingCart} className="h-6 w-6" />}
+      badge={cartItemsCount}
+    />
+  </motion.div>
+)}
+
+
+
+
 
       <StoreHero />
 
       <motion.section 
-        className="bg-gradient-to-r from-purple-900 to-purple-700 text-white py-16 relative overflow-hidden"
+        className="py-16 relative overflow-hidden"
+        style={{ background: colorScheme.primaryGradient }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
       >
-        <div className="absolute inset-0 opacity-10">
-          <div className="pattern-cross-dots-md text-purple-300 w-full h-full" />
-        </div>
+        <div className="absolute inset-0 opacity-10" style={{ backgroundColor: colorScheme.text }} />
         <div className="container mx-auto px-4 md:px-8 text-center relative z-10">
-          <motion.h1 
-            className="text-4xl md:text-5xl lg:text-6xl roboto-condensed font-bold tracking-tight"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
+          <BoldText as="h1" fontSize="2.5rem" className="tracking-tight" color={colorScheme.text}>
             ClaudyGod Gospel Store
-          </motion.h1>
+          </BoldText>
           <motion.div 
-            className="w-24 h-1.5 bg-gradient-to-r from-accent-gold to-yellow-300 mx-auto my-6 rounded-full"
+            className="h-1.5 rounded-full mx-auto my-6"
+            style={{ background: `linear-gradient(to right, ${colorScheme.accent}, gold)` }}
             initial={{ width: 0 }}
             animate={{ width: "6rem" }}
             transition={{ delay: 0.4, duration: 0.5 }}
           />
-          <motion.p 
-            className="max-w-3xl mx-auto text-lg md:text-xl raleway-medium text-purple-100"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-          >
+          <RegularText className="max-w-3xl mx-auto" fontSize="1.125rem" color={colorScheme.textSecondary}>
             Shop our curated collection of faith-inspired products designed to inspire and uplift your spirit every day.
-          </motion.p>
+          </RegularText>
         </div>
       </motion.section>
-
-      <motion.div
+<CategoryFilter 
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory} categories={[]}        />
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="py-8 bg-white sticky top-0 z-30 shadow-sm"
+        className="py-8 sticky top-0 z-30 shadow-sm"
+        style={{ backgroundColor: colorScheme.success}}
       >
-        <CategoryFilter 
-          activeCategory={activeCategory} 
-          setActiveCategory={setActiveCategory} 
-        />
-      </motion.div>
+        
+      </motion.div> */}
 
       {/* Featured Products Section - Responsive Carousel */}
-      <section className="py-12 px-4 relative">
+      <section className="py-12 px-4 relative" style={{ backgroundColor: colorScheme.gray[100] }}>
         <div className="container mx-auto">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+            <BoldText as="h2" fontSize="1.75rem" color={colorScheme.background}>
               Featured Products
-            </h2>
+            </BoldText>
             <div className="flex space-x-2">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={prevSlide}
-                disabled={currentSlide === 0}
-                className={`w-10 h-10 rounded-full flex items-center justify-center text-purple-900 transition-colors ${
-                  currentSlide === 0 
-                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
-                    : 'bg-white shadow-md hover:bg-purple-50'
-                }`}
-              >
-                <FontAwesomeIcon icon={faChevronLeft} />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={nextSlide}
-                disabled={currentSlide === totalSlides - 1}
-                className={`w-10 h-10 rounded-full flex items-center justify-center text-purple-900 transition-colors ${
-                  currentSlide === totalSlides - 1
-                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
-                    : 'bg-white shadow-md hover:bg-purple-50'
-                }`}
-              >
-                <FontAwesomeIcon icon={faChevronRight} />
-              </motion.button>
+            <CustomButton
+  variant={currentSlide === 0 ? "disabled" : "secondary"}
+  size="sm"
+  onClick={prevSlide}
+  disabled={currentSlide === 0}
+>
+  <FontAwesomeIcon icon={faChevronLeft} />
+</CustomButton>
+
+<CustomButton
+  variant={currentSlide === totalSlides - 1 ? "disabled" : "secondary"}
+  size="sm"
+  onClick={nextSlide}
+  disabled={currentSlide === totalSlides - 1}
+>
+  <FontAwesomeIcon icon={faChevronRight} />
+</CustomButton>
             </div>
           </div>
           
@@ -250,7 +235,11 @@ export const StoreData = () => {
                   {visibleProducts.map((product) => (
                     <motion.div
                       key={product.id}
-                      className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 h-full flex flex-col"
+                      className="rounded-2xl overflow-hidden shadow-lg border h-full flex flex-col"
+                      style={{
+                        backgroundColor: colorScheme.surface,
+                        borderColor: colorScheme.border
+                      }}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5 }}
@@ -260,27 +249,51 @@ export const StoreData = () => {
                         <img 
                           src={product.image} 
                           alt={product.name} 
-                          className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
+                          className="w-full h-56 object-cover 
+                          transition-transform duration-500
+                           group-hover:scale-110"
                         />
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => handleAddToCart(product)}
-                          className="absolute bottom-4 right-4 bg-gradient-to-r from-purple-600 to-purple-800 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg hover:from-purple-700 hover:to-purple-900 transition-all"
-                        >
-                          Add to Cart
-                        </motion.button>
+                        <div className="absolute bottom-4 right-4">
+                          <CustomButton
+                            variant="outline"
+        
+                            onClick={() => handleAddToCart(product)}
+                          >
+                            Add to Cart
+                          </CustomButton>
+                        </div>
                       </div>
                       <div className="p-6 flex flex-col justify-between flex-grow">
                         <div>
-                          <h3 className="text-lg font-bold text-gray-800">{product.name}</h3>
-                          <p className="text-gray-600 mt-2 line-clamp-2">{product.description}</p>
+                          <BoldText as="h3" fontSize="1.125rem" color={colorScheme.text}>
+                            {product.name}
+                          </BoldText>
+                          <RegularText className="mt-2 line-clamp-2" color={colorScheme.textSecondary}>
+                            {product.description}
+                          </RegularText>
                         </div>
                         <div className="mt-4 flex justify-between items-center">
-                          <span className="text-xl font-bold text-purple-900">${product.price}</span>
-                          <span className="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded-full">
-                            {product.category}
-                          </span>
+                          <BoldText fontSize="1.25rem" color={colorScheme.accent}>
+                            ${product.price}
+                          </BoldText>
+                          <LightText
+                           className="text-xs px-2 py-1 rounded-full"
+                           fontSize='0.7rem'
+                          style={{
+                              backgroundColor: `${colorScheme.primary}70`,
+                              color: colorScheme.gray[300]
+                            }}>
+                {product.category}
+                          </LightText>
+                          {/* <span 
+                            className="text-xs px-2 py-1 rounded-full"
+                            style={{
+                              backgroundColor: `${colorScheme.primary}20`,
+                              color: colorScheme.primary
+                            }}
+                          >
+                          
+                          </span> */}
                         </div>
                       </div>
                     </motion.div>
@@ -301,9 +314,12 @@ export const StoreData = () => {
                 }}
                 className={`mx-1 w-3 h-3 rounded-full transition-all ${
                   index === currentSlide 
-                    ? 'bg-purple-700 w-6' 
+                    ? 'w-6' 
                     : 'bg-gray-300'
                 }`}
+                style={{
+                  backgroundColor: index === currentSlide ? colorScheme.primary : colorScheme.borderLight
+                }}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
@@ -311,11 +327,15 @@ export const StoreData = () => {
         </div>
       </section>
 
-      <section className="py-12 bg-gray-50">
+      <section className="py-12" style={{ backgroundColor: colorScheme.backgroundSecondary }}>
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">
+          <BoldText as="h2" fontSize="1.75rem" className="mb-1 text-center" color={colorScheme.text}>
             All Products
-          </h2>
+          </BoldText>
+          <LightText as="h2" fontSize="1.25rem" className="mb-15 text-center" color={colorScheme.text}>
+           Explore our full collection, all in one place.
+          </LightText>
+        
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredProducts.map((product) => (
@@ -326,7 +346,11 @@ export const StoreData = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300"
+                className="rounded-xl overflow-hidden shadow-md border"
+                style={{
+                  backgroundColor: `${colorScheme.primary}70`,
+                  borderColor: colorScheme.border
+                }}
               >
                 <div className="relative overflow-hidden group">
                   <img 
@@ -334,23 +358,40 @@ export const StoreData = () => {
                     alt={product.name} 
                     className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => handleAddToCart(product)}
-                    className="absolute bottom-4 right-4 bg-gradient-to-r from-purple-600 to-purple-800 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg hover:from-purple-700 hover:to-purple-900 transition-all"
-                  >
-                    Add to Cart
-                  </motion.button>
+                  <div className="absolute bottom-4 right-4">
+                    <CustomButton
+                      variant="primary"
+                //        style={{
+                //   backgroundColor: `${colorScheme.accent}70`,
+                //   borderColor: colorScheme.border
+                // }}
+                      size="sm"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Add to Cart
+                    </CustomButton>
+                  </div>
                 </div>
                 <div className="p-5">
-                  <h3 className="text-lg font-bold text-gray-800">{product.name}</h3>
-                  <p className="text-gray-600 mt-2 line-clamp-2">{product.description}</p>
+                  <BoldText as="h3" fontSize="1.125rem" color={colorScheme.text}>
+                    {product.name}
+                  </BoldText>
+                  <RegularText className="mt-2 line-clamp-2" color={colorScheme.textSecondary}>
+                    {product.description}
+                  </RegularText>
                   <div className="mt-4 flex justify-between items-center">
-                    <span className="text-xl font-bold text-purple-900">${product.price}</span>
-                    <span className="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded-full">
-                      {product.category}
-                    </span>
+                    <BoldText fontSize="1.25rem" color={colorScheme.accent}>
+                      ${product.price}
+                    </BoldText>
+                    <LightText
+                           className="text-xs px-2 py-1 rounded-full"
+                           fontSize='0.7rem'
+                          style={{
+                              backgroundColor: `${colorScheme.primary}70`,
+                              color: colorScheme.gray[300]
+                            }}>
+                {product.category}
+                          </LightText>
                   </div>
                 </div>
               </motion.div>
@@ -360,47 +401,54 @@ export const StoreData = () => {
       </section>
 
       <motion.div 
-        className="py-16 bg-gradient-to-r from-purple-900 to-purple-700 text-center"
+        className="py-16 text-center"
+        style={{ background: colorScheme.primaryGradient }}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
       >
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <BoldText as="h2" fontSize="2.5rem" 
+          className="mb-6" color={colorScheme.accent}>
             Ready to Checkout?
-          </h2>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link
-              to="/cart"
-              className="inline-block bg-gradient-to-r from-accent-gold to-yellow-400 text-purple-900 px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              <FontAwesomeIcon icon={faShoppingBag} className="mr-2" />
-              Proceed to Checkout
-            </Link>
-          </motion.div>
-          <p className="text-purple-200 mt-6">
+          </BoldText>
+          <Link to="/cart">
+           <CustomButton
+  variant="accent"
+  size="lg"
+  icon={<FontAwesomeIcon icon={faShoppingBag} />}
+  className="shadow-lg hover:shadow-xl"
+>
+  Proceed to Checkout
+</CustomButton>
+
+          </Link>
+          <RegularText className="mt-6" color={colorScheme.textSecondary}>
             {cartItemsCount} items in your cart
-          </p>
+          </RegularText>
         </div>
       </motion.div>
-<DonationCallToAction
-  title="Partner with Our Ministry"
-  subtitle="Your Support Makes a Difference"
-  description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, 
-  and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
-  goFundMeUrl="https://gofundme.com/your-campaign"
-  donateUrl="/donate"
-/>
+<div className="py-16"
+        style={{ backgroundColor: colorScheme.text}}>
+    <DonationCallToAction
+        title="Partner with Our Ministry"
+        subtitle="Your Support Makes a Difference"
+        description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+        goFundMeUrl="https://gofundme.com/your-campaign"
+        donateUrl="/donate"
+      />
+
+</div>
+    
+
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="py-16 bg-white"
+        className="py-16"
+        style={{ backgroundColor: colorScheme.surface }}
       >
         <div className="container mx-auto px-4 max-w-4xl">
           <NewsletterForm />

@@ -6,6 +6,12 @@ import { PayPalPayment } from './paymentPlatforms/paypal';
 import { ZellePayment } from './paymentPlatforms/zelle';
 import { PaystackPayment } from './paymentPlatforms/paystack';
 import { NigerianBankTransfer } from './paymentPlatforms/NigerianAcct';
+import { useTheme } from '../../contexts/ThemeContext';
+
+import { BoldText, SemiBoldText, RegularText } from '../ui/fonts/typography';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 interface PaymentMethodsProps {
   paymentMethod: string;
@@ -23,6 +29,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   orderTotal
 }) => {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const { colorScheme } = useTheme();
 
   const paymentOptions = [
     {
@@ -30,35 +37,35 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
       name: 'Credit/Debit Card',
       description: 'Visa, Mastercard, American Express',
       icon: CreditCard,
-      color: 'bg-blue-600'
+      color: colorScheme.info
     },
     {
       id: 'paypal',
       name: 'PayPal',
       description: 'Pay with your PayPal account',
       icon: Smartphone,
-      color: 'bg-blue-500'
+      color: colorScheme.primaryLight
     },
     {
       id: 'zelle',
       name: 'Zelle',
       description: 'Send money with Zelle',
       icon: Building,
-      color: 'bg-purple-600'
+      color: colorScheme.primary
     },
     {
       id: 'paystack',
       name: 'Paystack',
       description: 'Nigerian payment gateway',
       icon: Globe,
-      color: 'bg-green-600'
+      color: colorScheme.success
     },
     {
       id: 'nigerian-bank',
       name: 'Nigerian Bank Transfer',
       description: 'Direct bank transfer to Nigerian account',
       icon: Landmark,
-      color: 'bg-green-700'
+      color: colorScheme.secondary
     }
   ];
 
@@ -88,14 +95,18 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
     return (
       <div>
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Payment Details</h2>
-          <button
+          <BoldText as="h2" fontSize="1.5rem" color={colorScheme.text}>
+            Payment Details
+          </BoldText>
+          <CustomButton
+            variant="text"
+            size="sm"
+            icon="arrow-left"
             onClick={() => setShowPaymentForm(false)}
-            className="flex items-center text-purple-600 hover:text-purple-700 font-medium"
+            className="text-purple-600 hover:text-purple-700"
           >
-            <ArrowLeft className="mr-1 h-4 w-4" />
             Change Method
-          </button>
+          </CustomButton>
         </div>
         {renderPaymentForm()}
       </div>
@@ -105,39 +116,53 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Payment Method</h2>
-        <button
-          onClick={onBack}
-          className="flex items-center text-purple-600 hover:text-purple-700 font-medium"
-        >
-          <ArrowLeft className="mr-1 h-4 w-4" />
-          Back
-        </button>
+        <BoldText as="h2" fontSize="1.5rem" color={colorScheme.text}>
+          Payment Method
+        </BoldText>
+    <CustomButton
+  variant="text"
+  size="sm"
+  icon={<FontAwesomeIcon icon={faArrowLeft} className="h-4 w-4" />}
+  onClick={onBack}
+  className="text-purple-600 hover:text-purple-700"
+>
+  Back
+</CustomButton>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         {paymentOptions.map((option) => (
-          <motion.button
+          <motion.div
             key={option.id}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => handleMethodSelect(option.id)}
-            className={`p-6 border-2 rounded-xl text-left transition-all duration-200 ${
-              paymentMethod === option.id
-                ? 'border-purple-500 bg-purple-50'
-                : 'border-gray-200 hover:border-purple-300'
-            }`}
           >
-            <div className="flex items-center mb-4">
-              <div className={`${option.color} p-3 rounded-lg text-white mr-4`}>
-                <option.icon className="h-6 w-6" />
+            <CustomButton
+              variant="outline"
+              fullWidth
+              className={`p-6 rounded-xl text-left h-full ${
+                paymentMethod === option.id
+                  ? 'border-purple-500 bg-purple-50'
+                  : 'hover:border-purple-300'
+              }`}
+              onClick={() => handleMethodSelect(option.id)}
+            >
+              <div className="flex items-center w-full">
+                <div 
+                  className="p-3 rounded-lg mr-4 text-white"
+                  style={{ backgroundColor: option.color }}
+                >
+                  <option.icon className="h-6 w-6" />
+                </div>
+                <div className="text-left">
+                  <SemiBoldText>{option.name}</SemiBoldText>
+                  <RegularText fontSize="0.875rem" color={colorScheme.textSecondary}>
+                    {option.description}
+                  </RegularText>
+                </div>
               </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">{option.name}</h3>
-                <p className="text-sm text-gray-600">{option.description}</p>
-              </div>
-            </div>
-          </motion.button>
+            </CustomButton>
+          </motion.div>
         ))}
       </div>
     </div>

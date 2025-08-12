@@ -148,7 +148,8 @@ export const Navbar: React.FC = () => {
             <button
               onClick={toggleNav}
               style={{
-                backgroundColor: scrolled ? colorScheme.button : 'white',
+                cursor:"pointer",
+                backgroundColor: scrolled ? colorScheme.primary : colorScheme.primary,
                 color: scrolled ? colorScheme.buttonText : 'trans'
               }}
               className="p-3 hover:opacity-80 rounded-lg shadow-sm transition-colors absolute right-4 top-4"
@@ -178,17 +179,17 @@ export const Navbar: React.FC = () => {
                 <img src={Log} alt="Logo" className="h-10 w-10" />
               </div>
               <div className="ml-2">
-                <LightText
+                <BoldText
                   variant="brand" 
                   style={{ color: colorScheme.text }}
                  font-size='5px'
                 >
                   ClaudyGod
-                </LightText>
+                </BoldText>
                 <LightText 
                   variant="caption" 
-                  style={{ color: colorScheme.secondaryText }}
-                  font-size='5px'
+                  style={{ color: colorScheme.text }}
+                  font-size='3px'
                 >
                   Music & Ministry
                 </LightText>

@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// src/components/checkout/CheckoutPage.tsx
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '../../contexts/Cartcontext';
 import { useNavigate } from 'react-router-dom';
-import { Truck, CreditCard, ArrowLeft, Building, Smartphone, Landmark } from 'lucide-react';
-import toast from 'react-hot-toast';
+import { useTheme } from '../../contexts/ThemeContext';
+import { BoldText, SemiBoldText} from '../ui/fonts/typography';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
 import { ShippingForm } from './ShippingForm';
 import { ZellePayment } from './paymentPlatforms/zelle';
 import { NigerianBankTransfer } from './paymentPlatforms/NigerianAcct';
@@ -28,6 +31,7 @@ interface PaymentInfo {
 export const CheckoutPage: React.FC = () => {
   const { items, clearCart } = useCartStore();
   const navigate = useNavigate();
+  const { colorScheme } = useTheme();
   const [step, setStep] = useState(1);
   const [showZelleForm, setShowZelleForm] = useState(false);
   const [showBankForm, setShowBankForm] = useState(false);
@@ -52,7 +56,6 @@ export const CheckoutPage: React.FC = () => {
 
   const finalizeOrder = (txId?: string) => {
     clearCart();
-    toast.success('Order placed successfully!');
     if (paymentInfo.method === 'zelle') {
       navigate('/payment-pending', { 
         state: { 
@@ -76,7 +79,6 @@ export const CheckoutPage: React.FC = () => {
 
   const submitPayment = async () => {
     if (!paymentInfo.method) {
-      toast.error('Please select a payment method');
       return;
     }
     setIsProcessing(true);
@@ -87,11 +89,9 @@ export const CheckoutPage: React.FC = () => {
   };
 
   const paymentMethods = [
-    { id: 'paypal', name: 'PayPal', icon: Smartphone, color: 'bg-blue-600' },
-    { id: 'zelle', name: 'Zelle', icon: Building, color: 'bg-purple-600' },
-    { id: 'nigerian-bank', name: 'Nigerian Bank', icon: Landmark, color: 'bg-green-600' },
-    { id: 'credit-card', name: 'Credit Card', icon: CreditCard, color: 'bg-yellow-500', disabled: true },
-    { id: 'cash-delivery', name: 'Cash on Delivery', icon: Truck, color: 'bg-red-500', disabled: true }
+    { id: 'paypal', name: 'PayPal', icon: 'smartphone', color: colorScheme.info },
+    { id: 'zelle', name: 'Zelle', icon: 'building', color: colorScheme.primary },
+    { id: 'nigerian-bank', name: 'Nigerian Bank', icon: 'landmark', color: colorScheme.success },
   ];
 
   return (
@@ -127,67 +127,99 @@ export const CheckoutPage: React.FC = () => {
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            <button 
-              onClick={() => setStep(1)} 
-              className="flex items-center text-indigo-600 hover:text-indigo-800 transition-colors"
+            <CustomButton
+              variant="text"
+              size="sm"
+              icon="arrow-left"
+              onClick={() => setStep(1)}
+              className="text-purple-600
+               hover:text-purple-700"
             >
-              <ArrowLeft className="inline mr-1" /> Back to Shipping
-            </button>
+              Back to Shipping
+            </CustomButton>
 
-            <h2 className="text-2xl font-bold">Select Payment Method</h2>
+            <BoldText as="h2" fontSize="1.5rem" color={colorScheme.text}>
+              Select Payment Method
+            </BoldText>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {paymentMethods.map((method) => (
-                <motion.button
+                <motion.div
                   key={method.id}
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => {
-                    if (method.disabled) {
-                      toast('Coming soon!', { icon: '🛠️' });
-                      return;
-                    }
-                    setPaymentInfo({ method: method.id as any });
-                    setShowZelleForm(false);
-                    setShowBankForm(false);
-                  }}
-                  disabled={method.disabled}
-                  className={`p-4 border rounded-xl flex items-center gap-2 ${
-                    paymentInfo.method === method.id 
-                      ? 'border-indigo-500 bg-indigo-50' 
-                      : 'border-gray-200 hover:bg-gray-50'
-                  } ${method.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  <method.icon className={`h-6 w-6 ${method.color} text-white p-1 rounded-full`} />
-                  <span>{method.name}</span>
-                  {method.disabled && <span className="text-xs text-gray-500 ml-auto">Soon</span>}
-                </motion.button>
+                  <CustomButton
+                    variant="outline"
+                    fullWidth
+                    className={`p-4 rounded-xl flex items-center gap-2 ${
+                      paymentInfo.method === method.id 
+                        ? 'border-purple-500 bg-purple-50' 
+                        : 'hover:bg-gray-50'
+                    }`}
+                    onClick={() => {
+                      setPaymentInfo({ method: method.id as any });
+                      setShowZelleForm(false);
+                      setShowBankForm(false);
+                    }}
+                  >
+                    <div 
+                      className="h-6 w-6 text-white p-1 rounded-full flex items-center justify-center"
+                      style={{ backgroundColor: method.color }}
+                    >
+                      {method.icon === 'smartphone' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zm3 14a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                      {method.icon === 'building' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                      {method.icon === 'landmark' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M5 4a1 1 0 011-1h8a1 1 0 011 1v1h2a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h2V4zm2 2h6V5H7v1z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </div>
+                    <SemiBoldText>{method.name}</SemiBoldText>
+                  </CustomButton>
+                </motion.div>
               ))}
             </div>
 
             {paymentInfo.method === 'paypal' && (
-              <motion.button
+              <motion.div
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
-                onClick={submitPayment}
-                disabled={isProcessing}
-                className={`w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 ${
-                  isProcessing ? 'opacity-70 cursor-not-allowed' : ''
-                }`}
               >
-                {isProcessing ? 'Processing...' : `Pay $${total.toFixed(2)} with PayPal`}
-              </motion.button>
+                <CustomButton
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                  isLoading={isProcessing}
+                  onClick={submitPayment}
+                >
+                  Pay ${total.toFixed(2)} with PayPal
+                </CustomButton>
+              </motion.div>
             )}
 
             {paymentInfo.method === 'zelle' && !showZelleForm && (
-              <motion.button
+              <motion.div
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
-                onClick={() => setShowZelleForm(true)}
-                className="w-full py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
               >
-                Send ${total.toFixed(2)} via Zelle
-              </motion.button>
+                <CustomButton
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                  onClick={() => setShowZelleForm(true)}
+                >
+                  Send ${total.toFixed(2)} via Zelle
+                </CustomButton>
+              </motion.div>
             )}
 
             {paymentInfo.method === 'zelle' && showZelleForm && (
@@ -195,14 +227,19 @@ export const CheckoutPage: React.FC = () => {
             )}
 
             {paymentInfo.method === 'nigerian-bank' && !showBankForm && (
-              <motion.button
+              <motion.div
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
-                onClick={() => setShowBankForm(true)}
-                className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700"
               >
-                Transfer ${total.toFixed(2)} to our bank
-              </motion.button>
+                <CustomButton
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                  onClick={() => setShowBankForm(true)}
+                >
+                  Transfer ${total.toFixed(2)} to our bank
+                </CustomButton>
+              </motion.div>
             )}
 
             {paymentInfo.method === 'nigerian-bank' && showBankForm && (

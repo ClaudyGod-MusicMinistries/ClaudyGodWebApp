@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Product } from '../types/storeTypes';
+import { RegularText } from '../ui/fonts/typography';
+import  CustomButton  from '../ui/fonts/buttons/CustomButton';
 
 interface AddToCartDialogProps {
   dialogProduct: Product | null;
@@ -22,19 +24,34 @@ export const AddToCartDialog = ({
         >
           <FontAwesomeIcon icon={faXmark} size="lg" />
         </button>
+        
         <div className="text-center">
-          <h3 className="text-xl font-bold text-purple-900 mb-4">
+          <RegularText 
+            as="h3"
+            fontSize="1.25rem"
+            fontWeight="bold"
+            className="mb-4 text-purple-900"
+          >
             Item Added to Cart
-          </h3>
-          <p className="text-gray-700 mb-2">{dialogProduct.name}</p>
-          <p className="text-gray-900 font-medium">${dialogProduct.price}</p>
+          </RegularText>
+          
+          <RegularText className="mb-2 text-gray-700">
+            {dialogProduct.name}
+          </RegularText>
+          
+          <RegularText fontWeight="medium" className="text-gray-900">
+            ${dialogProduct.price.toFixed(2)}
+          </RegularText>
+          
           <div className="mt-6">
-            <button
+            <CustomButton
               onClick={() => setDialogProduct(null)}
-              className="bg-purple-900 hover:bg-purple-800 text-white px-6 py-2 rounded-md transition-colors"
+              variant="primary"
+              size="md"
+              fullWidth
             >
               Continue Shopping
-            </button>
+            </CustomButton>
           </div>
         </div>
       </div>
