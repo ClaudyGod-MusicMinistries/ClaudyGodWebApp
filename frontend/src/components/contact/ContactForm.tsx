@@ -67,13 +67,13 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       transition={{ duration: 0.5 }}
     >
       <div>
-        <LightText 
+        <SemiBoldText
           style={{ color: colorScheme.primary }}
           fontSize="14px"
           className="mb-1"
         >
           Full Name
-        </LightText>
+        </SemiBoldText>
         <input
           id="name"
           type="text"
@@ -98,13 +98,13 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       </div>
 
       <div>
-        <LightText 
+        <SemiBoldText
           style={{ color: colorScheme.primary }}
           fontSize="14px"
           className="mb-1"
         >
           Email Address
-        </LightText>
+        </SemiBoldText>
         <input
           id="email"
           type="email"
@@ -135,13 +135,13 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       </div>
 
       <div>
-        <LightText 
+        <SemiBoldText 
           style={{ color: colorScheme.primary }}
           fontSize="14px"
           className="mb-1"
         >
           Your Message
-        </LightText>
+        </SemiBoldText>
         <textarea
           id="message"
           rows={4}

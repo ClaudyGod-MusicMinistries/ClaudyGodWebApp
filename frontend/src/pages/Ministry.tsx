@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,11 +13,12 @@ import { NewsletterForm } from '../components/util/Newsletter';
 import { About1 } from '../assets/';
 import { teachingsData, TeachingType } from '../components/data/MinistryData';
 import { DonationCallToAction } from '../components/util/DonationSupport';
-import { ExtraBoldText, RegularText } from '../components/ui/fonts/typography';
+import { BoldText, ExtraBoldText, LightText, RegularText } from '../components/ui/fonts/typography';
 import CustomButton from '../components/ui/fonts/buttons/CustomButton';
 import { useTheme } from '../contexts/ThemeContext';
 
-/* ---------- VIDEO CARD ---------- */
+
+
 const VideoCard = ({ 
   content, 
   onClick 
@@ -58,35 +60,34 @@ const VideoCard = ({
       </div>
 
       <div className="p-4" style={{ backgroundColor: colorScheme.surface }}>
-        <div className="flex items-center mb-2">
-          <span 
-            className="inline-block px-2 py-1 text-xs font-semibold rounded-full"
-            style={{
-              color: colorScheme.primary,
-              backgroundColor: `${colorScheme.primary}20`
-            }}
-          >
-            {content.scripture}
-          </span>
-          <span 
-            className="ml-2 text-xs"
-            style={{ color: colorScheme.textSecondary }}
-          >
-            {content.date}
-          </span>
-        </div>
-        <h3 
-          className="font-bold line-clamp-2 leading-tight mb-1"
-          style={{ color: colorScheme.text }}
-        >
-          {content.title}
-        </h3>
-        <p 
-          className="text-sm font-medium"
-          style={{ color: colorScheme.primary }}
-        >
+      <div className="flex items-center gap-15">
+  <LightText
+    className="px-2 py-1 rounded-full"
+    style={{
+      color: colorScheme.text,
+      fontSize: "0.8rem",
+      backgroundColor: `${colorScheme.primary}20`
+    }}
+  >
+    {content.scripture}
+  </LightText>
+
+  <LightText style={{ color: colorScheme.gray[300]
+    ,fontSize: "0.8rem",
+   }}>
+    {content.date}
+  </LightText>
+</div>
+
+        <BoldText style={{ color: colorScheme.text }}>
+ {content.title}
+        </BoldText>
+    
+        <LightText 
+         style={{ color: colorScheme.accent }}>
           {content.teacher}
-        </p>
+          </LightText>
+       
       </div>
     </motion.div>
   );
@@ -224,7 +225,7 @@ const ContentSection = ({
   );
 
   return (
-    <section className="py-16 px-4" style={{ backgroundColor: colorScheme.surfaceVariant }}>
+    <section className="py-16 px-4" style={{ backgroundColor: colorScheme.gray[50] }}>
       <div className="max-w-7xl mx-auto">
         <VideoModal videoId={selectedVideo} onClose={() => setSelectedVideo(null)} />
         
@@ -236,10 +237,10 @@ const ContentSection = ({
             </RegularText>
             <div className="w-12 h-0.5 ml-4" style={{ backgroundColor: colorScheme.primary }}></div>
           </div>
-          <ExtraBoldText fontSize="2rem" mdFontSize="2.5rem" style={{ color: colorScheme.text }} className="max-w-3xl mx-auto leading-tight mb-6">
+          <ExtraBoldText fontSize="2rem" mdFontSize="2.5rem" style={{ color: colorScheme.background }} className="max-w-3xl mx-auto leading-tight mb-6">
             Min. ClaudyGod Teachings & Podcasts
           </ExtraBoldText>
-          <RegularText fontSize="1rem" style={{ color: colorScheme.textSecondary }} className="max-w-2xl mx-auto">
+          <RegularText fontSize="1rem" style={{ color: colorScheme.button }} className="max-w-2xl mx-auto">
             {description}
           </RegularText>
         </div>

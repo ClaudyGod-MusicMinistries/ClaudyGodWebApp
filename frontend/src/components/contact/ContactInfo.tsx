@@ -43,10 +43,10 @@ const ContactInfo: React.FC = () => {
             className="mt-1 mr-3 text-lg" 
           />
           <div>
-            <BoldText style={{ color: colorScheme.primary }}>
+            <BoldText style={{ color: colorScheme.text }}>
               ClaudyGod Music & Ministries
             </BoldText>
-            <LightText style={{ color: colorScheme.primary }}>
+            <LightText style={{ color: colorScheme.text }}>
               San Ramon, California
             </LightText>
           </div>
@@ -63,10 +63,10 @@ const ContactInfo: React.FC = () => {
           />
           <a 
             href="tel:+13852196632" 
-            style={{ color: colorScheme.primary }}
+            style={{ color: colorScheme.text }}
            
           >
-            <LightText style={{ color: colorScheme.primary }}>+1 (385) 219-6632</LightText>
+            <LightText style={{ color: colorScheme.text }}>+1 (385) 219-6632</LightText>
           </a>
         </motion.div>
 
@@ -81,10 +81,10 @@ const ContactInfo: React.FC = () => {
           />
           <a
             href="mailto:info@ClaudyGod.com"
-            style={{ color: colorScheme.primary }}
+            style={{ color: colorScheme.text }}
             className="hover:text-purple-800 transition-colors"
           >
-            <LightText style={{ color: colorScheme.primary }}>info@ClaudyGod.com</LightText>
+            <LightText style={{ color: colorScheme.text }}>info@ClaudyGod.com</LightText>
           </a>
         </motion.div>
       </div>

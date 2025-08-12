@@ -92,7 +92,7 @@ export const ContactData: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
         >
           <SemiBoldText 
-            style={{ color: colorScheme.accent }}
+            style={{ color: colorScheme.background }}
             fontSize='1.5rem'
           >
             Get In Touch With Us
