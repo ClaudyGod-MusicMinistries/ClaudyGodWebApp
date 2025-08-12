@@ -1,6 +1,8 @@
+// store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import blogReducer from './blogs';
 import storeReducer from './storeSlice';
+import interviewsReducer from './interviewSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
@@ -16,6 +18,7 @@ export const store = configureStore({
   reducer: {
     blog: blogReducer,
     store: persistedReducer,
+    interviews: interviewsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

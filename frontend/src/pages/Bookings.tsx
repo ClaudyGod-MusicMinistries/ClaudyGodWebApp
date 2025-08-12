@@ -1,7 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTheme } from '../contexts/ThemeContext';
+import CustomButton from '../components/ui/fonts/buttons/CustomButton';
+
+import { BoldText, SemiBoldText, RegularText } from '../components/ui/fonts/typography';
 
 import { submitBooking } from '../components/api/bookingApi';
 import { Herosection } from '../components/util/Herosection';
@@ -15,8 +20,10 @@ import { LocationSection } from '../components/Bookings/LocationInfo';
 import { TermsSection } from '../components/Bookings/TermsSubmit';
 import { DownloadSection } from '../components/util/Download';
 import { SEO } from '../components/util/SEO';
+import { color } from 'framer-motion';
 
 export const Bookings: React.FC = () => {
+  const { colorScheme } = useTheme();
   const [loading, setLoading] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [states, setStates] = useState<string[]>([]);
@@ -68,7 +75,6 @@ export const Bookings: React.FC = () => {
   const isBlank = (value: unknown) => typeof value === 'string' ? !value.trim() : value == null;
 
   const onSubmit = async (data: any) => {
-    console.log('Form submission data:', data);
     const requiredTop = ['firstName', 'lastName', 'email', 'phone', 'eventType'];
     const requiredAddr = ['country', 'state', 'city', 'address1'];
 
@@ -84,13 +90,11 @@ export const Bookings: React.FC = () => {
 
     try {
       setLoading(true);
-      const response = await submitBooking(data);
-      console.log('Server response:', response);
-      toast.success('Booking submitted! We’ll be in touch shortly.');
+      await submitBooking(data);
+      toast.success(`'Booking submitted! We'll Touch be in  shortly.'`);
       reset();
       setShowThankYouModal(true);
     } catch (error: any) {
-      console.error('Booking error:', error);
       toast.error(error?.message || 'Failed to submit booking');
     } finally {
       setLoading(false);
@@ -98,7 +102,7 @@ export const Bookings: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen overflow-y-auto">
+    <div className="min-h-screen overflow-y-auto">
       <ToastContainer position="top-right" autoClose={5000} />
 
       <SEO
@@ -118,17 +122,17 @@ export const Bookings: React.FC = () => {
       />
 
       <Modal isOpen={showThankYouModal} onClose={() => setShowThankYouModal(false)} title="Thank You!">
-        <div className="text-gray-700 mb-4">
-          <p>Thank you for contacting us!</p>
-          <p>We will review your request and get in touch shortly.</p>
-        </div>
+        <RegularText className="mb-4">
+          Thank you for contacting us! We will review your request and get in touch shortly.
+        </RegularText>
         <div className="flex justify-end">
-          <button
+          <CustomButton
             onClick={() => setShowThankYouModal(false)}
-            className="px-4 py-2 bg-gradient-to-r from-purple-700 to-indigo-800 text-white rounded-md hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 shadow-md"
+            variant="primary"
+            size="md"
           >
             Close
-          </button>
+          </CustomButton>
         </div>
       </Modal>
 
@@ -136,75 +140,99 @@ export const Bookings: React.FC = () => {
         title="Book ClaudyGod for Your Event"
         subtitle="Fill out the form below to request a booking"
         backgroundImage={Back3}
-        // overlay="rgba(0,0,0,0.5)"
       />
 
       <div className="max-w-5xl mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Booking Request Form</h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-indigo-700 mx-auto rounded-full mb-4" />
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Please fill out all required fields below. Our team will review your request and contact you within 48 hours.
-          </p>
+          <BoldText as="h1" 
+          style={{color: colorScheme.primary }}
+          fontSize="2.5rem" className="mb-4">
+            Booking Request Form
+          </BoldText>
+          <div 
+            className="w-24 h-1 mx-auto rounded-full mb-4" 
+            style={{ background: colorScheme.primary }}
+          />
+          <RegularText className="text-lg max-w-3xl mx-auto"
+            style={{color: colorScheme.body }}>
+            Please fill out all required fields below. Our team will review your request within 48 hours.
+          </RegularText>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-          <div className="bg-gradient-to-r from-purple-800 to-indigo-900 py-4 px-8">
-            <h2 className="text-xl font-bold text-white">Event Information</h2>
+        <div 
+          className="rounded-2xl shadow-xl overflow-hidden border" 
+          style={{ 
+            // backgroundColor: colorScheme.surface,
+            borderColor: colorScheme.borderLight
+          }}
+        >
+          <div 
+            className="py-4 px-8" 
+            style={{ background: colorScheme.primary }}
+          >
+            <SemiBoldText as="h2" className="text-white"
+             style={{ background: colorScheme.primary }}>
+              Event Information
+            </SemiBoldText>
           </div>
 
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)} className="p-8">
               <div className="grid grid-cols-1 gap-8">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">Contact Information</h3>
+                  <SemiBoldText as="h3" className="text-lg mb-4 pb-2 border-b" 
+                  style={{ borderColor: colorScheme.background, color:colorScheme.background }}>
+                    Contact Information
+                  </SemiBoldText>
                   <PersonalInfoSection countryCode={watch('countryCode')} />
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">Event Details</h3>
+                  <SemiBoldText as="h3" className="text-lg mb-4 pb-2 border-b" 
+                    style={{ borderColor: colorScheme.background, color:colorScheme.background }}>
+                    Event Details
+                  </SemiBoldText>
                   <EventInfoSection MONTHS={MONTHS} />
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">Event Location</h3>
-                  <LocationSection states={states} cities={cities} country={country} COUNTRY_STATE_CITY_DATA={COUNTRY_STATE_CITY_DATA} />
+                  <SemiBoldText as="h3" 
+                  className="text-lg mb-4 pb-2 border-b" 
+                   style={{ borderColor: colorScheme.background, color:colorScheme.background }}>
+                    Event Location
+                  </SemiBoldText>
+                  <LocationSection states={states} cities={cities} 
+                  country={country} COUNTRY_STATE_CITY_DATA={COUNTRY_STATE_CITY_DATA} />
                 </div>
 
                 <TermsSection />
               </div>
 
               <div className="mt-8 flex justify-center">
-                <button
+                <CustomButton
                   type="submit"
-                  disabled={loading}
-                  className={`relative px-8 py-3 rounded-full font-medium text-white transition-all duration-300
-                    ${loading ? 'cursor-not-allowed opacity-60' : 'hover:scale-105'}
-                    bg-gradient-to-r from-purple-700 to-indigo-800 hover:from-purple-600 hover:to-indigo-700`}
+                  variant="primary"
+                  size="lg"
+                  fullWidth={false}
+                  isLoading={loading}
+                  className="px-8 py-3 rounded-full"
                 >
-                  {loading ? (
-                    <svg className="animate-spin h-5 w-5 mx-auto" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-                    </svg>
-                  ) : (
-                    <span className="flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                      Submit Booking Request
-                    </span>
-                  )}
-                </button>
+                  Submit Booking Request
+                </CustomButton>
               </div>
             </form>
           </FormProvider>
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-purple-50 to-indigo-50 py-12">
+      <div 
+        className="py-12" 
+        // style={{ background: colorScheme.secondary }}
+      >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">What to Expect After Submitting</h2>
+          <BoldText as="h2" className="text-center text-3xl mb-4">
+            What to Expect After Submitting
+          </BoldText>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
             {[
@@ -224,12 +252,26 @@ export const Bookings: React.FC = () => {
                 desc: 'A team member will contact you to discuss details and availability',
               },
             ].map(({ step, title, desc }) => (
-              <div key={step} className="bg-white p-6 rounded-xl shadow-md border border-purple-100 text-center">
-                <div className="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-purple-700 font-bold text-xl">{step}</span>
+              <div 
+                key={step} 
+                className="p-6 rounded-xl shadow-md border text-center"
+                style={{ 
+                  backgroundColor: colorScheme.surface,
+                  borderColor: colorScheme.border
+                }}
+              >
+                <div 
+                  className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4"
+                  style={{ backgroundColor: colorScheme.secondary }}
+                >
+                  <BoldText className="text-xl" style={{ color: colorScheme.secondaryText }}>
+                    {step}
+                  </BoldText>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
-                <p className="text-gray-600">{desc}</p>
+                <SemiBoldText as="h3" className="text-lg mb-2">
+                  {title}
+                </SemiBoldText>
+                <RegularText>{desc}</RegularText>
               </div>
             ))}
           </div>

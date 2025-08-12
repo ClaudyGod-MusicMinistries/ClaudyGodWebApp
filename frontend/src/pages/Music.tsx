@@ -8,14 +8,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DownloadSection } from '../components/util/Download';
 import { 
   faExternalLinkAlt,
-  faShieldAlt,
+
   faInfoCircle,
-  faTimes, 
+ 
   faArrowDown,
 } from '@fortawesome/free-solid-svg-icons';
 import { latestReleasePlatforms, securedMusicPlatforms } from '../components/data/musicData';
 import { NewsletterForm } from '../components/util/Newsletter';
 import { DonationCallToAction } from '../components/util/DonationSupport';
+import { SecurityModal } from '../components/util/modals/SecurityModal';
 import { useTheme } from '../contexts/ThemeContext';
 
 import { 
@@ -151,80 +152,13 @@ export const MusicData = () => {
       />
       
       {/* Security Modal */}
-      {isModalOpen && (
-        <motion.div 
-          className="fixed inset-0 bg-black/70 backdrop-blur-lg flex items-center justify-center z-50 p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        >
-          <motion.div 
-            className="max-w-md w-full overflow-hidden"
-            style={{ backgroundColor: colorScheme.gray[200] }}
-            initial={{ scale: 0.9, y: 20 }}
-            animate={{ scale: 1, y: 0 }}
-            transition={{ type: "spring", damping: 25 }}
-          >
-            <div 
-              className="p-5"
-              style={{ 
-                background: `linear-gradient(to right, ${colorScheme.gray[100]}, ${colorScheme.gray[100]})`
-              }}
-            >
-              <div className="flex justify-between items-center">
-                <ExtraBoldText className=" flex items-center" style={{ color: colorScheme.primary}}>
-                  <FontAwesomeIcon icon={faShieldAlt} className="mr-3 text-amber-300" />
-                  Security Notice
-                </ExtraBoldText>
-                <button 
-                  onClick={() => setIsModalOpen(false)}
-                  className="text-white/80 hover:text-white transition-colors"
-                >
-                  <FontAwesomeIcon icon={faTimes} className="text-xl" />
-                </button>
-              </div>
-            </div>
-            
-            <div className="p-6">
-              <div className="mb-6">
-                <LightText className="mb-4" style={{ color: colorScheme.primary}}>
-                  Stream our Music on various Streaming Platforms
-                </LightText>
-                <div 
-                  className="p-3 rounded-lg break-words text-sm font-mono"
-                  style={{ 
-                    backgroundColor: colorScheme.gray[100],
-                    border: `1px solid ${colorScheme.gray[200]}`,
-                    color: colorScheme.gray[800]
-                  }}
-                >
-                  {redirectUrl}
-                </div>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-3">
-                <CustomButton
-                  variant="secondary"
-                  onClick={() => setIsModalOpen(false)}
-                  className="flex-1"
-                >
-                  Cancel
-                </CustomButton>
-                <CustomButton
-                  variant="primary"
-                  onClick={handleRedirect}
-                  className="flex-1"
-                  style={{
-                    background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary})`
-                  }}
-                >
-                  Continue to Site
-                </CustomButton>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-      
+            <SecurityModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onContinue={handleRedirect}
+        redirectUrl={redirectUrl || ''}
+      />
+     
       {/* Hero Section */}
       <section 
         className="pt-32 pb-24 relative overflow-hidden"
@@ -444,26 +378,29 @@ export const MusicData = () => {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.98 }}
                           >
-                         <CustomButton
-  // variant="primary"
+                     <CustomButton
   size="sm"
-  style={{ BackgroundColor: colorScheme.accent }}
+  style={{ 
+    backgroundColor: colorScheme.accent,
+    display: 'inline-flex',  // Ensures inline behavior with flex alignment
+    alignItems: 'center',   // Vertically centers items
+    gap: '4rem',
+    padding:'2rem',          // Adds consistent spacing between items
+  }}
   onClick={(e) => {
     e.preventDefault();
     setRedirectUrl(sanitizedUrl);
     setIsModalOpen(true);
   }}
   fullWidth
-  // className="rounded-xl px-6 py-3"
 >
-                              <BoldText fontSize='0.8rem'>
-                                Play on {platform.name}
-                              </BoldText>
-                              <FontAwesomeIcon 
-                                icon={faExternalLinkAlt} 
-                                // className="ml-3 text-sm"
-                              />
-                            </CustomButton>
+  <BoldText fontSize='0.8rem' style={{ lineHeight: '1' }}>
+    Play on {platform.name}   <FontAwesomeIcon 
+    icon={faExternalLinkAlt} 
+    style={{ fontSize: '0.8rem' }} // Matches text size
+  />
+  </BoldText>
+</CustomButton>
                           </motion.div>
                         );
                       })}

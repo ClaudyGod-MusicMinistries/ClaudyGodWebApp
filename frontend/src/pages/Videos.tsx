@@ -200,7 +200,8 @@ export const VideosData: React.FC = () => {
           <CustomButton
             variant="primary"
             onClick={scrollToVideoGrid}
-            className="px-10 py-4 text-xl md:text-2xl flex items-center gap-3 mx-auto"
+            className="px-10 py-4 text-xl md:text-2xl
+             flex items-center  mx-auto"
             whileHover={{ 
               scale: 1.05,
               backgroundColor: colorScheme.white,
@@ -208,8 +209,13 @@ export const VideosData: React.FC = () => {
             }}
             whileTap={{ scale: 0.98 }}
           >
-            <BoldText>Explore Full Collection</BoldText>
-            <FontAwesomeIcon icon={faArrowRight} />
+<BoldText>
+  Explore Full Collection
+  <span className="ml-2 gap-9">
+    <FontAwesomeIcon icon={faArrowRight} />
+  </span>
+</BoldText>
+           
           </CustomButton>
         </div>
 
@@ -230,23 +236,25 @@ export const VideosData: React.FC = () => {
                   whileHover={{ 
                     scale: 1.05,
                     backgroundColor: hoveredCategory === category ? colorScheme.primary : colorScheme.gray[100],
-                    color: hoveredCategory === category ? colorScheme.white : colorScheme.primary
+                    color: hoveredCategory === category ? colorScheme.primary : colorScheme.primary
                   }}
                   whileTap={{ scale: 0.95 }}
                   onMouseEnter={() => setHoveredCategory(category)}
                   onMouseLeave={() => setHoveredCategory(null)}
                 >
                   <CustomButton
-                    variant={activeCategory === category ? "primary" : "secondary"}
-                    onClick={() => {
-                      setActiveCategory(category);
-                      setCurrentPage(1);
-                    }}
-                    className="px-6 py-3 rounded-full flex items-center gap-2"
-                  >
-                    <FontAwesomeIcon icon={categoryIcons[category]} />
-                    <BoldText>{category}</BoldText>
-                  </CustomButton>
+  variant={activeCategory === category ? "primary" : "secondary"}
+  onClick={() => {
+    setActiveCategory(category);
+    setCurrentPage(1);
+  }}
+  className="px-6 py-3 rounded-full flex items-center gap-3" // Increased gap from 2 to 3
+>
+  <BoldText className="flex items-center gap-4"> {/* Added nested flex container */}
+    <FontAwesomeIcon icon={categoryIcons[category]} />
+    <span>{category}</span> {/* Wrapped text in span for better spacing control */}
+  </BoldText>
+</CustomButton>
                 </motion.div>
               ))}
             </div>

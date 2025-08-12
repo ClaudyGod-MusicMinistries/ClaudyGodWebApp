@@ -9,7 +9,7 @@ import {
   faCreditCard,
   faHandHoldingUsd,
   faShieldAlt,
-  faArrowRight
+ 
 } from '@fortawesome/free-solid-svg-icons';
 import { Donate1, Donate2 } from '../assets/';
 import { useNavContext } from '../contexts/NavContext';
@@ -115,7 +115,7 @@ const DonateHeroSlider: React.FC = () => {
       </div>
 
       {/* Desktop Version */}
-      <div className="hidden md:block relative h-[60vh] min-h-[500px] w-full overflow-hidden">
+      <div className="hidden md:block relative h-[90vh] min-h-100px w-full overflow-hidden">
         {images.map((img, index) => (
           <div
             key={index}
@@ -224,14 +224,14 @@ const FeatureCard = ({ icon, title, description }: {
         />
       </div>
       <SemiBoldText 
-        style={{ color: colorScheme.primary }}
+        style={{ color: colorScheme.background }}
         fontSize="18px"
         className="mb-2"
       >
         {title}
       </SemiBoldText>
       <LightText 
-        style={{ color: colorScheme.primary }}
+        style={{ color: colorScheme.background }}
         fontSize="14px"
       >
         {description}
@@ -369,7 +369,7 @@ export const DonateData: React.FC = () => {
               className="w-24 h-1 mx-auto mt-4 mb-6 md:mb-8"
             ></div>
             <LightText 
-              style={{ color: colorScheme.primary }}
+              style={{ color: colorScheme.background }}
               fontSize="16px"
               className="max-w-3xl mx-auto leading-relaxed"
             >
