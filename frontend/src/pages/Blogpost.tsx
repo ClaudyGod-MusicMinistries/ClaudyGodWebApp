@@ -124,7 +124,8 @@ export const Blog: React.FC = () => {
   
   // Enhanced animation classes
   const fadeInClass = "transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]";
-  const fadeInUpClass = `${fadeInClass} translate-y-10 opacity-0 ${isMounted ? '!translate-y-0 !opacity-100' : ''}`;
+  const fadeInUpClass = `${fadeInClass} translate-y-10 opacity-0 ${isMounted ? 
+    '!translate-y-0 !opacity-100' : ''}`;
   const staggerClass = (index: number) => 
     `${fadeInClass} translate-y-8 opacity-0 ${isMounted ? `!translate-y-0 !opacity-100 delay-[${index * 75}ms]` : ''}`;
 

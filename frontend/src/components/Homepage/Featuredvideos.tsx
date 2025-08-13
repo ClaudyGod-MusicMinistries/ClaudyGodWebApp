@@ -8,7 +8,8 @@ import {
   BoldText,
   LightText,
   ExtraBoldText,
-  ExtraLightText 
+  ExtraLightText, 
+  RegularText
 } from '../ui/fonts/typography';
 import { useTheme } from '../../contexts/ThemeContext';
 import CustomButton from '../ui/fonts/buttons/CustomButton';
@@ -142,24 +143,30 @@ export const FeaturedVideos: React.FC = () => {
     >
       {/* Background with parallax effect */}
       <motion.div 
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: `url(${About2})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-        initial={{ scale: 1 }}
-        whileInView={{ scale: 1.05 }}
-        transition={{ duration: 10 }}
-      >
-        {/* Gradient overlay */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: `linear-gradient(to bottom, ${colorScheme.black}/90, ${colorScheme.accent}/70, ${colorScheme.black}/90)`
-          }}
-        />
-      </motion.div>
+  className="absolute inset-0 z-0"
+  style={{
+    backgroundImage: `url(${About2})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  }}
+  initial={{ scale: 1 }}
+  whileInView={{ scale: 1.05 }}
+  transition={{ duration: 10 }}
+>
+  {/* Very dark gradient overlay */}
+  <div 
+    className="absolute inset-0"
+    style={{
+      background: `linear-gradient(
+        to bottom, 
+        ${colorScheme.background}cc,    /* 80% opacity black */
+        ${colorScheme.accent}50,  /* 60% opacity accent */
+        ${colorScheme.background}cc     /* 80% opacity black */
+      )`
+    }}
+  />
+</motion.div>
+
 
       {/* Floating particles */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -191,58 +198,70 @@ export const FeaturedVideos: React.FC = () => {
 
       <div className="container mx-auto relative z-10 px-4 sm:px-6">
         {/* Header section */}
-        <motion.div 
-          className="flex flex-col items-center text-center md:text-left md:flex-row md:justify-between md:items-end mb-12 md:mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <div className="mb-8 md:mb-0 max-w-2xl">
-            <ExtraBoldText 
-              fontSize="48px"
-              className="mb-4 leading-tight"
-              style={{ color: colorScheme.white }}
-            >
-              Featured <span style={{ color: colorScheme.accent }}>Videos</span>
-            </ExtraBoldText>
-            <LightText 
-              fontSize="18px"
-              style={{ color: colorScheme.background }}
-            >
-              Experience our latest worship sessions and musical performances
-            </LightText>
-          </div>
-          
-          <motion.div
-            className="flex flex-wrap gap-4 justify-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            <Link to="/music">
-              <CustomButton
-                variant="primary"
-                size="md"
-                icon={<FontAwesomeIcon icon={faPlay} />}
-                iconPosition="right"
-                className="group"
-              >
-                <SemiBoldText>Latest Release</SemiBoldText>
-              </CustomButton>
-            </Link>
-            <Link to="/videos">
-              <CustomButton
-                variant="outline"
-                size="md"
-                style={{ borderColor: colorScheme.background, color: colorScheme.background }}
-                hoverStyle={{ backgroundColor: colorScheme.accent + '20' }}
-              >
-                <LightText style={{color: colorScheme.background}}>View All</LightText>
-              </CustomButton>
-            </Link>
-          </motion.div>
-        </motion.div>
+<div className="flex flex-col md:flex-row md:items-baseline md:justify-between w-full">
+  {/* Heading & Subheading */}
+  <div className="flex flex-col text-center md:text-left mt-12 md:mt-0">
+    <ExtraBoldText
+      fontSize="48px"
+      className="leading-[1.1] text-[24px] sm:text-[32px] md:text-[48px]"
+      style={{ color: colorScheme.white }}
+    >
+      Featured <span style={{ color: colorScheme.accent }}>Videos</span>
+    </ExtraBoldText>
+
+    <RegularText
+      fontSize="18px"
+      className="mt-3 text-[14px] sm:text-[16px] md:text-[18px]"
+      style={{ color: colorScheme.accent }}
+    >
+      Experience our latest worship sessions and musical performances
+    </RegularText>
+  </div>
+
+  {/* Buttons */}
+  <motion.div
+    className="flex flex-row flex-wrap gap-4 mt-6 md:mt-0 justify-center md:justify-end items-center"
+    initial={{ opacity: 0 }}
+    whileInView={{ opacity: 1 }}
+    transition={{ delay: 0.4 }}
+  >
+    <Link to="/music" className="w-auto">
+      <CustomButton
+        variant="primary"
+        size="sm"
+        className="flex items-center justify-center p-2 sm:p-3 group"
+        icon={<FontAwesomeIcon icon={faPlay} />}
+        iconPosition="right"
+      >
+        <SemiBoldText>Latest Release</SemiBoldText>
+      </CustomButton>
+    </Link>
+
+    <Link to="/videos" className="w-auto">
+      <CustomButton
+        variant="outline"
+        size="sm"
+        className="flex items-center justify-center p-2 sm:p-3"
+        style={{
+          borderColor: colorScheme.primary,
+          color: colorScheme.background
+        }}
+        hoverStyle={{ backgroundColor: colorScheme.accent + '20' }}
+      >
+        <RegularText style={{ color: colorScheme.background }}>
+          View All
+        </RegularText>
+      </CustomButton>
+    </Link>
+  </motion.div>
+</div>
+
+
+
+
+
+
+        {/* </motion.div> */}
 
         {/* Video Slider */}
         <motion.div

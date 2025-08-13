@@ -225,8 +225,8 @@ export const DownloadSection = () => {
               </LightText>
             </motion.div>
             
-           <motion.div 
-  className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto lg:mx-0"
+         <motion.div 
+  className="flex flex-row gap-4 max-w-md mx-auto lg:mx-0"
   variants={containerVariants}
 >
   {/* App Store Button */}
@@ -238,6 +238,7 @@ export const DownloadSection = () => {
       href="https://www.claudygod.com/claudygod-tv-apple"
       icon={<FontAwesomeIcon icon={faApple} />}
       variant="appStore"
+      size="sm"               // Add size sm here
       whileHover="hover"
       whileTap="tap"
     >
@@ -261,13 +262,15 @@ export const DownloadSection = () => {
       href="https://www.claudygod.com/claudygod-tv-andrioid"
       icon={<FontAwesomeIcon icon={faGooglePlay} />}
       variant="googlePlay"
+      size="sm"              // Add size sm here
       whileHover="hover"
       whileTap="tap"
     >
       <div className="text-left">
         <RegularText 
-        style={{color:colorScheme.textSecondary}}
-        className="text-[10px] tracking-wide uppercase">
+          style={{color:colorScheme.textSecondary}}
+          className="text-[10px] tracking-wide uppercase"
+        >
           Get it on
         </RegularText>
         <SemiBoldText className="text-base tracking-tight">
@@ -277,6 +280,7 @@ export const DownloadSection = () => {
     </CustomButton>
   </motion.div>
 </motion.div>
+
             <motion.div 
               className="mt-6 pt-4 border-t border-opacity-10 max-w-md mx-auto lg:mx-0"
               style={{ borderColor: colorScheme.border }}

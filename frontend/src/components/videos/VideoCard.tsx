@@ -2,6 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { VideoType } from '../types/video';
 
+import CustomButton from '../ui/fonts/buttons/CustomButton';
+import { ExtraBoldText, RegularText } from '../ui/fonts/typography/';
+
 const VideoCard: React.FC<{ 
   content: VideoType;
   onSelect: (videoId: string) => void;
@@ -23,34 +26,47 @@ const VideoCard: React.FC<{
           {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
           
-          {/* Play button */}
-          <button 
-            onClick={() => onSelect(content.youtubeId)}
-            className="absolute inset-0 flex items-center justify-center"
-            aria-label={`Play ${content.title}`}
-          >
-            <div className="absolute w-16 h-16 rounded-full bg-gradient-to-br from-purple-600 to-indigo-700 flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:scale-110">
-              <FontAwesomeIcon 
-                icon={faPlay} 
-                className="text-white text-xl ml-1" 
-              />
-            </div>
-          </button>
+          {/* Play button - replaced with CustomButton */}
+         <div className="absolute inset-0 flex items-center justify-center">
+  <CustomButton
+    onClick={() => onSelect(content.youtubeId)}
+    variant="icon"
+    size="sm"
+    className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+    aria-label={`Play ${content.title}`}
+  >
+    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-indigo-700 flex items-center justify-center shadow-lg">
+      <FontAwesomeIcon 
+        icon={faPlay} 
+        className="text-white text-lg ml-1" 
+      />
+    </div>
+  </CustomButton>
+</div>
+
           
           {/* Date badge */}
-          <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-white font-medium">
-            {content.date}
+          <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
+            <RegularText fontSize="0.75rem" className="text-white">
+              {content.date}
+            </RegularText>
           </div>
         </div>
         
-        {/* Content info */}
+        {/* Content info - using custom text components */}
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent">
-          <h3 className="text-white font-bold text-lg font-roboto-condensed tracking-tight mb-1 line-clamp-1">
+          <ExtraBoldText 
+            fontSize="1.125rem" 
+            className="text-white mb-1 line-clamp-1 tracking-tight"
+          >
             {content.title}
-          </h3>
-          <p className="text-purple-300 text-sm font-medium">
+          </ExtraBoldText>
+          <RegularText 
+            fontSize="0.875rem" 
+            className="text-purple-300 font-medium"
+          >
             {content.category}
-          </p>
+          </RegularText>
         </div>
         
         {/* Hover indicator */}
@@ -59,11 +75,11 @@ const VideoCard: React.FC<{
         </div>
       </div>
       
-      {/* Description on hover */}
+      {/* Description on hover - using custom text */}
       <div className="mt-3 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <p className="text-gray-600 text-sm line-clamp-2 font-raleway">
+        <RegularText fontSize="0.875rem" className="text-gray-600 line-clamp-2">
           {content.description}
-        </p>
+        </RegularText>
       </div>
     </div>
   );

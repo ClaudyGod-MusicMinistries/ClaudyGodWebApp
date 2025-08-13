@@ -186,16 +186,21 @@ const DiagonalSection: React.FC<{
                   scale: { duration: 1.5, repeat: Infinity, repeatType: "reverse" }
                 }}
               >
-                <div 
-                  className="rounded-full p-5 backdrop-blur-sm border shadow-lg"
-                  style={{
-                    background: `linear-gradient(135deg, ${colorScheme.primaryDark}70, ${colorScheme.primary}80)`,
-                    borderColor: colorScheme.borderLight,
-                    color: colorScheme.textInverted
-                  }}
-                >
-                  <FontAwesomeIcon icon={faPlay} className="pl-1" />
-                </div>
+                <div
+  className="rounded-full p-3 sm:p-5 w-12 h-12 sm:w-16 sm:h-16 backdrop-blur-sm border shadow-lg flex items-center justify-center"
+  style={{
+    background: `linear-gradient(135deg, ${colorScheme.primaryDark}70, ${colorScheme.primary}80)`,
+    borderColor: colorScheme.borderLight,
+    color: colorScheme.textInverted,
+  }}
+>
+  <FontAwesomeIcon
+    icon={faPlay}
+    className="text-lg sm:text-xl"
+    style={{color:colorScheme.gray[200]}}
+  />
+</div>
+
               </motion.div>
             </div>
           </div>

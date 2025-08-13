@@ -34,7 +34,7 @@ export const MusicSlide = ({
       <motion.div variants={textVariants}>
         <ExtraBoldText 
           fontSize="3rem" 
-          fontSize="6rem"
+        
           style={{ color: colorScheme.heading }}
           useThemeColor={false}
           className="drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"

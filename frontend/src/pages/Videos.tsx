@@ -123,26 +123,29 @@ export const VideosData: React.FC = () => {
               </LightText>
             </motion.div>
             
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-            >
-        <CustomButton
-  // variant="outline"
-  onClick={scrollToVideoGrid}
-  size="lg"
-  style={{ backgroundColor: colorScheme.background }}>
+           <motion.div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ delay: 0.8, duration: 0.8 }}
+>
+  <CustomButton
+    onClick={scrollToVideoGrid}
+    size="lg"
+    className="transition-transform duration-300 ease-in-out
+               bg-transparent hover:bg-indigo-100
+               text-indigo-700 hover:text-indigo-900"
+    style={{ backgroundColor: 'transparent' }}
+  >
+    <BoldText fontSize="1rem">
+      <span className="p-3 rounded-md inline-flex items-center gap-2">
+        Browse more videos
+        <FontAwesomeIcon icon={faArrowRight} />
+      </span>
+    </BoldText>
+  </CustomButton>
+</motion.div>
 
-  <BoldText fontSize="1rem">
-    <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
-      Browse more videos
-      <FontAwesomeIcon icon={faArrowRight} />
-    </span>
-  </BoldText>
-</CustomButton>
 
-            </motion.div>
           </motion.div>
         </div>
       </motion.section>
