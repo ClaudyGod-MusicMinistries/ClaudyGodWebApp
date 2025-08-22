@@ -1,4 +1,4 @@
-type VideoType = {
+export type VideoType = {
   id: number;
   title: string;
   youtubeId: string;

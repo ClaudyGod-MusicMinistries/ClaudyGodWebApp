@@ -13,7 +13,7 @@ interface CustomButtonProps {
   onClick?: (e: React.MouseEvent) => void;
   variant?: Variant;
   size?: Size;
-  mdSize?: Size;  // ✅ added here
+  mdSize?: Size; // Added mdSize prop
   fullWidth?: boolean;
   className?: string;
   type?: "button" | "submit" | "reset";
@@ -33,6 +33,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   onClick,
   variant = "primary",
   size = "md",
+  mdSize, // Added mdSize prop
   fullWidth = false,
   className = "",
   type = "button",
@@ -108,6 +109,14 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     }
   };
 
+  // Determine which size to use based on props
+  const getEffectiveSize = (): Size => {
+    // In a real implementation, you might want to use a media query hook
+    // to detect screen size and conditionally apply mdSize
+    // For now, we'll prioritize mdSize if provided
+    return mdSize || size;
+  };
+
   const baseStyle: React.CSSProperties = {
     borderRadius: variant === "text" ? "0" : "8px",
     fontWeight: 600,
@@ -122,7 +131,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     transition: "all 0.3s ease",
     textDecoration: "none",
     ...getVariantStyles(variant, colorScheme),
-    ...sizeStyles[size],
+    ...sizeStyles[getEffectiveSize()], // Use the effective size
   };
 
   const hoverStyle = !disabled && !isLoading ? {

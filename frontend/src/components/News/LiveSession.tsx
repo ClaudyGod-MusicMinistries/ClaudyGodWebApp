@@ -134,67 +134,105 @@ export const LiveSession = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 md:gap-4">
-        <CustomButton
-          href="#"
-          variant="secondary"
-          size="sm"
-          mdSize="lg"
-          className="justify-center gap-3 md:gap-4 text-xs md:text-base"
-          style={{ backgroundColor: '#1DB954' }}
-        >
-          <FontAwesomeIcon icon={faSpotify} className="text-xs md:text-base" />
-          <span>Spotify</span>
-        </CustomButton>
+<div className="grid grid-cols-2 gap-3 md:gap-4">
+  {/* Spotify */}
+  <CustomButton
+    href="#"
+    variant="secondary"
+    size="sm"
+    mdSize="lg"
+    className="px-4 py-2 text-xs md:text-base w-full"
+    style={{ backgroundColor: "#1DB954" }}
+  >
+    <div className="flex items-center gap-3 md:gap-4 w-full">
+      <FontAwesomeIcon
+        icon={faSpotify}
+        className="text-sm md:text-lg"
+      />
+      <span className="text-left">Spotify</span>
+    </div>
+  </CustomButton>
 
-        <CustomButton
-          href="#"
-          variant="secondary"
-          size="sm"
-          mdSize="lg"
-          className="justify-center gap-3 md:gap-4 text-xs md:text-base"
-          style={{ backgroundColor: '#FF0000' }}
-        >
-          <FontAwesomeIcon icon={faYoutube} className="text-xs md:text-base" />
-          <span>YouTube</span>
-        </CustomButton>
+  {/* YouTube */}
+  <CustomButton
+    href="#"
+    variant="secondary"
+    size="sm"
+    mdSize="lg"
+    className="px-4 py-2 text-xs md:text-base w-full"
+    style={{ backgroundColor: "#FF0000" }}
+  >
+    <div className="flex items-center gap-3 md:gap-4 w-full">
+      <FontAwesomeIcon
+        icon={faYoutube}
+        className="text-sm md:text-lg"
+      />
+      <span className="text-left">YouTube</span>
+    </div>
+  </CustomButton>
 
-        <CustomButton
-          href="#"
-          variant="secondary"
-          size="sm"
-          mdSize="lg"
-          className="justify-center gap-3 md:gap-4 text-xs md:text-base"
-          style={{ backgroundColor: '#000000' }}
-        >
-          <FontAwesomeIcon icon={faApple} className="text-xs md:text-base" />
-          <span>Apple Music</span>
-        </CustomButton>
+  {/* Apple Music */}
+  <CustomButton
+    href="#"
+    variant="secondary"
+    size="sm"
+    mdSize="lg"
+    className="px-4 py-2 text-xs md:text-base w-full"
+    style={{ backgroundColor: "#000000" }}
+  >
+    <div className="flex items-center gap-3 md:gap-4 w-full">
+      <FontAwesomeIcon
+        icon={faApple}
+        className="text-sm md:text-lg"
+      />
+      <span className="text-left">Apple Music</span>
+    </div>
+  </CustomButton>
 
-        <CustomButton
-          href="#"
-          variant="secondary"
-          size="sm"
-          mdSize="lg"
-          className="justify-center gap-3 md:gap-4 text-xs md:text-base"
-          style={{ backgroundColor: '#FEAA2D' }}
-        >
-          <FontAwesomeIcon icon={faDeezer} className="text-xs md:text-base" />
-          <span>Deezer</span>
-        </CustomButton>
-      </div>
+  {/* Deezer */}
+  <CustomButton
+    href="#"
+    variant="secondary"
+    size="sm"
+    mdSize="lg"
+    className="px-4 py-2 text-xs md:text-base w-full"
+    style={{ backgroundColor: "#FEAA2D" }}
+  >
+    <div className="flex items-center gap-3 md:gap-4 w-full">
+      <FontAwesomeIcon
+        icon={faDeezer}
+        className="text-sm md:text-lg"
+        fontSize="20px"
+      />
+      <span className="text-left">Deezer</span>
+    </div>
+  </CustomButton>
+</div>
+
+
 
       <div className="mt-6 md:mt-8 text-center">
-        <CustomButton
-          variant="primary"
-          size="md"
-          mdSize="lg"
-          className="mx-auto gap-3"
-        >
-          <span className="text-sm md:text-base">View All Releases</span>
-          <FontAwesomeIcon icon={faArrowRight} className="text-xs md:text-sm" />
-        </CustomButton>
-      </div>
+  <CustomButton
+    variant="primary"
+    size="md"
+    mdSize="lg"
+    className="mx-auto w-fit px-6" 
+  >
+    <div className="grid grid-cols-2 items-center gap-3 w-full">
+      {/* Left side: Text */}
+      <span className="text-sm md:text-base text-left">
+        View All Releases
+      </span>
+
+      {/* Right side: Icon */}
+      <FontAwesomeIcon
+        icon={faArrowRight}
+        className="text-base md:text-lg justify-self-end"
+      />
+    </div>
+  </CustomButton>
+</div>
+
     </motion.div>
   );
 };

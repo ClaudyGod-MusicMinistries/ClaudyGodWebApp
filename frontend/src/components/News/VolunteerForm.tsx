@@ -1,12 +1,28 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { submitVolunteerForm, VolunteerFormData } from '../api/volunteer'; // Add this import
+import { submitVolunteerForm, VolunteerFormData } from '../api/volunteer';
+import { useTheme } from '../../contexts/ThemeContext';
+import { ExtraBoldText, RegularText } from '../ui/fonts/typography';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
+
+// Import FontAwesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faCheckCircle, 
+  faSpinner, 
+  faUser, 
+  faEnvelope, 
+  faTasks, 
+  faComment 
+} from '@fortawesome/free-solid-svg-icons';
 
 export const VolunteerForm = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const { colorScheme } = useTheme();
   const {
     register,
     handleSubmit,
@@ -16,7 +32,6 @@ export const VolunteerForm = () => {
 
   const onSubmit = async (data: VolunteerFormData) => {
     try {
-  
       await submitVolunteerForm(data);
       toast.success('Volunteer application submitted successfully!');
       setShowSuccessModal(true);
@@ -37,7 +52,11 @@ export const VolunteerForm = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-[#1a0a2e] rounded-2xl p-6 md:p-8 shadow-xl relative"
+        className="rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl relative"
+        style={{
+          backgroundColor: colorScheme.surface,
+          border: `1px solid ${colorScheme.outline}`
+        }}
       >
         <ToastContainer
           position="top-right"
@@ -52,70 +71,106 @@ export const VolunteerForm = () => {
           theme="dark"
         />
         
-        <h3 className="text-3xl sm:text-4xl md:text-5xl font-roboto-condensed lg:text-6xl text-white mb-6 text-center">
+        <ExtraBoldText 
+          fontSize="1.75rem"
+          mdFontSize="2.25rem"
+          lgFontSize="2.5rem"
+          className="mb-4 md:mb-6 text-center"
+          style={{ color: colorScheme.text }}
+        >
           Volunteer to be part of our Music Tour
-        </h3>
+        </ExtraBoldText>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-            <div>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
+            <div className="relative">
               <label
                 htmlFor="firstName"
-                className="block text-purple-200 font-work-sans
- mb-2 text-sm md:text-base"
+                className="block mb-2 text-sm md:text-base"
+                style={{ color: colorScheme.textSecondary }}
               >
+                <FontAwesomeIcon icon={faUser} className="mr-2" />
                 First Name
               </label>
               <input
                 id="firstName"
-                className={`w-full px-3 py-2 md:px-4 md:py-3 bg-[#0a061a] border ${
+                className={`w-full pl-10 pr-3 py-2 md:px-4 md:py-3 rounded-lg focus:outline-none focus:ring-2 text-sm md:text-base ${
                   errors.firstName ? 'border-red-500' : 'border-purple-800'
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 text-white text-sm md:text-base`}
+                }`}
+                style={{
+                  backgroundColor: colorScheme.surfaceVariant,
+                  border: `1px solid ${errors.firstName ? '#ef4444' : colorScheme.outline}`,
+                  color: colorScheme.text
+                }}
                 {...register('firstName', { required: 'First name is required' })}
               />
+              {/* <div className="absolute left-3 top-9 transform -translate-y-1/2 text-gray-400">
+                <FontAwesomeIcon icon={faUser} />
+              </div> */}
               {errors.firstName && (
-                <p className="mt-1 text-red-500 text-xs">
+                <RegularText 
+                  className="mt-1 text-xs"
+                  style={{ color: '#ef4444' }}
+                >
                   {errors.firstName.message}
-                </p>
+                </RegularText>
               )}
             </div>
-            <div>
+            <div className="relative">
               <label
                 htmlFor="lastName"
-                className="block text-purple-200 mb-2 font-work-sans
- text-sm md:text-base"
+                className="block mb-2 text-sm md:text-base"
+                style={{ color: colorScheme.textSecondary }}
               >
+                <FontAwesomeIcon icon={faUser} className="mr-2" />
                 Last Name
               </label>
               <input
                 id="lastName"
-                className={`w-full px-3 py-2 md:px-4 md:py-3 bg-[#0a061a] border ${
+                className={`w-full pl-10 pr-3 py-2 md:px-4 md:py-3 rounded-lg focus:outline-none focus:ring-2 text-sm md:text-base ${
                   errors.lastName ? 'border-red-500' : 'border-purple-800'
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 text-white text-sm md:text-base`}
+                }`}
+                style={{
+                  backgroundColor: colorScheme.surfaceVariant,
+                  border: `1px solid ${errors.lastName ? '#ef4444' : colorScheme.outline}`,
+                  color: colorScheme.text
+                }}
                 {...register('lastName', { required: 'Last name is required' })}
               />
+              {/* <div className="absolute left-3 top-9 transform -translate-y-1/2 text-gray-400">
+                <FontAwesomeIcon icon={faUser} />
+              </div> */}
               {errors.lastName && (
-                <p className="mt-1 text-red-500 text-xs">
+                <RegularText 
+                  className="mt-1 text-xs"
+                  style={{ color: '#ef4444' }}
+                >
                   {errors.lastName.message}
-                </p>
+                </RegularText>
               )}
             </div>
           </div>
 
-          <div>
+          <div className="relative">
             <label
               htmlFor="email"
-              className="block text-purple-200 mb-2 font-work-sans
- text-sm md:text-base"
+              className="block mb-2 text-sm md:text-base"
+              style={{ color: colorScheme.textSecondary }}
             >
+              <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
               Email Address
             </label>
             <input
               id="email"
               type="email"
-              className={`w-full px-3 py-2 md:px-4 md:py-3 bg-[#0a061a] border ${
+              className={`w-full pl-10 pr-3 py-2 md:px-4 md:py-3 rounded-lg focus:outline-none focus:ring-2 text-sm md:text-base ${
                 errors.email ? 'border-red-500' : 'border-purple-800'
-              } rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 text-white text-sm md:text-base`}
+              }`}
+              style={{
+                backgroundColor: colorScheme.surfaceVariant,
+                border: `1px solid ${errors.email ? '#ef4444' : colorScheme.outline}`,
+                color: colorScheme.text
+              }}
               {...register('email', { 
                 required: 'Email is required',
                 pattern: {
@@ -124,27 +179,38 @@ export const VolunteerForm = () => {
                 }
               })}
             />
+            {/* <div className="absolute left-3 top-9 transform -translate-y-1/2 text-gray-400">
+              <FontAwesomeIcon icon={faEnvelope} />
+            </div> */}
             {errors.email && (
-              <p className="mt-1 text-red-500 text-xs">
+              <RegularText 
+                className="mt-1 text-xs"
+                style={{ color: '#ef4444' }}
+              >
                 {errors.email.message}
-              </p>
+              </RegularText>
             )}
           </div>
 
-          <div>
+          <div className="relative">
             <label
               htmlFor="role"
-              className="block text-purple-200 mb-2  font-work-sans
- text-sm md:text-base"
+              className="block mb-2 text-sm md:text-base"
+              style={{ color: colorScheme.textSecondary }}
             >
+              <FontAwesomeIcon icon={faTasks} className="mr-2" />
               Volunteering as
             </label>
             <select
               id="role"
-              className={`w-full px-3 py-2 font-work-sans
- md:px-4 md:py-3 bg-[#0a061a] border ${
+              className={`w-full pl-10 pr-3 py-2 md:px-4 md:py-3 rounded-lg focus:outline-none focus:ring-2 text-sm md:text-base appearance-none ${
                 errors.role ? 'border-red-500' : 'border-purple-800'
-              } rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 text-white text-sm md:text-base appearance-none`}
+              }`}
+              style={{
+                backgroundColor: colorScheme.surfaceVariant,
+                border: `1px solid ${errors.role ? '#ef4444' : colorScheme.outline}`,
+                color: colorScheme.text
+              }}
               {...register('role', { required: 'Please select a role' })}
             >
               <option value="">Select a role</option>
@@ -154,27 +220,39 @@ export const VolunteerForm = () => {
               <option value="security">Security</option>
               <option value="other">Other</option>
             </select>
+            {/* <div className="absolute left-3 top-9 transform -translate-y-1/2 text-gray-400">
+              <FontAwesomeIcon icon={faTasks} />
+            </div> */}
             {errors.role && (
-              <p className="mt-1 text-red-500 text-xs">
+              <RegularText 
+                className="mt-1 text-xs"
+                style={{ color: '#ef4444' }}
+              >
                 {errors.role.message}
-              </p>
+              </RegularText>
             )}
           </div>
 
-          <div>
+          <div className="relative">
             <label
               htmlFor="reason"
-              className="block text-purple-200 font-work-sans
-  mb-2 text-sm md:text-base"
+              className="block mb-2 text-sm md:text-base"
+              style={{ color: colorScheme.textSecondary }}
             >
+              <FontAwesomeIcon icon={faComment} className="mr-2" />
               Reason for Volunteering
             </label>
             <textarea
               id="reason"
               rows={4}
-              className={`w-full px-3 py-2 md:px-4 md:py-3 bg-[#0a061a] border ${
+              className={`w-full pl-10 pr-3 py-2 md:px-4 md:py-3 rounded-lg focus:outline-none focus:ring-2 text-sm md:text-base ${
                 errors.reason ? 'border-red-500' : 'border-purple-800'
-              } rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 text-white text-sm md:text-base`}
+              }`}
+              style={{
+                backgroundColor: colorScheme.surfaceVariant,
+                border: `1px solid ${errors.reason ? '#ef4444' : colorScheme.outline}`,
+                color: colorScheme.text
+              }}
               {...register('reason', { 
                 required: 'Reason is required',
                 minLength: {
@@ -183,34 +261,45 @@ export const VolunteerForm = () => {
                 }
               })}
             ></textarea>
+            {/* <div className="absolute left-3 top-9 transform -translate-y-1/2 text-gray-400">
+              <FontAwesomeIcon icon={faComment} />
+            </div> */}
             {errors.reason && (
-              <p className="mt-1 text-red-500 text-xs">
+              <RegularText 
+                className="mt-1 text-xs"
+                style={{ color: '#ef4444' }}
+              >
                 {errors.reason.message}
-              </p>
+              </RegularText>
             )}
           </div>
 
-          <button
+          <CustomButton
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-2.5 md:py-3.5 bg-gradient-to-r from-purple-800 to-purple-600 cursor-pointer text-white rounded-lg shadow-lg transition-all font-medium text-sm md:text-base ${
-              isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:opacity-90'
-            }`}
+            variant="primary"
+            size="lg"
+            className="w-full"
+            style={{
+              opacity: isSubmitting ? 0.7 : 1,
+              cursor: isSubmitting ? 'not-allowed' : 'pointer'
+            }}
           >
             {isSubmitting ? (
               <span className="flex items-center justify-center">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
+                <FontAwesomeIcon 
+                  icon={faSpinner} 
+                  className="animate-spin mr-3" 
+                />
                 Submitting...
               </span>
             ) : (
               'Submit Volunteer Application'
             )}
-          </button>
+          </CustomButton>
         </form>
       </motion.div>
+      
       {showSuccessModal && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -220,23 +309,42 @@ export const VolunteerForm = () => {
           <motion.div
             initial={{ scale: 0.9, y: 20 }}
             animate={{ scale: 1, y: 0 }}
-            className="bg-[#1a0a2e] rounded-2xl p-8 max-w-md w-full mx-4 border border-purple-600 shadow-xl"
+            className="rounded-2xl p-6 md:p-8 max-w-md w-full mx-4 shadow-xl"
+            style={{
+              backgroundColor: colorScheme.surface,
+              border: `1px solid ${colorScheme.primary}`
+            }}
           >
             <div className="text-center">
-              <div className="text-green-500 text-5xl mb-4">✓</div>
-              <h3 className="text-2xl text-white mb-2 font-bold">Thank You!</h3>
-              <p className="text-purple-200 mb-6">
+              <FontAwesomeIcon 
+                icon={faCheckCircle} 
+                className="text-5xl mb-4"
+                style={{ color: colorScheme.success || '#10B981' }}
+              />
+              <ExtraBoldText 
+                fontSize="1.5rem"
+                mdFontSize="1.75rem"
+                className="mb-2"
+                style={{ color: colorScheme.text }}
+              >
+                Thank You!
+              </ExtraBoldText>
+              <RegularText 
+                className="mb-6"
+                style={{ color: colorScheme.textSecondary }}
+              >
                 Your volunteer application has been submitted successfully. We'll contact you soon with more details.
-              </p>
-              <button
+              </RegularText>
+              <CustomButton
                 onClick={() => {
                   reset();
                   setShowSuccessModal(false);
                 }}
-                className="w-full py-3 bg-gradient-to-r from-purple-700 to-purple-500 text-white rounded-lg font-medium hover:opacity-90 transition-opacity"
+                variant="primary"
+                className="w-full"
               >
                 Close
-              </button>
+              </CustomButton>
             </div>
           </motion.div>
         </motion.div>

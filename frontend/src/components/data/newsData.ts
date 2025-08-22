@@ -1,4 +1,13 @@
  import { musicCover6, VideoArt, veryGlorious } from '../../assets';
+ import { 
+  // faInstagram, 
+  faFacebook, 
+  faYoutube, 
+  faTwitter, 
+  faTiktok,
+  faSpotify,
+  faApple
+} from '@fortawesome/free-brands-svg-icons';
  export const albums = [
     {
       title: 'Lover of my Soul',
@@ -31,3 +40,62 @@
       }
     }
   ];
+
+
+export const socialPlatforms = [
+  // {
+  //   name: 'Instagram',
+  //   icon: faInstagram,
+  //   color: '#E1306C',
+  //   url: 'https://instagram.com/claudygod',
+  //   handle: '@claudygod',
+  
+  // },
+  {
+    name: 'Facebook',
+    icon: faFacebook,
+    color: '#1877F2',
+    url: 'https://facebook.com/claudygod',
+    handle: '@claudygod',
+  
+  },
+  {
+    name: 'YouTube',
+    icon: faYoutube,
+    color: '#FF0000',
+    url: 'https://www.youtube.com/channel/UC0RUDNzIiSLxoWGcNQbrLNQ',
+    handle: '@claudygod',
+    
+  },
+  {
+    name: 'Twitter',
+    icon: faTwitter,
+    color: '#1DA1F2',
+    url: 'https://twitter.com/claudygod',
+    handle: '@claudygod',
+
+  },
+  {
+    name: 'TikTok',
+    icon: faTiktok,
+    color: '#FFFFFF',
+    url: 'https://tiktok.com/@claudygod',
+    handle: '@claudygod',
+
+  },
+  {
+    name: 'Spotify',
+    icon: faSpotify,
+    color: '#1DB954',
+    url: 'https://open.spotify.com/artist/claudygod',
+    handle: 'ClaudyGod',
+
+  },
+  {
+    name: 'Apple Music',
+    icon: faApple,
+    color: '#FFFFFF',
+    url: 'https://music.apple.com/artist/claudygod',
+    handle: 'ClaudyGod'
+  }
+];

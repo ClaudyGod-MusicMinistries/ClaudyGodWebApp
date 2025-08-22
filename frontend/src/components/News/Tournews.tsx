@@ -1,402 +1,241 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Aba1, Aba2, owerri1, Log, ph, newbanner } from '../../assets';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ExtraBoldText, RegularText } from '../ui/fonts/typography';
 import CustomButton from '../ui/fonts/buttons/CustomButton';
 import { useTheme } from '../../contexts/ThemeContext';
+import { socialPlatforms } from '../data/newsData';
 
-const tourImages: Record<string, string[]> = {
-  Abia: [Aba1, Aba2],
-  Portharcourt: [ph, Log],
-  Abuja: [Log, newbanner],
-  Owerri: [owerri1, Log],
-  Lagos: [Log, newbanner],
-};
-
-const stateDetails = {
-  Abia: {
-    title: 'Abia Music Tour',
-    date: 'See flier for more details',
-    venue: 'See flier for more details',
-    description: 'Join us for a powerful night of moment and praise in the city of Abia State.'
-  },
-  Portharcourt: {
-    title: 'Port Harcourt Music Tour',
-    date: 'See flier for more details',
-    venue: 'See flier for more details',
-    description: 'Join us for a powerful moment of worship and praise in the city of Portharcourt.'
-  },
-  Abuja: {
-    title: 'Abuja Music Tour',
-    date: 'See flier for more details',
-    venue: 'See flier for more details',
-    description: 'Join us for a powerful moment of worship and praise in the city of Abuja.'
-  },
-  Owerri: {
-    title: 'Owerri Music Tour',
-    date: 'See flier for more details',
-    venue: 'See flier for more details',
-    description: 'Join us for a powerful moment of worship and praise in the city of Owerri.'
-  },
-  Lagos: {
-    title: 'Lagos Music Tour',
-    date: 'See flier for more details',
-    venue: 'See flier for more details',
-    description: 'Join us for a powerful moment of worship and praise in the city of Lagos.'
-  }
-};
-
-const states = Object.keys(tourImages);
-
-export const TourHighlights: React.FC = () => {
+export const FollowUs: React.FC = () => {
   const { colorScheme } = useTheme();
-  const [activeState, setActiveState] = useState<string>('Abia');
-  const [slide, setSlide] = useState<number>(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: ''
-  });
-  const [selectedStateForModal, setSelectedStateForModal] = useState<string>('');
-
-  useEffect(() => {
-    let id: NodeJS.Timeout;
-    if (isAutoPlaying) {
-      id = setInterval(() => {
-        setSlide((s) => (s + 1) % tourImages[activeState].length);
-      }, 5000);
-    }
-    return () => clearInterval(id);
-  }, [activeState, isAutoPlaying]);
-
-  const prev = () => {
-    setIsAutoPlaying(false);
-    setSlide((s) => (s === 0 ? tourImages[activeState].length - 1 : s - 1));
-    setTimeout(() => setIsAutoPlaying(true), 10000);
-  };
-
-  const next = () => {
-    setIsAutoPlaying(false);
-    setSlide((s) => (s + 1) % tourImages[activeState].length);
-    setTimeout(() => setIsAutoPlaying(true), 10000);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted:', {
-      ...formData,
-      selectedState: selectedStateForModal,
-      eventTitle: stateDetails[selectedStateForModal]?.title
-    });
-    setIsModalOpen(false);
-    setFormData({ name: '', email: '' });
-  };
-
-  const openModal = () => {
-    setSelectedStateForModal(activeState);
-    setIsModalOpen(true);
-  };
 
   return (
     <section 
-      className="py-16 md:py-24"
+      className="py-12 md:py-24 relative overflow-hidden"
       style={{
-        background: `linear-gradient(to bottom, ${colorScheme.background}, ${colorScheme.surfaceVariant})`
+        background: `linear-gradient(to bottom, ${colorScheme.text}, ${colorScheme.surface}, ${colorScheme.surfaceVariant})`
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-12 items-center">
-          {/* Image Carousel */}
-          <div className="w-full lg:w-1/2">
-            <div className="relative w-full overflow-hidden rounded-2xl shadow-2xl aspect-video">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={`${activeState}-${slide}`}
-                  src={tourImages[activeState][slide]}
-                  alt={`${activeState} tour`}
-                  className="w-full h-full object-cover"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.1 }}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                />
-              </AnimatePresence>
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-10 left-10 w-48 h-48 md:w-72 md:h-72 rounded-full" style={{ backgroundColor: colorScheme.accent }}></div>
+        <div className="absolute bottom-10 right-10 w-64 h-64 md:w-96 md:h-96 rounded-full" style={{ backgroundColor: colorScheme.primary }}></div>
+      </div>
 
-              {/* Navigation Arrows */}
-              <CustomButton
-                onClick={prev}
-                variant="icon"
-                size="sm"
-                className="absolute left-3 top-1/2 -translate-y-1/2"
-                style={{ backgroundColor: `${colorScheme.textSecondary}20`, backdropFilter: 'blur(8px)' }}
-                aria-label="previous slide"
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-12 md:mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <ExtraBoldText 
+              fontSize="2rem"
+              mdFontSize="3rem"
+              lgFontSize="3.5rem"
+              className="mb-4 md:mb-6"
+              style={{ color: colorScheme.background }}
+            >
+              Stay Connected with <span style={{ color: colorScheme.accent }}>ClaudyGod</span>
+            </ExtraBoldText>
+          </motion.div>
+          
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: '6rem' }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="h-1 mb-6 md:mb-8 mx-auto"
+            style={{ backgroundColor: colorScheme.primary }}
+          />
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            <RegularText 
+              fontSize="0.9rem"
+              mdFontSize="1.1rem"
+              lgFontSize="1.25rem"
+              className="max-w-3xl mx-auto mb-8 md:mb-10 px-2"
+              style={{ color: colorScheme.background }}
+            >
+              Never miss a beat! Follow ClaudyGod across all platforms for exclusive content, 
+              behind-the-scenes moments, tour updates, and new music releases.
+            </RegularText>
+          </motion.div>
+        </div>
+
+        {/* Social Media Grid - Responsive layout */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16 px-2">
+          {socialPlatforms.map((platform, index) => (
+            <motion.div
+              key={platform.name}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="group cursor-pointer"
+              onClick={() => window.open(platform.url, '_blank')}
+            >
+              <div 
+                className="rounded-xl md:rounded-2xl p-4 md:p-6 h-full transition-all duration-300"
+                style={{
+                  backgroundColor: colorScheme.surface,
+                  border: `1px solid ${colorScheme.primary}20`,
+                  boxShadow: `0 4px 12px ${colorScheme.primary}10`
+                }}
               >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke={colorScheme.text}>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </CustomButton>
+                <div className="text-center">
+                  <div 
+                    className="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 transition-all duration-300 group-hover:scale-110"
+                    style={{ backgroundColor: `${platform.color}15` }}
+                  >
+                    <FontAwesomeIcon 
+                      icon={platform.icon} 
+                      className="text-lg md:text-2xl"
+                      style={{ color: platform.color }}
+                    />
+                  </div>
+                  
+                  <ExtraBoldText 
+                    fontSize="0.9rem"
+                    mdFontSize="1.1rem"
+                    className="mb-1 md:mb-2"
+                    style={{ color: colorScheme.text }}
+                  >
+                    {platform.name}
+                  </ExtraBoldText>
+                  
+                  <RegularText 
+                    className="mb-2 text-xs md:text-sm"
+                    style={{ color: platform.color }}
+                  >
+                    {platform.handle}
+                  </RegularText>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="text-center"
+        >
+          <div 
+            className="rounded-xl md:rounded-2xl p-6 md:p-8 lg:p-12 mx-auto max-w-4xl"
+            style={{
+              background: `linear-gradient(135deg, ${colorScheme.primary}15 0%, ${colorScheme.accent}15 100%)`,
+              border: `1px solid ${colorScheme.primary}30`
+            }}
+          >
+            <ExtraBoldText 
+              fontSize="1.25rem"
+              mdFontSize="1.5rem"
+              lgFontSize="2rem"
+              className="mb-3 md:mb-4"
+              style={{ color: colorScheme.text }}
+            >
+              Join the ClaudyGod Family
+            </ExtraBoldText>
+            
+            <RegularText 
+              className="mb-6 md:mb-8 max-w-2xl mx-auto text-sm md:text-base"
+              style={{ color: colorScheme.accent}}
+            >
+              Be the first to know about new music, exclusive events, and special announcements. 
+              Your support means everything!
+            </RegularText>
+
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
               <CustomButton
-                onClick={next}
-                variant="icon"
-                size="sm"
-                className="absolute right-3 top-1/2 -translate-y-1/2"
-                style={{ backgroundColor: `${colorScheme.textSecondary}20`, backdropFilter: 'blur(8px)' }}
-                aria-label="next slide"
+                href="https://instagram.com/claudygod"
+                target="_blank"
+                variant="primary"
+                size="md"
+                className="min-w-[160px] md:min-w-[200px] text-sm md:text-base"
               >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke={colorScheme.text}>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+                Follow on Instagram
               </CustomButton>
               
-              {/* Slide Indicators */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                {tourImages[activeState].map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      setIsAutoPlaying(false);
-                      setSlide(index);
-                      setTimeout(() => setIsAutoPlaying(true), 10000);
-                    }}
-                    className={`w-2.5 h-2.5 rounded-full transition-all ${
-                      index === slide ? 'w-4' : ''
-                    }`}
-                    style={{
-                      backgroundColor: index === slide ? colorScheme.primary : `${colorScheme.textSecondary}50`
-                    }}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
+              <CustomButton
+                href="https://youtube.com/claudygod"
+                target="_blank"
+                variant="secondary"
+                size="md"
+                className="min-w-[160px] md:min-w-[200px] text-sm md:text-base"
+              >
+                Subscribe on YouTube
+              </CustomButton>
             </div>
           </div>
+        </motion.div>
 
-          {/* Content Area */}
-          <div className="w-full lg:w-1/2 text-center lg:text-left">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <ExtraBoldText 
-                fontSize="2rem"
-                mdFontSize="3rem"
-                lgFontSize="3.5rem"
-                className="mb-6"
-              >
-                Want to know where <span style={{ color: colorScheme.accent }}>ClaudyGod</span> will be?
-              </ExtraBoldText>
-            </motion.div>
-            
+        {/* Real-time stats */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 1 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-12 md:mt-16"
+        >
+          {[
+    
+            { number: '24/7', label: 'Active Community' },
+            { number: '1M+', label: 'Monthly Reach' }
+          ].map((stat, index) => (
             <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: '6rem' }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="h-1 mb-8 mx-auto lg:mx-0"
-              style={{ backgroundColor: colorScheme.primary }}
-            />
-
-            {/* State Buttons */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 max-w-2xl mx-auto lg:mx-0 mb-10">
-              {states.map((state) => (
-                <CustomButton
-                  key={state}
-                  variant={state === activeState ? "primary" : "secondary"}
-                  size="sm"
-                  onClick={() => {
-                    setActiveState(state);
-                    setSlide(0);
-                    setIsAutoPlaying(true);
-                  }}
-                >
-                  {state}
-                </CustomButton>
-              ))}
-            </div>
-
-            {/* State Details */}
-            <motion.div
-              key={activeState}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="p-6 rounded-xl"
-              style={{ 
-                backgroundColor: colorScheme.surface,
-                border: `1px solid ${colorScheme.primary}50`
-              }}
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
+              className="text-center p-3 md:p-4 rounded-lg"
+              style={{ backgroundColor: `${colorScheme.primary}10` }}
             >
               <ExtraBoldText 
                 fontSize="1.5rem"
-                mdFontSize="1.75rem"
+                mdFontSize="2rem"
                 style={{ color: colorScheme.accent }}
-                className="mb-3"
+                className="mb-1 md:mb-2"
               >
-                {stateDetails[activeState].title}
+                {stat.number}
               </ExtraBoldText>
-              
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
-                <div className="flex items-center">
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke={colorScheme.primary} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <RegularText>{stateDetails[activeState].date}</RegularText>
-                </div>
-                
-                <div className="flex items-center">
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke={colorScheme.primary} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  <RegularText>{stateDetails[activeState].venue}</RegularText>
-                </div>
-              </div>
-              
               <RegularText 
-                style={{ color: colorScheme.textSecondary }}
-                className="mb-5"
+                className="text-xs md:text-sm"
+                style={{ color: colorScheme.text }}
               >
-                {stateDetails[activeState].description}
+                {stat.label}
               </RegularText>
-              
-              <CustomButton
-                onClick={openModal}
-                variant="primary"
-                size="lg"
-                fullWidth
-              >
-                Get Event Updates
-              </CustomButton>
             </motion.div>
-          </div>
-        </div>
+          ))}
+        </motion.div>
       </div>
 
-      {/* Event Updates Modal */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <motion.div 
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            style={{ backgroundColor: `${colorScheme.background}90`, backdropFilter: 'blur(8px)' }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsModalOpen(false)}
-          >
-            <motion.div 
-              className="rounded-2xl max-w-md w-full p-6 md:p-8"
-              style={{ 
-                backgroundColor: colorScheme.surface,
-                border: `1px solid ${colorScheme.primary}50`
-              }}
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              transition={{ type: "spring", damping: 25 }}
-              onClick={(e) => e.stopPropagation()}
+      {/* Floating social icons - Hidden on mobile, shown on desktop */}
+      <div className="fixed right-4 md:right-6 top-1/2 transform -translate-y-1/2 z-40 hidden lg:block">
+        <div className="flex flex-col gap-3 md:gap-4">
+          {socialPlatforms.slice(0, 4).map((platform) => (
+            <motion.a
+              key={platform.name}
+              href={platform.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1, x: -5 }}
+              className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center shadow-lg"
+              style={{ backgroundColor: platform.color }}
+              aria-label={`Follow on ${platform.name}`}
             >
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <ExtraBoldText 
-                    fontSize="1.5rem"
-                    style={{ color: colorScheme.accent }}
-                  >
-                    Get Event Updates
-                  </ExtraBoldText>
-                  <div className="flex items-center mt-1">
-                    <div 
-                      className="px-3 py-1 rounded-full text-sm"
-                      style={{ 
-                        backgroundColor: `${colorScheme.primary}20`,
-                        backdropFilter: 'blur(8px)'
-                      }}
-                    >
-                      <RegularText>{selectedStateForModal}</RegularText>
-                    </div>
-                    <RegularText 
-                      style={{ color: colorScheme.accent }}
-                      className="ml-2 text-sm"
-                    >
-                      {stateDetails[selectedStateForModal]?.title}
-                    </RegularText>
-                  </div>
-                </div>
-                <CustomButton
-                  onClick={() => setIsModalOpen(false)}
-                  variant="icon"
-                  size="sm"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke={colorScheme.text} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </CustomButton>
-              </div>
-              
-              <form onSubmit={handleSubmit}>
-                <div className="mb-6">
-                  <label htmlFor="name" className="block mb-2">
-                    <RegularText className="font-medium">Full Name</RegularText>
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2"
-                    style={{
-                      backgroundColor: colorScheme.background,
-                      border: `1px solid ${colorScheme.primary}`,
-                      color: colorScheme.text
-                    }}
-                    placeholder="Enter your full name"
-                  />
-                </div>
-                
-                <div className="mb-8">
-                  <label htmlFor="email" className="block mb-2">
-                    <RegularText className="font-medium">Email Address</RegularText>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2"
-                    style={{
-                      backgroundColor: colorScheme.background,
-                      border: `1px solid ${colorScheme.primary}`,
-                      color: colorScheme.text
-                    }}
-                    placeholder="Enter your email address"
-                  />
-                </div>
-                
-                <CustomButton
-                  type="submit"
-                  variant="primary"
-                  size="lg"
-                  fullWidth
-                >
-                  Subscribe for Updates
-                </CustomButton>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <FontAwesomeIcon 
+                icon={platform.icon} 
+                className="text-white text-sm md:text-lg"
+              />
+            </motion.a>
+          ))}
+        </div>
+      </div>
     </section>
   );
 };

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +11,7 @@ import {
   faPlay, 
   faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
-import { faYoutube, faSpotify, faApple, faDeezer } from '@fortawesome/free-brands-svg-icons';
+
 import { Tour1 } from '../assets/';
 
 // Components
@@ -22,13 +23,14 @@ import { LiveSession } from '../components/news/LiveSession';
 import { TourCityModal } from '../components/news/TourCityModal';
 import { NewsletterForm } from '../components/util/Newsletter';
 import { DonationCallToAction } from '../components/util/DonationSupport';
-import { TourHighlights } from '../components/news/Tournews';
+import { FollowUs } from '../components/news/Tournews';
 
 // Design System Components
 import { ExtraBoldText, RegularText } from '../components/ui/fonts/typography';
 import CustomButton from '../components/ui/fonts/buttons/CustomButton';
 import { useTheme } from '../contexts/ThemeContext';
-import { albums } from '../components/data/newsData';
+import { AlbumsSection } from '../components/news/AlbumSection';
+import { LiveSessionsSection } from '../components/news/Session';
 
 export const News = () => {
   const { colorScheme } = useTheme();
@@ -65,40 +67,6 @@ export const News = () => {
     setCurrentAlbum('');
   };
 
-  const cards = [
-    {
-      id: 1,
-      title: "Latest Songs",
-      description: "Discover our newest gospel releases and worship tracks that will uplift your spirit.",
-      icon: faMusic,
-      buttonText: "Listen Now",
-      buttonIcon: faPlay,
-    },
-    {
-      id: 2,
-      title: "Events",
-      description: "Find upcoming worship nights, concerts and special ministry events near you.",
-      icon: faCalendar,
-      buttonText: "View Calendar",
-      buttonIcon: faArrowRight,
-    },
-    {
-      id: 3,
-      title: "Gallery",
-      description: "Relive the powerful moments from our worship sessions and events.",
-      icon: faImages,
-      buttonText: "View Photos",
-      buttonIcon: faArrowRight,
-    },
-    {
-      id: 4,
-      title: "Prayer",
-      description: "Share your prayer needs with our ministry team for spiritual support.",
-      icon: faHandsPraying,
-      buttonText: "Submit Request",
-      buttonIcon: faArrowRight,
-    }
-  ];
 
   return (
     <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
@@ -249,111 +217,59 @@ export const News = () => {
               transition={{ delay: 0.2 }}
               className="text-center mb-8 lg:mb-12"
             >
-              <ExtraBoldText
-                className="mb-3 leading-tight text-xl lg:text-2xl"
-                style={{ color: colorScheme.text }}
-              >
-                Ministry Resources
-              </ExtraBoldText>
-
-              <RegularText
-                style={{ color: colorScheme.textSecondary }}
-                className="mx-auto max-w-2xl text-sm lg:text-base"
-              >
-                Access our music, events, gallery, and prayer resources to strengthen your faith journey.
-              </RegularText>
             </motion.div>
 
-            {/* Responsive Cards Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-              {cards.map((card, i) => (
-                <motion.div
-                  key={card.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                  className="flex flex-col rounded-xl p-4 lg:p-6 transition-all duration-300 hover:shadow-lg"
-                  style={{
-                    backgroundColor: colorScheme.surface,
-                    border: `1px solid ${colorScheme.outline}`,
-                    boxShadow: `0 4px 6px -1px ${colorScheme.primary}20, 0 2px 4px -1px ${colorScheme.primary}10`
-                  }}
-                >
-                  <div className="flex items-center mb-3">
-                    <div
-                      className="w-8 h-8 lg:w-10 lg:h-10 rounded-full mr-3 flex items-center justify-center transition-all duration-300 hover:scale-110"
-                      style={{
-                        backgroundColor: colorScheme.primary,
-                        boxShadow: `0 4px 6px -1px ${colorScheme.primary}40`
-                      }}
-                    >
-                      <FontAwesomeIcon icon={card.icon} style={{ color: colorScheme.onPrimary }} className="text-sm lg:text-lg" />
-                    </div>
-                    <ExtraBoldText fontSize="1rem" lgFontSize="1.1rem" style={{ color: colorScheme.text }}>
-                      {card.title}
-                    </ExtraBoldText>
-                  </div>
-
-                  <RegularText style={{ color: colorScheme.textSecondary }} className="mb-4 text-xs lg:text-sm">
-                    {card.description}
-                  </RegularText>
-
-                  <CustomButton 
-                    variant="text" 
-                    className="mt-auto self-start group" 
-                    style={{ color: colorScheme.primary, padding: '4px 0' }}
-                    aria-label={card.buttonText}
-                  >
-                    <span className="flex items-center gap-2 text-xs lg:text-sm">
-                      {card.buttonText}
-                      <FontAwesomeIcon icon={card.buttonIcon} className="transition-transform group-hover:translate-x-1 text-xs lg:text-sm" />
-                    </span>
-                  </CustomButton>
-                </motion.div>
-              ))}
-            </div>
+       
           </section>
 
           {/* Tour Highlights CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="rounded-2xl p-6 lg:p-8 text-center mt-8 lg:mt-12"
-            style={{ 
-              background: `linear-gradient(135deg, ${colorScheme.primary} 0%, ${colorScheme.primaryDark} 100%)`,
-              color: colorScheme.onPrimary
-            }}
-          >
-            <ExtraBoldText fontSize="1.5rem" className="mb-3">
-              Relive the Worship Moments
-            </ExtraBoldText>
-            
-            <RegularText className="mb-4 max-w-2xl mx-auto text-sm lg:text-base">
-              Experience the powerful worship sessions from our recent tour across multiple cities.
-            </RegularText>
-            
-            <CustomButton
-              variant="outlined"
-              size="sm"
-              style={{
-                borderColor: colorScheme.onPrimary,
-                color: colorScheme.onPrimary,
-                fontSize: '14px',
-                padding: '8px 16px'
-              }}
-              aria-label="View tour highlights"
-            >
-              View Tour Highlights
-            </CustomButton>
-          </motion.div>
+     <motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: "-100px" }}
+  transition={{ duration: 0.6 }}
+  className="rounded-2xl p-6 lg:p-8 text-center -mt-20 lg:-mt-10" 
+  style={{ 
+    background: `linear-gradient(135deg, ${colorScheme.primary} 0%, ${colorScheme.primaryDark} 100%)`,
+    color: colorScheme.onPrimary
+  }}
+>
+  <ExtraBoldText fontSize="1.5rem" className="mb-3">
+    Relive the Worship Moments
+  </ExtraBoldText>
+  
+  <RegularText className="mb-4 max-w-2xl mx-auto text-sm lg:text-base">
+    Experience the powerful worship sessions from our recent tour across multiple cities.
+  </RegularText>
+  
+  <CustomButton
+    variant="outlined"
+    size="sm"
+    style={{
+      borderColor: colorScheme.onPrimary,
+      color: colorScheme.onPrimary,
+      fontSize: '14px',
+      padding: '8px 16px'
+    }}
+    aria-label="View tour highlights"
+  >
+    View Tour Highlights
+  </CustomButton>
+</motion.div>
+
         </section>
 
         {/* Centered Events Section */}
+ 
         <section 
           className="w-full py-12 lg:py-16"
-          style={{ background: `linear-gradient(to bottom, ${colorScheme.background}, ${colorScheme.surfaceVariant})` }}
+              style={{ 
+            background: `linear-gradient(to bottom, 
+              ${colorScheme.text}, 
+              ${colorScheme.surface}, 
+              ${colorScheme.surfaceVariant}
+              )` 
+          }}
           id="gallery"
         >
           <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
@@ -363,7 +279,7 @@ export const News = () => {
               transition={{ duration: 0.5 }}
               className="flex flex-col items-center mb-12 lg:mb-16"
             >
-              <ExtraBoldText fontSize="2rem" lgFontSize="3rem" style={{ color: colorScheme.text }}>
+              <ExtraBoldText fontSize="2rem" lgFontSize="3rem" style={{ color: colorScheme.background }}>
                 Upcoming Events
               </ExtraBoldText>
               <motion.div
@@ -400,143 +316,7 @@ export const News = () => {
           </div>
         </section>
 
-        {/* Full-width Albums Section */}
-        <section 
-          className="w-full py-8 lg:py-12 px-4 sm:px-6 lg:px-8"
-          style={{ color: colorScheme.text }}
-        >
-          <div className="w-full">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex flex-col items-center text-center mb-8 lg:mb-12"
-            >
-              <ExtraBoldText fontSize="2rem" lgFontSize="3rem" style={{ color: colorScheme.primary }}>
-                Latest Albums
-              </ExtraBoldText>
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: '5rem' }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="h-1 my-4 lg:my-6"
-                style={{ backgroundColor: colorScheme.secondary }}
-              />
-              <RegularText fontSize="1rem" style={{ color: colorScheme.background }} className="max-w-3xl">
-                We've just released three new gospel albums, packed with inspiring messages and soulful melodies.
-              </RegularText>
-            </motion.div>
-
-            <div className="flex flex-col md:flex-row flex-wrap justify-center gap-4 lg:gap-6 w-full mb-12 lg:mb-16">
-              {albums.map((album, index) => (
-                <motion.div
-                  key={album.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 * index }}
-                  className="flex flex-col rounded-2xl p-4 lg:p-6 shadow-xl"
-                  style={{ 
-                    backgroundColor: colorScheme.surface,
-                    flex: '1 1 300px',
-                    maxWidth: '100%',
-                    marginBottom: '1rem'
-                  }}
-                >
-                  <ExtraBoldText fontSize="1.1rem" style={{ color: colorScheme.text }} className="mb-4 text-left">
-                    Album: {album.title}
-                  </ExtraBoldText>
-
-                  <div className="relative aspect-video rounded-xl overflow-hidden mb-4 flex-shrink-0">
-                    <img
-                      src={album.image}
-                      alt={`Album cover for ${album.title}`}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-center">
-                      <CustomButton
-                        variant="icon"
-                        size="sm"
-                        onClick={() => openVideoModal(album.links.youtube, album.title)}
-                        className="hover:scale-105 transition-transform"
-                        aria-label={`Play ${album.title}`}
-                      >
-                        <svg
-                          className="w-5 h-5 lg:w-6 lg:h-6"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          style={{ color: colorScheme.text }}
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </CustomButton>
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-2 mt-auto">
-                    <CustomButton
-                      href={album.links.spotify}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="secondary"
-                      size="xs"
-                      className="justify-center gap-1 text-xs"
-                      style={{ backgroundColor: '#1DB954', padding: '6px 8px' }}
-                      aria-label={`Listen to ${album.title} on Spotify`}
-                    >
-                      <FontAwesomeIcon icon={faSpotify} className="text-xs" />
-                      <span>Spotify</span>
-                    </CustomButton>
-                    
-                    <CustomButton
-                      onClick={() => openVideoModal(album.links.youtube, album.title)}
-                      variant="secondary"
-                      size="xs"
-                      className="justify-center gap-1 text-xs"
-                      style={{ backgroundColor: '#FF0000', padding: '6px 8px' }}
-                      aria-label={`Watch ${album.title} on YouTube`}
-                    >
-                      <FontAwesomeIcon icon={faYoutube} className="text-xs" />
-                      <span>YouTube</span>
-                    </CustomButton>
-                    
-                    <CustomButton
-                      href={album.links.apple}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="secondary"
-                      size="xs"
-                      className="justify-center gap-1 text-xs"
-                      style={{ backgroundColor: '#000000', padding: '6px 8px' }}
-                      aria-label={`Listen to ${album.title} on Apple Music`}
-                    >
-                      <FontAwesomeIcon icon={faApple} className="text-xs" />
-                      <span>Apple</span>
-                    </CustomButton>
-                    
-                    <CustomButton
-                      href={album.links.deezer}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="secondary"
-                      size="xs"
-                      className="justify-center gap-1 text-xs"
-                      style={{ backgroundColor: '#FEAA2D', padding: '6px 8px' }}
-                      aria-label={`Listen to ${album.title} on Deezer`}
-                    >
-                      <FontAwesomeIcon icon={faDeezer} className="text-xs" />
-                      <span>Deezer</span>
-                    </CustomButton>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <AlbumsSection openVideoModal={openVideoModal} />
 
         {/* Video Modal */}
         <AnimatePresence>
@@ -593,39 +373,12 @@ export const News = () => {
           )}
         </AnimatePresence>
 
-        <TourHighlights />
+        <FollowUs />
 
         {/* Live Sessions Section */}
-        <section 
-          className="w-full py-12 lg:py-16 mb-12 lg:mb-20"
-          style={{ backgroundColor: colorScheme.background }}
-        >
-          <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex flex-col items-center text-center mb-12 lg:mb-16"
-            >
-              <ExtraBoldText fontSize="2rem" lgFontSize="3rem" style={{ color: colorScheme.text }}>
-                Check Out Our Live Sessions
-              </ExtraBoldText>
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: '5rem' }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="h-1 my-4 lg:my-6"
-                style={{ backgroundColor: colorScheme.primary }}
-              />
-              <RegularText fontSize="0.9rem" lgFontSize="1rem" style={{ color: colorScheme.textSecondary }} className="max-w-3xl">
-                We recently hosted vibrant live gospel sessions in Nigeria, bringing soulful performances and spiritual inspiration to the community.
-                Stay connected for more updates and unforgettable moments of praise and worship!
-              </RegularText>
-            </motion.div>
-          </div>
-        </section>
+     <LiveSessionsSection />
 
-        <ArtistQuote />
+        <ArtistQuote/>
       </main>
 
       {/* Footer Components */}
