@@ -22,7 +22,10 @@ interface BaseTextProps {
   lineHeight?: string;
   textDecoration?: "none" | "underline" | "line-through";
   fontSize?: FontSize;
-  mdFontSize?: FontSize; // Added medium font size prop
+  smFontSize?: FontSize; // Small screen font size
+  mdFontSize?: FontSize; // Medium screen font size
+  lgFontSize?: FontSize; // Large screen font size
+  xlFontSize?: FontSize; // Extra large screen font size
   className?: string;
   fontFamily?: string;
   as?: React.ElementType;
@@ -70,7 +73,10 @@ export const BaseText: React.FC<BaseTextProps> = ({
   lineHeight,
   textDecoration = "none",
   fontSize = "md",
+  smFontSize,
   mdFontSize,
+  lgFontSize,
+  xlFontSize,
   className = "",
   fontFamily,
   as: Component = "p",
@@ -84,7 +90,35 @@ export const BaseText: React.FC<BaseTextProps> = ({
 
   // Resolve font sizes from the map or use direct values
   const resolvedFontSize = fontSizeMap[fontSize] || fontSize;
+  const resolvedSmFontSize = smFontSize ? (fontSizeMap[smFontSize] || smFontSize) : undefined;
   const resolvedMdFontSize = mdFontSize ? (fontSizeMap[mdFontSize] || mdFontSize) : undefined;
+  const resolvedLgFontSize = lgFontSize ? (fontSizeMap[lgFontSize] || lgFontSize) : undefined;
+  const resolvedXlFontSize = xlFontSize ? (fontSizeMap[xlFontSize] || xlFontSize) : undefined;
+
+  // Generate CSS for responsive font sizes
+  const responsiveFontSizes: React.CSSProperties = {
+    fontSize: resolvedFontSize,
+    ...(resolvedSmFontSize && {
+      '@media (min-width: 640px)': {
+        fontSize: resolvedSmFontSize
+      }
+    }),
+    ...(resolvedMdFontSize && {
+      '@media (min-width: 768px)': {
+        fontSize: resolvedMdFontSize
+      }
+    }),
+    ...(resolvedLgFontSize && {
+      '@media (min-width: 1024px)': {
+        fontSize: resolvedLgFontSize
+      }
+    }),
+    ...(resolvedXlFontSize && {
+      '@media (min-width: 1280px)': {
+        fontSize: resolvedXlFontSize
+      }
+    }),
+  };
 
   const styles: React.CSSProperties = {
     fontFamily: fontFamily || fontFamilyMap[weight],
@@ -92,12 +126,7 @@ export const BaseText: React.FC<BaseTextProps> = ({
     margin,
     lineHeight,
     textDecoration,
-    fontSize: resolvedFontSize,
-    ...(resolvedMdFontSize && {
-      '@media (min-width: 768px)': {
-        fontSize: resolvedMdFontSize
-      }
-    }),
+    ...responsiveFontSizes,
     ...(textColor && { color: textColor }),
     ...style,
   };

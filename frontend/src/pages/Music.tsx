@@ -205,7 +205,8 @@ export const MusicData = () => {
             <div
               className="w-24 h-1.5 rounded-full mb-8"
               style={{
-                background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.highlight})`,
+                background: `linear-gradient(to right, 
+                ${colorScheme.accent}, ${colorScheme.accent})`,
               }}
             ></div>
             <LightText style={{ color: colorScheme.text }}>
@@ -321,7 +322,8 @@ export const MusicData = () => {
             <div
               className="w-32 h-1 rounded-full mx-auto mt-4"
               style={{
-                background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.highlight})`,
+                background: `linear-gradient(to right, ${colorScheme.accent}, 
+                ${colorScheme.accent})`,
               }}
             ></div>
           </motion.div>
@@ -392,63 +394,62 @@ export const MusicData = () => {
                   </div>
 
                   <div className="mt-10">
-                    <ExtraBoldText
-                      className="max-md:text-2xl md:text-4xl mb-6 text-center"
-                      style={{ color: colorScheme.text }}
-                    >
-                      Experience the Sound - Stream Now!
-                    </ExtraBoldText>
+  <ExtraBoldText
+    className="max-md:text-2xl md:text-4xl mb-6 text-center"
+    style={{ color: colorScheme.text }}
+  >
+    Experience the Sound - Stream Now!
+  </ExtraBoldText>
 
-                    <motion.div
-                      className="flex flex-wrap gap-2 justify-center max-w-lg mx-auto"
-                    >
-                      {securedMusicPlatforms.map((platform, i) => {
-                        const sanitizedUrl =
-                          SecurityUtils.sanitizeUrl(platform.url);
+  <motion.div
+    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl mx-auto"
+  >
+    {securedMusicPlatforms.map((platform, i) => {
+      const sanitizedUrl = SecurityUtils.sanitizeUrl(platform.url);
 
-                        return (
-                          <motion.div
-                            key={i}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.98 }}
-                            className={`${
-                              i < 3 ? 'w-1/3' : 'w-1/2'
-                            } p-1`}
-                          >
-                            <CustomButton
-                              size="sm"
-                              style={{
-                                backgroundColor: colorScheme.accent,
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '0.5rem',
-                                padding: '0.5rem 1rem',
-                              }}
-                              onClick={(
-                                e: React.MouseEvent<HTMLButtonElement>
-                              ) => {
-                                e.preventDefault();
-                                setRedirectUrl(sanitizedUrl);
-                                setIsModalOpen(true);
-                              }}
-                              fullWidth
-                            >
-                              <BoldText
-                                fontSize="0.8rem"
-                                style={{ lineHeight: '1' }}
-                              >
-                                Play on {platform.name}{' '}
-                                <FontAwesomeIcon
-                                  // icon={faExternalLinkAlt}
-                                  style={{ fontSize: '0.8rem' }}
-                                />
-                              </BoldText>
-                            </CustomButton>
-                          </motion.div>
-                        );
-                      })}
-                    </motion.div>
-                  </div>
+      return (
+        <motion.div
+          key={i}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.98 }}
+          className="w-full"
+        >
+          <CustomButton
+            size="sm"
+            style={{
+              backgroundColor: colorScheme.body,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "0.5rem",
+              padding: "0.75rem 1rem",
+              borderRadius: "0.75rem",
+            }}
+            onClick={(e: React.MouseEvent) => {
+              e.preventDefault();
+              setRedirectUrl(sanitizedUrl);
+              setIsModalOpen(true);
+            }}
+            fullWidth
+          >
+            <BoldText
+              fontSize="0.9rem"
+              style={{ lineHeight: "1.2", textAlign: "center" }}
+            >
+              Play on {platform.name}{" "}
+              <FontAwesomeIcon
+                // icon={faExternalLinkAlt}
+                style={{ fontSize: "0.8rem" }}
+                icon={"function"}
+              />
+            </BoldText>
+          </CustomButton>
+        </motion.div>
+      );
+    })}
+  </motion.div>
+</div>
+
                 </div>
               </motion.div>
             ))}
