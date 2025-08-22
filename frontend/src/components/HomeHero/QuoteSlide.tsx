@@ -35,7 +35,7 @@ export const QuoteSlide = ({ slide }: { slide: HeroSlide }) => {
         <RegularText
           fontSize="1rem"
           mdFontSize="1.5rem"
-          italic
+         
           bold
           style={{ color: colorScheme.accent }}
           className="text-left drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
@@ -67,7 +67,7 @@ export const QuoteSlide = ({ slide }: { slide: HeroSlide }) => {
             </motion.div>
             
             <ExtraBoldText
-              fontSize="1rem"
+             
               fontSize="1.125rem"
               style={{ color: colorScheme.text }}
               className="tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
