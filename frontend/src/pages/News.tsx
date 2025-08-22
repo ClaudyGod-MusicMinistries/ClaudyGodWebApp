@@ -1,8 +1,10 @@
 import { useState, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDown, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { faYoutube, faSpotify, faApple, faDeezer } from '@fortawesome/free-brands-svg-icons';
+import { faArrowDown, faBook, faCalendar, faCircle, faHandsPraying, faMusic, faTimes, faCheck, faImages, faPlay, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faYoutube, faSpotify, faApple, faDeezer, faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import {Tour1} from '../assets/'
+
 
 // Components
 import { HeroSlider } from '../components/news/Slider';
@@ -14,7 +16,6 @@ import { TourCityModal } from '../components/news/TourCityModal';
 import { NewsletterForm } from '../components/util/Newsletter';
 import { DonationCallToAction } from '../components/util/DonationSupport';
 import { TourHighlights } from '../components/news/Tournews';
-import { Tours } from '../components/news/Tours';
 
 // Design System Components
 import { ExtraBoldText, RegularText } from '../components/ui/fonts/typography';
@@ -41,57 +42,315 @@ export const News = () => {
     setCurrentVideoUrl('');
     setCurrentAlbum('');
   };
+const cards = [
+  {
+    id: 1,
+    title: "Latest Songs",
+    description: "Discover our newest gospel releases and worship tracks that will uplift your spirit.",
+    icon: faMusic,
+    buttonText: "Listen Now",
+    buttonIcon: faPlay,
+    colorScheme: {
+      bg: 'primary',
+      text: 'onPrimary'
+    }
+  },
+  {
+    id: 2,
+    title: "Events",
+    description: "Find upcoming worship nights, concerts and special ministry events near you.",
+    icon: faCalendar,
+    buttonText: "View Calendar",
+    buttonIcon: faArrowRight,
+    colorScheme: {
+      bg: 'secondary',
+      text: 'onSecondary'
+    }
+  },
+  {
+    id: 3,
+    title: "Gallery",
+    description: "Relive the powerful moments from our worship sessions and events.",
+    icon: faImages,
+    buttonText: "View Photos",
+    buttonIcon: faArrowRight,
+    colorScheme: {
+      bg: 'tertiary',
+      text: 'onTertiary'
+    }
+  },
+  {
+    id: 4,
+    title: "Prayer",
+    description: "Share your prayer needs with our ministry team for spiritual support.",
+    icon: faHandsPraying,
+    buttonText: "Submit Request",
+    buttonIcon: faArrowRight,
+    colorScheme: {
+      bg: 'error',
+      text: 'onError'
+    }
+  }
+];
+
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Slider */}
-      <div className="flex-shrink-0">
+    <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
+      {/* Hero Slider - Full width */}
+      <div className="flex-shrink-0 w-full">
         <HeroSlider />
       </div>
 
       {/* Main Content */}
-      <main className="flex-grow flex flex-col">
-        {/* Tours Section */}
-        {/* <section 
-          className="flex flex-col py-16" 
-          style={{ background: `linear-gradient(to bottom, ${colorScheme.background}, ${colorScheme.surfaceVariant})` }}
+      <main className="flex-grow flex flex-col w-full">
+        {/* Full-width 4-Column Section */}
+     <section 
+  className="w-full py-20 px-20"
+  style={{ 
+    background: `linear-gradient(to bottom, 
+      ${colorScheme.text}, 
+      ${colorScheme.surface}, 
+      ${colorScheme.surfaceVariant}
+      )` 
+  }}
+>
+<div className="w-full px-4 sm:px-6 lg:px-8">
+  {/* Hero Section with Heading and Subheading */}
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    className="flex flex-col items-center mb-16 text-center"
+  >
+    <ExtraBoldText fontSize="3rem" mdFontSize="4rem" style={{ color: colorScheme.accent }}>
+      ClaudyGod - Uniting Hearts in Worship Across Various Cities
+    </ExtraBoldText>
+    
+    {/* Subheading */}
+    <motion.p
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.2 }}
+      className="max-w-3xl mt-4"
+      style={{ color: colorScheme.background }}
+    >
+      Bringing divine worship experiences to communities worldwide through music, 
+      prayer, and fellowship
+    </motion.p>
+    
+    <motion.div
+      initial={{ width: 0 }}
+      animate={{ width: '8rem' }}
+      transition={{ duration: 0.8, delay: 0.3 }}
+      className="h-1 my-6"
+      style={{ backgroundColor: colorScheme.primary }}
+    />
+  </motion.div>
+
+  {/* Two Column Layout - Image + Text */}
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+    {/* Column 1 - Image */}
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.6 }}
+      className="relative rounded-2xl overflow-hidden aspect-video lg:aspect-square"
+    >
+      <img
+        src={Tour1} // Replace with your image path
+        alt="ClaudyGod in worship"
+        className="w-full h-full object-cover"
+        loading="eager"
+      />
+      <div 
+        className="absolute inset-0"
+        style={{ 
+          background: `linear-gradient(to top, ${colorScheme.background} 0%, transparent 30%)` 
+        }}
+      />
+    </motion.div>
+
+    {/* Column 2 - Artist Text */}
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+    >
+      <ExtraBoldText fontSize="2rem" className="mb-6" style={{ color: colorScheme.text }}>
+       What to Expect - Music Tour
+      </ExtraBoldText>
+      
+      <RegularText style={{ color: colorScheme.text }} className="mb-4">
+        "My mission is to create spaces where people can encounter God through worship. 
+        Each city we visit becomes a new opportunity to unite believers in praise and 
+        experience the transformative power of God's presence."
+      </RegularText>
+      
+      <RegularText style={{ color: colorScheme.textSecondary }} className="mb-8">
+        Join me on this journey as we take worship beyond church walls and into communities 
+        that hunger for spiritual connection.
+      </RegularText>
+      
+      <div className="flex flex-wrap gap-4">
+
+<CustomButton
+  style={{
+    backgroundColor: colorScheme.primary,
+    color: colorScheme.onPrimary,
+    display: "flex",
+    alignItems: "center",
+    padding: "20px",
+    justifyContent: "space-between", // pushes label and icon apart
+    // width: "100%",
+  }}
+>
+  <span>Tour Highlights</span>
+  <FontAwesomeIcon icon={faArrowRight} 
+  style={{marginLeft:"40px", fontSize:"20px"}} aria-hidden="true" />
+</CustomButton>
+
+
+
+
+
+    
+      </div>
+    </motion.div>
+  </div>
+
+  {/* Connection Section */}
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ delay: 0.4 }}
+    className="text-center mb-16"
+  >
+    <ExtraBoldText fontSize="2rem" className="mb-6" style={{ color: colorScheme.text }}>
+     Catch up on our Music Tour Across Various States in Nigeria
+    </ExtraBoldText>
+    
+  <RegularText 
+  style={{ color: colorScheme.textSecondary }} 
+  className="max-w-3xl mx-auto mb-8"
+>
+  
+  Explore each tour stop to see highlights, testimonies, and the unique ways God is moving 
+  in every community we visit.
+</RegularText>
+
+  </motion.div>
+
+  {/* 4-Column Grid - Full width */}
+ <section className="w-full py-12 sm:py-16 lg:py-24 px-4">
+      {/* Section Heading */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="text-center mb-10 sm:mb-16"
+      >
+        <ExtraBoldText
+          className="mb-4 leading-tight text-xl sm:text-2xl md:text-3xl"
+          style={{ color: colorScheme.text }}
         >
-          <div className="flex flex-col items-center mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex flex-col items-center mb-16"
-            >
-              <ExtraBoldText fontSize="3rem" mdFontSize="4rem" style={{ color: colorScheme.text }}>
-                Upcoming Events
+          Catch up on our Music Tour Across Various States in Nigeria
+        </ExtraBoldText>
+
+        <RegularText
+          style={{ color: colorScheme.textSecondary }}
+          className="mx-auto max-w-2xl text-sm sm:text-base md:text-lg"
+        >
+          Explore each tour stop to see highlights, testimonies, and the unique ways God is moving
+          in every community we visit.
+        </RegularText>
+      </motion.div>
+
+      {/* Responsive Cards Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {cards.map((card, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: i * 0.1 }}
+            className="flex flex-col rounded-xl p-5 sm:p-6 transition-all duration-300 hover:shadow-lg"
+            style={{
+              backgroundColor: colorScheme.surface,
+              border: `1px solid ${colorScheme.outline}`,
+              boxShadow: `0 4px 6px -1px ${colorScheme.primary}20, 0 2px 4px -1px ${colorScheme.primary}10`
+            }}
+          >
+            <div className="flex items-center mb-4">
+              <div
+                className="w-10 h-10 rounded-full mr-3 flex items-center justify-center transition-all duration-300 hover:scale-110"
+                style={{
+                  backgroundColor: colorScheme.primary,
+                  boxShadow: `0 4px 6px -1px ${colorScheme.primary}40`
+                }}
+              >
+                <FontAwesomeIcon icon={card.icon} style={{ color: colorScheme.onPrimary }} className="text-lg" />
+              </div>
+              <ExtraBoldText fontSize="1.1rem" style={{ color: colorScheme.text }}>
+                {card.title}
               </ExtraBoldText>
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: '8rem' }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="h-1 my-6"
-                style={{ backgroundColor: colorScheme.primary }}
-              />
-            </motion.div>
-
-            <div className="w-full">
-              <TourSection 
-                onCitySelect={(city) => {
-                  setSelectedTourCity(city);
-                  setShowTourModal(true);
-                }} 
-              />
             </div>
-          </div>
-        </section> */}
 
-        {/* Events Section */}
+            <RegularText style={{ color: colorScheme.textSecondary }} className="mb-6 text-sm sm:text-base">
+              {card.description}
+            </RegularText>
+
+            <CustomButton variant="text" className="mt-auto self-start group" style={{ color: colorScheme.primary }}>
+              <span className="flex items-center gap-2">
+                {card.button}
+                <FontAwesomeIcon icon={card.buttonIcon} className="transition-transform group-hover:translate-x-1" />
+              </span>
+            </CustomButton>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+
+  {/* Tour Highlights CTA */}
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6 }}
+    className="bg-gradient-to-r rounded-2xl p-8 text-center"
+    style={{ 
+      background: `linear-gradient(135deg, ${colorScheme.primary} 0%, ${colorScheme.primaryDark} 100%)`,
+      color: colorScheme.onPrimary
+    }}
+  >
+    <ExtraBoldText fontSize="2rem" className="mb-4">
+      Relive the Worship Moments
+    </ExtraBoldText>
+    
+    <RegularText className="mb-6 max-w-2xl mx-auto">
+      Experience the powerful worship sessions from our recent tour across multiple cities.
+    </RegularText>
+    
+    <CustomButton
+      variant="outlined"
+      size="large"
+      endIcon={<FontAwesomeIcon icon={faImages} />}
+      style={{
+        borderColor: colorScheme.onPrimary,
+        color: colorScheme.onPrimary
+      }}
+    >
+      View Tour Highlights
+    </CustomButton>
+  </motion.div>
+</div>
+        </section>
+
+        {/* Centered Events Section */}
         <section 
-          className="flex flex-col py-16"
+          className="w-full py-16"
           style={{ background: `linear-gradient(to bottom, ${colorScheme.background}, ${colorScheme.surfaceVariant})` }}
         >
-          <div className="flex flex-col items-center mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -135,12 +394,12 @@ export const News = () => {
           </div>
         </section>
 
-        {/* Albums Section */}
+        {/* Full-width Albums Section */}
         <section 
-          className="flex flex-col py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-8"
+          className="w-full py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-8"
           style={{ color: colorScheme.text }}
         >
-          <div className="flex flex-col items-center mx-auto max-w-7xl">
+          <div className="w-full">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -324,10 +583,10 @@ export const News = () => {
 
         {/* Live Sessions Section */}
         <section 
-          className="flex flex-col py-20 mb-20"
+          className="w-full py-20 mb-20"
           style={{ backgroundColor: colorScheme.background }}
         >
-          <div className="flex flex-col items-center mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -388,7 +647,7 @@ export const News = () => {
       </main>
 
       {/* Footer Components */}
-      <div className="flex-shrink-0">
+      <div className="flex-shrink-0 w-full">
         {showTourModal && selectedTourCity && (
           <Suspense fallback={<div>Loading...</div>}>
             <TourCityModal

@@ -1,4 +1,30 @@
 // src/components/ui/fonts/colors.ts
+
+// Base color interfaces
+type BackgroundColor = string
+type Color = string
+
+interface GrayScale {
+  50: string;
+  100: string;
+  200: string;
+  300: string;
+  400: string;
+  500: string;
+  600: string;
+  700: string;
+  800: string;
+  900: string;
+}
+
+interface BorderRadius {
+  small: string;
+  medium: string;
+  large: string;
+  xlarge: string;
+  full: string;
+}
+
 export interface ColorScheme {
   // Base colors
   primary: string;
@@ -59,27 +85,13 @@ export interface ColorScheme {
   // Additional colors
   heading: string;
   white: string;
-}
-
-interface GrayScale {
-  50: string;
-  100: string;
-  200: string;
-  300: string;
-  400: string;
-  500: string;
-  600: string;
-  700: string;
-  800: string;
-  900: string;
-}
-
-interface BorderRadius {
-  small: string;
-  medium: string;
-  large: string;
-  xlarge: string;
-  full: string;
+  
+  // Material-like color scheme additions
+  tertiary?: BackgroundColor;
+  onTertiary?: Color;
+  onPrimary?: Color;
+  onSecondary?: Color;
+  outline?: string;
 }
 
 const baseGrayScale: GrayScale = {
@@ -163,6 +175,13 @@ export const darkShades: ColorScheme = {
   // Additional colors
   heading: "#FFFFFF",
   white: "#FFFFFF",
+  
+  // Material-like colors
+  tertiary: "#2D2D42" as BackgroundColor,
+  onTertiary: "#FFFFFF" as Color,
+  onPrimary: "#FFFFFF" as Color,
+  onSecondary: "#FFFFFF" as Color,
+  outline: "#4B5563",
 };
 
 export const lightShades: ColorScheme = {
@@ -225,6 +244,13 @@ export const lightShades: ColorScheme = {
   // Additional colors
   heading: "#1F2937",
   white: "#FFFFFF",
+  
+  // Material-like colors
+  tertiary: "#F3F4F6" as BackgroundColor,
+  onTertiary: "#1F2937" as Color,
+  onPrimary: "#FFFFFF" as Color,
+  onSecondary: "#FFFFFF" as Color,
+  outline: "#D1D5DB",
 };
 
 // Utility types for theme usage

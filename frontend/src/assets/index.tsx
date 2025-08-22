@@ -78,6 +78,7 @@ import VideoArt from './videoCoverArt.webp';
 import newsBan from './bannerMain.jpg'
 import newbanner from './newsBanner.webp'
 import blog from './blogBanner.webp'
+import Tour1 from './tour_1.jpg'
 import veryGlorious from './veryGlorious.jpg'
 
 // tour
@@ -91,7 +92,7 @@ import bgVideo from '/mainBanner.webm'
 
 
 
-export {Log, Back1, Isr, Back2, Back3,  Back4, About1, blog,owerri1,ph,
+export {Log, Back1, Isr, Back2, Back3,  Back4, About1, blog,owerri1,ph,Tour1,
     About2, Cover, Shop1, Shop2,Shop3, Donate1 , Donate2, veryGlorious,DesktopBg,
     Shop4, bgresize, VideoBanner1, VideoBanner2,newsBanner, musicCover6,newbanner,
     VideoBanner3,StoreBanner, newsBan,musicCover2, musicCover3,musicCover4, bgVideo,Main,

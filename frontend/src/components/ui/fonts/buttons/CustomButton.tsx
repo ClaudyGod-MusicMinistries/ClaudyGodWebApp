@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useTheme } from "../../../../contexts/ThemeContext";
 import { ColorScheme } from "../color/colorScheme";
 
-type Variant = "primary" | "secondary" | "outline";
+type Variant = "primary" | "secondary" | "outline" | "icon";
 type Size = "sm" | "md" | "lg" | "xl";
 
 interface CustomButtonProps {
@@ -53,34 +53,41 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     xl: { padding: "18px 32px", fontSize: "20px" },
   };
 
-  const getVariantStyles = (variant: Variant, colorScheme: ColorScheme): React.CSSProperties => {
-    switch (variant) {
-      case "primary":
-        return {
-          backgroundColor: colorScheme.button,
-          color: colorScheme.buttonText,
-          border: "none",
-        };
-      case "secondary":
-        return {
-          backgroundColor: colorScheme.background,
-          color: colorScheme.text,
-          border: `1px solid ${colorScheme.border}`,
-        };
-      case "outline":
-        return {
-          backgroundColor: "transparent",
-          color: colorScheme.primary,
-          border: `1px solid ${colorScheme.primary}`,
-        };
-      default:
-        return {
-          backgroundColor: colorScheme.button,
-          color: colorScheme.buttonText,
-          border: "none",
-        };
-    }
-  };
+ const getVariantStyles = (variant: Variant, colorScheme: ColorScheme): React.CSSProperties => {
+  switch (variant) {
+    case "primary":
+      return {
+        backgroundColor: colorScheme.button,
+        color: colorScheme.buttonText,
+        border: "none",
+      };
+    case "secondary":
+      return {
+        backgroundColor: colorScheme.background,
+        color: colorScheme.text,
+        border: `1px solid ${colorScheme.border}`,
+      };
+    case "outline":
+      return {
+        backgroundColor: "transparent",
+        color: colorScheme.primary,
+        border: `1px solid ${colorScheme.primary}`,
+      };
+    case "icon":
+      return {
+        backgroundColor: "transparent",
+        color: colorScheme.text,
+        border: "none",
+        padding: "8px", // Adjust as needed
+      };
+    default:
+      return {
+        backgroundColor: colorScheme.button,
+        color: colorScheme.buttonText,
+        border: "none",
+      };
+  }
+};
 
   const baseStyle: React.CSSProperties = {
     borderRadius: "8px",
@@ -99,15 +106,17 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     ...sizeStyles[size],
   };
 
-  const hoverStyle = !disabled && !isLoading ? {
-    backgroundColor: variant === "primary" 
-      ? colorScheme.accent 
-      : variant === "secondary" 
-        ? colorScheme.background 
+const hoverStyle = !disabled && !isLoading ? {
+  backgroundColor: variant === "primary" 
+    ? colorScheme.accent 
+    : variant === "secondary" 
+      ? colorScheme.background 
+      : variant === "icon"
+        ? "transparent"
         : colorScheme.primary + "10",
-    transform: "translateY(-1px)",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  } : {};
+  transform: variant === "icon" ? "none" : "translateY(-1px)",
+  boxShadow: variant === "icon" ? "none" : "0 4px 6px rgba(0, 0, 0, 0.1)",
+} : {};
 
   const content = isLoading ? (
     <span

@@ -20,7 +20,7 @@ import { LocationSection } from '../components/Bookings/LocationInfo';
 import { TermsSection } from '../components/Bookings/TermsSubmit';
 import { DownloadSection } from '../components/util/Download';
 import { SEO } from '../components/util/SEO';
-import { color } from 'framer-motion';
+// import { color } from 'framer-motion';
 
 export const Bookings: React.FC = () => {
   const { colorScheme } = useTheme();
