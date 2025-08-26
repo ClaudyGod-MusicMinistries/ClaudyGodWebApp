@@ -1,26 +1,50 @@
 
 🎵 Claudy God Web App
+A modern, production-ready website built to boost the online presence of Gospel Artist Claudy God, featuring smooth animations, responsive design, and a clean UI/UX experience.
 
-| Feature                           | Description                                |
-| --------------------------------- | ------------------------------------------ |
-| ✅ Vite                            | Fast dev/build tool with instant HMR       |
-| ✅ React + TypeScript              | Scalable and type-safe                     |
-| ✅ Tailwind CSS                    | Utility-first styling                      |
-| ✅ GSAP                            | Smooth and powerful animations             |
-| ✅ React Hook Form + Yup           | Forms & validation                         |
-| ✅ TanStack Query (React Query)    | Data fetching, caching & syncing           |
-| ✅ React Redux                     | State Management                           |
-| ✅ React Router                    | Client-side routing                        |
-| ✅ Axios                           | API consumption with global config         |
-| ✅ Environment                     | Variables via `.env`                       |
-| ✅ Prettier                        | Maintain a clean codebase                  |
-| ✅ Simple-git-hooks                | Set up Git hooks                           |
-| ✅ Nano-staged                     | Run staged file commands before commit     |
-| ✅ Clsx                            | Join class names conditionally             |
-| ✅ Tailwind-Merge                  | Merge Tailwind classes & resolve conflicts |
-| ✅ Well-organized folder structure | Organized architecture                     |
-| ✅ ESM, HMR, PostCSS               | Vite-ready optimizations                   |
-| ✅ Deployment                      | Fully deployed on **Render**               |
+
+⚡ Features
+
+✅ Vite – Fast dev/build tool with instant HMR
+
+✅ React + TypeScript – Scalable and type-safe
+
+✅ Tailwind CSS – Utility-first styling
+
+✅ GSAP – Smooth and powerful animations
+
+✅ React Hook Form + Yup – Forms & validation
+
+✅ TanStack Query (React Query) – Data fetching, caching & syncing
+
+✅ React Redux – State Management
+
+✅ React Router – Client-side routing
+
+✅ Axios – API consumption with global config
+
+✅ Environment – Variables via .env
+
+✅ Prettier – Maintain a clean codebase
+
+✅ Simple-git-hooks – Set up Git hooks
+
+✅ Nano-staged – Run staged file commands before commit
+
+✅ Clsx – Join class names conditionally
+
+✅ Tailwind-Merge – Merge Tailwind classes & resolve conflicts
+
+✅ Well-organized folder structure
+
+✅ ESM, HMR, PostCSS – Vite-ready optimizations
+
+✅ Fully deployed on Render
+
+
+
+
+
 
 
 
