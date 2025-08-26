@@ -1,7 +1,6 @@
-
 🎵 Claudy God Web App
-A modern, production-ready website built to boost the online presence of Gospel Artist Claudy God, featuring smooth animations, responsive design, and a clean UI/UX experience.
 
+Claudy God Web App is a modern, production-ready website built to boost the online presence of Gospel Artist Claudy God.
 
 ⚡ Features
 
