@@ -239,7 +239,7 @@ export const ShopPreview: React.FC = () => {
             fontSize="16px"
             className="max-w-2xl mx-auto"
           >
-            Premium merchandise crafted for your everyday use.
+            Premium merchandise crafted for your everyday vse
           </LightText>
         </motion.div>
 
