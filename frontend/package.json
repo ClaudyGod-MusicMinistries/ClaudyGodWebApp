@@ -74,7 +74,7 @@
     "typescript-eslint": "^8.30.1",
     "vite": "^6.3.5"
   },
-  "nano-staged": {
+  "lint-staged": {
     "*.{js,jsx,ts,tsx,json,md}": [
       "prettier --write",
       "eslint --fix"
