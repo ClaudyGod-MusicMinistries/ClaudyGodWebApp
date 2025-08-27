@@ -1,5 +1,0 @@
-export default {
-  "*.ts": ["eslint --fix", "prettier --write"],
-  "*.js": ["eslint --fix", "prettier --write"],
-  "*.json": ["prettier --write"],
-};
