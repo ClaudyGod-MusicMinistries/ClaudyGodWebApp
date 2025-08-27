@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-# Run eslint and prettier on staged files
-npx eslint --fix $(git diff --name-only --cached --diff-filter=d | grep -E '\.(js|jsx|ts|tsx)$')
-npx prettier --write $(git diff --name-only --cached --diff-filter=d | grep -E '\.(js|jsx|ts|tsx|json|md)$')
