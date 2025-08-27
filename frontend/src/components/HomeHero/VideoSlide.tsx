@@ -4,7 +4,13 @@ import { textVariants } from '../data/HeroSlide';
 import { ExtraBoldText, RegularText } from '../ui/fonts/typography';
 import { useTheme } from '../../contexts/ThemeContext';
 
-export const VideoSlide = ({ slide }: { slide: HeroSlide }) => {
+interface VideoSlideProps {
+  slide: HeroSlide;
+  isMuted: boolean;
+  toggleMute: () => void;
+}
+
+export const VideoSlide = ({ slide, isMuted, toggleMute }: VideoSlideProps) => {
   const { colorScheme } = useTheme();
 
   return (
@@ -26,13 +32,22 @@ export const VideoSlide = ({ slide }: { slide: HeroSlide }) => {
       <RegularText
         fontSize="1.5rem"
         mdFontSize="2rem"
-        italic
-        bold
+      
         style={{ color: colorScheme.accent }}
         className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
       >
         {slide.content?.reference}
       </RegularText>
+
+      {/* Mute Toggle Button */}
+      {slide.videoUrl && (
+        <button
+          onClick={toggleMute}
+          className="mt-4 px-4 py-2 rounded bg-gray-800 text-white"
+        >
+          {isMuted ? 'Unmute' : 'Mute'}
+        </button>
+      )}
     </motion.div>
   );
 };

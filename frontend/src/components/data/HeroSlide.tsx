@@ -8,9 +8,9 @@ import {
   faPodcast
 } from '@fortawesome/free-solid-svg-icons';
 
-import { DesktopBg, Back3 , Resize4, Main} from '../../assets';
-import { bgVideo } from '../../assets';
-
+import { DesktopBg, Back3 , Resize4, Main } from '../../assets';
+// import { bgVideo } from '../../assets';
+import { Transition, Variants} from 'framer-motion';
 
 export interface HeroSlide {
   id: number;
@@ -41,22 +41,23 @@ export interface SlideContentProps {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const textVariants = {
+// Correctly typed textVariants
+export const textVariants: Variants = {
   hidden: { opacity: 0, y: 20, scale: 0.95 },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
     transition: {
-      type: 'spring',
+      type: 'spring',   // ✅ literal type
       stiffness: 120,
       damping: 10,
       duration: 0.5
-    }
+    } as Transition
   }
 };
 
-export const imageVariants = {
+export const imageVariants: Variants = {
   hidden: { scale: 1.1, opacity: 0 },
   visible: {
     scale: 1,
@@ -64,11 +65,11 @@ export const imageVariants = {
     transition: {
       duration: 1.2,
       ease: 'easeInOut'
-    }
+    } as Transition
   }
 };
 
-export const slideVariants = {
+export const slideVariants: Variants = {
   enter: (direction: number) => ({
     x: direction > 0 ? '100%' : '-100%',
     opacity: 0
@@ -76,32 +77,33 @@ export const slideVariants = {
   center: {
     x: 0,
     opacity: 1,
-    transition: { duration: 1.5, ease: 'easeInOut' }
+    transition: { duration: 1.5, ease: 'easeInOut' } as Transition
   },
   exit: (direction: number) => ({
     x: direction > 0 ? '-100%' : '100%',
     opacity: 0,
-    transition: { duration: 2.5, ease: 'easeInOut' }
+    transition: { duration: 2.5, ease: 'easeInOut' } as Transition
   })
 };
 
-export const modalVariants = {
-  hidden: { opacity: 0, scale:1.5 },
-  visible: { 
-    opacity: 1, 
+// Spring transition for modal
+const springTransition: Transition = {
+  type: 'spring', // ✅ literal string
+  damping: 25,
+  stiffness: 300
+};
+
+export const modalVariants: Variants = {
+  hidden: { opacity: 0, scale: 1.5 },
+  visible: {
+    opacity: 1,
     scale: 1,
-    transition: { 
-      type: 'spring', 
-      damping: 25, 
-      stiffness: 300 
-    }
+    transition: springTransition
   },
-  exit: { 
-    opacity: 0, 
+  exit: {
+    opacity: 0,
     scale: 0.8,
-    transition: { 
-      duration: 0.2 
-    } 
+    transition: { duration: 0.2 } as Transition
   }
 };
 
@@ -129,19 +131,19 @@ export const heroSlides: HeroSlide[] = [
     content: { 
       listenText: "Experience the Divine Melody",
       streamingPlatforms: [
-        { name: 'Spotify', icon: faMusic, url: 'https://open.spotify.com/album/2MY5xlrYfuvKXaYfdB5v2A?referral=labelaffiliate&utm_source=1101lBmnzTP8&utm_medium=Indie_CDBaby&utm_campaign=labelaffiliate' },
+        { name: 'Spotify', icon: faMusic, url: 'https://open.spotify.com/album/2MY5xlrYfuvKXaYfdB5v2A' },
         { name: 'Apple Music', icon: faPodcast, url: 'https://music.apple.com/ng/album/very-glorious/1789665669' },
-        { name: 'YouTube', icon: faVideo, url: 'https://youtube.com/@claudygodministries?si=6Ne99tTC48Ihv44s' },
+        { name: 'YouTube', icon: faVideo, url: 'https://youtube.com/@claudygodministries' },
         { name: 'Itunes', icon: faVideo, url: 'https://music.apple.com/ng/album/very-glorious/1789665669' },
         { name: 'Deezer', icon: faNewspaper, url: 'https://www.deezer.com/us/album/695949191' },
         { name: 'Pandora', icon: faNewspaper, url: 'https://found.ee/58RtlR' },
-        { name: 'Amazon', icon: faNewspaper, url: 'https://music.amazon.com/albums/B0DSM7QGLF?tag=fndcmpgns-20' },
+        { name: 'Amazon', icon: faNewspaper, url: 'https://music.amazon.com/albums/B0DSM7QGLF' }
       ]
     }
   },
   { 
-    id: 4, 
-    videoUrl: bgVideo, 
+ id: 2, 
+    imageUrl: Resize4, 
     type: 'video', 
     content: { 
       quote: 'Praise the Lord Most High', 

@@ -10,7 +10,7 @@ import {
   BoldText,
   LightText,
   ExtraBoldText,
-  ExtraLightText 
+ 
 } from '../ui/fonts/typography';
 import { useTheme } from '../../contexts/ThemeContext';
 import CustomButton from '../ui/fonts/buttons/CustomButton';

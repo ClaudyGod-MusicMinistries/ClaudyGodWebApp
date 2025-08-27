@@ -1,12 +1,13 @@
-
-import { useNavigate } from 'react-router-dom';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// import { useNavigate } from 'react-router-dom';
+import { Variants } from 'framer-motion';
 
 // Interfaces
 export interface HeroSlide {
   id: number;
   imageUrl?: string;
-  imageUrlMobile?: string; 
-  imageUrlDesktop?: string; 
+  imageUrlMobile?: string;
+  imageUrlDesktop?: string;
   videoUrl?: string;
   type: 'quote' | 'form' | 'streaming' | 'cta' | 'music' | 'video';
   content?: {
@@ -18,21 +19,8 @@ export interface HeroSlide {
   };
 }
 
-// interface TextVariantsProps {
-//   children: React.ReactNode;
-//   className?: string;
-// }
-
-// interface SlideContentProps {
-//   slide: HeroSlide;
-//   isMuted: boolean;
-//   toggleMute: () => void;
-//   navigate: ReturnType<typeof useNavigate>;
-//   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-// }
-
 // Animation Variants
-export const textVariants = {
+export const textVariants: Variants = {
   hidden: { opacity: 0, y: 20, scale: 0.95 },
   visible: {
     opacity: 1,
@@ -41,13 +29,13 @@ export const textVariants = {
     transition: {
       type: 'spring',
       stiffness: 120,
-      damping: 10,
-      duration: 0.5
+      damping: 10
+      // 🔥 removed duration, since spring ignores it
     }
   }
 };
 
-export const imageVariants = {
+export const imageVariants: Variants = {
   hidden: { scale: 1.1, opacity: 0 },
   visible: {
     scale: 1,
@@ -59,7 +47,7 @@ export const imageVariants = {
   }
 };
 
-export const slideVariants = {
+export const slideVariants: Variants = {
   enter: (direction: number) => ({
     x: direction > 0 ? '100%' : '-100%',
     opacity: 0
@@ -76,22 +64,22 @@ export const slideVariants = {
   })
 };
 
-export const modalVariants = {
+export const modalVariants: Variants = {
   hidden: { opacity: 0, scale: 0.8 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     scale: 1,
-    transition: { 
-      type: 'spring', 
-      damping: 25, 
-      stiffness: 300 
+    transition: {
+      type: 'spring',
+      damping: 25,
+      stiffness: 300
     }
   },
-  exit: { 
-    opacity: 0, 
+  exit: {
+    opacity: 0,
     scale: 0.8,
-    transition: { 
-      duration: 0.2 
-    } 
+    transition: {
+      duration: 0.2
+    }
   }
 };

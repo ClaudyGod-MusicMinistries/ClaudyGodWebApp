@@ -58,13 +58,13 @@ export const Hero = () => {
       <AnimatePresence initial={false} custom={direction}>
         {heroSlides.map((slide, index) => index === currentSlide && (
           <SlideContainer
-            key={slide.id}
-            slide={slide}
-            direction={direction}
-            isMuted={isMuted}
-            toggleMute={toggleMute}
-            videoRef={videoRef}
-          >
+  key={slide.id}
+  slide={slide}
+  direction={direction}
+  isMuted={isMuted}
+  toggleMute={toggleMute}
+  videoRef={videoRef as React.RefObject<HTMLVideoElement>}
+>
             {slide.type === 'quote' && <QuoteSlide slide={slide} />}
             {slide.type === 'cta' && <CtaSlide navigate={navigate} />}
             {slide.type === 'music' && (
