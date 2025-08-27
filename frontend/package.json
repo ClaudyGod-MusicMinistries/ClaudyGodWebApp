@@ -11,7 +11,8 @@
     "postbuild": "react-snap",
     "generate-sitemap": "node ./scripts/generateSitemap.js",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -67,19 +68,16 @@
     "husky": "^9.1.7",
     "nano-staged": "^0.8.0",
     "prettier": "^3.6.2",
-    "simple-git-hooks": "^2.13.1",
     "sitemap": "^8.0.0",
     "terser": "^5.43.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.30.1",
     "vite": "^6.3.5"
   },
-  "simple-git-hooks": {
-    "pre-commit": "npx nano-staged",
-    "pre-push": "npm run lint",
-    "preserveUnused": true
-  },
   "nano-staged": {
-    "*.{js,jsx,ts,tsx,json,md}": "prettier --write"
+    "*.{js,jsx,ts,tsx,json,md}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }
