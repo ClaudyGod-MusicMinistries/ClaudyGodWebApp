@@ -94,7 +94,7 @@ export const AudioMackComponent = () => {
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
                 {platforms.map((platform, idx) => (
-                  <CustomButton
+                  CustomButton
                     key={`platform-${idx}`}
                     variant="outline"
                     size="sm"
