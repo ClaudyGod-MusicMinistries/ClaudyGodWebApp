@@ -94,23 +94,23 @@ export const AudioMackComponent = () => {
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
                 {platforms.map((platform, idx) => (
-                  <CustomButton
-                    key={`platform-${idx}`}
-                    variant="outline"
-                    size="sm"
-                    fullWidth
-                    className="flex items-center justify-center p-2 md:p-3 bg-gray-50 border border-gray-200 rounded-lg"
-                    onClick={handleOpenModal}
-                  >
-                    <FontAwesomeIcon
-                      icon={platform.icon}
-                      color={platform.color}
-                      className="text-base md:text-lg"
-                    />
-                    <span className="ml-2 text-xs sm:text-sm md:text-base font-work-sans text-gray-700 truncate">
-                      {platform.name}
-                    </span>
-                  </CustomButton>
+                  // <CustomButton
+                  //   key={`platform-${idx}`}
+                  //   variant="outline"
+                  //   size="sm"
+                  //   fullWidth
+                  //   className="flex items-center justify-center p-2 md:p-3 bg-gray-50 border border-gray-200 rounded-lg"
+                  //   onClick={handleOpenModal}
+                  // >
+                  //   <FontAwesomeIcon
+                  //     icon={platform.icon}
+                  //     color={platform.color}
+                  //     className="text-base md:text-lg"
+                  //   />
+                  //   <span className="ml-2 text-xs sm:text-sm md:text-base font-work-sans text-gray-700 truncate">
+                  //     {platform.name}
+                  //   </span>
+                  // </CustomButton>
                 ))}
               </div>
             </div>
