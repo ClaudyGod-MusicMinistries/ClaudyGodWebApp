@@ -13,16 +13,16 @@ const CityTourModal = ({ city, isOpen, onClose }: CityTourModalProps) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted:', { name, email, city });
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setName('');
-      setEmail('');
-      onClose();
-    }, 3000);
-  };
+  //   e.preventDefault();
+  //   console.log('Form submitted:', { name, email, city });
+  //   setIsSubmitted(true);
+  //   setTimeout(() => {
+  //     setIsSubmitted(false);
+  //     setName('');
+  //     setEmail('');
+  //     onClose();
+  //   }, 3000);
+  // };
 
   if (!isOpen) return null;
 
