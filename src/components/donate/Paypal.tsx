@@ -327,9 +327,9 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
                 Payment Not Completed
               </Dialog.Title>
             </div>
-            <RegularText style={{ color: colorScheme.textSecondary }}>
+            {/* <RegularText style={{ color: colorScheme.textSecondary }}>
               You closed PayPal before finishing. Want to try again?
-            </RegularText>
+            </RegularText> */}
             <div className="mt-6 flex space-x-3">
               <button
                 className="flex-1 px-4 py-2 text-sm rounded-md"
