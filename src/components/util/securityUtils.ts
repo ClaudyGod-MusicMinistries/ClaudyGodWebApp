@@ -1,17 +1,23 @@
-
 export const TRUSTED_DOMAINS = [
   'spotify.com',
   'apple.com',
   'youtube.com',
   'deezer.com',
-  'amazon.com'
+  'amazon.com',
 ];
 
 export const SecurityUtils = {
   sanitizeUrl: (url: string) => {
     try {
       const parsedUrl = new URL(url);
-      const safeParams = ['si', 'referral', 'utm_source', 'utm_medium', 'utm_campaign', 'tag'];
+      const safeParams = [
+        'si',
+        'referral',
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'tag',
+      ];
       safeParams.forEach(param => parsedUrl.searchParams.delete(param));
       return parsedUrl.toString();
     } catch (error) {
@@ -27,5 +33,5 @@ export const SecurityUtils = {
     } catch (error) {
       return false;
     }
-  }
+  },
 };

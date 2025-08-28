@@ -1,20 +1,24 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { closeArticle } from '../../store/blogs';
-import { ExtraBoldText, RegularText, SemiBoldText } from '../ui/fonts/typography';
+import {
+  ExtraBoldText,
+  RegularText,
+  SemiBoldText,
+} from '../ui/fonts/typography';
 import CustomButton from '../ui/fonts/buttons/CustomButton';
 import { useTheme } from '../../contexts/ThemeContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faArrowLeft, 
-  faShareNodes, 
+import {
+  faArrowLeft,
+  faShareNodes,
   faEnvelope,
-  faXmark
+  faXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import { 
-  faTwitter, 
-  faFacebook, 
-  faLinkedin 
+import {
+  faTwitter,
+  faFacebook,
+  faLinkedin,
 } from '@fortawesome/free-brands-svg-icons';
 
 interface ArticleDetailProps {
@@ -78,8 +82,8 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ post }) => {
   };
 
   return (
-    <div 
-      className="fixed inset-0 z-50 overflow-y-auto" 
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto"
       style={{ backgroundColor: colorScheme.text }}
     >
       {/* Close button (top right) */}
@@ -91,8 +95,8 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ post }) => {
           className="p-2 rounded-full"
           style={{ backgroundColor: colorScheme.background + '40' }}
         >
-          <FontAwesomeIcon 
-            icon={faXmark} 
+          <FontAwesomeIcon
+            icon={faXmark}
             className="h-5 w-5"
             style={{ color: colorScheme.background }}
           />
@@ -107,12 +111,12 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ post }) => {
             onClick={() => dispatch(closeArticle())}
             className="inline-flex items-center"
           >
-            <FontAwesomeIcon 
-              icon={faArrowLeft} 
+            <FontAwesomeIcon
+              icon={faArrowLeft}
               className="h-4 w-4 mr-2"
               style={{ color: colorScheme.text }}
             />
-            <SemiBoldText fontSize='0.8rem' style={{ color: colorScheme.text }}>
+            <SemiBoldText fontSize="0.8rem" style={{ color: colorScheme.text }}>
               Back
             </SemiBoldText>
           </CustomButton>
@@ -120,7 +124,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ post }) => {
 
         {/* Article Header */}
         <div className="mb-10">
-          <ExtraBoldText 
+          <ExtraBoldText
             fontSize="2.5rem"
             lineHeight="1.2"
             className="mb-4"
@@ -128,22 +132,19 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ post }) => {
           >
             {post.title}
           </ExtraBoldText>
-          
+
           <div className="flex items-center mb-6">
-            <RegularText 
-              color={colorScheme.background}
-              className="mr-4"
-            >
+            <RegularText color={colorScheme.background} className="mr-4">
               {post.date}
             </RegularText>
-            
+
             <CustomButton
               variant="background"
               onClick={handleShare}
               className="inline-flex items-center"
             >
-              <FontAwesomeIcon 
-                icon={faShareNodes} 
+              <FontAwesomeIcon
+                icon={faShareNodes}
                 className="h-4 w-4 mr-2"
                 style={{ color: colorScheme.text }}
               />
@@ -155,37 +156,37 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ post }) => {
         </div>
 
         {/* Article Image */}
-        <div 
+        <div
           className="rounded-2xl overflow-hidden mb-10 shadow-lg"
           style={{ borderColor: colorScheme.border }}
         >
-          <img 
-            src={post.image} 
-            alt={post.title} 
+          <img
+            src={post.image}
+            alt={post.title}
             className="w-full h-96 object-cover"
           />
         </div>
 
         {/* Article Content */}
-        <div 
+        <div
           className="prose prose-lg max-w-none mb-12"
           style={{ color: colorScheme.background }}
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
 
         {/* Social Sharing */}
-        <div 
+        <div
           className="mt-16 pt-8 border-t"
           style={{ borderColor: colorScheme.border }}
         >
-          <SemiBoldText 
+          <SemiBoldText
             fontSize="1.125rem"
             className="mb-4"
             color={colorScheme.background}
           >
             Share this article
           </SemiBoldText>
-          
+
           <div className="flex space-x-4">
             <CustomButton
               variant="icon"
@@ -194,13 +195,13 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ post }) => {
               className="p-3 rounded-full"
               style={{ backgroundColor: colorScheme.background + '20' }}
             >
-              <FontAwesomeIcon 
-                icon={faTwitter} 
+              <FontAwesomeIcon
+                icon={faTwitter}
                 className="h-5 w-5"
                 style={{ color: colorScheme.background }}
               />
             </CustomButton>
-            
+
             <CustomButton
               variant="icon"
               onClick={shareOnFacebook}
@@ -208,13 +209,13 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ post }) => {
               className="p-3 rounded-full"
               style={{ backgroundColor: colorScheme.background + '20' }}
             >
-              <FontAwesomeIcon 
-                icon={faFacebook} 
+              <FontAwesomeIcon
+                icon={faFacebook}
                 className="h-5 w-5"
                 style={{ color: colorScheme.background }}
               />
             </CustomButton>
-            
+
             <CustomButton
               variant="icon"
               onClick={shareOnLinkedIn}
@@ -222,13 +223,13 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ post }) => {
               className="p-3 rounded-full"
               style={{ backgroundColor: colorScheme.background + '20' }}
             >
-              <FontAwesomeIcon 
-                icon={faLinkedin} 
+              <FontAwesomeIcon
+                icon={faLinkedin}
                 className="h-5 w-5"
                 style={{ color: colorScheme.background }}
               />
             </CustomButton>
-            
+
             <CustomButton
               variant="icon"
               onClick={shareViaEmail}
@@ -236,8 +237,8 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ post }) => {
               className="p-3 rounded-full"
               style={{ backgroundColor: colorScheme.background + '20' }}
             >
-              <FontAwesomeIcon 
-                icon={faEnvelope} 
+              <FontAwesomeIcon
+                icon={faEnvelope}
                 className="h-5 w-5"
                 style={{ color: colorScheme.background }}
               />

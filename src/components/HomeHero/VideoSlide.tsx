@@ -14,10 +14,7 @@ export const VideoSlide = ({ slide, isMuted, toggleMute }: VideoSlideProps) => {
   const { colorScheme } = useTheme();
 
   return (
-    <motion.div 
-      variants={textVariants}
-      className="max-w-3xl"
-    >
+    <motion.div variants={textVariants} className="max-w-3xl">
       {/* Main Quote */}
       <ExtraBoldText
         fontSize="3rem"
@@ -32,7 +29,6 @@ export const VideoSlide = ({ slide, isMuted, toggleMute }: VideoSlideProps) => {
       <RegularText
         fontSize="1.5rem"
         mdFontSize="2rem"
-      
         style={{ color: colorScheme.accent }}
         className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
       >

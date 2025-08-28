@@ -3,18 +3,18 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faShoppingCart, 
-  faPlus, 
-  faMinus, 
+import {
+  faShoppingCart,
+  faPlus,
+  faMinus,
   faTimes,
-  faArrowLeft
+  faArrowLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   useCartStore,
   selectCartItems,
   selectCartTotal,
-  selectCartCount
+  selectCartCount,
 } from '../../contexts/Cartcontext';
 
 interface CartProps {
@@ -23,14 +23,18 @@ interface CartProps {
   isModal?: boolean;
 }
 
-export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal = false }) => {
+export const CartPage: React.FC<CartProps> = ({
+  isOpen = true,
+  onClose,
+  isModal = false,
+}) => {
   // Use selectors to get reactive data
-  const items     = useCartStore(selectCartItems);
-  const subtotal  = useCartStore(selectCartTotal);
+  const items = useCartStore(selectCartItems);
+  const subtotal = useCartStore(selectCartTotal);
   const itemCount = useCartStore(selectCartCount);
-  const removeItem     = useCartStore(state => state.removeItem);
+  const removeItem = useCartStore(state => state.removeItem);
   const updateQuantity = useCartStore(state => state.updateQuantity);
-  const clearCart      = useCartStore(state => state.clearCart);
+  const clearCart = useCartStore(state => state.clearCart);
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
@@ -48,19 +52,22 @@ export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal 
     };
   }, [isModal, isOpen]);
 
-
   const orderTotal = subtotal;
 
   const renderEmptyCart = () => (
     <div className="text-center py-8 px-4">
       <div className="bg-white rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6 shadow-lg">
-        <FontAwesomeIcon icon={faShoppingCart} className="h-12 w-12 text-gray-400" />
+        <FontAwesomeIcon
+          icon={faShoppingCart}
+          className="h-12 w-12 text-gray-400"
+        />
       </div>
       <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
         Your {isModal ? 'Cart' : 'Shopping Cart'} is Empty
       </h1>
       <p className="text-gray-600 mb-8 max-w-md mx-auto">
-        Looks like you haven't added any items yet. Start shopping to fill it up!
+        Looks like you haven't added any items yet. Start shopping to fill it
+        up!
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <button
@@ -82,7 +89,7 @@ export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal 
 
   const renderCartItems = () => (
     <div className="space-y-4">
-      {items.map((item) => (
+      {items.map(item => (
         <motion.div
           key={item.id}
           initial={{ opacity: 0, x: -20 }}
@@ -100,8 +107,12 @@ export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal 
           <div className="flex-1 min-w-0">
             <div className="flex justify-between gap-2">
               <div>
-                <h3 className="font-medium text-gray-900 line-clamp-2">{item.name}</h3>
-                <p className="text-sm text-gray-500 capitalize mt-1">{item.category}</p>
+                <h3 className="font-medium text-gray-900 line-clamp-2">
+                  {item.name}
+                </h3>
+                <p className="text-sm text-gray-500 capitalize mt-1">
+                  {item.category}
+                </p>
               </div>
               <button
                 onClick={() => removeItem(item.id)}
@@ -114,13 +125,17 @@ export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal 
             <div className="flex flex-wrap justify-between items-center mt-4 gap-4">
               <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
                 <button
-                  onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                  onClick={() =>
+                    updateQuantity(item.id, Math.max(1, item.quantity - 1))
+                  }
                   className="p-2 hover:bg-gray-50 transition-colors duration-200"
                   disabled={item.quantity <= 1}
                 >
                   <FontAwesomeIcon icon={faMinus} className="h-4 w-4" />
                 </button>
-                <span className="px-4 py-2 text-center min-w-[2rem] font-medium">{item.quantity}</span>
+                <span className="px-4 py-2 text-center min-w-[2rem] font-medium">
+                  {item.quantity}
+                </span>
                 <button
                   onClick={() => updateQuantity(item.id, item.quantity + 1)}
                   className="p-2 hover:bg-gray-50 transition-colors duration-200"
@@ -129,8 +144,12 @@ export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal 
                 </button>
               </div>
               <div className="text-right">
-                <p className="text-lg font-bold text-purple-900">${(item.price * item.quantity).toFixed(2)}</p>
-                <p className="text-sm text-gray-500">${item.price.toFixed(2)} each</p>
+                <p className="text-lg font-bold text-purple-900">
+                  ${(item.price * item.quantity).toFixed(2)}
+                </p>
+                <p className="text-sm text-gray-500">
+                  ${item.price.toFixed(2)} each
+                </p>
               </div>
             </div>
           </div>
@@ -141,7 +160,9 @@ export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal 
 
   const renderOrderSummary = () => (
     <div className="border-t border-gray-200 pt-6 mt-6">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Order Summary</h2>
+      <h2 className="text-lg font-semibold text-gray-900 mb-4">
+        Order Summary
+      </h2>
       <div className="space-y-3 mb-6">
         <div className="flex justify-between text-base">
           <span className="text-gray-600">Subtotal ({itemCount} items)</span>
@@ -151,7 +172,7 @@ export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal 
           <span className="text-gray-600">Shipping</span>
           <span className="font-medium text-green-600">Free</span>
         </div>
-        
+
         <div className="border-t border-gray-200 pt-3">
           <div className="flex justify-between text-lg font-bold">
             <span>Total</span>
@@ -214,10 +235,10 @@ export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal 
             >
               <div className="p-4 flex justify-between items-center border-b sticky top-0 bg-white z-10">
                 <h2 className="text-xl font-semibold flex items-center">
-                  <FontAwesomeIcon icon={faShoppingCart} className="mr-2" /> 
+                  <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />
                   Shopping Cart ({itemCount})
                 </h2>
-                <button 
+                <button
                   onClick={onClose}
                   className="text-gray-500 hover:text-gray-700 p-2"
                 >
@@ -244,15 +265,17 @@ export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal 
     <>
       <Helmet>
         <title>
-          {items.length > 0 
-            ? `Shopping Cart (${itemCount} items) - ClaudyGod Store` 
+          {items.length > 0
+            ? `Shopping Cart (${itemCount} items) - ClaudyGod Store`
             : 'Shopping Cart - ClaudyGod Store'}
         </title>
-        <meta 
-          name="description" 
-          content={items.length > 0 
-            ? `Review your ${itemCount} selected faith-inspired products before checkout. Total: $${orderTotal.toFixed(2)}` 
-            : "Your shopping cart is empty. Browse our collection of faith-inspired products and Christian merchandise."} 
+        <meta
+          name="description"
+          content={
+            items.length > 0
+              ? `Review your ${itemCount} selected faith-inspired products before checkout. Total: $${orderTotal.toFixed(2)}`
+              : 'Your shopping cart is empty. Browse our collection of faith-inspired products and Christian merchandise.'
+          }
         />
       </Helmet>
 
@@ -265,7 +288,9 @@ export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal 
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="text-3xl md:text-4xl font-bold mb-4">Shopping Cart</h1>
+              <h1 className="text-3xl md:text-4xl font-bold mb-4">
+                Shopping Cart
+              </h1>
               <div className="w-20 h-1 bg-yellow-400 mb-4"></div>
               <p className="text-xl text-purple-100">
                 {itemCount} {itemCount === 1 ? 'item' : 'items'} in your cart
@@ -290,12 +315,12 @@ export const CartPage: React.FC<CartProps> = ({ isOpen = true, onClose, isModal 
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-xl shadow-sm overflow-hidden">
                   <div className="p-6 border-b border-gray-200">
-                    <h2 className="text-xl font-semibold text-gray-900">Order Items</h2>
+                    <h2 className="text-xl font-semibold text-gray-900">
+                      Order Items
+                    </h2>
                   </div>
                   <div className="divide-y divide-gray-200">
-                    <AnimatePresence>
-                      {renderCartItems()}
-                    </AnimatePresence>
+                    <AnimatePresence>{renderCartItems()}</AnimatePresence>
                   </div>
                 </div>
               </div>

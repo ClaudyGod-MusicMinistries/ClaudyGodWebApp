@@ -1,10 +1,14 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
-import { BoldText, ExtraBoldText} from '../ui/fonts/typography';
+import { BoldText, ExtraBoldText } from '../ui/fonts/typography';
 import CustomButton from '../ui/fonts/buttons/CustomButton';
 
-export const CtaSlide = ({ navigate }: { navigate: ReturnType<typeof useNavigate> }) => {
+export const CtaSlide = ({
+  navigate,
+}: {
+  navigate: ReturnType<typeof useNavigate>;
+}) => {
   const { colorScheme } = useTheme();
 
   return (
@@ -21,7 +25,7 @@ export const CtaSlide = ({ navigate }: { navigate: ReturnType<typeof useNavigate
         >
           Want to Bring
         </ExtraBoldText>
-        
+
         <ExtraBoldText
           fontSize="2rem"
           smFontSize="1.5rem"
@@ -32,7 +36,7 @@ export const CtaSlide = ({ navigate }: { navigate: ReturnType<typeof useNavigate
         >
           ClaudyGod Live
         </ExtraBoldText>
-        
+
         <ExtraBoldText
           fontSize="2.5rem"
           smFontSize="1.5rem"
@@ -58,7 +62,8 @@ export const CtaSlide = ({ navigate }: { navigate: ReturnType<typeof useNavigate
             style={{ color: colorScheme.textSecondary }}
             className="leading-snug max-w-md drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] text-left"
           >
-            Book ClaudyGod for an unforgettable worship experience that will transform your event and touch hearts.
+            Book ClaudyGod for an unforgettable worship experience that will
+            transform your event and touch hearts.
           </BoldText>
         </motion.div>
 
@@ -69,9 +74,9 @@ export const CtaSlide = ({ navigate }: { navigate: ReturnType<typeof useNavigate
             size="lg"
             fullWidth
             className="shadow-lg py-3 text-base font-bold"
-            style={{ 
+            style={{
               backgroundColor: colorScheme.primary,
-              color: colorScheme.buttonText || '#fff'
+              color: colorScheme.buttonText || '#fff',
             }}
           >
             Contact Us
@@ -85,7 +90,8 @@ export const CtaSlide = ({ navigate }: { navigate: ReturnType<typeof useNavigate
             style={{ color: colorScheme.textSecondary }}
             className="leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
           >
-            Available for concerts, worship nights, church events, and special gatherings.
+            Available for concerts, worship nights, church events, and special
+            gatherings.
           </BoldText>
         </motion.div>
       </div>
@@ -102,7 +108,8 @@ export const CtaSlide = ({ navigate }: { navigate: ReturnType<typeof useNavigate
               style={{ color: colorScheme.textSecondary }}
               className="leading-relaxed max-w-4xl ml-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
             >
-              Book ClaudyGod for an unforgettable worship experience that will transform your event and touch hearts.
+              Book ClaudyGod for an unforgettable worship experience that will
+              transform your event and touch hearts.
             </BoldText>
           </motion.div>
 
@@ -112,24 +119,24 @@ export const CtaSlide = ({ navigate }: { navigate: ReturnType<typeof useNavigate
               className="w-20 md:w-24 lg:w-32 h-2 rounded-full"
               style={{ backgroundColor: colorScheme.heading }}
             ></div>
-            
+
             <motion.div className="relative group">
               <CustomButton
                 onClick={() => navigate('/bookings')}
                 variant="primary"
                 size="xl"
-                whileHover={{ 
-                  scale: 1.05, 
-                  boxShadow: `0px 4px 30px ${colorScheme.primary}66`
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: `0px 4px 30px ${colorScheme.primary}66`,
                 }}
-                whileTap={{ 
+                whileTap={{
                   scale: 0.95,
                   backgroundColor: colorScheme.buttonActive,
                 }}
                 className="shadow-xl relative overflow-hidden px-8 py-4 font-bold"
                 style={{
                   backgroundColor: colorScheme.primary,
-                  color: colorScheme.buttonText || '#fff'
+                  color: colorScheme.buttonText || '#fff',
                 }}
               >
                 <motion.span
@@ -138,13 +145,15 @@ export const CtaSlide = ({ navigate }: { navigate: ReturnType<typeof useNavigate
                   whileTap={{
                     opacity: 1,
                     scale: 2,
-                    transition: { duration: 0.6 }
+                    transition: { duration: 0.6 },
                   }}
                 />
-                <span className="relative z-10 text-lg md:text-xl lg:text-2xl">Contact Us</span>
+                <span className="relative z-10 text-lg md:text-xl lg:text-2xl">
+                  Contact Us
+                </span>
               </CustomButton>
             </motion.div>
-            
+
             <BoldText
               fontSize="1.25rem"
               mdFontSize="1.5rem"
@@ -165,7 +174,8 @@ export const CtaSlide = ({ navigate }: { navigate: ReturnType<typeof useNavigate
               style={{ color: colorScheme.textSecondary }}
               className="leading-relaxed max-w-4xl ml-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
             >
-              Available for concerts, worship nights, church events, and special gatherings.
+              Available for concerts, worship nights, church events, and special
+              gatherings.
             </BoldText>
           </motion.div>
         </div>

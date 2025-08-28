@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { subscribeToNewsletter } from '../../components/api/subscriber';
 import { motion } from 'framer-motion';
-import { 
-  
+import {
   BoldText,
   LightText,
   ExtraBoldText,
@@ -12,7 +11,12 @@ import {
 import { useTheme } from '../../contexts/ThemeContext';
 import CustomButton from '../ui/fonts/buttons/CustomButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faEnvelope, faCheckCircle, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import {
+  faUser,
+  faEnvelope,
+  faCheckCircle,
+  faCircleExclamation,
+} from '@fortawesome/free-solid-svg-icons';
 
 type FormData = {
   name: string;
@@ -24,12 +28,12 @@ export const NewsletterForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
-  
-  const { 
-    register, 
-    handleSubmit, 
+
+  const {
+    register,
+    handleSubmit,
     reset,
-    formState: { errors, isValid }
+    formState: { errors, isValid },
   } = useForm<FormData>({ mode: 'onChange' });
 
   useEffect(() => {
@@ -42,64 +46,68 @@ export const NewsletterForm: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
       await subscribeToNewsletter(data);
       reset();
       setIsSuccess(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An unexpected error occurred. Please try again later.');
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'An unexpected error occurred. Please try again later.'
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="mt-20 mb-20 w-full max-w-4xl mx-auto px-4"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
     >
-      <div 
+      <div
         className="rounded-xl shadow-lg overflow-hidden"
         style={{
           backgroundColor: colorScheme.text,
           borderColor: colorScheme.gray[200],
           borderRadius: colorScheme.borderRadius.xlarge,
-          borderWidth: '1px'
+          borderWidth: '1px',
         }}
       >
         <div className="p-8 sm:p-10 md:p-12">
-          <motion.div 
+          <motion.div
             className="text-center mb-10"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            <div 
+            <div
               className="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6 mx-auto"
-              style={{ 
+              style={{
                 backgroundColor: colorScheme.gray[200],
-                boxShadow: `0 4px 20px ${colorScheme.accent}20`
+                boxShadow: `0 4px 20px ${colorScheme.accent}20`,
               }}
             >
-              <FontAwesomeIcon 
-                icon={faEnvelope} 
+              <FontAwesomeIcon
+                icon={faEnvelope}
                 className="h-9 w-9"
                 style={{ color: colorScheme.accent }}
                 fontSize="25px"
               />
             </div>
-            <ExtraBoldText 
+            <ExtraBoldText
               fontSize="42px"
               className="mb-4"
               style={{ color: colorScheme.primary }}
             >
               Stay Updated
             </ExtraBoldText>
-            <LightText 
+            <LightText
               fontSize="18px"
               style={{ color: colorScheme.gray[600] }}
               className="max-w-md mx-auto leading-relaxed"
@@ -107,12 +115,12 @@ export const NewsletterForm: React.FC = () => {
               Subscribe to our newsletter for the latest news and updates
             </LightText>
           </motion.div>
-          
+
           <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
             <div className="space-y-5 mb-8">
               {/* Name Input */}
               <div>
-                <SemiBoldText 
+                <SemiBoldText
                   fontSize="1rem"
                   style={{ color: colorScheme.background }}
                   className="mb-2 block"
@@ -120,7 +128,7 @@ export const NewsletterForm: React.FC = () => {
                   Your Name
                 </SemiBoldText>
                 <div className="relative">
-                  <div 
+                  <div
                     className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
                     style={{ color: colorScheme.gray[400] }}
                   >
@@ -130,23 +138,25 @@ export const NewsletterForm: React.FC = () => {
                     id="name"
                     className="w-full pl-12 pr-4 py-3.5 border rounded-lg focus:outline-none focus:ring-2"
                     style={{
-                      borderColor: errors.name ? colorScheme.error : colorScheme.gray[300],
+                      borderColor: errors.name
+                        ? colorScheme.error
+                        : colorScheme.gray[300],
                       backgroundColor: colorScheme.white,
                       color: colorScheme.primary,
                       borderRadius: colorScheme.borderRadius.medium,
-                      outlineColor: colorScheme.accent
+                      outlineColor: colorScheme.accent,
                     }}
                     placeholder="John Doe"
-                    {...register('name', { 
+                    {...register('name', {
                       required: 'Name is required',
                       minLength: {
                         value: 2,
-                        message: 'Name must be at least 2 characters'
+                        message: 'Name must be at least 2 characters',
                       },
                       maxLength: {
                         value: 50,
-                        message: 'Name cannot exceed 50 characters'
-                      }
+                        message: 'Name cannot exceed 50 characters',
+                      },
                     })}
                   />
                 </div>
@@ -156,12 +166,15 @@ export const NewsletterForm: React.FC = () => {
                     style={{ color: colorScheme.error }}
                     className="mt-2 flex items-center pl-1"
                   >
-                    <FontAwesomeIcon icon={faCircleExclamation} className="h-4 w-4 mr-2" />
+                    <FontAwesomeIcon
+                      icon={faCircleExclamation}
+                      className="h-4 w-4 mr-2"
+                    />
                     {errors.name.message}
                   </LightText>
                 )}
               </div>
-              
+
               {/* Email Input */}
               <div>
                 <SemiBoldText
@@ -172,7 +185,7 @@ export const NewsletterForm: React.FC = () => {
                   Email Address
                 </SemiBoldText>
                 <div className="relative">
-                  <div 
+                  <div
                     className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
                     style={{ color: colorScheme.gray[400] }}
                   >
@@ -183,29 +196,34 @@ export const NewsletterForm: React.FC = () => {
                     type="email"
                     className="w-full pl-12 pr-4 py-3.5 border rounded-lg focus:outline-none focus:ring-2"
                     style={{
-                      borderColor: errors.email ? colorScheme.error : colorScheme.gray[300],
+                      borderColor: errors.email
+                        ? colorScheme.error
+                        : colorScheme.gray[300],
                       backgroundColor: colorScheme.white,
                       color: colorScheme.primary,
                       borderRadius: colorScheme.borderRadius.medium,
-                      outlineColor: colorScheme.accent
+                      outlineColor: colorScheme.accent,
                     }}
                     placeholder="your.email@example.com"
-                    {...register('email', { 
+                    {...register('email', {
                       required: 'Email is required',
                       pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: 'Invalid email address'
-                      }
+                        message: 'Invalid email address',
+                      },
                     })}
                   />
                 </div>
                 {errors.email && (
-                  <LightText 
+                  <LightText
                     fontSize="9px"
                     style={{ color: colorScheme.error }}
                     className="mt-2 flex items-center pl-1"
                   >
-                    <FontAwesomeIcon icon={faCircleExclamation} className="h-4 w-4 mr-2" />
+                    <FontAwesomeIcon
+                      icon={faCircleExclamation}
+                      className="h-4 w-4 mr-2"
+                    />
                     {errors.email.message}
                   </LightText>
                 )}
@@ -214,7 +232,7 @@ export const NewsletterForm: React.FC = () => {
 
             {/* Error Message */}
             {error && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="mb-6 p-4 rounded-lg flex items-start"
@@ -223,17 +241,20 @@ export const NewsletterForm: React.FC = () => {
                   borderColor: `${colorScheme.error}20`,
                   color: colorScheme.error,
                   borderRadius: colorScheme.borderRadius.medium,
-                  borderWidth: '1px'
+                  borderWidth: '1px',
                 }}
               >
-                <FontAwesomeIcon icon={faCircleExclamation} className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
+                <FontAwesomeIcon
+                  icon={faCircleExclamation}
+                  className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0"
+                />
                 <span>{error}</span>
               </motion.div>
             )}
-            
+
             {/* Success Message */}
             {isSuccess && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="mb-6 p-4 rounded-lg flex items-start"
@@ -242,11 +263,16 @@ export const NewsletterForm: React.FC = () => {
                   borderColor: `${colorScheme.success}20`,
                   color: colorScheme.success,
                   borderRadius: colorScheme.borderRadius.medium,
-                  borderWidth: '1px'
+                  borderWidth: '1px',
                 }}
               >
-                <FontAwesomeIcon icon={faCheckCircle} className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
-                <span>Thank you for subscribing! You'll receive updates soon.</span>
+                <FontAwesomeIcon
+                  icon={faCheckCircle}
+                  className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0"
+                />
+                <span>
+                  Thank you for subscribing! You'll receive updates soon.
+                </span>
               </motion.div>
             )}
 
@@ -263,13 +289,15 @@ export const NewsletterForm: React.FC = () => {
                 style={{
                   backgroundColor: colorScheme.button,
                   color: colorScheme.buttonText,
-                  borderRadius: colorScheme.borderRadius.large
+                  borderRadius: colorScheme.borderRadius.large,
                 }}
               >
-                <BoldText>{isLoading ? 'Processing...' : 'Subscribe Now'}</BoldText>
+                <BoldText>
+                  {isLoading ? 'Processing...' : 'Subscribe Now'}
+                </BoldText>
               </CustomButton>
-              
-              <LightText 
+
+              <LightText
                 fontSize="13px"
                 style={{ color: colorScheme.gray[500] }}
                 className="mt-5"

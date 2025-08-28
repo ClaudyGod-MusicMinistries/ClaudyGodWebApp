@@ -21,7 +21,7 @@ export const TourCityModal = ({
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -133,7 +133,9 @@ export const TourCityModal = ({
                   type="submit"
                   disabled={loading}
                   className={`w-full py-2.5 md:py-3.5 bg-gradient-to-r from-purple-800 to-purple-600 text-white rounded-lg shadow-lg transition-all font-medium text-sm md:text-base ${
-                    loading ? 'opacity-70 cursor-not-allowed' : 'hover:opacity-90'
+                    loading
+                      ? 'opacity-70 cursor-not-allowed'
+                      : 'hover:opacity-90'
                   }`}
                 >
                   {loading ? 'Submitting...' : 'Submit Registration'}

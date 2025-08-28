@@ -12,7 +12,6 @@ import { CtaSlide } from './CtaSlide';
 import { MusicSlide } from './MusicSlide';
 import { VideoSlide } from './VideoSlide';
 
-
 export const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -49,36 +48,39 @@ export const Hero = () => {
 
   return (
     <section className="relative h-[100vh] md:h-[120vh] w-full overflow-hidden">
-      <StreamingPlatformsModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        platforms={heroSlides[2].content?.streamingPlatforms} 
+      <StreamingPlatformsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        platforms={heroSlides[2].content?.streamingPlatforms}
       />
 
       <AnimatePresence initial={false} custom={direction}>
-        {heroSlides.map((slide, index) => index === currentSlide && (
-          <SlideContainer
-  key={slide.id}
-  slide={slide}
-  direction={direction}
-  isMuted={isMuted}
-  toggleMute={toggleMute}
-  videoRef={videoRef as React.RefObject<HTMLVideoElement>}
->
-            {slide.type === 'quote' && <QuoteSlide slide={slide} />}
-            {slide.type === 'cta' && <CtaSlide navigate={navigate} />}
-            {slide.type === 'music' && (
-              <MusicSlide slide={slide} setIsModalOpen={setIsModalOpen} />
-            )}
-            {slide.type === 'video' && <VideoSlide slide={slide} />}
-          </SlideContainer>
-        ))}
+        {heroSlides.map(
+          (slide, index) =>
+            index === currentSlide && (
+              <SlideContainer
+                key={slide.id}
+                slide={slide}
+                direction={direction}
+                isMuted={isMuted}
+                toggleMute={toggleMute}
+                videoRef={videoRef as React.RefObject<HTMLVideoElement>}
+              >
+                {slide.type === 'quote' && <QuoteSlide slide={slide} />}
+                {slide.type === 'cta' && <CtaSlide navigate={navigate} />}
+                {slide.type === 'music' && (
+                  <MusicSlide slide={slide} setIsModalOpen={setIsModalOpen} />
+                )}
+                {slide.type === 'video' && <VideoSlide slide={slide} />}
+              </SlideContainer>
+            )
+        )}
       </AnimatePresence>
 
-      <PaginationDots 
-        currentSlide={currentSlide} 
-        totalSlides={heroSlides.length} 
-        goToSlide={goToSlide} 
+      <PaginationDots
+        currentSlide={currentSlide}
+        totalSlides={heroSlides.length}
+        goToSlide={goToSlide}
       />
     </section>
   );

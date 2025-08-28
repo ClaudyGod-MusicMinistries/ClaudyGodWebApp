@@ -8,12 +8,12 @@ interface LazyImageProps {
   height?: number | string;
 }
 
-export const LazyImage = ({ 
-  src, 
-  alt, 
-  className = '', 
-  width = '100%', 
-  height = 'auto' 
+export const LazyImage = ({
+  src,
+  alt,
+  className = '',
+  width = '100%',
+  height = 'auto',
 }: LazyImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -29,20 +29,23 @@ export const LazyImage = ({
     const imgElement = imgRef.current;
 
     // Intersection Observer for lazy loading
-    observerRef.current = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !isLoaded && !error) {
-          const img = new Image();
-          img.src = src;
-          img.onload = handleLoad;
-          img.onerror = handleError;
-          observerRef.current?.disconnect();
-        }
-      });
-    }, {
-      rootMargin: '200px',
-      threshold: 0.01
-    });
+    observerRef.current = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !isLoaded && !error) {
+            const img = new Image();
+            img.src = src;
+            img.onload = handleLoad;
+            img.onerror = handleError;
+            observerRef.current?.disconnect();
+          }
+        });
+      },
+      {
+        rootMargin: '200px',
+        threshold: 0.01,
+      }
+    );
 
     observerRef.current.observe(imgElement);
 
@@ -52,19 +55,22 @@ export const LazyImage = ({
   }, [src, isLoaded, error]);
 
   return (
-    <div className={`lazy-image-container ${className}`} style={{ width, height }}>
+    <div
+      className={`lazy-image-container ${className}`}
+      style={{ width, height }}
+    >
       {!isLoaded && !error && (
         <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-full flex items-center justify-center">
           <span className="text-gray-500 text-sm">Loading...</span>
         </div>
       )}
-      
+
       {error && (
         <div className="bg-red-100 border-2 border-dashed border-red-300 rounded-xl w-full h-full flex items-center justify-center">
           <span className="text-red-500 text-sm">Image failed to load</span>
         </div>
       )}
-      
+
       <img
         ref={imgRef}
         src={isLoaded ? src : ''}

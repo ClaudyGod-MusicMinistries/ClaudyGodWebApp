@@ -15,7 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    
+
     // Your custom paths
     "baseUrl": "src",
     "paths": {
@@ -26,11 +26,6 @@
       "@assets/*": ["assets/*"]
     }
   },
-  "references": [
-    { "path": "./tsconfig.node.json" }
-  ],
-  "include": [
-    "src",
-    "types.d.ts"
-  ]
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "include": ["src", "types.d.ts"]
 }

@@ -28,14 +28,15 @@ const interviewsSlice = createSlice({
       state.currentVideo = action.payload;
       state.showPlayer = true;
     },
-    closePlayer: (state) => {
+    closePlayer: state => {
       state.showPlayer = false;
     },
-    togglePlayer: (state) => {
+    togglePlayer: state => {
       state.showPlayer = !state.showPlayer;
-    }
-  }
+    },
+  },
 });
 
-export const { setCurrentVideo, closePlayer, togglePlayer } = interviewsSlice.actions;
+export const { setCurrentVideo, closePlayer, togglePlayer } =
+  interviewsSlice.actions;
 export default interviewsSlice.reducer;

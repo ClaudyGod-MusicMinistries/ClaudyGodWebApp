@@ -1,11 +1,14 @@
 import { CountryCode } from '../types/booking';
 
-export const COUNTRY_STATE_CITY_DATA: Record<CountryCode, {
-  phonePattern: RegExp;
-  states: Record<string, string[]>;
-}> = {
+export const COUNTRY_STATE_CITY_DATA: Record<
+  CountryCode,
+  {
+    phonePattern: RegExp;
+    states: Record<string, string[]>;
+  }
+> = {
   US: {
-    phonePattern: /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/,  
+    phonePattern: /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/,
     states: {
       Alabama: ['Birmingham', 'Montgomery'],
       Alaska: ['Anchorage', 'Juneau'],
@@ -56,35 +59,35 @@ export const COUNTRY_STATE_CITY_DATA: Record<CountryCode, {
       Washington: ['Seattle', 'Spokane'],
       'West Virginia': ['Charleston'],
       Wisconsin: ['Milwaukee', 'Madison'],
-      Wyoming: ['Cheyenne']
-    }
+      Wyoming: ['Cheyenne'],
+    },
   },
   CA: {
-    phonePattern: /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/,  
+    phonePattern: /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/,
     states: {
       Alberta: ['Calgary', 'Edmonton'],
       BritishColumbia: ['Vancouver', 'Victoria'],
       Manitoba: ['Winnipeg'],
       'New Brunswick': ['Fredericton'],
-      'Newfoundland and Labrador': ['St. John\'s'],
+      'Newfoundland and Labrador': ["St. John's"],
       'Nova Scotia': ['Halifax'],
       Ontario: ['Toronto', 'Ottawa', 'Mississauga'],
       'Prince Edward Island': ['Charlottetown'],
       Quebec: ['Montreal', 'Quebec City', 'Laval'],
-      Saskatchewan: ['Regina', 'Saskatoon']
-    }
+      Saskatchewan: ['Regina', 'Saskatoon'],
+    },
   },
   UK: {
-    phonePattern: /^(?:\+44\s?7\d{3}|07\d{3})\s?\d{3}\s?\d{3}$/,  
+    phonePattern: /^(?:\+44\s?7\d{3}|07\d{3})\s?\d{3}\s?\d{3}$/,
     states: {
       England: ['London', 'Manchester', 'Birmingham', 'Liverpool'],
       Scotland: ['Edinburgh', 'Glasgow', 'Aberdeen'],
       Wales: ['Cardiff', 'Swansea', 'Newport'],
-      'Northern Ireland': ['Belfast', 'Derry']
-    }
+      'Northern Ireland': ['Belfast', 'Derry'],
+    },
   },
   NG: {
-    phonePattern: /^(?:\+234|0)[7-9][01]\d{8}$/,  
+    phonePattern: /^(?:\+234|0)[7-9][01]\d{8}$/,
     states: {
       Abia: ['Umuahia', 'Aba'],
       Adamawa: ['Yola'],
@@ -122,19 +125,29 @@ export const COUNTRY_STATE_CITY_DATA: Record<CountryCode, {
       Taraba: ['Jalingo'],
       Yobe: ['Damaturu'],
       Zamfara: ['Gusau'],
-      FCT: ['Abuja City', 'Garki']
-    }
-  }
+      FCT: ['Abuja City', 'Garki'],
+    },
+  },
 };
 
 export const ZIP_CODE_PATTERNS: Record<CountryCode, RegExp> = {
   US: /^\d{5}(?:[-\s]\d{4})?$/,
   CA: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/,
   UK: /^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/,
-  NG: /^\d{6}$/
+  NG: /^\d{6}$/,
 };
 
 export const MONTHS = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];

@@ -4,13 +4,17 @@ import Slider from 'react-slick';
 import { motion } from 'framer-motion';
 import { Shop1, Shop2, Shop3, Shop4 } from '../../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingBag, faChevronLeft, faChevronRight, faStar } from '@fortawesome/free-solid-svg-icons';
-import { 
+import {
+  faShoppingBag,
+  faChevronLeft,
+  faChevronRight,
+  faStar,
+} from '@fortawesome/free-solid-svg-icons';
+import {
   SemiBoldText,
   BoldText,
   LightText,
   ExtraBoldText,
- 
 } from '../ui/fonts/typography';
 import { useTheme } from '../../contexts/ThemeContext';
 import CustomButton from '../ui/fonts/buttons/CustomButton';
@@ -27,13 +31,48 @@ interface ProductProps {
 }
 
 const products: ProductProps[] = [
-  { id: '1', name: 'ClaudyGod Premium T-Shirt', price: 25, Desc: 'Premium Cotton', imageUrl: Shop3, rating: 4.8 },
-  { id: '2', name: 'Savior is Born, Jesus his Here Mug', price: 5, Desc: 'Ceramic Design', imageUrl: Shop2, rating: 4.9 },
-  { id: '3', name: 'ClaudyGod Premium T-Shirt', price: 30, Desc: 'Limited Edition', imageUrl: Shop4, rating: 4.7 },
-  { id: '4', name: 'ClaudyGod Exclusive Mug', price: 5, Desc: 'Double-Walled', imageUrl: Shop1, rating: 5.0 },
+  {
+    id: '1',
+    name: 'ClaudyGod Premium T-Shirt',
+    price: 25,
+    Desc: 'Premium Cotton',
+    imageUrl: Shop3,
+    rating: 4.8,
+  },
+  {
+    id: '2',
+    name: 'Savior is Born, Jesus his Here Mug',
+    price: 5,
+    Desc: 'Ceramic Design',
+    imageUrl: Shop2,
+    rating: 4.9,
+  },
+  {
+    id: '3',
+    name: 'ClaudyGod Premium T-Shirt',
+    price: 30,
+    Desc: 'Limited Edition',
+    imageUrl: Shop4,
+    rating: 4.7,
+  },
+  {
+    id: '4',
+    name: 'ClaudyGod Exclusive Mug',
+    price: 5,
+    Desc: 'Double-Walled',
+    imageUrl: Shop1,
+    rating: 5.0,
+  },
 ];
 
-const ProductCard: React.FC<ProductProps> = ({ id, name, price, imageUrl, Desc, rating }) => {
+const ProductCard: React.FC<ProductProps> = ({
+  id,
+  name,
+  price,
+  imageUrl,
+  Desc,
+  rating,
+}) => {
   const { colorScheme } = useTheme();
 
   return (
@@ -47,11 +86,11 @@ const ProductCard: React.FC<ProductProps> = ({ id, name, price, imageUrl, Desc, 
     >
       <Link to={`/shop/${id}`} className="block">
         <div className="flex flex-col items-center w-full max-w-xs mx-auto">
-          <div 
+          <div
             className="relative w-full rounded-xl overflow-hidden aspect-square shadow-md hover:shadow-xl transition-all duration-300"
             style={{
               background: `linear-gradient(to bottom right, ${colorScheme.gray[50]}, ${colorScheme.gray[100]}`,
-              borderRadius: colorScheme.borderRadius.large
+              borderRadius: colorScheme.borderRadius.large,
             }}
           >
             <img
@@ -59,36 +98,33 @@ const ProductCard: React.FC<ProductProps> = ({ id, name, price, imageUrl, Desc, 
               alt={name}
               className="w-full h-full object-contain transform group-hover:scale-[1.03] transition-transform duration-300 p-4"
             />
-            <div 
+            <div
               className="absolute top-3 right-3 flex items-center px-2 py-1 rounded-full shadow-sm"
               style={{
                 backgroundColor: colorScheme.white + '90',
                 backdropFilter: 'blur(4px)',
-                borderRadius: colorScheme.borderRadius.full
+                borderRadius: colorScheme.borderRadius.full,
               }}
             >
-              <FontAwesomeIcon 
-                icon={faStar} 
+              <FontAwesomeIcon
+                icon={faStar}
                 style={{ color: colorScheme.warning }}
-                className="text-xs mr-1" 
+                className="text-xs mr-1"
               />
-              <LightText 
-                style={{ color: colorScheme.primary }}
-                fontSize="12px"
-              >
+              <LightText style={{ color: colorScheme.primary }} fontSize="12px">
                 {rating}
               </LightText>
             </div>
           </div>
           <div className="w-full mt-4 px-1 text-center">
-            <SemiBoldText 
+            <SemiBoldText
               style={{ color: colorScheme.primary }}
               fontSize="16px"
               className="mb-1 line-clamp-1"
             >
               {name}
             </SemiBoldText>
-            <LightText 
+            <LightText
               style={{ color: colorScheme.gray[500] }}
               fontSize="12px"
               className="mb-2 line-clamp-1"
@@ -96,10 +132,7 @@ const ProductCard: React.FC<ProductProps> = ({ id, name, price, imageUrl, Desc, 
               {Desc}
             </LightText>
             <div className="flex items-center justify-center">
-              <BoldText 
-                style={{ color: colorScheme.accent }}
-                fontSize="14px"
-              >
+              <BoldText style={{ color: colorScheme.accent }} fontSize="14px">
                 ${price.toFixed(2)}
               </BoldText>
             </div>
@@ -110,7 +143,10 @@ const ProductCard: React.FC<ProductProps> = ({ id, name, price, imageUrl, Desc, 
   );
 };
 
-const CustomArrow: React.FC<{ onClick?: () => void; direction: 'left' | 'right' }> = ({ onClick, direction }) => {
+const CustomArrow: React.FC<{
+  onClick?: () => void;
+  direction: 'left' | 'right';
+}> = ({ onClick, direction }) => {
   const { colorScheme } = useTheme();
 
   return (
@@ -122,7 +158,7 @@ const CustomArrow: React.FC<{ onClick?: () => void; direction: 'left' | 'right' 
       style={{
         backgroundColor: colorScheme.white + '90',
         backdropFilter: 'blur(4px)',
-        borderRadius: colorScheme.borderRadius.full
+        borderRadius: colorScheme.borderRadius.full,
       }}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
@@ -139,7 +175,7 @@ const CustomArrow: React.FC<{ onClick?: () => void; direction: 'left' | 'right' 
 
 export const ShopPreview: React.FC = () => {
   const { colorScheme } = useTheme();
-  
+
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -159,21 +195,21 @@ export const ShopPreview: React.FC = () => {
           slidesToShow: 2,
           slidesToScroll: 2,
           centerMode: true,
-          centerPadding: '20px'
-        }
+          centerPadding: '20px',
+        },
       },
       {
         breakpoint: 1024,
-        settings: 'unslick'
-      }
-    ]
+        settings: 'unslick',
+      },
+    ],
   };
 
   return (
-    <section 
+    <section
       className="py-16 md:py-24 px-4 sm:px-6 relative overflow-hidden"
       style={{
-        background: `linear-gradient(to bottom, ${colorScheme.white}, ${colorScheme.gray[50]})`
+        background: `linear-gradient(to bottom, ${colorScheme.white}, ${colorScheme.gray[50]})`,
       }}
     >
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
@@ -190,7 +226,11 @@ export const ShopPreview: React.FC = () => {
             }}
             initial={{ scale: 0 }}
             animate={{ scale: [0, 1, 0.8] }}
-            transition={{ duration: 4 + Math.random() * 2, repeat: Infinity, ease: 'easeInOut' }}
+            transition={{
+              duration: 4 + Math.random() * 2,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
           />
         ))}
       </div>
@@ -203,14 +243,14 @@ export const ShopPreview: React.FC = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <div 
+          <div
             className="inline-flex items-center justify-center px-4 py-1.5 rounded-full mb-4"
             style={{
               backgroundColor: colorScheme.gray[300],
-              borderRadius: colorScheme.borderRadius.full
+              borderRadius: colorScheme.borderRadius.full,
             }}
           >
-            <LightText 
+            <LightText
               style={{ color: colorScheme.background }}
               fontSize="12px"
               // className="tracking-wider uppercase"
@@ -219,7 +259,7 @@ export const ShopPreview: React.FC = () => {
             </LightText>
           </div>
 
-          <ExtraBoldText 
+          <ExtraBoldText
             style={{ color: colorScheme.primary }}
             fontSize="40px"
             className="mb-4"
@@ -227,14 +267,14 @@ export const ShopPreview: React.FC = () => {
             CLAUDYGOD STORE
           </ExtraBoldText>
 
-          <div 
+          <div
             className="w-24 h-1 mx-auto rounded-full mb-6"
             style={{
-              background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.secondary})`
+              background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.secondary})`,
             }}
           />
 
-          <LightText 
+          <LightText
             style={{ color: colorScheme.gray[600] }}
             fontSize="16px"
             className="max-w-2xl mx-auto"
@@ -277,9 +317,7 @@ export const ShopPreview: React.FC = () => {
               icon={<FontAwesomeIcon icon={faShoppingBag} />}
               className="shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
-              <BoldText className="tracking-wide">
-                Shop More
-              </BoldText>
+              <BoldText className="tracking-wide">Shop More</BoldText>
             </CustomButton>
           </Link>
         </motion.div>

@@ -11,13 +11,13 @@ import CustomButton from '../ui/fonts/buttons/CustomButton';
 
 // Import FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faCheckCircle, 
-  faSpinner, 
-  faUser, 
-  faEnvelope, 
-  faTasks, 
-  faComment 
+import {
+  faCheckCircle,
+  faSpinner,
+  faUser,
+  faEnvelope,
+  faTasks,
+  faComment,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const VolunteerForm = () => {
@@ -35,7 +35,7 @@ export const VolunteerForm = () => {
       await submitVolunteerForm(data);
       toast.success('Volunteer application submitted successfully!');
       setShowSuccessModal(true);
-  
+
       setTimeout(() => {
         reset();
         setShowSuccessModal(false);
@@ -55,7 +55,7 @@ export const VolunteerForm = () => {
         className="rounded-2xl p-4 sm:p-6 md:p-8 shadow-xl relative"
         style={{
           backgroundColor: colorScheme.surface,
-          border: `1px solid ${colorScheme.outline}`
+          border: `1px solid ${colorScheme.outline}`,
         }}
       >
         <ToastContainer
@@ -70,8 +70,8 @@ export const VolunteerForm = () => {
           pauseOnHover
           theme="dark"
         />
-        
-        <ExtraBoldText 
+
+        <ExtraBoldText
           fontSize="1.75rem"
           mdFontSize="2.25rem"
           lgFontSize="2.5rem"
@@ -81,7 +81,10 @@ export const VolunteerForm = () => {
           Volunteer to be part of our Music Tour
         </ExtraBoldText>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4 md:space-y-6"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
             <div className="relative">
               <label
@@ -100,15 +103,17 @@ export const VolunteerForm = () => {
                 style={{
                   backgroundColor: colorScheme.surfaceVariant,
                   border: `1px solid ${errors.firstName ? '#ef4444' : colorScheme.outline}`,
-                  color: colorScheme.text
+                  color: colorScheme.text,
                 }}
-                {...register('firstName', { required: 'First name is required' })}
+                {...register('firstName', {
+                  required: 'First name is required',
+                })}
               />
               {/* <div className="absolute left-3 top-9 transform -translate-y-1/2 text-gray-400">
                 <FontAwesomeIcon icon={faUser} />
               </div> */}
               {errors.firstName && (
-                <RegularText 
+                <RegularText
                   className="mt-1 text-xs"
                   style={{ color: '#ef4444' }}
                 >
@@ -133,7 +138,7 @@ export const VolunteerForm = () => {
                 style={{
                   backgroundColor: colorScheme.surfaceVariant,
                   border: `1px solid ${errors.lastName ? '#ef4444' : colorScheme.outline}`,
-                  color: colorScheme.text
+                  color: colorScheme.text,
                 }}
                 {...register('lastName', { required: 'Last name is required' })}
               />
@@ -141,7 +146,7 @@ export const VolunteerForm = () => {
                 <FontAwesomeIcon icon={faUser} />
               </div> */}
               {errors.lastName && (
-                <RegularText 
+                <RegularText
                   className="mt-1 text-xs"
                   style={{ color: '#ef4444' }}
                 >
@@ -169,21 +174,21 @@ export const VolunteerForm = () => {
               style={{
                 backgroundColor: colorScheme.surfaceVariant,
                 border: `1px solid ${errors.email ? '#ef4444' : colorScheme.outline}`,
-                color: colorScheme.text
+                color: colorScheme.text,
               }}
-              {...register('email', { 
+              {...register('email', {
                 required: 'Email is required',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address'
-                }
+                  message: 'Invalid email address',
+                },
               })}
             />
             {/* <div className="absolute left-3 top-9 transform -translate-y-1/2 text-gray-400">
               <FontAwesomeIcon icon={faEnvelope} />
             </div> */}
             {errors.email && (
-              <RegularText 
+              <RegularText
                 className="mt-1 text-xs"
                 style={{ color: '#ef4444' }}
               >
@@ -209,7 +214,7 @@ export const VolunteerForm = () => {
               style={{
                 backgroundColor: colorScheme.surfaceVariant,
                 border: `1px solid ${errors.role ? '#ef4444' : colorScheme.outline}`,
-                color: colorScheme.text
+                color: colorScheme.text,
               }}
               {...register('role', { required: 'Please select a role' })}
             >
@@ -224,7 +229,7 @@ export const VolunteerForm = () => {
               <FontAwesomeIcon icon={faTasks} />
             </div> */}
             {errors.role && (
-              <RegularText 
+              <RegularText
                 className="mt-1 text-xs"
                 style={{ color: '#ef4444' }}
               >
@@ -251,21 +256,21 @@ export const VolunteerForm = () => {
               style={{
                 backgroundColor: colorScheme.surfaceVariant,
                 border: `1px solid ${errors.reason ? '#ef4444' : colorScheme.outline}`,
-                color: colorScheme.text
+                color: colorScheme.text,
               }}
-              {...register('reason', { 
+              {...register('reason', {
                 required: 'Reason is required',
                 minLength: {
                   value: 20,
-                  message: 'Reason should be at least 20 characters'
-                }
+                  message: 'Reason should be at least 20 characters',
+                },
               })}
             ></textarea>
             {/* <div className="absolute left-3 top-9 transform -translate-y-1/2 text-gray-400">
               <FontAwesomeIcon icon={faComment} />
             </div> */}
             {errors.reason && (
-              <RegularText 
+              <RegularText
                 className="mt-1 text-xs"
                 style={{ color: '#ef4444' }}
               >
@@ -282,14 +287,14 @@ export const VolunteerForm = () => {
             className="w-full"
             style={{
               opacity: isSubmitting ? 0.7 : 1,
-              cursor: isSubmitting ? 'not-allowed' : 'pointer'
+              cursor: isSubmitting ? 'not-allowed' : 'pointer',
             }}
           >
             {isSubmitting ? (
               <span className="flex items-center justify-center">
-                <FontAwesomeIcon 
-                  icon={faSpinner} 
-                  className="animate-spin mr-3" 
+                <FontAwesomeIcon
+                  icon={faSpinner}
+                  className="animate-spin mr-3"
                 />
                 Submitting...
               </span>
@@ -299,7 +304,7 @@ export const VolunteerForm = () => {
           </CustomButton>
         </form>
       </motion.div>
-      
+
       {showSuccessModal && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -312,16 +317,16 @@ export const VolunteerForm = () => {
             className="rounded-2xl p-6 md:p-8 max-w-md w-full mx-4 shadow-xl"
             style={{
               backgroundColor: colorScheme.surface,
-              border: `1px solid ${colorScheme.primary}`
+              border: `1px solid ${colorScheme.primary}`,
             }}
           >
             <div className="text-center">
-              <FontAwesomeIcon 
-                icon={faCheckCircle} 
+              <FontAwesomeIcon
+                icon={faCheckCircle}
                 className="text-5xl mb-4"
                 style={{ color: colorScheme.success || '#10B981' }}
               />
-              <ExtraBoldText 
+              <ExtraBoldText
                 fontSize="1.5rem"
                 mdFontSize="1.75rem"
                 className="mb-2"
@@ -329,11 +334,12 @@ export const VolunteerForm = () => {
               >
                 Thank You!
               </ExtraBoldText>
-              <RegularText 
+              <RegularText
                 className="mb-6"
                 style={{ color: colorScheme.textSecondary }}
               >
-                Your volunteer application has been submitted successfully. We'll contact you soon with more details.
+                Your volunteer application has been submitted successfully.
+                We'll contact you soon with more details.
               </RegularText>
               <CustomButton
                 onClick={() => {

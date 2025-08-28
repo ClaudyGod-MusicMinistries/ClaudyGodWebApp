@@ -20,7 +20,7 @@ export const store = configureStore({
     store: persistedReducer,
     interviews: interviewsReducer,
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),

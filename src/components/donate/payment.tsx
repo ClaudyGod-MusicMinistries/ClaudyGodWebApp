@@ -2,13 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
-import { 
-  FaPaypal, 
-  FaBuilding, 
-  FaArrowLeft, 
-  FaGlobe, 
+import {
+  FaPaypal,
+  FaBuilding,
+  FaArrowLeft,
+  FaGlobe,
   FaInfoCircle,
-  FaCreditCard
+  FaCreditCard,
 } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 
@@ -31,8 +31,18 @@ interface PaymentPlatformsProps {
 }
 
 const countryOptions = [
-  { code: 'NG', name: 'Nigeria (+234)', pattern: /^(70|80|81|90|91)\d{8}$/, flag: '🇳🇬' },
-  { code: 'GH', name: 'Ghana (+233)', pattern: /^(20|24|26|27|28|30|50|54|55|57)\d{7,8}$/, flag: '🇬🇭' },
+  {
+    code: 'NG',
+    name: 'Nigeria (+234)',
+    pattern: /^(70|80|81|90|91)\d{8}$/,
+    flag: '🇳🇬',
+  },
+  {
+    code: 'GH',
+    name: 'Ghana (+233)',
+    pattern: /^(20|24|26|27|28|30|50|54|55|57)\d{7,8}$/,
+    flag: '🇬🇭',
+  },
   { code: 'US', name: 'United States (+1)', pattern: /^\d{10}$/, flag: '🇺🇸' },
   { code: 'GB', name: 'United Kingdom (+44)', pattern: /^7\d{9}$/, flag: '🇬🇧' },
   { code: 'CA', name: 'Canada (+1)', pattern: /^\d{10}$/, flag: '🇨🇦' },
@@ -48,12 +58,12 @@ const countryCallingCodes: Record<string, string> = {
 
 const formatPhoneNumber = (value: string, pattern: RegExp) => {
   if (!value) return '';
-  
+
   const digits = value.replace(/\D/g, '');
   const match = digits.match(pattern);
-  
+
   if (!match) return digits;
-  
+
   return digits;
 };
 
@@ -64,32 +74,36 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
   onComplete,
 }) => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [paymentMethod, setPaymentMethod] = useState<'paypal' | 'zelle' | 'stripe' | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<
+    'paypal' | 'zelle' | 'stripe' | null
+  >(null);
   const [selectedCountry, setSelectedCountry] = useState('US');
   const [donorInfo, setDonorInfo] = useState({
     email: '',
     name: '',
-    phone: ''
+    phone: '',
   });
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     reset,
     getValues,
     setValue,
     watch,
-    trigger
+    trigger,
   } = useForm<PaymentFormData>({
-    mode: 'onChange'
+    mode: 'onChange',
   });
 
   const phoneCountry = watch('phoneCountry') || 'US';
   const phoneNumber = watch('phoneNumber') || '';
-  
-  const countryPattern = countryOptions.find(c => c.code === phoneCountry)?.pattern;
-  
+
+  const countryPattern = countryOptions.find(
+    c => c.code === phoneCountry
+  )?.pattern;
+
   useEffect(() => {
     if (phoneNumber && countryPattern) {
       const formatted = formatPhoneNumber(phoneNumber, countryPattern);
@@ -112,10 +126,10 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
         toast.error('Please fix the errors in the form');
         return;
       }
-      
+
       const formData = getValues();
       const email = formData.email;
-      
+
       if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
         toast.error('Please enter a valid email address');
         return;
@@ -126,7 +140,9 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
         const cntry = formData.phoneCountry || 'US';
         const pattern = countryOptions.find(c => c.code === cntry)?.pattern;
         if (pattern && !pattern.test(formData.phoneNumber)) {
-          toast.error('Please enter a valid phone number for the selected country');
+          toast.error(
+            'Please enter a valid phone number for the selected country'
+          );
           return;
         }
         phone = `${countryCallingCodes[cntry]}${formData.phoneNumber}`;
@@ -137,7 +153,7 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
       setDonorInfo({
         email,
         name: formData.name || '',
-        phone
+        phone,
       });
 
       setStep(2);
@@ -145,9 +161,10 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
   };
 
   const DonorInfoStep: React.FC = () => {
-    const countryPattern = countryOptions.find(c => c.code === phoneCountry)?.pattern;
+    const countryPattern = countryOptions.find(
+      c => c.code === phoneCountry
+    )?.pattern;
     const countryCode = countryCallingCodes[phoneCountry];
-    const countryFlag = countryOptions.find(c => c.code === phoneCountry)?.flag || '';
 
     return (
       <motion.div
@@ -172,7 +189,9 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
         <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-5 rounded-xl mb-6 border border-purple-200 shadow-sm">
           <div className="text-center">
             <p className="text-sm text-gray-600 mb-1">Your Donation Amount</p>
-            <p className="text-2xl font-bold text-purple-800">{formatAmount(amount)}</p>
+            <p className="text-2xl font-bold text-purple-800">
+              {formatAmount(amount)}
+            </p>
           </div>
         </div>
 
@@ -189,13 +208,24 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
                 placeholder="John Doe"
               />
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
                 </svg>
               </div>
             </div>
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium mb-2 text-gray-700">
               Email Address <span className="text-red-500">*</span>
@@ -211,13 +241,26 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
                   },
                 })}
                 className={`w-full pl-10 pr-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 ${
-                  errors.email ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-purple-500'
+                  errors.email
+                    ? 'border-red-500 focus:ring-red-500'
+                    : 'border-gray-300 focus:ring-purple-500'
                 }`}
                 placeholder="you@example.com"
               />
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
                 </svg>
               </div>
             </div>
@@ -253,8 +296,17 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
                 <FaGlobe className="text-gray-400" />
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                <svg
+                  className="h-5 w-5 text-gray-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
             </div>
@@ -272,7 +324,7 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
               <input
                 type="tel"
                 {...register('phoneNumber', {
-                  validate: (value) => {
+                  validate: value => {
                     if (!value) return true;
                     if (countryPattern && !countryPattern.test(value)) {
                       return 'Invalid phone number format';
@@ -281,7 +333,7 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
                   },
                 })}
                 value={phoneNumber}
-                onChange={(e) => {
+                onChange={e => {
                   const value = e.target.value.replace(/\D/g, '');
                   setValue('phoneNumber', value, { shouldValidate: true });
                 }}
@@ -289,9 +341,11 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
                   errors.phoneNumber ? 'border-red-500' : ''
                 }`}
                 placeholder={
-                  phoneCountry === 'GB' ? '7123456789'
-                    : phoneCountry === 'NG' ? '8012345678'
-                    : '5551234567'
+                  phoneCountry === 'GB'
+                    ? '7123456789'
+                    : phoneCountry === 'NG'
+                      ? '8012345678'
+                      : '5551234567'
                 }
               />
             </div>
@@ -305,15 +359,16 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
                 {phoneCountry === 'US' || phoneCountry === 'CA'
                   ? 'Format: 10 digits (e.g., 5551234567)'
                   : phoneCountry === 'GB'
-                  ? 'Format: 10 digits starting with 7'
-                  : phoneCountry === 'NG'
-                  ? 'Format: 10 digits starting with 70,80,81,90,91'
-                  : phoneCountry === 'GH'
-                  ? 'Format: 9-10 digits starting with 20,24…'
-                  : ''}
+                    ? 'Format: 10 digits starting with 7'
+                    : phoneCountry === 'NG'
+                      ? 'Format: 10 digits starting with 70,80,81,90,91'
+                      : phoneCountry === 'GH'
+                        ? 'Format: 9-10 digits starting with 20,24…'
+                        : ''}
               </p>
               <span className="text-xs text-gray-500">
-                {phoneNumber.length}/{countryPattern?.toString().includes('10') ? 10 : 9}
+                {phoneNumber.length}/
+                {countryPattern?.toString().includes('10') ? 10 : 9}
               </span>
             </div>
           </div>
@@ -332,29 +387,29 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
   };
 
   const paymentCards = [
-    { 
-      id: 'paypal', 
-      name: 'PayPal', 
-      description: 'Secure online payments', 
-      icon: FaPaypal, 
+    {
+      id: 'paypal',
+      name: 'PayPal',
+      description: 'Secure online payments',
+      icon: FaPaypal,
       color: 'from-blue-500 to-blue-600',
-      bg: 'bg-blue-100'
+      bg: 'bg-blue-100',
     },
-    { 
-      id: 'zelle',  
-      name: 'Zelle',  
-      description: 'Direct bank transfer',         
-      icon: FaBuilding, 
+    {
+      id: 'zelle',
+      name: 'Zelle',
+      description: 'Direct bank transfer',
+      icon: FaBuilding,
       color: 'from-purple-500 to-purple-600',
-      bg: 'bg-purple-100'
+      bg: 'bg-purple-100',
     },
-    { 
-      id: 'stripe',  
-      name: 'Credit/Debit Card',  
-      description: 'Visa, Mastercard, Amex',         
-      icon: FaCreditCard, 
+    {
+      id: 'stripe',
+      name: 'Credit/Debit Card',
+      description: 'Visa, Mastercard, Amex',
+      icon: FaCreditCard,
       color: 'from-indigo-500 to-indigo-600',
-      bg: 'bg-indigo-100'
+      bg: 'bg-indigo-100',
     },
   ] as const;
 
@@ -388,18 +443,22 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
             whileHover={{ y: -5 }}
             whileTap={{ scale: 0.98 }}
             className={`p-5 border rounded-xl text-left transition-all shadow-sm ${
-              paymentMethod === m.id 
-                ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-blue-50 shadow-md' 
+              paymentMethod === m.id
+                ? 'border-purple-500 bg-gradient-to-r from-purple-50 to-blue-50 shadow-md'
                 : 'border-gray-200 hover:border-purple-300 bg-white'
             }`}
           >
             <div className="flex items-center">
               <div className={`${m.bg} p-3 rounded-lg`}>
-                <m.icon className={`h-6 w-6 ${
-                  m.id === 'paypal' ? 'text-blue-600' : 
-                  m.id === 'zelle' ? 'text-purple-600' : 
-                  'text-indigo-600'
-                }`} />
+                <m.icon
+                  className={`h-6 w-6 ${
+                    m.id === 'paypal'
+                      ? 'text-blue-600'
+                      : m.id === 'zelle'
+                        ? 'text-purple-600'
+                        : 'text-indigo-600'
+                  }`}
+                />
               </div>
               <div className="ml-4">
                 <h3 className="font-bold text-gray-900 text-lg">{m.name}</h3>
@@ -443,18 +502,24 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
                     step === n
                       ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white'
                       : n < step
-                      ? 'bg-green-500 text-white'
-                      : 'bg-gray-200 text-gray-700'
+                        ? 'bg-green-500 text-white'
+                        : 'bg-gray-200 text-gray-700'
                   }`}
                 >
                   {n}
                 </div>
                 <div className="mt-2 text-xs font-medium text-center w-20">
-                  {n === 1 ? 'Your Info' : n === 2 ? 'Payment Method' : 'Complete'}
+                  {n === 1
+                    ? 'Your Info'
+                    : n === 2
+                      ? 'Payment Method'
+                      : 'Complete'}
                 </div>
               </div>
               {n < 3 && (
-                <div className={`h-1 flex-1 mx-2 ${step > n ? 'bg-green-500' : 'bg-gray-200'}`}></div>
+                <div
+                  className={`h-1 flex-1 mx-2 ${step > n ? 'bg-green-500' : 'bg-gray-200'}`}
+                ></div>
               )}
             </React.Fragment>
           ))}
@@ -465,11 +530,11 @@ export const PaymentPlatforms: React.FC<PaymentPlatformsProps> = ({
         {step === 1 && <DonorInfoStep />}
         {step === 2 && <PaymentMethodStep />}
         {step === 3 && paymentMethod === 'paypal' && (
-          <PayPalStep 
-            amount={amount} 
-            currency={currency} 
-            onBack={handleBack} 
-            onSuccess={onComplete} 
+          <PayPalStep
+            amount={amount}
+            currency={currency}
+            onBack={handleBack}
+            onSuccess={onComplete}
           />
         )}
         {step === 3 && paymentMethod === 'zelle' && (

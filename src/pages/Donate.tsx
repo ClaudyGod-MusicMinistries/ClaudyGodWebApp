@@ -3,13 +3,12 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  
+import {
   faInfoCircle,
   faGlobe,
   faCreditCard,
   faHandHoldingUsd,
   faShieldAlt,
- 
 } from '@fortawesome/free-solid-svg-icons';
 import { Donate1, Donate2 } from '../assets/';
 import { useNavContext } from '../contexts/NavContext';
@@ -19,17 +18,23 @@ import { PaymentPlatforms } from '../components/donate/payment';
 import { NigerianBankTransfer } from '../components/donate/NigeriaAcct';
 import { Herosection } from '../components/util/Herosection';
 import { DonationCallToAction } from '../components/util/DonationSupport';
-import { 
-  SemiBoldText, 
-  BoldText, 
-  LightText, 
-  ExtraBoldText, 
-  ExtraLightText 
+import {
+  SemiBoldText,
+  BoldText,
+  LightText,
+  ExtraBoldText,
+  ExtraLightText,
 } from '../components/ui/fonts/typography';
 import CustomButton from '../components/ui/fonts/buttons/CustomButton';
 
 // Currency selector component
-const CurrencySelector = ({ currency, setCurrency }: { currency: string, setCurrency: React.Dispatch<React.SetStateAction<string>> }) => {
+const CurrencySelector = ({
+  currency,
+  setCurrency,
+}: {
+  currency: string;
+  setCurrency: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const { colorScheme } = useTheme();
   const currencies = [
     { code: 'USD', symbol: '$', name: 'US Dollar' },
@@ -40,26 +45,36 @@ const CurrencySelector = ({ currency, setCurrency }: { currency: string, setCurr
 
   return (
     <div className="relative flex-shrink-0 w-full sm:w-auto">
-      <select 
+      <select
         value={currency}
-        onChange={(e) => setCurrency(e.target.value)}
+        onChange={e => setCurrency(e.target.value)}
         style={{
           backgroundColor: colorScheme.gray[100],
           borderColor: colorScheme.gray[300],
           borderRadius: colorScheme.borderRadius.medium,
-          color: colorScheme.primary
+          color: colorScheme.primary,
         }}
         className="appearance-none w-full h-full px-3 py-2 text-sm bg-gray-100 border border-r-0 rounded-l-md focus:outline-none focus:ring-2 cursor-pointer shadow-sm"
       >
-        {currencies.map((curr) => (
+        {currencies.map(curr => (
           <option key={curr.code} value={curr.code}>
             {curr.symbol} {curr.code} - {curr.name}
           </option>
         ))}
       </select>
       <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-        <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        <svg
+          className="w-4 h-4 text-gray-700"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </div>
     </div>
@@ -80,10 +95,10 @@ const DonateHeroSlider: React.FC = () => {
 
     setShouldAnimate(true);
     let interval: NodeJS.Timeout | null = null;
-    
+
     if (shouldAnimate) {
       interval = setInterval(() => {
-        setCurrentImageIndex((prev) => (prev + 1) % images.length);
+        setCurrentImageIndex(prev => (prev + 1) % images.length);
       }, 5000);
     }
 
@@ -93,7 +108,9 @@ const DonateHeroSlider: React.FC = () => {
   }, [images.length, shouldAnimate, isNavOpen]);
 
   return (
-    <div className={`relative w-full ${isNavOpen ? 'filter blur-sm opacity-75 transition-all duration-300' : ''}`}>
+    <div
+      className={`relative w-full ${isNavOpen ? 'filter blur-sm opacity-75 transition-all duration-300' : ''}`}
+    >
       {/* Mobile Version */}
       <div className="md:hidden relative h-[50vh] min-h-[300px] w-full overflow-hidden bg-black">
         {images.map((img, index) => (
@@ -139,27 +156,27 @@ const DonateHeroSlider: React.FC = () => {
 
 const DonationGuide = () => {
   const { colorScheme } = useTheme();
-  
+
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      style={{ 
+      style={{
         backgroundColor: colorScheme.gray[50],
         borderLeftColor: colorScheme.accent,
-        borderRadius: colorScheme.borderRadius.large
+        borderRadius: colorScheme.borderRadius.large,
       }}
       className="border-l-4 rounded-lg p-4 sm:p-5 mb-8 sm:mb-10 shadow-sm"
     >
       <div className="flex items-start">
-        <FontAwesomeIcon 
-          icon={faInfoCircle} 
+        <FontAwesomeIcon
+          icon={faInfoCircle}
           style={{ color: colorScheme.accent }}
-          className="text-xl mt-1 mr-3 flex-shrink-0" 
+          className="text-xl mt-1 mr-3 flex-shrink-0"
         />
         <div>
-          <SemiBoldText 
+          <SemiBoldText
             style={{ color: colorScheme.primary }}
             fontSize="18px"
             className="mb-2"
@@ -169,24 +186,46 @@ const DonationGuide = () => {
           <ul className="list-disc pl-5 space-y-2 text-sm sm:text-base">
             <li>
               <LightText style={{ color: colorScheme.primary }}>
-                <span style={{ color: colorScheme.accent }} className="font-medium">Select your currency</span> - Choose from USD, EUR, GBP or NGN using 
-                the dropdown menu
+                <span
+                  style={{ color: colorScheme.accent }}
+                  className="font-medium"
+                >
+                  Select your currency
+                </span>{' '}
+                - Choose from USD, EUR, GBP or NGN using the dropdown menu
               </LightText>
             </li>
             <li>
               <LightText style={{ color: colorScheme.primary }}>
-                <span style={{ color: colorScheme.accent }} className="font-medium">Enter your details</span> - Provide your name and donation amount
+                <span
+                  style={{ color: colorScheme.accent }}
+                  className="font-medium"
+                >
+                  Enter your details
+                </span>{' '}
+                - Provide your name and donation amount
               </LightText>
             </li>
             <li>
               <LightText style={{ color: colorScheme.primary }}>
-                <span style={{ color: colorScheme.accent }} className="font-medium">Choose payment method</span> - After clicking "Donate", select your 
-                preferred payment option
+                <span
+                  style={{ color: colorScheme.accent }}
+                  className="font-medium"
+                >
+                  Choose payment method
+                </span>{' '}
+                - After clicking "Donate", select your preferred payment option
               </LightText>
             </li>
             <li>
               <LightText style={{ color: colorScheme.primary }}>
-                <span style={{ color: colorScheme.accent }} className="font-medium">Complete transaction</span> - Follow the secure payment process
+                <span
+                  style={{ color: colorScheme.accent }}
+                  className="font-medium"
+                >
+                  Complete transaction
+                </span>{' '}
+                - Follow the secure payment process
               </LightText>
             </li>
           </ul>
@@ -196,44 +235,45 @@ const DonationGuide = () => {
   );
 };
 
-const FeatureCard = ({ icon, title, description }: { 
-  icon: any, 
-  title: string, 
-  description: string 
+const FeatureCard = ({
+  icon,
+  title,
+  description,
+}: {
+  icon: any;
+  title: string;
+  description: string;
 }) => {
   const { colorScheme } = useTheme();
-  
+
   return (
-    <motion.div 
+    <motion.div
       whileHover={{ y: -5 }}
-      style={{ 
+      style={{
         backgroundColor: colorScheme.white,
         borderRadius: colorScheme.borderRadius.large,
-        borderColor: colorScheme.gray[100]
+        borderColor: colorScheme.gray[100],
       }}
       className="p-4 sm:p-6 rounded-xl shadow-sm border hover:shadow-md transition-shadow h-full"
     >
-      <div 
+      <div
         style={{ backgroundColor: colorScheme.gray[100] }}
         className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-3 sm:mb-4"
       >
-        <FontAwesomeIcon 
-          icon={icon} 
+        <FontAwesomeIcon
+          icon={icon}
           style={{ color: colorScheme.accent }}
-          className="text-lg sm:text-xl" 
+          className="text-lg sm:text-xl"
         />
       </div>
-      <SemiBoldText 
+      <SemiBoldText
         style={{ color: colorScheme.background }}
         fontSize="18px"
         className="mb-2"
       >
         {title}
       </SemiBoldText>
-      <LightText 
-        style={{ color: colorScheme.background }}
-        fontSize="14px"
-      >
+      <LightText style={{ color: colorScheme.background }} fontSize="14px">
         {description}
       </LightText>
     </motion.div>
@@ -256,44 +296,56 @@ export const DonateData: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!amount || parseFloat(amount) <= 0) {
       alert('Please enter a valid donation amount');
       return;
     }
-    
+
     setIsCheckout(true);
   };
 
   const handlePaymentComplete = () => {
-    alert('Thank you for your donation! Your support helps spread the gospel through music.');
+    alert(
+      'Thank you for your donation! Your support helps spread the gospel through music.'
+    );
     setAmount('');
     setName('');
     setIsCheckout(false);
   };
-  
+
   const handlePaymentBack = () => {
     setIsCheckout(false);
   };
 
   // Suggested donation amounts based on currency
   const getSuggestedAmounts = () => {
-    switch(currency) {
-      case 'USD': return [10, 25, 50, 100, 250];
-      case 'EUR': return [10, 20, 50, 100, 200];
-      case 'GBP': return [10, 20, 40, 75, 150];
-      case 'NGN': return [5000, 10000, 20000, 50000, 100000];
-      default: return [10, 25, 50, 100, 250];
+    switch (currency) {
+      case 'USD':
+        return [10, 25, 50, 100, 250];
+      case 'EUR':
+        return [10, 20, 50, 100, 200];
+      case 'GBP':
+        return [10, 20, 40, 75, 150];
+      case 'NGN':
+        return [5000, 10000, 20000, 50000, 100000];
+      default:
+        return [10, 25, 50, 100, 250];
     }
   };
 
   const getCurrencySymbol = () => {
-    switch(currency) {
-      case 'USD': return '$';
-      case 'EUR': return '€';
-      case 'GBP': return '£';
-      case 'NGN': return '₦';
-      default: return '$';
+    switch (currency) {
+      case 'USD':
+        return '$';
+      case 'EUR':
+        return '€';
+      case 'GBP':
+        return '£';
+      case 'NGN':
+        return '₦';
+      default:
+        return '$';
     }
   };
 
@@ -301,7 +353,7 @@ export const DonateData: React.FC = () => {
   const currencySymbol = getCurrencySymbol();
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -314,35 +366,37 @@ export const DonateData: React.FC = () => {
         canonical="https://claudygod.org/donate"
         image="https://claudygod.org/images/donate-og.jpg"
         structuredData={{
-          "@context": "https://schema.org",
-          "@type": "DonateAction",
-          "name": "Support Gospel Music Ministry",
-          "description": "Donation page for ClaudyGod Ministries",
-          "url": "https://claudygod.org/donate",
-          "recipient": {
-            "@type": "Organization",
-            "name": "ClaudyGod Ministries",
-            "url": "https://claudygod.org"
-          }
+          '@context': 'https://schema.org',
+          '@type': 'DonateAction',
+          name: 'Support Gospel Music Ministry',
+          description: 'Donation page for ClaudyGod Ministries',
+          url: 'https://claudygod.org/donate',
+          recipient: {
+            '@type': 'Organization',
+            name: 'ClaudyGod Ministries',
+            url: 'https://claudygod.org',
+          },
         }}
       />
-      
+
       <DonateHeroSlider />
-      
+
       {isCheckout ? (
-        <div className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75' : ''}`}>
+        <div
+          className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75' : ''}`}
+        >
           {currency === 'NGN' ? (
             <div className="max-w-2xl mx-auto">
-              <NigerianBankTransfer 
-                amount={parseFloat(amount)} 
+              <NigerianBankTransfer
+                amount={parseFloat(amount)}
                 currency={currency}
                 onComplete={handlePaymentComplete}
                 onBack={handlePaymentBack}
               />
             </div>
           ) : (
-            <PaymentPlatforms 
-              amount={parseFloat(amount)} 
+            <PaymentPlatforms
+              amount={parseFloat(amount)}
               currency={currency}
               onBack={handlePaymentBack}
               onComplete={handlePaymentComplete}
@@ -350,53 +404,58 @@ export const DonateData: React.FC = () => {
           )}
         </div>
       ) : (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75 transition-all duration-300' : ''}`}
         >
           <div className="text-center mb-12 md:mb-16">
-            <ExtraBoldText 
+            <ExtraBoldText
               style={{ color: colorScheme.primary }}
               fontSize="32px"
               className="mb-4"
             >
               Support Our Ministry
             </ExtraBoldText>
-            <div 
+            <div
               style={{ backgroundColor: colorScheme.accent }}
               className="w-24 h-1 mx-auto mt-4 mb-6 md:mb-8"
             ></div>
-            <LightText 
+            <LightText
               style={{ color: colorScheme.background }}
               fontSize="16px"
               className="max-w-3xl mx-auto leading-relaxed"
             >
-              "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver." (2 Corinthians 9:7)
-              <br /><br />
-              We appreciate your support and donations towards the ministry. You partner with us to advance the gospel through music. 
-              "And my God will meet all your needs according to the riches of His glory in Christ Jesus." (Philippians 4:19)
+              "Each of you should give what you have decided in your heart to
+              give, not reluctantly or under compulsion, for God loves a
+              cheerful giver." (2 Corinthians 9:7)
+              <br />
+              <br />
+              We appreciate your support and donations towards the ministry. You
+              partner with us to advance the gospel through music. "And my God
+              will meet all your needs according to the riches of His glory in
+              Christ Jesus." (Philippians 4:19)
             </LightText>
           </div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ staggerChildren: 0.1 }}
             className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 md:mb-16"
           >
-            <FeatureCard 
+            <FeatureCard
               icon={faGlobe}
               title="Global Support"
               description="Your donation helps us reach audiences worldwide with gospel music and messages of hope."
             />
-            <FeatureCard 
+            <FeatureCard
               icon={faCreditCard}
               title="Secure Payments"
               description="All transactions are encrypted and processed through trusted payment gateways for your security."
             />
-            <FeatureCard 
+            <FeatureCard
               icon={faShieldAlt}
               title="Trusted Ministry"
               description="We are accountable for every donation and provide regular ministry updates to our supporters."
@@ -404,50 +463,52 @@ export const DonateData: React.FC = () => {
           </motion.div>
 
           <div className="flex justify-center my-8 md:my-10">
-            <div 
+            <div
               style={{ backgroundColor: colorScheme.accent }}
               className="h-1 w-16 rounded-full"
             ></div>
           </div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            style={{ 
+            style={{
               backgroundColor: colorScheme.white,
-              borderRadius: colorScheme.borderRadius.xlarge
+              borderRadius: colorScheme.borderRadius.xlarge,
             }}
             className="max-w-4xl mx-auto px-4 py-6 sm:py-8 rounded-xl shadow-sm"
           >
             <div className="text-center mb-8 md:mb-10">
-              <ExtraBoldText 
+              <ExtraBoldText
                 style={{ color: colorScheme.primary }}
                 fontSize="28px"
                 className="mb-3 md:mb-4"
               >
                 Make a Donation
               </ExtraBoldText>
-              <LightText 
+              <LightText
                 style={{ color: colorScheme.primary }}
                 fontSize="14px"
                 className="max-w-xl mx-auto"
               >
-                Select your currency and amount to support our gospel music ministry
+                Select your currency and amount to support our gospel music
+                ministry
               </LightText>
             </div>
 
             <DonationGuide />
 
-            <form onSubmit={handleSubmit} 
+            <form
+              onSubmit={handleSubmit}
               style={{
                 backgroundColor: colorScheme.gray[50],
-                borderRadius: colorScheme.borderRadius.large
+                borderRadius: colorScheme.borderRadius.large,
               }}
               className="p-4 sm:p-6 md:p-8 rounded-lg"
             >
               <div className="mb-4 sm:mb-6">
-                <SemiBoldText 
+                <SemiBoldText
                   style={{ color: colorScheme.primary }}
                   fontSize="16px"
                   className="mb-2"
@@ -458,30 +519,30 @@ export const DonateData: React.FC = () => {
                   type="text"
                   id="name"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={e => setName(e.target.value)}
                   style={{
                     borderColor: colorScheme.gray[300],
                     borderRadius: colorScheme.borderRadius.medium,
                     color: colorScheme.primary,
-                    backgroundColor: colorScheme.white
+                    backgroundColor: colorScheme.white,
                   }}
                   className="w-full px-3 sm:px-4 py-2 sm:py-3 border focus:outline-none focus:ring-2 focus:border-transparent"
                   placeholder="Enter your name"
                   required
                 />
               </div>
-              
+
               <div className="mb-6 sm:mb-8">
-                <SemiBoldText 
+                <SemiBoldText
                   style={{ color: colorScheme.primary }}
                   fontSize="16px"
                   className="mb-2"
                 >
                   Select Amount ({currency})
                 </SemiBoldText>
-                
+
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3 mb-4">
-                  {suggestedAmounts.map((amt) => (
+                  {suggestedAmounts.map(amt => (
                     <motion.button
                       key={amt}
                       type="button"
@@ -489,19 +550,29 @@ export const DonateData: React.FC = () => {
                       onClick={() => setAmount(amt.toString())}
                       style={{
                         borderRadius: colorScheme.borderRadius.medium,
-                        borderColor: amount === amt.toString() ? colorScheme.accent : colorScheme.gray[300],
-                        backgroundColor: amount === amt.toString() ? colorScheme.accent : colorScheme.white,
-                        color: amount === amt.toString() ? colorScheme.white : colorScheme.primary
+                        borderColor:
+                          amount === amt.toString()
+                            ? colorScheme.accent
+                            : colorScheme.gray[300],
+                        backgroundColor:
+                          amount === amt.toString()
+                            ? colorScheme.accent
+                            : colorScheme.white,
+                        color:
+                          amount === amt.toString()
+                            ? colorScheme.white
+                            : colorScheme.primary,
                       }}
                       className="py-2 sm:py-3 px-2 rounded-lg border transition-all text-sm sm:text-base"
                     >
-                      {currencySymbol}{amt}
+                      {currencySymbol}
+                      {amt}
                     </motion.button>
                   ))}
                 </div>
-                
+
                 <div className="mb-4 sm:mb-6">
-                  <LightText 
+                  <LightText
                     style={{ color: colorScheme.primary }}
                     fontSize="14px"
                     className="mb-2"
@@ -510,18 +581,21 @@ export const DonateData: React.FC = () => {
                   </LightText>
                   <div className="flex flex-col sm:flex-row">
                     <div className="w-full sm:w-auto mb-2 sm:mb-0">
-                      <CurrencySelector currency={currency} setCurrency={setCurrency} />
+                      <CurrencySelector
+                        currency={currency}
+                        setCurrency={setCurrency}
+                      />
                     </div>
                     <input
                       type="number"
                       id="amount"
                       value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
+                      onChange={e => setAmount(e.target.value)}
                       style={{
                         borderColor: colorScheme.gray[300],
                         borderRadius: colorScheme.borderRadius.medium,
                         color: colorScheme.primary,
-                        backgroundColor: colorScheme.white
+                        backgroundColor: colorScheme.white,
                       }}
                       className="flex-1 w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-r-lg focus:outline-none focus:ring-2 focus:border-transparent"
                       placeholder="Enter amount"
@@ -532,7 +606,7 @@ export const DonateData: React.FC = () => {
                   </div>
                 </div>
               </div>
-              
+
               <CustomButton
                 type="submit"
                 variant="primary"
@@ -543,37 +617,46 @@ export const DonateData: React.FC = () => {
                 <BoldText>Donate Now</BoldText>
               </CustomButton>
             </form>
-            
+
             <div className="mt-6 sm:mt-8 text-center">
-              <ExtraLightText 
+              <ExtraLightText
                 style={{ color: colorScheme.gray[500] }}
                 fontSize="12px"
               >
-                Your donation is securely processed. All major cards and payment methods accepted.
+                Your donation is securely processed. All major cards and payment
+                methods accepted.
               </ExtraLightText>
             </div>
           </motion.div>
-          
+
           <div className="mt-12 sm:mt-16 text-center">
-            <SemiBoldText 
+            <SemiBoldText
               style={{ color: colorScheme.primary }}
               fontSize="18px"
               className="mb-3 sm:mb-4"
             >
               Have questions about donating?
             </SemiBoldText>
-            <LightText 
+            <LightText
               style={{ color: colorScheme.primary }}
               fontSize="14px"
               className="max-w-2xl mx-auto"
             >
-              Contact us at <span style={{ color: colorScheme.accent }}>info@ClaudyGod.com</span> or call 
-              <span style={{ color: colorScheme.accent }}> +1 (385) 219‑6632</span> for assistance with your donation.
+              Contact us at{' '}
+              <span style={{ color: colorScheme.accent }}>
+                info@ClaudyGod.com
+              </span>{' '}
+              or call
+              <span style={{ color: colorScheme.accent }}>
+                {' '}
+                +1 (385) 219‑6632
+              </span>{' '}
+              for assistance with your donation.
             </LightText>
           </div>
         </motion.div>
       )}
-      
+
       <DonationCallToAction
         title="Partner with Our Ministry"
         subtitle="Your Support Makes a Difference"

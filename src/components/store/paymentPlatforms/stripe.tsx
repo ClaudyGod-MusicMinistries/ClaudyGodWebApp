@@ -10,7 +10,7 @@ export const StripePayment: React.FC<StripePaymentProps> = ({ onNext }) => {
     number: '',
     expiry: '',
     cvc: '',
-    name: ''
+    name: '',
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -35,7 +35,7 @@ export const StripePayment: React.FC<StripePaymentProps> = ({ onNext }) => {
         <input
           type="text"
           value={cardData.name}
-          onChange={(e) => setCardData({ ...cardData, name: e.target.value })}
+          onChange={e => setCardData({ ...cardData, name: e.target.value })}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           placeholder="John Doe"
           required
@@ -49,7 +49,7 @@ export const StripePayment: React.FC<StripePaymentProps> = ({ onNext }) => {
         <input
           type="text"
           value={cardData.number}
-          onChange={(e) => setCardData({ ...cardData, number: e.target.value })}
+          onChange={e => setCardData({ ...cardData, number: e.target.value })}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           placeholder="1234 5678 9012 3456"
           required
@@ -64,7 +64,7 @@ export const StripePayment: React.FC<StripePaymentProps> = ({ onNext }) => {
           <input
             type="text"
             value={cardData.expiry}
-            onChange={(e) => setCardData({ ...cardData, expiry: e.target.value })}
+            onChange={e => setCardData({ ...cardData, expiry: e.target.value })}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             placeholder="MM/YY"
             required
@@ -77,7 +77,7 @@ export const StripePayment: React.FC<StripePaymentProps> = ({ onNext }) => {
           <input
             type="text"
             value={cardData.cvc}
-            onChange={(e) => setCardData({ ...cardData, cvc: e.target.value })}
+            onChange={e => setCardData({ ...cardData, cvc: e.target.value })}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             placeholder="123"
             required

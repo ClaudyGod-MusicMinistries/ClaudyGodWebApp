@@ -1,12 +1,12 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faArrowRight, 
+import {
+  faArrowRight,
   faPlayCircle,
   faVideo,
   faMusic,
-  faMicrophoneAlt
+  faMicrophoneAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import VideoPlayerModal from '../components/videos/VideoPlayerModel';
 import VideoCard from '../components/videos/VideoCard';
@@ -19,11 +19,10 @@ import { videos } from '../components/data/videosData';
 // import { DonationCallToAction } from '../components/util/DonationSupport';
 
 import { useTheme } from '../contexts/ThemeContext';
-import { 
- 
+import {
   LightText,
   ExtraBoldText,
-  BoldText
+  BoldText,
 } from '../components/ui/fonts/typography';
 import CustomButton from '../components/ui/fonts/buttons/CustomButton';
 
@@ -31,15 +30,18 @@ const VIDEOS_PER_PAGE = 6;
 
 export const VideosData: React.FC = () => {
   const { colorScheme } = useTheme();
-  const [activeCategory, setActiveCategory] = useState<'All' | 'Music Videos' | 'Visualizers' | 'Live Sessions'>('All');
+  const [activeCategory, setActiveCategory] = useState<
+    'All' | 'Music Videos' | 'Visualizers' | 'Live Sessions'
+  >('All');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
   const videoGridRef = useRef<HTMLDivElement>(null);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
 
-  const filteredVideos = activeCategory === 'All' 
-    ? videos 
-    : videos.filter(video => video.category === activeCategory);
+  const filteredVideos =
+    activeCategory === 'All'
+      ? videos
+      : videos.filter(video => video.category === activeCategory);
 
   const totalPages = Math.ceil(filteredVideos.length / VIDEOS_PER_PAGE);
   const paginatedVideos = filteredVideos.slice(
@@ -53,20 +55,20 @@ export const VideosData: React.FC = () => {
 
   // Category icons mapping
   const categoryIcons = {
-    'All': faVideo,
+    All: faVideo,
     'Music Videos': faMusic,
-    'Visualizers': faPlayCircle,
-    'Live Sessions': faMicrophoneAlt
+    Visualizers: faPlayCircle,
+    'Live Sessions': faMicrophoneAlt,
   };
 
   return (
-    <div >
+    <div>
       {/* Enhanced Hero Section */}
-      <motion.section 
+      <motion.section
         className="pt-32 pb-24  relative"
         style={{
           background: `linear-gradient(to bottom right, 
-          ${colorScheme.background}, ${colorScheme.background})`
+          ${colorScheme.background}, ${colorScheme.background})`,
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -74,19 +76,21 @@ export const VideosData: React.FC = () => {
       >
         <div className="container mx-auto px-4 relative">
           {/* Decorative elements */}
-          <div 
+          <div
             className="absolute top-0 left-0 w-full h-full opacity-10"
-            style={{ 
-              backgroundImage: "url('https://www.transparenttextures.com/patterns/carbon-fibre.png')" }}
+            style={{
+              backgroundImage:
+                "url('https://www.transparenttextures.com/patterns/carbon-fibre.png')",
+            }}
           ></div>
-          <div 
+          <div
             className="absolute top-10 right-10 text-9xl"
-            style={{color: `${colorScheme.accent}30` }}
+            style={{ color: `${colorScheme.accent}30` }}
           >
             <FontAwesomeIcon icon={faVideo} />
           </div>
-          
-          <motion.div 
+
+          <motion.div
             className="relative z-10 max-w-4xl"
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -97,65 +101,68 @@ export const VideosData: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
-               <ExtraBoldText fontSize='3rem' style={{ color: colorScheme.gray[300] }}>
-                       Videos
-               </ExtraBoldText>
+              <ExtraBoldText
+                fontSize="3rem"
+                style={{ color: colorScheme.gray[300] }}
+              >
+                Videos
+              </ExtraBoldText>
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               className="h-1 mb-8"
               style={{
                 background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary})`,
-                width: '6rem'
+                width: '6rem',
               }}
               initial={{ width: 0 }}
               animate={{ width: '6rem' }}
               transition={{ delay: 0.4, duration: 0.8 }}
             />
-            
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8 }}
             >
               <LightText className="text-lg md:text-xl max-w-2xl mb-10">
-                Experience the divine fusion of American Contemporary Christian Music and Afro-Gospel Songs through ClaudyGod's Inspirational Journey.
+                Experience the divine fusion of American Contemporary Christian
+                Music and Afro-Gospel Songs through ClaudyGod's Inspirational
+                Journey.
               </LightText>
             </motion.div>
-            
-           <motion.div
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 0.8, duration: 0.8 }}
->
-  <CustomButton
-    onClick={scrollToVideoGrid}
-    size="lg"
-    className="transition-transform duration-300 ease-in-out
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+            >
+              <CustomButton
+                onClick={scrollToVideoGrid}
+                size="lg"
+                className="transition-transform duration-300 ease-in-out
                bg-transparent hover:bg-indigo-100
                text-indigo-700 hover:text-indigo-900"
-    style={{ backgroundColor: 'transparent' }}
-  >
-    <BoldText fontSize="1rem">
-      <span className="p-3 rounded-md inline-flex items-center gap-2">
-        Browse more videos
-        <FontAwesomeIcon icon={faArrowRight} />
-      </span>
-    </BoldText>
-  </CustomButton>
-</motion.div>
-
-
+                style={{ backgroundColor: 'transparent' }}
+              >
+                <BoldText fontSize="1rem">
+                  <span className="p-3 rounded-md inline-flex items-center gap-2">
+                    Browse more videos
+                    <FontAwesomeIcon icon={faArrowRight} />
+                  </span>
+                </BoldText>
+              </CustomButton>
+            </motion.div>
           </motion.div>
         </div>
       </motion.section>
 
       <div style={{ backgroundColor: colorScheme.background }}>
-        <VideoPlayerModal 
-          videoId={selectedVideoId} 
-          onClose={() => setSelectedVideoId(null)} 
+        <VideoPlayerModal
+          videoId={selectedVideoId}
+          onClose={() => setSelectedVideoId(null)}
         />
-        
+
         {/* Diagonal Sections */}
         <section className="pt-16 md:pt-24">
           <DiagonalSection
@@ -194,10 +201,10 @@ export const VideosData: React.FC = () => {
         </section>
 
         {/* CTA Section */}
-        <div 
+        <div
           className="py-16 text-center"
           style={{
-            background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary})`
+            background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary})`,
           }}
         >
           <CustomButton
@@ -205,72 +212,84 @@ export const VideosData: React.FC = () => {
             onClick={scrollToVideoGrid}
             className="px-10 py-4 text-xl md:text-2xl
              flex items-center  mx-auto"
-            whileHover={{ 
+            whileHover={{
               scale: 1.05,
               backgroundColor: colorScheme.white,
-              color: colorScheme.primary
+              color: colorScheme.primary,
             }}
             whileTap={{ scale: 0.98 }}
           >
-<BoldText>
-  Explore Full Collection
-  <span className="ml-2 gap-9">
-    <FontAwesomeIcon icon={faArrowRight} />
-  </span>
-</BoldText>
-           
+            <BoldText>
+              Explore Full Collection
+              <span className="ml-2 gap-9">
+                <FontAwesomeIcon icon={faArrowRight} />
+              </span>
+            </BoldText>
           </CustomButton>
         </div>
 
         {/* Video Grid Section */}
-        <div 
-          ref={videoGridRef} 
+        <div
+          ref={videoGridRef}
           className="pt-16 pb-24"
           style={{
-            background: `linear-gradient(to bottom, ${colorScheme.background}, ${colorScheme.gray[50]})`
+            background: `linear-gradient(to bottom, ${colorScheme.background}, ${colorScheme.gray[50]})`,
           }}
         >
           <div className="container mx-auto px-4 md:px-8">
             {/* Category Filter */}
             <div className="flex flex-wrap justify-center gap-4 mb-16">
-              {(['All', 'Music Videos', 'Visualizers', 'Live Sessions'] as const).map((category) => (
+              {(
+                ['All', 'Music Videos', 'Visualizers', 'Live Sessions'] as const
+              ).map(category => (
                 <motion.div
                   key={category}
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.05,
-                    backgroundColor: hoveredCategory === category ? colorScheme.primary : colorScheme.gray[100],
-                    color: hoveredCategory === category ? colorScheme.primary : colorScheme.primary
+                    backgroundColor:
+                      hoveredCategory === category
+                        ? colorScheme.primary
+                        : colorScheme.gray[100],
+                    color:
+                      hoveredCategory === category
+                        ? colorScheme.primary
+                        : colorScheme.primary,
                   }}
                   whileTap={{ scale: 0.95 }}
                   onMouseEnter={() => setHoveredCategory(category)}
                   onMouseLeave={() => setHoveredCategory(null)}
                 >
                   <CustomButton
-  variant={activeCategory === category ? "primary" : "secondary"}
-  onClick={() => {
-    setActiveCategory(category);
-    setCurrentPage(1);
-  }}
-  className="px-6 py-3 rounded-full flex items-center gap-3" // Increased gap from 2 to 3
->
-  <BoldText className="flex items-center gap-4"> {/* Added nested flex container */}
-    <FontAwesomeIcon icon={categoryIcons[category]} />
-    <span>{category}</span> {/* Wrapped text in span for better spacing control */}
-  </BoldText>
-</CustomButton>
+                    variant={
+                      activeCategory === category ? 'primary' : 'secondary'
+                    }
+                    onClick={() => {
+                      setActiveCategory(category);
+                      setCurrentPage(1);
+                    }}
+                    className="px-6 py-3 rounded-full flex items-center gap-3" // Increased gap from 2 to 3
+                  >
+                    <BoldText className="flex items-center gap-4">
+                      {' '}
+                      {/* Added nested flex container */}
+                      <FontAwesomeIcon icon={categoryIcons[category]} />
+                      <span>{category}</span>{' '}
+                      {/* Wrapped text in span for better spacing control */}
+                    </BoldText>
+                  </CustomButton>
                 </motion.div>
               ))}
             </div>
 
             {/* Video Grid */}
             {paginatedVideos.length > 0 ? (
-              <motion.div 
+              <motion.div
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                {paginatedVideos.map((video) => (
+                {paginatedVideos.map(video => (
                   <VideoCard
                     key={video.id}
                     content={video}
@@ -286,13 +305,13 @@ export const VideosData: React.FC = () => {
                   className="inline-block p-6 rounded-full mb-6"
                   style={{ backgroundColor: colorScheme.gray[100] }}
                 >
-                  <FontAwesomeIcon 
-                    icon={faVideo} 
+                  <FontAwesomeIcon
+                    icon={faVideo}
                     className="text-4xl"
                     style={{ color: colorScheme.primary }}
                   />
                 </motion.div>
-                <ExtraBoldText 
+                <ExtraBoldText
                   className="text-xl md:text-2xl mb-4"
                   style={{ color: colorScheme.primary }}
                 >
@@ -327,17 +346,17 @@ export const VideosData: React.FC = () => {
         </div>
 
         {/* Divider */}
-        <div 
+        <div
           className="relative h-24"
           style={{
-            backgroundColor: colorScheme.primary
+            backgroundColor: colorScheme.primary,
           }}
         >
-          <div 
+          <div
             className="absolute inset-0 flex items-center justify-center"
             style={{ backgroundColor: colorScheme.primary }}
           >
-            <div 
+            <div
               className="w-24 h-1"
               style={{ backgroundColor: `${colorScheme.white}30` }}
             ></div>

@@ -3,9 +3,18 @@ import axios from 'axios';
 import { BookingFormData } from '../types/booking';
 
 const MONTHS = [
-  'January','February','March','April',
-  'May','June','July','August',
-  'September','October','November','December'
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];
 
 const API_BASE =
@@ -30,23 +39,24 @@ export const submitBooking = async (data: BookingFormData) => {
       country: data.address.country,
       state: data.address.state,
       city: data.address.city,
-      zipCode: data.address.zipCode
-    }
+      zipCode: data.address.zipCode,
+    },
   };
 
   try {
     const response = await axios.post(BOOKINGS_ENDPOINT, payload, {
       headers: { 'Content-Type': 'application/json' },
-      timeout: 20000
+      timeout: 20000,
     });
     return response.data;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     let errorMessage = 'Failed to submit booking';
     if (axios.isAxiosError(error)) {
       if (error.response) {
-        errorMessage = error.response.data.message ||
-                       `Request failed with status ${error.response.status}`;
+        errorMessage =
+          error.response.data.message ||
+          `Request failed with status ${error.response.status}`;
       } else if (error.request) {
         errorMessage = 'No response received from server';
       } else {
@@ -61,9 +71,11 @@ export const submitBooking = async (data: BookingFormData) => {
 
 export const checkApiHealth = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/api/health`, { timeout: 5000 });
+    const response = await axios.get(`${API_BASE}/api/health`, {
+      timeout: 5000,
+    });
     return { status: 'healthy', data: response.data };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     return { status: 'unhealthy', error: error.message || 'Unknown error' };
   }

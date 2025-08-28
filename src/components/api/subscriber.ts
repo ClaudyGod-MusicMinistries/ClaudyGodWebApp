@@ -1,10 +1,9 @@
-
 const getApiBase = () => {
   if (import.meta.env.PROD) {
     return 'https://cgm-backend-5qvj.onrender.com';
   }
-  return window.location.origin.includes('localhost') 
-    ? 'http://localhost:10000' 
+  return window.location.origin.includes('localhost')
+    ? 'http://localhost:10000'
     : 'https://cgm-backend-5qvj.onrender.com';
 };
 
@@ -15,9 +14,9 @@ export async function subscribeToNewsletter({ name, email }) {
   try {
     const res = await fetch(SUBSCRIBE_ENDPOINT, {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        Accept: 'application/json',
       },
       body: JSON.stringify({ name, email }),
     });
@@ -29,7 +28,9 @@ export async function subscribeToNewsletter({ name, email }) {
       } catch (e) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
-      throw new Error(errorData.message || `Request failed with status ${res.status}`);
+      throw new Error(
+        errorData.message || `Request failed with status ${res.status}`
+      );
     }
 
     return await res.json();

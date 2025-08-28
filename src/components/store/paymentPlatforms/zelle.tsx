@@ -98,7 +98,7 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
             Send ${amount.toFixed(2)} using Zelle to complete your payment
           </p>
           <p className="text-xs text-blue-600 mt-1">
-            Your order  will be processed after payment confirmation
+            Your order will be processed after payment confirmation
           </p>
         </div>
       </div>
@@ -161,7 +161,9 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
               </span>{' '}
               in the memo/notes
             </li> */}
-            <li>Complete the transaction and paste the confirmation ID below</li>
+            <li>
+              Complete the transaction and paste the confirmation ID below
+            </li>
           </ol>
         )}
 
@@ -179,7 +181,7 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
               type="text"
               value={confirmationId}
               readOnly
-              onPaste={(e) => {
+              onPaste={e => {
                 e.preventDefault();
                 handlePaste();
               }}

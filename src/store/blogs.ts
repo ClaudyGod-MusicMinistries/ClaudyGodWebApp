@@ -23,10 +23,10 @@ const blogSlice = createSlice({
     openArticle: (state, action: PayloadAction<BlogPost>) => {
       state.currentArticle = action.payload;
     },
-    closeArticle: (state) => {
+    closeArticle: state => {
       state.currentArticle = null;
-    }
-  }
+    },
+  },
 });
 
 export const { openArticle, closeArticle } = blogSlice.actions;

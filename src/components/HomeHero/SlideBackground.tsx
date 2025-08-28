@@ -4,7 +4,7 @@ import { HeroSlide, imageVariants } from '../types/homeHero';
 const SlideBackground = ({
   slide,
   isMuted,
-  videoRef
+  videoRef,
 }: {
   slide: HeroSlide;
   isMuted: boolean;
@@ -28,7 +28,7 @@ const SlideBackground = ({
         <source src={slide.videoUrl} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-    ) : ( 
+    ) : (
       <div className="relative h-full w-full">
         {slide.imageUrlMobile && slide.imageUrlDesktop ? (
           <>
@@ -50,11 +50,13 @@ const SlideBackground = ({
             className="h-full w-full object-cover object-center"
           />
         )}
-        <div className={`absolute inset-0 ${
-          slide.type === 'cta' || slide.type === 'music' 
-            ? 'bg-gradient-to-t from-black/60 via-black/30 to-transparent'
-            : 'bg-gradient-to-t from-black/100 via-black/50 to-black/10'
-        }`} />
+        <div
+          className={`absolute inset-0 ${
+            slide.type === 'cta' || slide.type === 'music'
+              ? 'bg-gradient-to-t from-black/60 via-black/30 to-transparent'
+              : 'bg-gradient-to-t from-black/100 via-black/50 to-black/10'
+          }`}
+        />
       </div>
     )}
   </motion.div>

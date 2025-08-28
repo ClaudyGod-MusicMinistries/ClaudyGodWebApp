@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { motion } from "framer-motion";
-import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
-import { faSpotify, faApple, faYoutube, faDeezer } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useTheme } from "../../contexts/ThemeContext";
-import { BoldText, LightText, RegularText } from "../ui/fonts/typography";
+import { motion } from 'framer-motion';
+import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSpotify,
+  faApple,
+  faYoutube,
+  faDeezer,
+} from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTheme } from '../../contexts/ThemeContext';
+import { BoldText, LightText, RegularText } from '../ui/fonts/typography';
 
 export const MusicSlide = ({
   setIsModalOpen,
@@ -15,17 +20,17 @@ export const MusicSlide = ({
   const { colorScheme } = useTheme();
 
   const streamingPlatforms = [
-    { name: "Spotify", icon: faSpotify, url: "#" },
-    { name: "Apple Music", icon: faApple, url: "#" },
-    { name: "YouTube Music", icon: faYoutube, url: "#" },
-    { name: "Deezer", icon: faDeezer, url: "#" },
+    { name: 'Spotify', icon: faSpotify, url: '#' },
+    { name: 'Apple Music', icon: faApple, url: '#' },
+    { name: 'YouTube Music', icon: faYoutube, url: '#' },
+    { name: 'Deezer', icon: faDeezer, url: '#' },
   ];
 
   return (
     <div className="space-y-6 sm:space-y-8 md:space-y-12 w-full px-4 sm:px-6 lg:px-20 xl:px-28">
       {/* Title */}
       <motion.div>
-        <BoldText  
+        <BoldText
           style={{ color: colorScheme.heading }}
           fontSize="40px"
           className="text-left leading-tight drop-shadow-[0_6px_12px_rgba(0,0,0,0.9)]"
@@ -37,7 +42,7 @@ export const MusicSlide = ({
       {/* Mobile View */}
       <div className="md:hidden space-y-6 mt-6">
         <motion.div
-          style={{background:colorScheme.background}}
+          style={{ background: colorScheme.background }}
           className="w-10 sm:w-16 h-1  rounded-full"
         />
 
@@ -55,9 +60,9 @@ export const MusicSlide = ({
           <button
             onClick={() => setIsModalOpen(true)}
             className="shadow-lg py-3 sm:py-4 text-base sm:text-lg w-full rounded-lg font-medium"
-            style={{ 
+            style={{
               backgroundColor: colorScheme.primary,
-              color: colorScheme.buttonText || '#fff'
+              color: colorScheme.buttonText || '#fff',
             }}
           >
             Stream across platforms
@@ -82,8 +87,8 @@ export const MusicSlide = ({
               style={{ color: colorScheme.textSecondary }}
               fontSize="30px"
             >
-              Dive into spiritual worship through sacred melodies that uplift the
-              soul and glorify His name
+              Dive into spiritual worship through sacred melodies that uplift
+              the soul and glorify His name
             </LightText>
           </motion.div>
 
@@ -99,7 +104,7 @@ export const MusicSlide = ({
                 className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full flex items-center justify-center shadow-2xl"
                 style={{
                   backgroundColor: `${colorScheme.primary}40`,
-                  backdropFilter: "blur(12px)",
+                  backdropFilter: 'blur(12px)',
                 }}
               >
                 <button
@@ -115,7 +120,7 @@ export const MusicSlide = ({
                 </button>
               </div>
             </motion.div>
-            
+
             <h2
               className="tracking-widest drop-shadow-[0_3px_6px_rgba(0,0,0,0.8)] font-extrabold text-xl md:text-2xl lg:text-3xl"
               style={{ color: colorScheme.text }}
@@ -127,7 +132,7 @@ export const MusicSlide = ({
           {/* Streaming Platforms */}
           <motion.div className="space-y-8 mt-12 w-full max-w-6xl ml-0">
             <BoldText
-              style={{ color: colorScheme.accent}}
+              style={{ color: colorScheme.accent }}
               className="tracking-wide drop-shadow-[0_3px_6px_rgba(0,0,0,0.8)]"
             >
               STREAM EVERYWHERE
@@ -135,9 +140,9 @@ export const MusicSlide = ({
 
             {/* Improved Streaming Platforms Grid */}
             <div className="flex flex-wrap gap-4 lg:gap-6 justify-start">
-              {streamingPlatforms.map((platform) => (
-                <motion.div 
-                  key={platform.name} 
+              {streamingPlatforms.map(platform => (
+                <motion.div
+                  key={platform.name}
                   whileHover={{ y: -8 }}
                   className="flex-none min-w-[180px] max-w-[240px] flex-grow"
                 >
@@ -147,8 +152,9 @@ export const MusicSlide = ({
                     rel="noopener noreferrer"
                     className="px-4 lg:px-6 py-3 lg:py-4 shadow-lg hover:shadow-xl flex items-center justify-start gap-3 rounded-lg transition-all"
                     style={{
-                      backgroundColor: colorScheme.background || 'rgba(255, 255, 255, 0.1)',
-                      color: colorScheme.text
+                      backgroundColor:
+                        colorScheme.background || 'rgba(255, 255, 255, 0.1)',
+                      color: colorScheme.text,
                     }}
                   >
                     <FontAwesomeIcon

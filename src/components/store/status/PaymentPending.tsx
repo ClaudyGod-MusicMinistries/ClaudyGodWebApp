@@ -37,7 +37,7 @@ export const PaymentPending: React.FC = () => {
 
     // If nothing happens after 30 s mark as failed
     const failTimer = setTimeout(() => {
-      setStatus((prev) => (prev === 'pending' ? 'failed' : prev));
+      setStatus(prev => (prev === 'pending' ? 'failed' : prev));
     }, 30000);
 
     return () => {

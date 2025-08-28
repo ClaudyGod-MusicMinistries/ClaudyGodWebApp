@@ -3,24 +3,30 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CountryCode } from '@/components/types/booking';
 import { MapPin, Home, Map } from 'lucide-react';
 
-export const LocationSection = ({ 
-  states, 
-  cities, 
+export const LocationSection = ({
+  states,
+  cities,
   country,
-  COUNTRY_STATE_CITY_DATA
-}: { 
-  states: string[]; 
-  cities: string[]; 
+  COUNTRY_STATE_CITY_DATA,
+}: {
+  states: string[];
+  cities: string[];
   country: CountryCode;
   COUNTRY_STATE_CITY_DATA: any;
 }) => {
-  const { control, formState: { errors } } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label htmlFor="address.address1" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+          <label
+            htmlFor="address.address1"
+            className="block text-sm font-medium text-gray-700 mb-1 flex items-center"
+          >
             <Home className="h-4 w-4 mr-2 text-purple-700" />
             Address 1
           </label>
@@ -42,14 +48,23 @@ export const LocationSection = ({
           </div>
           <AnimatePresence>
             {errors.address?.address1 && (
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 className="text-red-500 text-xs mt-1.5 flex items-center"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 mr-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                    clipRule="evenodd"
+                  />
                 </svg>
                 {errors.address.address1.message}
               </motion.p>
@@ -57,7 +72,10 @@ export const LocationSection = ({
           </AnimatePresence>
         </div>
         <div>
-          <label htmlFor="address.address2" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+          <label
+            htmlFor="address.address2"
+            className="block text-sm font-medium text-gray-700 mb-1 flex items-center"
+          >
             <Home className="h-4 w-4 mr-2 text-purple-700" />
             Address 2 (Optional)
           </label>
@@ -98,7 +116,9 @@ export const LocationSection = ({
                   >
                     <option value="">Country</option>
                     {Object.keys(COUNTRY_STATE_CITY_DATA).map(country => (
-                      <option key={country} value={country}>{country}</option>
+                      <option key={country} value={country}>
+                        {country}
+                      </option>
                     ))}
                   </select>
                 )}
@@ -107,28 +127,46 @@ export const LocationSection = ({
                 <MapPin className="h-5 w-5 text-gray-400" />
               </div>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                <svg
+                  className="h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
             </div>
             <AnimatePresence>
               {errors.address?.country && (
-                <motion.p 
+                <motion.p
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   className="text-red-500 text-xs mt-1.5 flex items-center"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 mr-1"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   {errors.address.country.message}
                 </motion.p>
               )}
             </AnimatePresence>
           </div>
-          
+
           <div>
             <div className="relative">
               <Controller
@@ -142,7 +180,9 @@ export const LocationSection = ({
                   >
                     <option value="">State</option>
                     {states.map(state => (
-                      <option key={state} value={state}>{state}</option>
+                      <option key={state} value={state}>
+                        {state}
+                      </option>
                     ))}
                   </select>
                 )}
@@ -151,28 +191,46 @@ export const LocationSection = ({
                 <MapPin className="h-5 w-5 text-gray-400" />
               </div>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                <svg
+                  className="h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
             </div>
             <AnimatePresence>
               {errors.address?.state && (
-                <motion.p 
+                <motion.p
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   className="text-red-500 text-xs mt-1.5 flex items-center"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 mr-1"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   {errors.address.state.message}
                 </motion.p>
               )}
             </AnimatePresence>
           </div>
-          
+
           <div>
             <div className="relative">
               <Controller
@@ -186,7 +244,9 @@ export const LocationSection = ({
                   >
                     <option value="">City</option>
                     {cities.map(city => (
-                      <option key={city} value={city}>{city}</option>
+                      <option key={city} value={city}>
+                        {city}
+                      </option>
                     ))}
                   </select>
                 )}
@@ -195,21 +255,39 @@ export const LocationSection = ({
                 <MapPin className="h-5 w-5 text-gray-400" />
               </div>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                <svg
+                  className="h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
             </div>
             <AnimatePresence>
               {errors.address?.city && (
-                <motion.p 
+                <motion.p
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   className="text-red-500 text-xs mt-1.5 flex items-center"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M18 10a8 8 极 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 mr-1"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 极 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   {errors.address.city.message}
                 </motion.p>
@@ -220,7 +298,10 @@ export const LocationSection = ({
       </div>
 
       <div>
-        <label htmlFor="address.zipCode" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+        <label
+          htmlFor="address.zipCode"
+          className="block text-sm font-medium text-gray-700 mb-1 flex items-center"
+        >
           <MapPin className="h-4 w-4 mr-2 text-purple-700" />
           ZIP / Postal Code
         </label>
@@ -233,10 +314,13 @@ export const LocationSection = ({
                 {...field}
                 className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 placeholder={
-                  country === 'US' ? 'e.g. 12345 or 12345-6789' :
-                  country === 'CA' ? 'e.g. A1B 2C3' :
-                  country === 'UK' ? 'e.g. SW1A 1AA' :
-                  'e.g. 123456'
+                  country === 'US'
+                    ? 'e.g. 12345 or 12345-6789'
+                    : country === 'CA'
+                      ? 'e.g. A1B 2C3'
+                      : country === 'UK'
+                        ? 'e.g. SW1A 1AA'
+                        : 'e.g. 123456'
                 }
               />
             )}
@@ -247,14 +331,23 @@ export const LocationSection = ({
         </div>
         <AnimatePresence>
           {errors.address?.zipCode && (
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               className="text-red-500 text-xs mt-1.5 flex items-center"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 mr-1"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                  clipRule="evenodd"
+                />
               </svg>
               {errors.address.zipCode.message}
             </motion.p>

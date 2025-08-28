@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import {
@@ -35,7 +37,7 @@ export const StripePayment: React.FC<StripeStepProps> = ({
   const [paymentCompleted, setPaymentCompleted] = useState(false);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
   const paymentWindowRef = useRef<Window | null>(null);
-  
+
   const formatAmount = (value: number) =>
     new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -46,7 +48,7 @@ export const StripePayment: React.FC<StripeStepProps> = ({
   // Generate the Stripe payment link with prefilled values and amount
   const generateStripeUrl = (): string => {
     const baseUrl = 'https://donate.stripe.com/test_eVq6oJdfKfC1fT98TIdfG01';
-    
+
     const params = new URLSearchParams({
       amount: (amount * 100).toString(), // Stripe uses cents
       currency: currency.toLowerCase(),
@@ -56,18 +58,18 @@ export const StripePayment: React.FC<StripeStepProps> = ({
     if (donorInfo.email) {
       params.append('prefilled_email', donorInfo.email);
     }
-    
+
     if (donorInfo.name) {
       params.append('prefilled_name', donorInfo.name);
     }
-    
+
     if (donorInfo.phone) {
       params.append('prefilled_phone', donorInfo.phone);
     }
 
     // Add amount as a query parameter
     params.append('amount', (amount * 100).toString());
-    
+
     return `${baseUrl}?${params.toString()}`;
   };
 
@@ -75,14 +77,14 @@ export const StripePayment: React.FC<StripeStepProps> = ({
     const handleMessage = (e: MessageEvent) => {
       if (e.data === 'stripePaymentCompleted') handleComplete();
     };
-    
+
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
   }, []);
 
   useEffect(() => {
     if (!paymentWindowRef.current) return;
-    
+
     const timer = setInterval(() => {
       if (paymentWindowRef.current?.closed) {
         clearInterval(timer);
@@ -93,19 +95,23 @@ export const StripePayment: React.FC<StripeStepProps> = ({
         }
       }
     }, 500);
-    
+
     return () => clearInterval(timer);
   }, [paymentCompleted]);
 
   const handleRedirect = () => {
     if (paymentCompleted) return onSuccess();
-    
+
     if (paymentStatus === 'canceled') {
       setPaymentStatus('idle');
       setShowCancelDialog(false);
     }
-    
-    const popup = window.open('', 'stripe', 'width=800,height=600,scrollbars=yes');
+
+    const popup = window.open(
+      '',
+      'stripe',
+      'width=800,height=600,scrollbars=yes'
+    );
     if (!popup) {
       toast.error('Enable pop‑ups to continue with Stripe');
       return;
@@ -185,7 +191,7 @@ export const StripePayment: React.FC<StripeStepProps> = ({
             </h3>
             <p className="text-gray-600">{statusContent.description}</p>
           </div>
-          
+
           {paymentStatus === 'idle' && !paymentCompleted && (
             <div className="bg-purple-50 rounded-lg p-4 mb-6 border border-purple-100">
               <div className="flex justify-between">
@@ -196,11 +202,13 @@ export const StripePayment: React.FC<StripeStepProps> = ({
               </div>
             </div>
           )}
-          
+
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={onBack}
-              disabled={paymentStatus !== 'idle' && paymentStatus !== 'canceled'}
+              disabled={
+                paymentStatus !== 'idle' && paymentStatus !== 'canceled'
+              }
               className={`px-5 py-3 rounded-lg text-gray-700 border ${
                 paymentStatus !== 'idle' && paymentStatus !== 'canceled'
                   ? 'opacity-50 cursor-not-allowed'
@@ -232,8 +240,8 @@ export const StripePayment: React.FC<StripeStepProps> = ({
                 paymentCompleted
                   ? 'bg-green-600 hover:bg-green-700'
                   : paymentStatus === 'canceled'
-                  ? 'bg-yellow-600 hover:bg-yellow-700'
-                  : 'bg-purple-600 hover:bg-purple-700'
+                    ? 'bg-yellow-600 hover:bg-yellow-700'
+                    : 'bg-purple-600 hover:bg-purple-700'
               } ${
                 paymentStatus === 'popupOpen' ||
                 (paymentStatus === 'idle' && paymentCompleted)
@@ -271,7 +279,10 @@ export const StripePayment: React.FC<StripeStepProps> = ({
       >
         <div className="min-h-screen px-4 text-center">
           <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-          <span className="inline-block h-screen align-middle" aria-hidden="true">
+          <span
+            className="inline-block h-screen align-middle"
+            aria-hidden="true"
+          >
             &#8203;
           </span>
           <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle bg-white shadow-xl rounded-2xl">

@@ -30,45 +30,41 @@ export const useCartStore = create<CartStore>()(
       items: [],
       isOpen: false,
 
-      addItem: (item) =>
-        set((state) => {
-          const existing = state.items.find((i) => i.id === item.id);
+      addItem: item =>
+        set(state => {
+          const existing = state.items.find(i => i.id === item.id);
           if (existing) {
             return {
-              items: state.items.map((i) =>
-                i.id === item.id
-                  ? { ...i, quantity: i.quantity + 1 }
-                  : i
+              items: state.items.map(i =>
+                i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
               ),
             };
           }
           return { items: [...state.items, { ...item, quantity: 1 }] };
         }),
 
-      removeItem: (id) =>
-        set((state) => ({
-          items: state.items.filter((i) => i.id !== id),
+      removeItem: id =>
+        set(state => ({
+          items: state.items.filter(i => i.id !== id),
         })),
 
       updateQuantity: (id, quantity) =>
-        set((state) => {
+        set(state => {
           if (quantity <= 0) {
-            return { items: state.items.filter((i) => i.id !== id) };
+            return { items: state.items.filter(i => i.id !== id) };
           }
           return {
-            items: state.items.map((i) =>
-              i.id === id ? { ...i, quantity } : i
-            ),
+            items: state.items.map(i => (i.id === id ? { ...i, quantity } : i)),
           };
         }),
 
       clearCart: () => set({ items: [] }),
-      toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
+      toggleCart: () => set(state => ({ isOpen: !state.isOpen })),
       closeCart: () => set({ isOpen: false }),
     }),
     {
       name: 'cart-storage',
-      partialize: (state) => ({ items: state.items }),
+      partialize: state => ({ items: state.items }),
     }
   )
 );

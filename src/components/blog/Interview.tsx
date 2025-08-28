@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faAnglesDown, 
-  faPlay, 
-  faCalendarAlt, 
+import {
+  faAnglesDown,
+  faPlay,
+  faCalendarAlt,
   faClock,
-  faArrowRight
+  faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { setCurrentVideo } from '../../store/interviewSlice';
@@ -19,14 +19,14 @@ const Interview = () => {
   const [loadingThumbnails, setLoadingThumbnails] = useState(true);
   const thumbnailRefs = useRef<(HTMLImageElement | null)[]>([]);
 
-  const handleVideoClick = (video: typeof videos[0]) => {
+  const handleVideoClick = (video: (typeof videos)[0]) => {
     dispatch(setCurrentVideo(video));
   };
 
   const scrollToSection = () => {
-    videoSectionRef.current?.scrollIntoView({ 
+    videoSectionRef.current?.scrollIntoView({
       behavior: 'smooth',
-      block: 'center'
+      block: 'center',
     });
   };
 
@@ -36,7 +36,8 @@ const Interview = () => {
       if (img.src.includes('hqdefault')) {
         img.src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
       } else {
-        img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180" viewBox="0 0 320 180"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%231a1a2e"/><stop offset="100%" stop-color="%23162146"/></linearGradient></defs><rect width="320" height="180" fill="url(%23grad)"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="16" fill="%23ffffff">Thumbnail Loading</text></svg>';
+        img.src =
+          'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180" viewBox="0 0 320 180"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%231a1a2e"/><stop offset="100%" stop-color="%23162146"/></linearGradient></defs><rect width="320" height="180" fill="url(%23grad)"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="16" fill="%23ffffff">Thumbnail Loading</text></svg>';
       }
     }
   };
@@ -57,7 +58,7 @@ const Interview = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-gray-950 z-0">
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10"></div>
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 relative z-10">
           <div className="text-center">
             <motion.div
@@ -69,19 +70,22 @@ const Interview = () => {
                 Ministry Interviews
               </h1>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed">
-                Exclusive conversations and insights from Minister ClaudyGod's ministry journey
+                Exclusive conversations and insights from Minister ClaudyGod's
+                ministry journey
               </p>
-              
+
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={scrollToSection}
                 className="relative group inline-flex items-center justify-center px-8 py-4 font-medium text-white transition-all duration-300 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg hover:shadow-purple-500/20"
               >
-                <span className="relative z-10 text-lg tracking-wider">Watch Interviews</span>
-                <FontAwesomeIcon 
-                  icon={faAnglesDown} 
-                  className="ml-3 h-5 w-5 animate-bounce group-hover:animate-none transition-all z-10" 
+                <span className="relative z-10 text-lg tracking-wider">
+                  Watch Interviews
+                </span>
+                <FontAwesomeIcon
+                  icon={faAnglesDown}
+                  className="ml-3 h-5 w-5 animate-bounce group-hover:animate-none transition-all z-10"
                 />
                 <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
               </motion.button>
@@ -91,10 +95,7 @@ const Interview = () => {
       </section>
 
       {/* Video Gallery Section */}
-      <section 
-        ref={videoSectionRef}
-        className="relative py-20 bg-gray-950"
-      >
+      <section ref={videoSectionRef} className="relative py-20 bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <motion.div
@@ -119,7 +120,7 @@ const Interview = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+                viewport={{ once: true, margin: '0px 0px -100px 0px' }}
                 whileHover={{ y: -8 }}
                 className="group cursor-pointer"
                 onClick={() => handleVideoClick(video)}
@@ -132,8 +133,8 @@ const Interview = () => {
                         <div className="w-12 h-12 rounded-full bg-purple-900/50 animate-ping"></div>
                       </div>
                     )}
-                    <img 
-                      ref={el => thumbnailRefs.current[index] = el}
+                    <img
+                      ref={el => (thumbnailRefs.current[index] = el)}
                       src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
                       alt={video.title}
                       className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${loadingThumbnails ? 'opacity-0' : 'opacity-100'}`}
@@ -143,44 +144,54 @@ const Interview = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="h-16 w-16 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all shadow-lg">
-                        <FontAwesomeIcon 
-                          icon={faPlay} 
-                          className="text-white text-xl ml-1" 
+                        <FontAwesomeIcon
+                          icon={faPlay}
+                          className="text-white text-xl ml-1"
                         />
                       </div>
                     </div>
                     <div className="absolute bottom-0 left-0 w-full p-5">
                       <div className="flex justify-between items-start">
-                        <h3 className="text-lg font-semibold text-white line-clamp-2">{video.title}</h3>
+                        <h3 className="text-lg font-semibold text-white line-clamp-2">
+                          {video.title}
+                        </h3>
                         <span className="text-xs text-white bg-purple-900/80 px-2 py-1 rounded-full flex-shrink-0">
                           {video.duration}
                         </span>
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Video Info */}
                   <div className="p-6">
                     <div className="flex justify-between items-center mb-4">
                       <span className="text-sm text-gray-400 flex items-center">
-                        <FontAwesomeIcon icon={faCalendarAlt} className="h-4 w-4 mr-2 text-purple-400" />
+                        <FontAwesomeIcon
+                          icon={faCalendarAlt}
+                          className="h-4 w-4 mr-2 text-purple-400"
+                        />
                         {video.date}
                       </span>
                       <span className="text-xs bg-purple-900/30 px-3 py-1 rounded-full border border-purple-500/20">
                         {video.channel}
                       </span>
                     </div>
-                    <p className="text-gray-300 text-sm mb-5 line-clamp-3">{video.description}</p>
+                    <p className="text-gray-300 text-sm mb-5 line-clamp-3">
+                      {video.description}
+                    </p>
                     <div className="flex items-center justify-between">
                       <span className="text-purple-400 text-sm font-medium flex items-center group-hover:text-purple-300 transition-colors">
                         Watch Interview
-                        <FontAwesomeIcon 
-                          icon={faArrowRight} 
-                          className="ml-2 text-xs transition-transform group-hover:translate-x-1" 
+                        <FontAwesomeIcon
+                          icon={faArrowRight}
+                          className="ml-2 text-xs transition-transform group-hover:translate-x-1"
                         />
                       </span>
                       <span className="text-gray-500 text-xs flex items-center">
-                        <FontAwesomeIcon icon={faClock} className="h-3 w-3 mr-1" />
+                        <FontAwesomeIcon
+                          icon={faClock}
+                          className="h-3 w-3 mr-1"
+                        />
                         {video.duration}
                       </span>
                     </div>

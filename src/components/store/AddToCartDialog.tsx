@@ -2,16 +2,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Product } from '../types/storeTypes';
 import { RegularText } from '../ui/fonts/typography';
-import  CustomButton  from '../ui/fonts/buttons/CustomButton';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
 
 interface AddToCartDialogProps {
   dialogProduct: Product | null;
   setDialogProduct: (product: Product | null) => void;
 }
 
-export const AddToCartDialog = ({ 
-  dialogProduct, 
-  setDialogProduct 
+export const AddToCartDialog = ({
+  dialogProduct,
+  setDialogProduct,
 }: AddToCartDialogProps) => {
   if (!dialogProduct) return null;
 
@@ -24,9 +24,9 @@ export const AddToCartDialog = ({
         >
           <FontAwesomeIcon icon={faXmark} size="lg" />
         </button>
-        
+
         <div className="text-center">
-          <RegularText 
+          <RegularText
             as="h3"
             fontSize="1.25rem"
             fontWeight="bold"
@@ -34,15 +34,15 @@ export const AddToCartDialog = ({
           >
             Item Added to Cart
           </RegularText>
-          
+
           <RegularText className="mb-2 text-gray-700">
             {dialogProduct.name}
           </RegularText>
-          
+
           <RegularText fontWeight="medium" className="text-gray-900">
             ${dialogProduct.price.toFixed(2)}
           </RegularText>
-          
+
           <div className="mt-6">
             <CustomButton
               onClick={() => setDialogProduct(null)}

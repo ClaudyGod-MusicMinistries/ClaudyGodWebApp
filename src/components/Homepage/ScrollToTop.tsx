@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
@@ -17,7 +17,7 @@ export const ScrollToTop = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   };
 
@@ -27,7 +27,7 @@ export const ScrollToTop = () => {
   }, []);
 
   return (
-    <motion.div 
+    <motion.div
       className="fixed bottom-8 right-8 z-50"
       initial={{ opacity: 0 }}
       animate={{ opacity: isVisible ? 1 : 0 }}

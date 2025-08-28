@@ -21,7 +21,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
   return (
     <div className="container mx-auto px-4 md:px-8 py-8">
       <div className="flex flex-wrap justify-center gap-4">
-        {categories.map((category) => (
+        {categories.map(category => (
           <motion.button
             key={category.id}
             whileHover={{ scale: 1.05 }}

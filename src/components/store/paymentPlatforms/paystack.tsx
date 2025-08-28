@@ -9,7 +9,10 @@ interface PaystackPaymentProps {
   onNext: () => void;
 }
 
-export const PaystackPayment: React.FC<PaystackPaymentProps> = ({ amount, onNext }) => {
+export const PaystackPayment: React.FC<PaystackPaymentProps> = ({
+  amount,
+  onNext,
+}) => {
   const [email, setEmail] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const { currentOrder, confirmPayment } = useOrderStore();
@@ -17,19 +20,19 @@ export const PaystackPayment: React.FC<PaystackPaymentProps> = ({ amount, onNext
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
-    
+
     try {
       // Simulate Paystack payment initialization
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       // Generate mock Paystack reference
       const mockReference = `ps_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      
+
       // Update order with payment info
       if (currentOrder) {
         await confirmPayment(currentOrder.orderId, {
           method: 'paystack',
-          paystackReference: mockReference
+          paystackReference: mockReference,
         });
       }
 
@@ -42,7 +45,7 @@ export const PaystackPayment: React.FC<PaystackPaymentProps> = ({ amount, onNext
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="space-y-6"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -61,7 +64,9 @@ export const PaystackPayment: React.FC<PaystackPaymentProps> = ({ amount, onNext
             <CreditCard className="h-6 w-6" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">Paystack Payment</h3>
+            <h3 className="text-lg font-semibold text-gray-900">
+              Paystack Payment
+            </h3>
             <p className="text-sm text-gray-600">
               Amount: ₦{(amount * 1500).toLocaleString()} (${amount.toFixed(2)})
             </p>
@@ -76,7 +81,7 @@ export const PaystackPayment: React.FC<PaystackPaymentProps> = ({ amount, onNext
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
               placeholder="your.email@example.com"
               required
@@ -88,7 +93,9 @@ export const PaystackPayment: React.FC<PaystackPaymentProps> = ({ amount, onNext
           </div>
 
           <div className="bg-gray-50 p-4 rounded-lg">
-            <h4 className="font-medium text-gray-900 mb-2">Accepted Payment Methods:</h4>
+            <h4 className="font-medium text-gray-900 mb-2">
+              Accepted Payment Methods:
+            </h4>
             <ul className="text-sm text-gray-600 space-y-1">
               <li>• Visa, Mastercard, Verve cards</li>
               <li>• Bank transfers (all Nigerian banks)</li>
@@ -106,9 +113,25 @@ export const PaystackPayment: React.FC<PaystackPaymentProps> = ({ amount, onNext
           >
             {isProcessing ? (
               <>
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <svg
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
                 </svg>
                 Processing...
               </>

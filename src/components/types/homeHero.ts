@@ -29,10 +29,10 @@ export const textVariants: Variants = {
     transition: {
       type: 'spring',
       stiffness: 120,
-      damping: 10
+      damping: 10,
       // 🔥 removed duration, since spring ignores it
-    }
-  }
+    },
+  },
 };
 
 export const imageVariants: Variants = {
@@ -42,26 +42,26 @@ export const imageVariants: Variants = {
     opacity: 1,
     transition: {
       duration: 1.2,
-      ease: 'easeInOut'
-    }
-  }
+      ease: 'easeInOut',
+    },
+  },
 };
 
 export const slideVariants: Variants = {
   enter: (direction: number) => ({
     x: direction > 0 ? '100%' : '-100%',
-    opacity: 0
+    opacity: 0,
   }),
   center: {
     x: 0,
     opacity: 1,
-    transition: { duration: 0.8, ease: 'easeInOut' }
+    transition: { duration: 0.8, ease: 'easeInOut' },
   },
   exit: (direction: number) => ({
     x: direction > 0 ? '-100%' : '100%',
     opacity: 0,
-    transition: { duration: 0.8, ease: 'easeInOut' }
-  })
+    transition: { duration: 0.8, ease: 'easeInOut' },
+  }),
 };
 
 export const modalVariants: Variants = {
@@ -72,14 +72,14 @@ export const modalVariants: Variants = {
     transition: {
       type: 'spring',
       damping: 25,
-      stiffness: 300
-    }
+      stiffness: 300,
+    },
   },
   exit: {
     opacity: 0,
     scale: 0.8,
     transition: {
-      duration: 0.2
-    }
-  }
+      duration: 0.2,
+    },
+  },
 };

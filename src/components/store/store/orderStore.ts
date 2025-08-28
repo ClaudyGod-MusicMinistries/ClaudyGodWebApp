@@ -7,7 +7,7 @@
 //   currentOrder: Order | null;
 //   isLoading: boolean;
 //   error: string | null;
-  
+
 //   createOrder: (items: CartItem[], shipping: ShippingInfo, paymentMethod: string) => Promise<string>;
 //   getOrder: (orderId: string) => Promise<Order | null>;
 //   confirmPayment: (orderId: string, paymentInfo: PaymentInfo) => Promise<void>;
@@ -20,13 +20,13 @@
 //   currentOrder: null,
 //   isLoading: false,
 //   error: null,
-  
+
 //   createOrder: async (items: CartItem[], shipping: ShippingInfo, paymentMethod: string) => {
 //     set({ isLoading: true, error: null });
-    
+
 //     try {
 //       const total = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      
+
 //       const orderData = {
 //         amount: total,
 //         shipping,
@@ -40,7 +40,7 @@
 //       };
 
 //       const response = await apiService.createOrder(orderData);
-      
+
 //       if (response.success && response.orderId) {
 //         const order: Order = {
 //           id: response.orderId,
@@ -54,13 +54,13 @@
 //           status: 'pending',
 //           createdAt: new Date()
 //         };
-        
+
 //         set(state => ({
 //           orders: [...state.orders, order],
 //           currentOrder: order,
 //           isLoading: false
 //         }));
-        
+
 //         return response.orderId;
 //       } else {
 //         throw new Error('Failed to create order');
@@ -71,13 +71,13 @@
 //       throw error;
 //     }
 //   },
-  
+
 //   getOrder: async (orderId: string) => {
 //     set({ isLoading: true, error: null });
-    
+
 //     try {
 //       const response = await apiService.getOrder(orderId);
-      
+
 //       if (response) {
 //         const order: Order = {
 //           id: response.orderId,
@@ -91,11 +91,11 @@
 //           status: response.status || 'pending',
 //           createdAt: new Date(response.createdAt)
 //         };
-        
+
 //         set({ currentOrder: order, isLoading: false });
 //         return order;
 //       }
-      
+
 //       return null;
 //     } catch (error) {
 //       const errorMessage = error instanceof Error ? error.message : 'Failed to fetch order';
@@ -103,25 +103,25 @@
 //       return null;
 //     }
 //   },
-  
+
 //   confirmPayment: async (orderId: string, paymentInfo: PaymentInfo) => {
 //     set({ isLoading: true, error: null });
-    
+
 //     try {
-//       const confirmation = paymentInfo.zelleConfirmation || 
-//                           paymentInfo.paypalTxnId || 
-//                           paymentInfo.stripePaymentIntentId || 
-//                           paymentInfo.paystackReference || 
+//       const confirmation = paymentInfo.zelleConfirmation ||
+//                           paymentInfo.paypalTxnId ||
+//                           paymentInfo.stripePaymentIntentId ||
+//                           paymentInfo.paystackReference ||
 //                           paymentInfo.bankTransferReference || '';
-      
+
 //       await apiService.confirmPayment(orderId, {
 //         paymentMethod: paymentInfo.method,
 //         confirmation
 //       });
-      
+
 //       set(state => ({
 //         orders: state.orders.map(order =>
-//           order.orderId === orderId 
+//           order.orderId === orderId
 //             ? { ...order, status: 'confirmed', paymentInfo }
 //             : order
 //         ),
@@ -133,7 +133,7 @@
 //       throw error;
 //     }
 //   },
-  
+
 //   updateOrderStatus: (orderId: string, status: Order['status']) => {
 //     set(state => ({
 //       orders: state.orders.map(order =>
@@ -141,7 +141,7 @@
 //       )
 //     }));
 //   },
-  
+
 //   clearError: () => {
 //     set({ error: null });
 //   }

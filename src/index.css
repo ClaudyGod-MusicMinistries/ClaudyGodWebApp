@@ -1,15 +1,13 @@
-
-
-@import "tailwindcss";
-@import "./components/ui/fonts/fonts/Font.css";
+@import 'tailwindcss';
+@import './components/ui/fonts/fonts/Font.css';
 
 @font-face {
-  font-family: "Work Sans";
-  src: url("./components/ui/fonts/fonts/WorkSans-Medium.ttf") format("truetype");
+  font-family: 'Work Sans';
+  src: url('./components/ui/fonts/fonts/WorkSans-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
 
 body {
-  font-family: "Work Sans", system-ui, sans-serif;
+  font-family: 'Work Sans', system-ui, sans-serif;
 }

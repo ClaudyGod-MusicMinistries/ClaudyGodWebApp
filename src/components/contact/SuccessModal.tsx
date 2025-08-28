@@ -13,7 +13,8 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose }) => {
       <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4 text-center shadow-lg">
         <h2 className="text-xl font-semibold mb-4">Thank You!</h2>
         <p className="text-gray-700 mb-6">
-          Thank you for contacting us, our team will get back to you as soon as possible.
+          Thank you for contacting us, our team will get back to you as soon as
+          possible.
         </p>
         <button
           onClick={onClose}

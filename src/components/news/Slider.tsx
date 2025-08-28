@@ -26,7 +26,7 @@ export const HeroSlider = () => {
     setIsClient(true);
 
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setCurrentSlide(prev => (prev + 1) % slides.length);
     }, 7000);
 
     return () => clearInterval(timer);
@@ -78,18 +78,18 @@ export const HeroSlider = () => {
           </motion.div>
         </AnimatePresence>
       </div>
-      
+
       {/* Floating dropdown arrow */}
-      <motion.div 
+      <motion.div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 cursor-pointer"
         initial={{ opacity: 0, y: -10 }}
-        animate={{ 
-          opacity: 1, 
+        animate={{
+          opacity: 1,
           y: 0,
-          transition: { 
+          transition: {
             delay: 1.5,
-            duration: 0.5 
-          } 
+            duration: 0.5,
+          },
         }}
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.9 }}
@@ -102,9 +102,9 @@ export const HeroSlider = () => {
         //   }
         // }}
       >
-        <FontAwesomeIcon 
-          icon={faArrowDown} 
-          className="w-8 h-8 text-purple-400" 
+        <FontAwesomeIcon
+          icon={faArrowDown}
+          className="w-8 h-8 text-purple-400"
         />
       </motion.div>
     </div>

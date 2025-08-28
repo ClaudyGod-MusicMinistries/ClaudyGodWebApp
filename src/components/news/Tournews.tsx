@@ -10,16 +10,22 @@ export const FollowUs: React.FC = () => {
   const { colorScheme } = useTheme();
 
   return (
-    <section 
+    <section
       className="py-12 md:py-24 relative overflow-hidden"
       style={{
-        background: `linear-gradient(to bottom, ${colorScheme.text}, ${colorScheme.surface}, ${colorScheme.surfaceVariant})`
+        background: `linear-gradient(to bottom, ${colorScheme.text}, ${colorScheme.surface}, ${colorScheme.surfaceVariant})`,
       }}
     >
       {/* Background decorative elements */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-10 left-10 w-48 h-48 md:w-72 md:h-72 rounded-full" style={{ backgroundColor: colorScheme.accent }}></div>
-        <div className="absolute bottom-10 right-10 w-64 h-64 md:w-96 md:h-96 rounded-full" style={{ backgroundColor: colorScheme.primary }}></div>
+        <div
+          className="absolute top-10 left-10 w-48 h-48 md:w-72 md:h-72 rounded-full"
+          style={{ backgroundColor: colorScheme.accent }}
+        ></div>
+        <div
+          className="absolute bottom-10 right-10 w-64 h-64 md:w-96 md:h-96 rounded-full"
+          style={{ backgroundColor: colorScheme.primary }}
+        ></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -29,17 +35,18 @@ export const FollowUs: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <ExtraBoldText 
+            <ExtraBoldText
               fontSize="2rem"
               mdFontSize="3rem"
               lgFontSize="3.5rem"
               className="mb-4 md:mb-6"
               style={{ color: colorScheme.background }}
             >
-              Stay Connected with <span style={{ color: colorScheme.accent }}>ClaudyGod</span>
+              Stay Connected with{' '}
+              <span style={{ color: colorScheme.accent }}>ClaudyGod</span>
             </ExtraBoldText>
           </motion.div>
-          
+
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '6rem' }}
@@ -53,15 +60,16 @@ export const FollowUs: React.FC = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.5 }}
           >
-            <RegularText 
+            <RegularText
               fontSize="0.9rem"
               mdFontSize="1.1rem"
               lgFontSize="1.25rem"
               className="max-w-3xl mx-auto mb-8 md:mb-10 px-2"
               style={{ color: colorScheme.background }}
             >
-              Never miss a beat! Follow ClaudyGod across all platforms for exclusive content, 
-              behind-the-scenes moments, tour updates, and new music releases.
+              Never miss a beat! Follow ClaudyGod across all platforms for
+              exclusive content, behind-the-scenes moments, tour updates, and
+              new music releases.
             </RegularText>
           </motion.div>
         </div>
@@ -78,27 +86,27 @@ export const FollowUs: React.FC = () => {
               className="group cursor-pointer"
               onClick={() => window.open(platform.url, '_blank')}
             >
-              <div 
+              <div
                 className="rounded-xl md:rounded-2xl p-4 md:p-6 h-full transition-all duration-300"
                 style={{
                   backgroundColor: colorScheme.surface,
                   border: `1px solid ${colorScheme.primary}20`,
-                  boxShadow: `0 4px 12px ${colorScheme.primary}10`
+                  boxShadow: `0 4px 12px ${colorScheme.primary}10`,
                 }}
               >
                 <div className="text-center">
-                  <div 
+                  <div
                     className="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 transition-all duration-300 group-hover:scale-110"
                     style={{ backgroundColor: `${platform.color}15` }}
                   >
-                    <FontAwesomeIcon 
-                      icon={platform.icon} 
+                    <FontAwesomeIcon
+                      icon={platform.icon}
                       className="text-lg md:text-2xl"
                       style={{ color: platform.color }}
                     />
                   </div>
-                  
-                  <ExtraBoldText 
+
+                  <ExtraBoldText
                     fontSize="0.9rem"
                     mdFontSize="1.1rem"
                     className="mb-1 md:mb-2"
@@ -106,8 +114,8 @@ export const FollowUs: React.FC = () => {
                   >
                     {platform.name}
                   </ExtraBoldText>
-                  
-                  <RegularText 
+
+                  <RegularText
                     className="mb-2 text-xs md:text-sm"
                     style={{ color: platform.color }}
                   >
@@ -126,14 +134,14 @@ export const FollowUs: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="text-center"
         >
-          <div 
+          <div
             className="rounded-xl md:rounded-2xl p-6 md:p-8 lg:p-12 mx-auto max-w-4xl"
             style={{
               background: `linear-gradient(135deg, ${colorScheme.primary}15 0%, ${colorScheme.accent}15 100%)`,
-              border: `1px solid ${colorScheme.primary}30`
+              border: `1px solid ${colorScheme.primary}30`,
             }}
           >
-            <ExtraBoldText 
+            <ExtraBoldText
               fontSize="1.25rem"
               mdFontSize="1.5rem"
               lgFontSize="2rem"
@@ -142,13 +150,13 @@ export const FollowUs: React.FC = () => {
             >
               Join the ClaudyGod Family
             </ExtraBoldText>
-            
-            <RegularText 
+
+            <RegularText
               className="mb-6 md:mb-8 max-w-2xl mx-auto text-sm md:text-base"
-              style={{ color: colorScheme.accent}}
+              style={{ color: colorScheme.accent }}
             >
-              Be the first to know about new music, exclusive events, and special announcements. 
-              Your support means everything!
+              Be the first to know about new music, exclusive events, and
+              special announcements. Your support means everything!
             </RegularText>
 
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
@@ -161,7 +169,7 @@ export const FollowUs: React.FC = () => {
               >
                 Follow on Instagram
               </CustomButton>
-              
+
               <CustomButton
                 href="https://youtube.com/claudygod"
                 target="_blank"
@@ -183,9 +191,8 @@ export const FollowUs: React.FC = () => {
           className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-12 md:mt-16"
         >
           {[
-    
             { number: '24/7', label: 'Active Community' },
-            { number: '1M+', label: 'Monthly Reach' }
+            { number: '1M+', label: 'Monthly Reach' },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -195,7 +202,7 @@ export const FollowUs: React.FC = () => {
               className="text-center p-3 md:p-4 rounded-lg"
               style={{ backgroundColor: `${colorScheme.primary}10` }}
             >
-              <ExtraBoldText 
+              <ExtraBoldText
                 fontSize="1.5rem"
                 mdFontSize="2rem"
                 style={{ color: colorScheme.accent }}
@@ -203,7 +210,7 @@ export const FollowUs: React.FC = () => {
               >
                 {stat.number}
               </ExtraBoldText>
-              <RegularText 
+              <RegularText
                 className="text-xs md:text-sm"
                 style={{ color: colorScheme.text }}
               >
@@ -217,7 +224,7 @@ export const FollowUs: React.FC = () => {
       {/* Floating social icons - Hidden on mobile, shown on desktop */}
       <div className="fixed right-4 md:right-6 top-1/2 transform -translate-y-1/2 z-40 hidden lg:block">
         <div className="flex flex-col gap-3 md:gap-4">
-          {socialPlatforms.slice(0, 4).map((platform) => (
+          {socialPlatforms.slice(0, 4).map(platform => (
             <motion.a
               key={platform.name}
               href={platform.url}
@@ -228,8 +235,8 @@ export const FollowUs: React.FC = () => {
               style={{ backgroundColor: platform.color }}
               aria-label={`Follow on ${platform.name}`}
             >
-              <FontAwesomeIcon 
-                icon={platform.icon} 
+              <FontAwesomeIcon
+                icon={platform.icon}
                 className="text-white text-sm md:text-lg"
               />
             </motion.a>

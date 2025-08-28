@@ -1,11 +1,16 @@
 // components/news/AlbumsSection.tsx
-import { motion } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpotify, faYoutube, faApple, faDeezer } from "@fortawesome/free-brands-svg-icons";
-import { ExtraBoldText, RegularText } from "../ui/fonts/typography";
-import CustomButton from "../ui/fonts/buttons/CustomButton";
-import { useTheme } from "../../contexts/ThemeContext";
-import { albums } from "../data/newsData";
+import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faSpotify,
+  faYoutube,
+  faApple,
+  faDeezer,
+} from '@fortawesome/free-brands-svg-icons';
+import { ExtraBoldText, RegularText } from '../ui/fonts/typography';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
+import { useTheme } from '../../contexts/ThemeContext';
+import { albums } from '../data/newsData';
 
 interface AlbumsSectionProps {
   openVideoModal: (url: string, album: string) => void;
@@ -27,12 +32,16 @@ export const AlbumsSection = ({ openVideoModal }: AlbumsSectionProps) => {
           transition={{ duration: 0.5 }}
           className="flex flex-col items-center text-center mb-8 lg:mb-12"
         >
-          <ExtraBoldText fontSize="2rem" lgFontSize="3rem" style={{ color: colorScheme.primary }}>
+          <ExtraBoldText
+            fontSize="2rem"
+            lgFontSize="3rem"
+            style={{ color: colorScheme.primary }}
+          >
             Latest Albums
           </ExtraBoldText>
           <motion.div
             initial={{ width: 0 }}
-            animate={{ width: "5rem" }}
+            animate={{ width: '5rem' }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="h-1 my-4 lg:my-6"
             style={{ backgroundColor: colorScheme.secondary }}
@@ -42,7 +51,8 @@ export const AlbumsSection = ({ openVideoModal }: AlbumsSectionProps) => {
             style={{ color: colorScheme.background }}
             className="max-w-3xl"
           >
-            We've just released three new gospel albums, packed with inspiring messages and soulful melodies.
+            We've just released three new gospel albums, packed with inspiring
+            messages and soulful melodies.
           </RegularText>
         </motion.div>
 
@@ -57,13 +67,17 @@ export const AlbumsSection = ({ openVideoModal }: AlbumsSectionProps) => {
               className="flex flex-col rounded-2xl p-4 lg:p-6 shadow-xl"
               style={{
                 backgroundColor: colorScheme.surface,
-                flex: "1 1 300px",
-                maxWidth: "100%",
-                marginBottom: "1rem",
+                flex: '1 1 300px',
+                maxWidth: '100%',
+                marginBottom: '1rem',
               }}
             >
               {/* Title */}
-              <ExtraBoldText fontSize="1.1rem" style={{ color: colorScheme.text }} className="mb-4 text-left">
+              <ExtraBoldText
+                fontSize="1.1rem"
+                style={{ color: colorScheme.text }}
+                className="mb-4 text-left"
+              >
                 Album: {album.title}
               </ExtraBoldText>
 
@@ -80,12 +94,14 @@ export const AlbumsSection = ({ openVideoModal }: AlbumsSectionProps) => {
                     variant="icon"
                     size="lg"
                     mdSize="xl"
-                    onClick={() => openVideoModal(album.links.youtube, album.title)}
+                    onClick={() =>
+                      openVideoModal(album.links.youtube, album.title)
+                    }
                     className="hover:scale-105 transition-transform"
                     aria-label={`Play ${album.title}`}
                     style={{
                       backgroundColor: `${colorScheme.primary}30`,
-                      backdropFilter: 'blur(8px)'
+                      backdropFilter: 'blur(8px)',
                     }}
                   >
                     <svg
@@ -115,7 +131,7 @@ export const AlbumsSection = ({ openVideoModal }: AlbumsSectionProps) => {
                   size="sm"
                   mdSize="lg"
                   className="px-4 py-2 text-xs md:text-base w-full"
-                  style={{ backgroundColor: "#1DB954" }}
+                  style={{ backgroundColor: '#1DB954' }}
                   aria-label={`Listen to ${album.title} on Spotify`}
                 >
                   <div className="flex items-center gap-3 md:gap-4 w-full">
@@ -129,12 +145,14 @@ export const AlbumsSection = ({ openVideoModal }: AlbumsSectionProps) => {
 
                 {/* YouTube */}
                 <CustomButton
-                  onClick={() => openVideoModal(album.links.youtube, album.title)}
+                  onClick={() =>
+                    openVideoModal(album.links.youtube, album.title)
+                  }
                   variant="secondary"
                   size="sm"
                   mdSize="lg"
                   className="px-4 py-2 text-xs md:text-base w-full"
-                  style={{ backgroundColor: "#FF0000" }}
+                  style={{ backgroundColor: '#FF0000' }}
                   aria-label={`Watch ${album.title} on YouTube`}
                 >
                   <div className="flex items-center gap-3 md:gap-4 w-full">
@@ -155,7 +173,7 @@ export const AlbumsSection = ({ openVideoModal }: AlbumsSectionProps) => {
                   size="sm"
                   mdSize="lg"
                   className="px-4 py-2 text-xs md:text-base w-full"
-                  style={{ backgroundColor: "#000000" }}
+                  style={{ backgroundColor: '#000000' }}
                   aria-label={`Listen to ${album.title} on Apple Music`}
                 >
                   <div className="flex items-center gap-3 md:gap-4 w-full">
@@ -176,7 +194,7 @@ export const AlbumsSection = ({ openVideoModal }: AlbumsSectionProps) => {
                   size="sm"
                   mdSize="lg"
                   className="px-4 py-2 text-xs md:text-base w-full"
-                  style={{ backgroundColor: "#FEAA2D" }}
+                  style={{ backgroundColor: '#FEAA2D' }}
                   aria-label={`Listen to ${album.title} on Deezer`}
                 >
                   <div className="flex items-center gap-3 md:gap-4 w-full">

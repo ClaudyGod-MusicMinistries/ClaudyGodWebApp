@@ -1,73 +1,73 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
+import {
   faLocationDot,
   faEnvelope,
   faPhone,
-  faCopyright
+  faCopyright,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { Social } from '../Social';
 import { Streaming } from '../Streaming';
 import { useTheme } from '../../contexts/ThemeContext';
-import { 
+import {
   SemiBoldText,
   LightText,
   ExtraBoldText,
-  BoldText
+  BoldText,
 } from '../ui/fonts/typography';
 import CustomButton from '../ui/fonts/buttons/CustomButton';
 
 export const Footer: React.FC = () => {
   const { colorScheme } = useTheme();
   const currentYear = new Date().getFullYear();
-  
+
   const quickLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/biography' },
     { name: 'Music', path: '/music' },
     { name: 'Store', path: '/store' },
-    { name: 'Contact', path: '/contact' }
+    { name: 'Contact', path: '/contact' },
   ];
-  
+
   return (
-    <footer 
+    <footer
       className="w-full"
-      style={{ 
+      style={{
         backgroundColor: colorScheme.footer,
-        color: colorScheme.white
+        color: colorScheme.white,
       }}
     >
       {/* Top gradient border */}
-      <div 
+      <div
         className="h-1"
-        style={{ 
-          background: `linear-gradient(to right, ${colorScheme.accent}90, ${colorScheme.primary}, ${colorScheme.accent}90)`
+        style={{
+          background: `linear-gradient(to right, ${colorScheme.accent}90, ${colorScheme.primary}, ${colorScheme.accent}90)`,
         }}
-      ></div>   
-      
+      ></div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand Column */}
           <div className="flex flex-col">
             <div className="flex items-center mb-6">
-              <div 
+              <div
                 className="p-1 rounded-xl mr-4"
-                style={{ 
-                  background: `linear-gradient(to bottom right, ${colorScheme.accent}, ${colorScheme.accent})`
+                style={{
+                  background: `linear-gradient(to bottom right, ${colorScheme.accent}, ${colorScheme.accent})`,
                 }}
               >
-                <div 
+                <div
                   className="p-2 rounded-lg"
                   style={{ backgroundColor: colorScheme.footer }}
                 >
-                  <div 
+                  <div
                     className="w-12 h-12 rounded-lg flex items-center justify-center"
-                    style={{ 
-                      background: `linear-gradient(to bottom right, ${colorScheme.accent}, ${colorScheme.primary})`
+                    style={{
+                      background: `linear-gradient(to bottom right, ${colorScheme.accent}, ${colorScheme.primary})`,
                     }}
                   >
-                    <span 
+                    <span
                       className="text-white font-bold text-xl"
                       style={{ color: colorScheme.white }}
                     >
@@ -77,17 +77,17 @@ export const Footer: React.FC = () => {
                 </div>
               </div>
               <div>
-                <ExtraBoldText 
+                <ExtraBoldText
                   fontSize="32px"
-                  style={{ 
+                  style={{
                     background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.secondary})`,
                     WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent'
+                    WebkitTextFillColor: 'transparent',
                   }}
                 >
                   ClaudyGod
                 </ExtraBoldText>
-                <LightText 
+                <LightText
                   fontSize="14px"
                   style={{ color: colorScheme.gray[400] }}
                 >
@@ -95,25 +95,26 @@ export const Footer: React.FC = () => {
                 </LightText>
               </div>
             </div>
-            
-            <LightText 
+
+            <LightText
               fontSize="14px"
               style={{ color: colorScheme.gray[300] }}
               className="mb-6 leading-relaxed"
             >
-              Creating inspirational music that uplifts the soul and brings people closer to faith through melody and message.
+              Creating inspirational music that uplifts the soul and brings
+              people closer to faith through melody and message.
             </LightText>
-            
+
             <div className="flex space-x-3">
-              <div 
+              <div
                 className="p-3 rounded-lg flex items-center justify-center"
                 style={{ backgroundColor: colorScheme.gray[800] }}
               >
-                <div 
+                <div
                   className="w-3 h-3 rounded-full mr-2 animate-pulse"
                   style={{ backgroundColor: colorScheme.success }}
                 ></div>
-                <LightText 
+                <LightText
                   fontSize="12px"
                   style={{ color: colorScheme.gray[300] }}
                 >
@@ -125,29 +126,29 @@ export const Footer: React.FC = () => {
 
           {/* Quick Links Column */}
           <div className="flex flex-col">
-            <SemiBoldText 
+            <SemiBoldText
               fontSize="18px"
               className="mb-6 pb-2 tracking-wide"
-              style={{ 
+              style={{
                 color: colorScheme.accent,
-                borderBottom: `1px solid ${colorScheme.gray[700]}`
+                borderBottom: `1px solid ${colorScheme.gray[700]}`,
               }}
             >
               Quick Links
             </SemiBoldText>
             <ul className="space-y-3">
-              {quickLinks.map((link) => (
+              {quickLinks.map(link => (
                 <li key={link.name}>
-                  <Link 
+                  <Link
                     to={link.path}
                     className="transition-all duration-300 flex items-center group"
                     style={{ color: colorScheme.gray[300] }}
                   >
-                    <span 
+                    <span
                       className="w-1 h-1 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity"
                       style={{ backgroundColor: colorScheme.accent }}
                     ></span>
-                    <LightText 
+                    <LightText
                       fontSize="14px"
                       className="group-hover:text-purple-400"
                       style={{ color: 'inherit' }}
@@ -159,15 +160,15 @@ export const Footer: React.FC = () => {
               ))}
             </ul>
           </div>
-          
+
           {/* Contact Column */}
           <div className="flex flex-col">
-            <SemiBoldText 
+            <SemiBoldText
               fontSize="18px"
               className="mb-6 pb-2 tracking-wide"
-              style={{ 
+              style={{
                 color: colorScheme.accent,
-                borderBottom: `1px solid ${colorScheme.gray[700]}`
+                borderBottom: `1px solid ${colorScheme.gray[700]}`,
               }}
             >
               Contact Us
@@ -175,71 +176,89 @@ export const Footer: React.FC = () => {
             <ul className="space-y-4">
               <li className="flex">
                 <div className="flex-shrink-0 mt-1">
-                  <FontAwesomeIcon 
-                    icon={faLocationDot} 
-                    style={{ color: colorScheme.accent }} 
+                  <FontAwesomeIcon
+                    icon={faLocationDot}
+                    style={{ color: colorScheme.accent }}
                   />
                 </div>
                 <div className="ml-4">
-                  <SemiBoldText fontSize="14px" style={{ color: colorScheme.gray[300] }}>
+                  <SemiBoldText
+                    fontSize="14px"
+                    style={{ color: colorScheme.gray[300] }}
+                  >
                     Our Location
                   </SemiBoldText>
-                  <LightText fontSize="14px" style={{ color: colorScheme.gray[400] }}>
+                  <LightText
+                    fontSize="14px"
+                    style={{ color: colorScheme.gray[400] }}
+                  >
                     San Ramon, California
                   </LightText>
                 </div>
               </li>
-              
+
               <li className="flex">
                 <div className="flex-shrink-0 mt-1">
-                  <FontAwesomeIcon 
-                    icon={faEnvelope} 
-                    style={{ color: colorScheme.accent }} 
+                  <FontAwesomeIcon
+                    icon={faEnvelope}
+                    style={{ color: colorScheme.accent }}
                   />
                 </div>
                 <div className="ml-4">
-                  <SemiBoldText fontSize="14px" style={{ color: colorScheme.gray[300] }}>
+                  <SemiBoldText
+                    fontSize="14px"
+                    style={{ color: colorScheme.gray[300] }}
+                  >
                     Email Address
                   </SemiBoldText>
-                  <a 
-                    href="mailto:info@claudygod.com" 
+                  <a
+                    href="mailto:info@claudygod.com"
                     className="transition-colors"
                     style={{ color: colorScheme.gray[400] }}
                   >
-                    <LightText fontSize="14px" className="hover:text-purple-400">
+                    <LightText
+                      fontSize="14px"
+                      className="hover:text-purple-400"
+                    >
                       info@claudygod.com
                     </LightText>
                   </a>
                 </div>
               </li>
-              
+
               <li className="flex">
                 <div className="flex-shrink-0 mt-1">
-                  <FontAwesomeIcon 
-                    icon={faPhone} 
-                    style={{ color: colorScheme.accent }} 
+                  <FontAwesomeIcon
+                    icon={faPhone}
+                    style={{ color: colorScheme.accent }}
                   />
                 </div>
                 <div className="ml-4">
-                  <SemiBoldText fontSize="14px" style={{ color: colorScheme.gray[300] }}>
+                  <SemiBoldText
+                    fontSize="14px"
+                    style={{ color: colorScheme.gray[300] }}
+                  >
                     Phone Number
                   </SemiBoldText>
-                  <LightText fontSize="14px" style={{ color: colorScheme.gray[400] }}>
+                  <LightText
+                    fontSize="14px"
+                    style={{ color: colorScheme.gray[400] }}
+                  >
                     +1 (385) 219‑6632
                   </LightText>
                 </div>
               </li>
             </ul>
           </div>
-          
+
           {/* Social Column */}
           <div className="flex flex-col">
-            <SemiBoldText 
+            <SemiBoldText
               fontSize="18px"
               className="mb-6 pb-2 tracking-wide"
-              style={{ 
+              style={{
                 color: colorScheme.accent,
-                borderBottom: `1px solid ${colorScheme.gray[700]}`
+                borderBottom: `1px solid ${colorScheme.gray[700]}`,
               }}
             >
               Connect With Us
@@ -253,31 +272,31 @@ export const Footer: React.FC = () => {
         {/* Newsletter Section */}
         <div className="mt-16 max-w-2xl mx-auto">
           <div className="text-center mb-8">
-            <ExtraBoldText 
+            <ExtraBoldText
               fontSize="36px"
-      
-              style={{ color: colorScheme.accent}}
+              style={{ color: colorScheme.accent }}
             >
               Join Our Newsletter
             </ExtraBoldText>
-            <LightText 
+            <LightText
               fontSize="14px"
               style={{ color: colorScheme.gray[300] }}
               className="max-w-lg mx-auto"
             >
-              Stay updated with our latest music releases, ministry events, and inspirational content.
+              Stay updated with our latest music releases, ministry events, and
+              inspirational content.
             </LightText>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row gap-3">
-            <input 
-              type="email" 
-              placeholder="Your email address" 
+            <input
+              type="email"
+              placeholder="Your email address"
               className="px-5 py-3 rounded-lg focus:outline-none w-full text-base border focus:border-purple-500"
               style={{
                 backgroundColor: colorScheme.gray[800],
                 color: colorScheme.white,
-                borderColor: colorScheme.gray[700]
+                borderColor: colorScheme.gray[700],
               }}
             />
             <CustomButton
@@ -285,48 +304,45 @@ export const Footer: React.FC = () => {
               size="md"
               className="whitespace-nowrap"
               style={{
-                background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.secondary})`
+                background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.secondary})`,
               }}
             >
               <BoldText>Subscribe Now</BoldText>
             </CustomButton>
           </div>
         </div>
-        
+
         {/* Divider */}
-        <div 
+        <div
           className="w-full my-8"
           style={{ borderTop: `1px solid ${colorScheme.gray[800]}` }}
         ></div>
-        
+
         {/* Streaming Section */}
         <div className="w-full">
           <Streaming />
         </div>
-        
+
         {/* Copyright Section */}
-        <div 
+        <div
           className="w-full my-8"
           style={{ borderTop: `1px solid ${colorScheme.gray[800]}` }}
         ></div>
         <div className="flex flex-col md:flex-row justify-between items-center pt-4">
           <div className="flex items-center mb-4 md:mb-0">
-            <FontAwesomeIcon 
-              icon={faCopyright} 
+            <FontAwesomeIcon
+              icon={faCopyright}
               className="mr-2 text-xs"
               style={{ color: colorScheme.gray[500] }}
             />
-            <LightText 
-              fontSize="12px"
-              style={{ color: colorScheme.gray[500] }}
-            >
+            <LightText fontSize="12px" style={{ color: colorScheme.gray[500] }}>
               {currentYear} ClaudyGod Music & Ministries. All rights reserved.
             </LightText>
           </div>
-          
+
           <div className="flex space-x-6">
-            <a 
-              href="#" 
+            <a
+              href="#"
               className="transition duration-300 text-sm"
               style={{ color: colorScheme.gray[500] }}
             >
@@ -334,8 +350,8 @@ export const Footer: React.FC = () => {
                 Privacy Policy
               </LightText>
             </a>
-            <a 
-              href="#" 
+            <a
+              href="#"
               className="transition duration-300 text-sm"
               style={{ color: colorScheme.gray[500] }}
             >
@@ -343,8 +359,8 @@ export const Footer: React.FC = () => {
                 Terms of Service
               </LightText>
             </a>
-            <a 
-              href="#" 
+            <a
+              href="#"
               className="transition duration-300 text-sm"
               style={{ color: colorScheme.gray[500] }}
             >

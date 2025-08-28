@@ -24,8 +24,16 @@ const routes = [
   { path: '/store', priority: '0.80' },
   { path: '/contact', priority: '0.70' },
   { path: '/donate', priority: '0.70' },
-  { path: '/blog/why-worship-matters', priority: '0.80', lastmod: '2023-10-15' },
-  { path: '/blog/spiritual-growth-tips', priority: '0.80', lastmod: '2023-09-20' }
+  {
+    path: '/blog/why-worship-matters',
+    priority: '0.80',
+    lastmod: '2023-10-15',
+  },
+  {
+    path: '/blog/spiritual-growth-tips',
+    priority: '0.80',
+    lastmod: '2023-09-20',
+  },
 ];
 
 // Start building the XML

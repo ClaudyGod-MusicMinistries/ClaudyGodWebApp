@@ -13,14 +13,17 @@ interface SecuredLinkProps {
 
 export const SecuredLink = ({ platform, onClick }: SecuredLinkProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  
+
   const sanitizedUrl = SecurityUtils.sanitizeUrl(platform.url);
-  const isTrusted = SecurityUtils.isTrustedDomain(sanitizedUrl, TRUSTED_DOMAINS);
-  
+  const isTrusted = SecurityUtils.isTrustedDomain(
+    sanitizedUrl,
+    TRUSTED_DOMAINS
+  );
+
   return (
     <motion.a
       href={sanitizedUrl}
-      onClick={(e) => onClick(platform.url, e)}
+      onClick={e => onClick(platform.url, e)}
       className={`flex items-center px-6 py-3 rounded-lg shadow-md transition-shadow ${platform.bgColor} ${platform.textColor} ${
         isHovered ? 'shadow-lg' : ''
       } ${isTrusted ? '' : 'opacity-80'}`}
@@ -30,10 +33,7 @@ export const SecuredLink = ({ platform, onClick }: SecuredLinkProps) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
     >
-      <FontAwesomeIcon 
-        icon={platform.icon} 
-        className="mr-2 text-lg"
-      />
+      <FontAwesomeIcon icon={platform.icon} className="mr-2 text-lg" />
       <span>
         {platform.name}
         {!isTrusted && <span className="text-xs ml-1">(unverified)</span>}

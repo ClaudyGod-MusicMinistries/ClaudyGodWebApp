@@ -6,6 +6,6 @@ const Notfound = () => {
       <h2> Backend is working effectively..........</h2>
     </div>
   );
-}
+};
 
 export default Notfound;

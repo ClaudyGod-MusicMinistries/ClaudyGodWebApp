@@ -18,12 +18,12 @@ export const BlogPost: React.FC<BlogPostProps> = ({
   date,
   image,
   onReadArticle,
-  className
+  className,
 }) => {
   const { colorScheme } = useTheme();
 
   return (
-    <motion.div 
+    <motion.div
       className={`group relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl ${className}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -32,19 +32,21 @@ export const BlogPost: React.FC<BlogPostProps> = ({
     >
       {/* Image container */}
       <div className="aspect-[4/3] w-full overflow-hidden">
-        <img 
-          src={image} 
-          alt={title} 
+        <img
+          src={image}
+          alt={title}
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           loading="lazy"
         />
         {/* Gradient overlay */}
-        <div 
+        <div
           className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-90"
-          style={{ background: `linear-gradient(to top, ${colorScheme.primary}/80, transparent)` }}
+          style={{
+            background: `linear-gradient(to top, ${colorScheme.primary}/80, transparent)`,
+          }}
         />
       </div>
-      
+
       {/* Content container */}
       <div className="p-6">
         {/* Date */}
@@ -55,17 +57,17 @@ export const BlogPost: React.FC<BlogPostProps> = ({
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mb-2"
         >
-          <LightText 
-            style={{ 
+          <LightText
+            style={{
               color: colorScheme.success,
-              fontSize: "0.875rem"
+              fontSize: '0.875rem',
             }}
             useThemeColor={false}
           >
             {date}
           </LightText>
         </motion.div>
-        
+
         {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -74,18 +76,18 @@ export const BlogPost: React.FC<BlogPostProps> = ({
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-4"
         >
-          <ExtraBoldText 
-            style={{ 
+          <ExtraBoldText
+            style={{
               color: colorScheme.background,
-              fontSize: "1.5rem",
-              lineHeight: "1.3"
+              fontSize: '1.5rem',
+              lineHeight: '1.3',
             }}
             useThemeColor={false}
           >
             {title}
           </ExtraBoldText>
         </motion.div>
-        
+
         {/* Read More button */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -99,11 +101,20 @@ export const BlogPost: React.FC<BlogPostProps> = ({
             onClick={() => onReadArticle(id)}
             className="inline-flex items-center px-6 py-2.5 bg-white text-gray-900 font-medium rounded-full hover:bg-gray-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black/30"
           >
-            <SemiBoldText useThemeColor={false}>
-              Read Article
-            </SemiBoldText>
-            <svg xmlns="http://www.w3.org/2000/svg" className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            <SemiBoldText useThemeColor={false}>Read Article</SemiBoldText>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="ml-2 h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              />
             </svg>
           </button>
         </motion.div>

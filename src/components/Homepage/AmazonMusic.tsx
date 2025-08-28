@@ -2,7 +2,13 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import { faAmazon, faAppStore, faDeezer, faSpotify, faYoutube } from '@fortawesome/free-brands-svg-icons';
+import {
+  faAmazon,
+  faAppStore,
+  faDeezer,
+  faSpotify,
+  faYoutube,
+} from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CustomButton from '../ui/fonts/buttons/CustomButton';
 import { NotAvailableModal } from '../util/modals/Notavailable';
@@ -18,20 +24,20 @@ export const AudioMackComponent = () => {
   const { colorScheme } = useTheme();
 
   const platforms = [
-    { name: "Spotify", icon: faSpotify, color: "#1DB954" },
-    { name: "Apple Music", icon: faAppStore, color: "#FA2C56" },
-    { name: "YouTube Music", icon: faYoutube, color: "#FF0000" },
-    { name: "Deezer", icon: faDeezer, color: "#00C7F2" },
+    { name: 'Spotify', icon: faSpotify, color: '#1DB954' },
+    { name: 'Apple Music', icon: faAppStore, color: '#FA2C56' },
+    { name: 'YouTube Music', icon: faYoutube, color: '#FF0000' },
+    { name: 'Deezer', icon: faDeezer, color: '#00C7F2' },
   ];
 
   return (
     <section className="py-12 md:py-16 lg:py-20 bg-gray-50 relative">
       <div className="container mx-auto px-4">
-        <motion.div 
+        <motion.div
           className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden border border-gray-100"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
         >
           <div className="p-6 sm:p-8 md:p-10 lg:p-12">
             {/* Header */}
@@ -61,11 +67,15 @@ export const AudioMackComponent = () => {
                   style={{ color: colorScheme.primary }}
                   useThemeColor={false}
                 >
-                  <span style={{ color: colorScheme.button }}>Latest Release: You Are Our Everything</span>
+                  <span style={{ color: colorScheme.button }}>
+                    Latest Release: You Are Our Everything
+                  </span>
                 </ExtraBoldText>
 
                 <p className="text-xs md:text-sm font-raleway-medium text-gray-600 mb-6">
-                  Experience the divine harmony of ClaudyGod's latest worship release — a soul-stirring single that captures the essence of true devotion.
+                  Experience the divine harmony of ClaudyGod's latest worship
+                  release — a soul-stirring single that captures the essence of
+                  true devotion.
                 </p>
 
                 <CustomButton

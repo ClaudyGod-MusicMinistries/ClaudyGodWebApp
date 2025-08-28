@@ -1,9 +1,5 @@
 import { motion } from 'framer-motion';
-import { 
-  HeroSlide, 
-  imageVariants, 
-  slideVariants 
-} from '../data/HeroSlide';
+import { HeroSlide, imageVariants, slideVariants } from '../data/HeroSlide';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVolumeUp, faVolumeMute } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
@@ -14,7 +10,7 @@ export const SlideContainer = ({
   isMuted,
   toggleMute,
   videoRef,
-  children
+  children,
 }: {
   slide: HeroSlide;
   direction: number;
@@ -49,7 +45,7 @@ export const SlideContainer = ({
           <source src={slide.videoUrl} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-      ) : ( 
+      ) : (
         <div className="relative h-full w-full">
           {slide.imageUrlMobile && slide.imageUrlDesktop ? (
             <>
@@ -71,15 +67,17 @@ export const SlideContainer = ({
               className="h-full w-full object-cover object-center"
             />
           )}
-          <div className={`absolute inset-0 ${
-            slide.type === 'cta' || slide.type === 'music' 
-              ? 'bg-gradient-to-t from-black/60 via-black/30 to-transparent'
-              : 'bg-gradient-to-t from-black/100 via-black/50 to-black/10'
-          }`} />
+          <div
+            className={`absolute inset-0 ${
+              slide.type === 'cta' || slide.type === 'music'
+                ? 'bg-gradient-to-t from-black/60 via-black/30 to-transparent'
+                : 'bg-gradient-to-t from-black/100 via-black/50 to-black/10'
+            }`}
+          />
         </div>
       )}
     </motion.div>
-    
+
     <div className="container ml-4 md:ml-10 mt-6 md:mt-10 relative mx-auto flex h-full items-center px-4">
       <motion.div
         initial="hidden"
@@ -88,8 +86,8 @@ export const SlideContainer = ({
           hidden: { opacity: 0 },
           visible: {
             opacity: 1,
-            transition: { staggerChildren: 0.2 }
-          }
+            transition: { staggerChildren: 0.2 },
+          },
         }}
         className="max-w-4xl text-white"
       >
@@ -105,9 +103,9 @@ export const SlideContainer = ({
           onClick={toggleMute}
           className="bg-white/30 p-3 rounded-full backdrop-blur-sm shadow-lg"
         >
-          <FontAwesomeIcon 
-            icon={isMuted ? faVolumeMute : faVolumeUp} 
-            className="text-white text-xl" 
+          <FontAwesomeIcon
+            icon={isMuted ? faVolumeMute : faVolumeUp}
+            className="text-white text-xl"
           />
         </motion.button>
       </div>

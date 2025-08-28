@@ -2,16 +2,19 @@ import { Product } from '../types/storeTypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 import { RegularText } from '../ui/fonts/typography';
-import  CustomButton  from '../ui/fonts/buttons/CustomButton';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
 
 interface ProductGridProps {
   products: Product[];
   handleAddToCart: (product: Product) => void;
 }
 
-export const ProductGrid = ({ products, handleAddToCart }: ProductGridProps) => (
+export const ProductGrid = ({
+  products,
+  handleAddToCart,
+}: ProductGridProps) => (
   <section className="hidden md:grid container mx-auto px-4 md:px-8 py-16 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-    {products.map((product) => (
+    {products.map(product => (
       <div
         key={product.id}
         className="group cursor-pointer border border-purple-900 rounded-lg overflow-hidden shadow-sm flex flex-col transition-transform hover:scale-105"
@@ -24,7 +27,7 @@ export const ProductGrid = ({ products, handleAddToCart }: ProductGridProps) => 
           />
         </div>
         <div className="p-6 flex flex-col flex-grow">
-          <RegularText 
+          <RegularText
             as="h3"
             fontSize="1.125rem"
             fontWeight="bold"
@@ -32,20 +35,20 @@ export const ProductGrid = ({ products, handleAddToCart }: ProductGridProps) => 
           >
             {product.name}
           </RegularText>
-          
-          <RegularText 
+
+          <RegularText
             fontSize="0.75rem"
             color="text-gray-600"
             className="mb-4 flex-grow"
           >
             {product.description}
           </RegularText>
-          
+
           <div className="flex justify-between items-center">
             <RegularText fontSize="0.75rem" fontWeight="medium">
               ${product.price.toFixed(2)}
             </RegularText>
-            
+
             <CustomButton
               onClick={() => handleAddToCart(product)}
               variant="primary"

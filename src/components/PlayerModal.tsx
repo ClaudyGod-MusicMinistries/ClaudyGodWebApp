@@ -18,7 +18,7 @@ export const PlayerModal = ({ videoId, title, onClose }: PlayerModalProps) => (
       >
         <FontAwesomeIcon icon={faXmark} size="2x" />
       </button>
-      
+
       <div className="aspect-w-16 aspect-h-9">
         <iframe
           src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}

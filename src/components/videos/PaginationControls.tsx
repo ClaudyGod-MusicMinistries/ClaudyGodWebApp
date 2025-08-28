@@ -1,5 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
 
 export const PaginationControls: React.FC<{
   currentPage: number;
@@ -11,11 +14,11 @@ export const PaginationControls: React.FC<{
     const maxVisible = 5;
     let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
     const end = Math.min(totalPages, start + maxVisible - 1);
-    
+
     if (end - start + 1 < maxVisible) {
       start = Math.max(1, end - maxVisible + 1);
     }
-    
+
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   };
 
@@ -31,20 +34,20 @@ export const PaginationControls: React.FC<{
           className="flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-md hover:shadow-lg transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-md"
           aria-label="Previous page"
         >
-          <FontAwesomeIcon 
-            icon={faChevronLeft} 
-            className="text-purple-900 text-sm" 
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            className="text-purple-900 text-sm"
           />
         </button>
-        
+
         {/* First Page */}
         {visiblePages[0] > 1 && (
           <>
             <button
               onClick={() => onPageChange(1)}
               className={`w-10 h-10 flex items-center justify-center rounded-full font-medium text-sm ${
-                1 === currentPage 
-                  ? 'bg-gradient-to-br from-purple-600 to-indigo-600 text-white shadow-purple-md' 
+                1 === currentPage
+                  ? 'bg-gradient-to-br from-purple-600 to-indigo-600 text-white shadow-purple-md'
                   : 'bg-white text-gray-600 hover:bg-gray-50'
               } transition-all duration-300`}
             >
@@ -55,9 +58,9 @@ export const PaginationControls: React.FC<{
             )}
           </>
         )}
-        
+
         {/* Visible Page Numbers */}
-        {visiblePages.map((page) => (
+        {visiblePages.map(page => (
           <button
             key={page}
             onClick={() => onPageChange(page)}
@@ -70,7 +73,7 @@ export const PaginationControls: React.FC<{
             {page}
           </button>
         ))}
-        
+
         {/* Last Page */}
         {visiblePages[visiblePages.length - 1] < totalPages && (
           <>
@@ -80,8 +83,8 @@ export const PaginationControls: React.FC<{
             <button
               onClick={() => onPageChange(totalPages)}
               className={`w-10 h-10 flex items-center justify-center rounded-full font-medium text-sm ${
-                totalPages === currentPage 
-                  ? 'bg-gradient-to-br from-purple-600 to-indigo-600 text-white shadow-purple-md' 
+                totalPages === currentPage
+                  ? 'bg-gradient-to-br from-purple-600 to-indigo-600 text-white shadow-purple-md'
                   : 'bg-white text-gray-600 hover:bg-gray-50'
               } transition-all duration-300`}
             >
@@ -89,7 +92,7 @@ export const PaginationControls: React.FC<{
             </button>
           </>
         )}
-        
+
         {/* Next Button */}
         <button
           onClick={() => onPageChange(currentPage + 1)}
@@ -97,16 +100,17 @@ export const PaginationControls: React.FC<{
           className="flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-md hover:shadow-lg transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-md"
           aria-label="Next page"
         >
-          <FontAwesomeIcon 
-            icon={faChevronRight} 
-            className="text-purple-900 text-sm" 
+          <FontAwesomeIcon
+            icon={faChevronRight}
+            className="text-purple-900 text-sm"
           />
         </button>
       </div>
-      
+
       {/* Page Info */}
       <div className="mt-3 text-sm text-gray-600 font-medium">
-        Page <span className="text-purple-700">{currentPage}</span> of <span className="text-purple-700">{totalPages}</span>
+        Page <span className="text-purple-700">{currentPage}</span> of{' '}
+        <span className="text-purple-700">{totalPages}</span>
       </div>
     </div>
   );

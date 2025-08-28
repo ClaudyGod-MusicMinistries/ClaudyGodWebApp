@@ -1,7 +1,7 @@
 // src/components/util/modals/NotAvailableModal.tsx
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
 
 interface NotAvailableModalProps {
   isOpen: boolean;

@@ -9,10 +9,10 @@ export const Heroblog: React.FC = () => {
   const { colorScheme } = useTheme();
 
   return (
-    <div 
+    <div
       className="relative"
       style={{
-        background: `linear-gradient(to right, ${colorScheme.background}, ${colorScheme.background})`
+        background: `linear-gradient(to right, ${colorScheme.background}, ${colorScheme.background})`,
       }}
     >
       <div className="max-w-7xl mx-auto px-4 py-16 sm:py-24 sm:px-6 lg:px-8 flex flex-col items-center text-center">
@@ -24,7 +24,7 @@ export const Heroblog: React.FC = () => {
         >
           Our Blog
         </ExtraBoldText>
-        
+
         <RegularText
           fontSize="1.25rem"
           className="max-w-2xl mx-auto mb-10"
@@ -32,7 +32,7 @@ export const Heroblog: React.FC = () => {
         >
           Feel free to share your thoughts in our community
         </RegularText>
-        
+
         <div className="relative max-w-lg w-full">
           <input
             type="text"
@@ -42,22 +42,22 @@ export const Heroblog: React.FC = () => {
               backgroundColor: colorScheme.text + '20',
               borderColor: colorScheme.textInverted + '30',
               color: colorScheme.textInverted,
-              focusRingColor: colorScheme.textInverted
+              focusRingColor: colorScheme.textInverted,
             }}
           />
           <div className="absolute inset-y-0 right-0 flex items-center pr-4">
-            <FontAwesomeIcon 
-              icon={faSearch} 
-              className="h-5 w-5" 
+            <FontAwesomeIcon
+              icon={faSearch}
+              className="h-5 w-5"
               style={{ color: colorScheme.text }}
             />
           </div>
         </div>
       </div>
-      <div 
+      <div
         className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-b from-transparent"
-        style={{ 
-          backgroundColor: colorScheme.background 
+        style={{
+          backgroundColor: colorScheme.background,
         }}
       ></div>
     </div>

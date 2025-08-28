@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
-import { motion } from "framer-motion";
-import { HeroSlide } from "../data/HeroSlide";
-import { textVariants } from "../types/homeHero";
-import { ExtraBoldText, RegularText } from "../ui/fonts/typography";
-import CustomButton from "../ui/fonts/buttons/CustomButton";
-import { useTheme } from "../../contexts/ThemeContext";
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
+import { motion } from 'framer-motion';
+import { HeroSlide } from '../data/HeroSlide';
+import { textVariants } from '../types/homeHero';
+import { ExtraBoldText, RegularText } from '../ui/fonts/typography';
+import CustomButton from '../ui/fonts/buttons/CustomButton';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface QuoteSlideProps {
   slide: HeroSlide;

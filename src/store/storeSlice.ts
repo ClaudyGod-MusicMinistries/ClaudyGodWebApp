@@ -28,32 +28,43 @@ const storeSlice = createSlice({
     setSlideCount(state, action: PayloadAction<number>) {
       state.ui.slideCount = action.payload;
     },
-    setSlideDirection(state, action: PayloadAction<'left' | 'right'>) { // Added action
+    setSlideDirection(state, action: PayloadAction<'left' | 'right'>) {
+      // Added action
       state.ui.slideDirection = action.payload;
     },
-    setCurrentSlide(state, action: PayloadAction<number>) { // Added action
+    setCurrentSlide(state, action: PayloadAction<number>) {
+      // Added action
       state.ui.currentSlide = action.payload;
     },
     nextSlide(state) {
-      const filteredProducts = state.ui.activeCategory === 'all' 
-        ? state.products 
-        : state.products.filter(p => p.category === state.ui.activeCategory);
-      
-      const totalSlides = Math.ceil(filteredProducts.length / state.ui.slideCount);
+      const filteredProducts =
+        state.ui.activeCategory === 'all'
+          ? state.products
+          : state.products.filter(p => p.category === state.ui.activeCategory);
+
+      const totalSlides = Math.ceil(
+        filteredProducts.length / state.ui.slideCount
+      );
       state.ui.slideDirection = 'right';
       state.ui.currentSlide = (state.ui.currentSlide + 1) % totalSlides;
     },
     prevSlide(state) {
-      const filteredProducts = state.ui.activeCategory === 'all' 
-        ? state.products 
-        : state.products.filter(p => p.category === state.ui.activeCategory);
-      
-      const totalSlides = Math.ceil(filteredProducts.length / state.ui.slideCount);
+      const filteredProducts =
+        state.ui.activeCategory === 'all'
+          ? state.products
+          : state.products.filter(p => p.category === state.ui.activeCategory);
+
+      const totalSlides = Math.ceil(
+        filteredProducts.length / state.ui.slideCount
+      );
       state.ui.slideDirection = 'left';
-      state.ui.currentSlide = (state.ui.currentSlide - 1 + totalSlides) % totalSlides;
+      state.ui.currentSlide =
+        (state.ui.currentSlide - 1 + totalSlides) % totalSlides;
     },
     addToCart(state, action: PayloadAction<Product>) {
-      const existingItem = state.cart.items.find(item => item.id === action.payload.id);
+      const existingItem = state.cart.items.find(
+        item => item.id === action.payload.id
+      );
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
@@ -61,14 +72,21 @@ const storeSlice = createSlice({
       }
       state.ui.dialogProduct = action.payload;
     },
-     removeItem(state, action: PayloadAction<string>) {
-      state.cart.items = state.cart.items.filter(item => item.id !== action.payload);
-    }, 
-    updateQuantity(state, action: PayloadAction<{id: string; quantity: number}>) {
+    removeItem(state, action: PayloadAction<string>) {
+      state.cart.items = state.cart.items.filter(
+        item => item.id !== action.payload
+      );
+    },
+    updateQuantity(
+      state,
+      action: PayloadAction<{ id: string; quantity: number }>
+    ) {
       const item = state.cart.items.find(item => item.id === action.payload.id);
       if (item) {
         if (action.payload.quantity <= 0) {
-          state.cart.items = state.cart.items.filter(item => item.id !== action.payload.id);
+          state.cart.items = state.cart.items.filter(
+            item => item.id !== action.payload.id
+          );
         } else {
           item.quantity = action.payload.quantity;
         }
@@ -100,7 +118,7 @@ export const {
   setActiveCategory,
   setSlideCount,
   setSlideDirection, // Export new action
-  setCurrentSlide,   // Export new action
+  setCurrentSlide, // Export new action
   nextSlide,
   prevSlide,
   addToCart,

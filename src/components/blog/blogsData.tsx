@@ -1,5 +1,5 @@
 // src/data/blogData.ts
-import { Log } from "../../assets";
+import { Log } from '../../assets';
 
 export interface BlogPost {
   id: string;
@@ -28,7 +28,7 @@ Yet in the midst of this darkness, God is preparing a remnant
 
 Take hope: the antichrist’s reign is on divine timer. His destruction is assured, not by human resistance, but by the breath of Christ’s mouth at His glorious return (2 Thessalonians 2:8). The question is not if God will prevail, but who will endure to the end (Matthew 24:13). Let this truth stir you—not to fear, but to action. Pray relentlessly. Discern the times. And "stand firm in the faith" (1 Corinthians 16:13), for the King of kings is coming."`,
     date: '02/05/2025',
-    image: Log
+    image: Log,
   },
   {
     id: '2',
@@ -46,7 +46,7 @@ surrendered devotion. It begins when we stop asking Him to
 bless our plans and instead seek His face, His will, His heart. Like Mary sitting at the feet of Jesus (Luke 10:39), we must choose the "one thing needed"—time in His presence, listening to His voice, and letting His love transform us from within. The world will always pull us toward empty pursuits, but those who dwell in the secret place of the Most High (Psalm 91:1) will discover a treasure that can never be taken away. May we lay aside every weight and run with endurance into the arms of our Savior, for in Him alone is life, 
 joy, and eternal fulfillment.`,
     date: '02/05/2025',
-    image: Log
+    image: Log,
   },
   {
     id: '3',
@@ -59,7 +59,7 @@ The Holy Spirit, working through the Church, currently holds back the full force
 inescapable for those who rejected the truth.
 4. Gospel gets to ends of earth - Before the end comes, the true Church has one final mission: "This gospel of the kingdom will be preached in all the world as a witness to all the nations, and then the end will come" (Matthew 24:14). While the antichrist's rise seems inevitable, so is the unstoppable advance of God's Kingdom. Every soul reached, every nation touched with the Gospel, pushes back the darkness and delays the coming judgment. This is our great hope and urgent calling—not to fear the end times, but to faithfully participate in God's redemptive work until the very last moment. The antichrist may have his hour, but Christ will have the final victory.`,
     date: '02/05/2025',
-    image: Log
+    image: Log,
   },
   {
     id: '4',
@@ -74,7 +74,7 @@ Too many believers are trying to serve two masters—clinging to God's promises 
 A Call to Wholehearted Surrender
 The hour demands more than casual Christianity; it requires a people who are "holy, and acceptable to God" (Romans 12:1). Like the five wise virgins, we must trim our lamps and fill them with oil (Matthew 25:1-13)—the oil of intimacy with Christ, unwavering obedience, and a life poured out in worship. This is not a time for fear, but for fierce devotion. When the storm rages, the tree rooted deep in God will not be shaken (Psalm 1:3). Let us surrender every area of our lives to Him now, so that when the heat comes, we will not burn, but rise—a sweet-smelling aroma to our King.`,
     date: '06/21/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '5',
@@ -96,7 +96,7 @@ and unrepentant heart you are storing up wrath for
 yourself in the day of wrath and revelation of the 
 righteous judgment of God,`,
     date: '06/21/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '6',
@@ -104,7 +104,7 @@ righteous judgment of God,`,
     content: `These days the church is full of God's agenda and flesh's agenda at the same time. 
 May God's fire consume all of our human agenda such that our lives and works will rise to Him as a sweet smelling aroma. `,
     date: '06/21/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '7',
@@ -113,7 +113,7 @@ May God's fire consume all of our human agenda such that our lives and works wil
 God will destroy the earth because it’s His earth and if He doesn’t like how it’s going, He can choose to destroy and re-create it. And He will also destroy its perpetrators. We all understand ownership. Note that
 EVERYTHING  on the earth is the Lord’s including YOU! `,
     date: '06/21/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '8',
@@ -128,7 +128,7 @@ Then we who are alive and remain will be caught up together with them in the clo
 
 1st Thessalonians 4:17`,
     date: '05/30/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '9',
@@ -147,7 +147,7 @@ so that in the day of Christ I may be proud that I did not run in vain or labor 
 Numbers 11:1 
 And the people complained in the hearing of the Lord about their misfortunes, and when the Lord heard it, his anger was kindled, and the fire of the Lord burned among them and consumed some outlying parts of the camp. `,
     date: '06/21/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '10',
@@ -156,18 +156,19 @@ And the people complained in the hearing of the Lord about their misfortunes, an
 lessons for what He may have a great task lined up for your future. God can choose to use your unfortunate, miserable & uncomfortable situation as a training ground for you. Lemonade comes from squeezing lemons. 
 Therefore discover what God wants you to do in your adverse situation and stay with the Lord. Your obedience and perseverance will produce rewarding results. However if it’s an issue of safety, you should prayerfully remove yourself from the situation and seek God’s face for further direction. Being killed or physically hurt in a marriage is absolutely not in God’s will.`,
     date: '06/21/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '11',
-    title: 'One way to understand if you are dealing with a demon spirit in your relationships  ',
+    title:
+      'One way to understand if you are dealing with a demon spirit in your relationships  ',
     content: `If you are admonishing somebody and 
 they are unable to change, high chance you are 
 dealing with a demon spirit. 
 In that case deliverance or prayer will be the way to go. Demons don’t respect human advise, opinion or efforts.
 Only the power of God can drive them out.`,
     date: '05/22/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '12',
@@ -177,14 +178,14 @@ Psalm 39:6
 
 Many fuss, quarrel, fight, step on others to benefit from this life. Some even think, at whatever cost I must succeed. Is life really all of that and worth stepping on someone else? God will hold us accountable for how we live whether for Him or stuff. He will also check if we truly loved others both friend or stranger. Life is like a shadow, but a vapor. Lets live purposefully. Lets dedicate our lives to God and walk in the love of God with others. `,
     date: '05/21/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '13',
     title: `God owns everything on this planet except.... `,
     content: `God is the one who truly owns everything you think you own. The only thing that’s really yours is YOUR FREEWILL meaning, your ability to choose!`,
     date: '05/20/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '14',
@@ -192,7 +193,7 @@ Many fuss, quarrel, fight, step on others to benefit from this life. Some even t
     content: `The devil will use anyone in the flesh to tempt you. That’s why we shouldn’t be in the flesh ourselves, so we don’t tempt others. 
 Walk in love ALWAYS!`,
     date: '05/20/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '15',
@@ -200,7 +201,7 @@ Walk in love ALWAYS!`,
     content: `Many People are okay with GOOD but they are not okay with GOD. Because wholly embracing God implies dying to self and living holy unto and as Christ. 
 GOOD without GOD is nice on earth but will not lead you anywhere into His presence but Hell unfortunately. However Embracing GOD means life eternal in His glorious presence.`,
     date: '05/20/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '16',
@@ -212,7 +213,7 @@ Isaiah 66:4
 Sin has consequences. Rejection of God has consequences. 
 Repentance and accepting Christ into our lives is how we can turn to God. After we receive Jesus into our hearts, we live a holy and godly life unto God. When we live reverentially for Christ, we will be with Him in heaven at His coming or when our time on earth is over. `,
     date: '05/20/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '17',
@@ -224,7 +225,7 @@ there’s a behind-the-scenes force called kingdom of
 darkness. They are now confessing more than ever before in deliverance services all their atrocities - from quarrels between husband and wife or any two people to car accidents, child trafficking whatever! It’s the End times, knowledge will increase. Information is being amplified from all fronts including the supernatural. God is trying to help us through there confessions. They typically would love people to be ignorant because knowledge and truth are powerful. They would rather keep their secrets so you don’t know how to fight and overpower them. We need to be in the secret place of the Most High and ABIDE under His shadow. We need to live Holy & Godly.
 We need to HATE sin & walk in LOVE.`,
     date: '05/11/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '18',
@@ -232,7 +233,7 @@ We need to HATE sin & walk in LOVE.`,
     content: `In the spirit realm WAITING is a “very special thing”.  It is an active and very valuable spiritual activity. 
 It is part of the spiritual warfare. You can WAIT successfully by patience and a great attitude, then your victory will be certain!`,
     date: '05/11/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '19',
@@ -241,7 +242,7 @@ It is part of the spiritual warfare. You can WAIT successfully by patience and a
 The" Beast of the field" can represent your undisciplined flesh when life’s perfect for you. If all enemies are destroyed and everything is perfect in our lives, we will not have any need for God and our flesh will take dominance. Pressure refines people.
 It humbles us and makes us seek after God.`,
     date: '05/20/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '20',
@@ -277,7 +278,7 @@ Three ways people will change their strong opinions/mindsets on a wrong ideology
 
 A hard hearted/stiff necked person may never change their opinion/mindset. They may never change e.g the Pharisees, Judas.`,
     date: '02/05/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '21',
@@ -285,11 +286,12 @@ A hard hearted/stiff necked person may never change their opinion/mindset. They 
     content: `God will influence people based on their inclinations. Same as the devil. If your heart is turned towards God, you will be influenced by Him and same applies with the enemy. 
 However God can override an evil person’s will to favor whom He wants to favor, a child of God. Exodus 12:36`,
     date: '02/05/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '22',
-    title: 'Can this WAR in Israel be the Abomination of Desolation? (Matthew 24:15-22) ',
+    title:
+      'Can this WAR in Israel be the Abomination of Desolation? (Matthew 24:15-22) ',
     content: ` The Jews were engaged in a demonic festival at the time of the Hamas Terrorists attack. It was a mockery of their Holy Feast of Tabernacles or Sukkot. The festival that they were engaged in at the time of the attack on the young people and slaughtering of some/captivity of others near kibbutz Re'im, in the Negev desert area was called the Supernova Psychedelic trance music festival- a highly paganistic festival (you can research it yourself!). An abomination to God indeed and a mockery of their Jewish Religious Festival.
 
 Ezekiel 39:23
@@ -299,11 +301,12 @@ The observance of the Feast of Tabernacles is mentioned in the following books o
 Regardless of their sin, we are asked to pray for the Jews. They are still God’s chosen people. They are the people of promise. Gentile Christians are grafted in with them to become ONE NEW MAN. God will save the remnant Jews after the invasion and destruction by nations. God will fight for them and overpower their enemies. He will show them mercy. He will save some, the remnant. They will all be saved! They will recognize Him as Messiah, turn away from their sinful ways, receive His Holy Spirit and become one with Him. 
 We (redeemed and faithful Gentile followers of Christ) will join this group of sanctified Jews and become the NEW JERUSALEM.`,
     date: '10/30/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '23',
-    title: 'Who is our enemy? Why do we have enemies? How do we handle our enemies ',
+    title:
+      'Who is our enemy? Why do we have enemies? How do we handle our enemies ',
     content: `An enemy is an adversary who works against you. They can work against you to different degrees. You receive no love from an enemy. Here are three categories of enemies we face as humans and to the different degrees they can work against you. The bible teaches us that Satan is our ultimate adversary. Bible quote, “Be sober, be vigilant; because your adversary the devil, as a roaring lion, walketh about, seeking whom he may devour” (1st Peter 5:8).
 
 Types of Enemies: 
@@ -318,7 +321,7 @@ And in Your lovingkindness, cut off my enemies
 And destroy all those who afflict my soul,
 For I am Your servant. `,
     date: '05/20/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '24',
@@ -329,14 +332,14 @@ Your weakness: This may not necessarily be sin. For example poverty, inability t
 Your ignorance: This is when you are clueless on spiritual matters. Sadly the kingdom of darkness does not care if one is ignorant but in fact they like people that that way. However the bible has let us know that the truth we know sets us free (John 8:31-32). Therefore we need to seek truth. 
 The enemy will attack and infiltrate your life if you are in any or all of these types of situations. He also preys upon generational curses. This will be discussed at another time`,
     date: '05/20/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '25',
     title: 'Does God send people to hell?   ',
     content: `God doesn’t throw anyone in hell, you throw yourself in hell when you reject Jesus Christ and live for yourself. Christ came to save you from hell. Put your faith in Him, now that you can.`,
     date: '05/20/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '26',
@@ -344,7 +347,7 @@ The enemy will attack and infiltrate your life if you are in any or all of these
     content: `“These are the ones I look on with favor: those who are humble and contrite in spirit, and who tremble at my word.” 
 Isaiah  66:2b`,
     date: '09/30/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '27',
@@ -352,7 +355,7 @@ Isaiah  66:2b`,
     content: `Sadly someone can have a demon that drives people away from them - People that may want to love you, be friends with you or help you. The demons will cause you to be obnoxious and exhibit behaviors that are intolerable for these well meaning people, making it very difficult for them to love and support you. 
 Go for your deliverance.`,
     date: '09/30/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '28',
@@ -361,14 +364,14 @@ Go for your deliverance.`,
 However the enemy has put many under spiritual anesthesia including church people. I’m indeed concerned that people may wake up when it’s too late to defend themselves against him. May we therefore pray intently for an awakening for the body of Christ and those
 belonging to Christ that are lost in Babylon. `,
     date: '09/30/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '29',
     title: 'Worrying about what others think.',
     content: `What people think of us is overrated. Focus on what God thinks of you. Get into the Word.`,
     date: '09/30/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '30',
@@ -376,14 +379,14 @@ belonging to Christ that are lost in Babylon. `,
     content: `That Satan is so subtle that he can allow a person hear the Word, know the Word, preach the Word, even defend the Word just as long as you don’t DO THE WORD.
 `,
     date: '09/15/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '31',
     title: 'Why will God allow Christians to encounter the Antichrist? ',
     content: `Antichrist will wake  up some sleeping Christians. Sadly some will not wake up at all. They will sign up with Antichrist. They will take his mark. `,
     date: '09/15/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '32',
@@ -391,7 +394,7 @@ belonging to Christ that are lost in Babylon. `,
     content: `It’s when we are not solid with God that we become desperate to have approval from man. 
 Work on your relationship with God!`,
     date: '09/15/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '33',
@@ -405,7 +408,7 @@ Work on your relationship with God!`,
 
 4. Lastly and very importantly is there love in your heart? Have you tried to reach out privately to the people you intend to expose and did you receive a rebuttal?`,
     date: '09/14/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '34',
@@ -414,7 +417,7 @@ Work on your relationship with God!`,
 They will try so hard to weaken, distract and discourage you. Don’t be surprised if your hardships tempt you toward feeling either or all three of these listed. 
 Nonetheless be strong in the Lord and in the power of His might, remain focused and unwavering in your faith and the things the Lord has called you to. Live a holy and blameless life. Walk in love. Be patient.`,
     date: '05/20/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '35',
@@ -427,7 +430,7 @@ Scriptures:
 a. Now faith is the substance of things hoped for, the evidence of things not seen. (Hebrews 11:1)
 b. But without faith it is impossible to please Him: for he that cometh to God must believe that He is, and that He is a rewarder of them that diligently seek Him. (Hebrews 11:6)`,
     date: '09/01/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '36',
@@ -438,7 +441,7 @@ Here’s what the word of God says, “Do not make an idol for yourself, whether
 Bottom line, your phone will become whatever you permit it to be - god or tool. You decide. 
 Our choices and actions have consequences before God. Let’s wake up! `,
     date: '08/22/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '37',
@@ -449,7 +452,7 @@ The voice of a stranger Lord I will not listen to but your voice: John 10:5
 
 Jesus said, “My sheep hear my voice and they listen”. Bible scriptural text John 10:27, My sheep listen to my voice; I know them, and they follow me.`,
     date: '05/20/2024',
-    image: Log
+    image: Log,
   },
   {
     id: '38',
@@ -488,14 +491,14 @@ Scriptural text: 2nd Timothy 3:1-14
 
 14 But continue thou in the things which thou hast learned and hast been assured of, knowing of whom thou hast learned them.`,
     date: '08/18/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '39',
     title: 'How do we align ourselves rightly with God? ',
     content: `First we choose to set our minds and hearts 100% on Him. Secondly we refine our character by His presence in worship, word study, prayer and walking in love. Lastly we choose to prayerfully obey His word completely, not picking and choosing as we so please. We continually ask for His grace to obey His word, even the toughest ones for us. His grace is sufficient to help us in our weaknesses. 2nd Corinthians 12:9.`,
     date: '08/18/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '40',
@@ -503,7 +506,7 @@ Scriptural text: 2nd Timothy 3:1-14
     content: `For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord. Romans 6:23. Hell was designed for God's enemies namely Satan and his demons. 
 When people align/side with the devil in their hearts, they inherit his punishment. One may also ask:  Why do some people in sin die early and some others appear to have a longer time to continue to sin?  Sometimes people are judged instantly by the Lord and they may die before their time. I believe its because they are in a place where their hearts are already totally sold out to the devil that is they are already sealed to Satan and no amount of preaching will cause them to change their hearts. God knows the hearts of men and He judges accordingly. He is a righteous judge. Let all men by liars and God alone be true. If God sees that a man’s heart will turn to Him, He will find a way to lead them to deliverance.`,
     date: '08/15/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '41',
@@ -516,7 +519,7 @@ Basically the devil will corner you into sin through your weaknesses, un-surrend
 Also consider the story of Ananias and Sapphira that were judged instantly by the Lord even though believers. They were judged for their lies to the Holy Spirit, greed and deception. Acts 5: 1-11. 
 Lastly we can look at the story of Judas Iscariot where he was beguiled by Satan as the enemy took advantage of his greed and lack of loyalty to Jesus. Mark 14:44-46, John 18:1-13, Matthew 27:5, Acts 1:18.`,
     date: '08/14/2023',
-    image: Log
+    image: Log,
   },
   {
     id: '42',
@@ -525,6 +528,6 @@ Lastly we can look at the story of Judas Iscariot where he was beguiled by Satan
 Good news is that right now the spiritual mark can be removed!  This happens when you receive Jesus Christ into your life and receive His Holy Spirit and you then remain grounded in Him! 
 Therefore, this is the right time! (NOW is the day of salvation!!) as there will come a time when it would be way too late! God’s judgement on sin and on the wickedness of this world will be terrible. We haven’t seen anything like it. (Matthew 24:21; Zeph 1:14; Amos 5:18-20; Rev 6:16-17, Rev 9:20). So turn your life over now! Or if you believe you are saved, surrender COMPLETELY to Him. Give your WHOLE LIFE, holding nothing back!`,
     date: '08/14/2023',
-    image: Log
-  }
+    image: Log,
+  },
 ];

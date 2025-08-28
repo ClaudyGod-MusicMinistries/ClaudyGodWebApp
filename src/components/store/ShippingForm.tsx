@@ -26,31 +26,103 @@ interface ShippingFormProps {
 
 // Country-state mapping
 const COUNTRY_STATES: Record<string, string[]> = {
-  'Nigeria': ['Lagos', 'Abuja', 'Kano', 'Ogun', 'Rivers', 'Delta', 'Enugu', 'Anambra', 'Kaduna', 'Oyo', 'Imo', 'Katsina'],
-  'Ghana': ['Greater Accra', 'Ashanti', 'Western', 'Central', 'Eastern', 'Volta', 'Northern', 'Upper East', 'Upper West'],
+  Nigeria: [
+    'Lagos',
+    'Abuja',
+    'Kano',
+    'Ogun',
+    'Rivers',
+    'Delta',
+    'Enugu',
+    'Anambra',
+    'Kaduna',
+    'Oyo',
+    'Imo',
+    'Katsina',
+  ],
+  Ghana: [
+    'Greater Accra',
+    'Ashanti',
+    'Western',
+    'Central',
+    'Eastern',
+    'Volta',
+    'Northern',
+    'Upper East',
+    'Upper West',
+  ],
   'United States': [
-    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 
-    'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 
-    'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 
-    'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 
-    'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 
-    'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 
-    'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+    'Alabama',
+    'Alaska',
+    'Arizona',
+    'Arkansas',
+    'California',
+    'Colorado',
+    'Connecticut',
+    'Delaware',
+    'Florida',
+    'Georgia',
+    'Hawaii',
+    'Idaho',
+    'Illinois',
+    'Indiana',
+    'Iowa',
+    'Kansas',
+    'Kentucky',
+    'Louisiana',
+    'Maine',
+    'Maryland',
+    'Massachusetts',
+    'Michigan',
+    'Minnesota',
+    'Mississippi',
+    'Missouri',
+    'Montana',
+    'Nebraska',
+    'Nevada',
+    'New Hampshire',
+    'New Jersey',
+    'New Mexico',
+    'New York',
+    'North Carolina',
+    'North Dakota',
+    'Ohio',
+    'Oklahoma',
+    'Oregon',
+    'Pennsylvania',
+    'Rhode Island',
+    'South Carolina',
+    'South Dakota',
+    'Tennessee',
+    'Texas',
+    'Utah',
+    'Vermont',
+    'Virginia',
+    'Washington',
+    'West Virginia',
+    'Wisconsin',
+    'Wyoming',
   ],
-  'Canada': [
-    'Alberta', 'British Columbia', 'Manitoba', 'New Brunswick', 'Newfoundland and Labrador', 
-    'Nova Scotia', 'Ontario', 'Prince Edward Island', 'Quebec', 'Saskatchewan'
+  Canada: [
+    'Alberta',
+    'British Columbia',
+    'Manitoba',
+    'New Brunswick',
+    'Newfoundland and Labrador',
+    'Nova Scotia',
+    'Ontario',
+    'Prince Edward Island',
+    'Quebec',
+    'Saskatchewan',
   ],
-  'United Kingdom': [
-    'England', 'Scotland', 'Wales', 'Northern Ireland'
-  ]
+  'United Kingdom': ['England', 'Scotland', 'Wales', 'Northern Ireland'],
 };
 
 export const ShippingForm: React.FC<ShippingFormProps> = ({
   shippingInfo,
   setShippingInfo,
   onSubmit,
-  isLoading = false
+  isLoading = false,
 }) => {
   const { colorScheme } = useTheme();
   const [phoneError, setPhoneError] = useState<string | null>(null);
@@ -66,10 +138,10 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
     if (field === 'country') {
       setSelectedCountry(value);
       // Reset state when country changes
-      setShippingInfo({ 
-        ...shippingInfo, 
+      setShippingInfo({
+        ...shippingInfo,
         [field]: value,
-        state: '' 
+        state: '',
       });
       setAvailableStates(COUNTRY_STATES[value] || []);
     } else {
@@ -97,7 +169,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setShippingInfo({ ...shippingInfo, phone: value });
-    
+
     if (!value) {
       setPhoneError('Phone number is required');
     } else if (!validatePhoneNumber(value, selectedCountry)) {
@@ -109,7 +181,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validatePhoneNumber(shippingInfo.phone, selectedCountry)) {
       setPhoneError(`Invalid phone number format for ${selectedCountry}`);
       return;
@@ -123,24 +195,32 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
       {/* Name Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-       <SemiBoldText as="label" fontSize="0.875rem" className="block mb-2" color={colorScheme.background}>
-           First Name *
+          <SemiBoldText
+            as="label"
+            fontSize="0.875rem"
+            className="block mb-2"
+            color={colorScheme.background}
+          >
+            First Name *
           </SemiBoldText>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <User className="h-5 w-5" style={{ color: colorScheme.background }} />
+              <User
+                className="h-5 w-5"
+                style={{ color: colorScheme.background }}
+              />
             </div>
             <input
               type="text"
               required
               value={shippingInfo.firstName}
-              onChange={(e) => handleChange('firstName', e.target.value)}
+              onChange={e => handleChange('firstName', e.target.value)}
               className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2"
               style={{
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                focusRing: colorScheme.focusRing
+                focusRing: colorScheme.focusRing,
               }}
               placeholder="Enter first name"
               disabled={isLoading}
@@ -149,25 +229,32 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
         </div>
 
         <div>
-          
-            <SemiBoldText as="label" fontSize="0.875rem" className="block mb-2" color={colorScheme.background}>
-          Last Name *
+          <SemiBoldText
+            as="label"
+            fontSize="0.875rem"
+            className="block mb-2"
+            color={colorScheme.background}
+          >
+            Last Name *
           </SemiBoldText>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <User className="h-5 w-5" style={{ color: colorScheme.textTertiary }} />
+              <User
+                className="h-5 w-5"
+                style={{ color: colorScheme.textTertiary }}
+              />
             </div>
             <input
               type="text"
               required
               value={shippingInfo.lastName}
-              onChange={(e) => handleChange('lastName', e.target.value)}
+              onChange={e => handleChange('lastName', e.target.value)}
               className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2"
-               style={{
+              style={{
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                focusRing: colorScheme.focusRing
+                focusRing: colorScheme.focusRing,
               }}
               placeholder="Enter last name"
               disabled={isLoading}
@@ -179,26 +266,33 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
       {/* Contact Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-        
-          <SemiBoldText as="label" fontSize="0.875rem" className="block mb-2" color={colorScheme.background}>
-       Email *
+          <SemiBoldText
+            as="label"
+            fontSize="0.875rem"
+            className="block mb-2"
+            color={colorScheme.background}
+          >
+            Email *
           </SemiBoldText>
-          
+
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Mail className="h-5 w-5" style={{ color: colorScheme.textTertiary }} />
+              <Mail
+                className="h-5 w-5"
+                style={{ color: colorScheme.textTertiary }}
+              />
             </div>
             <input
               type="email"
               required
               value={shippingInfo.email}
-              onChange={(e) => handleChange('email', e.target.value)}
+              onChange={e => handleChange('email', e.target.value)}
               className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2"
-               style={{
+              style={{
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                focusRing: colorScheme.focusRing
+                focusRing: colorScheme.focusRing,
               }}
               placeholder="Enter email address"
               disabled={isLoading}
@@ -207,13 +301,20 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
         </div>
 
         <div>
-         
-          <SemiBoldText as="label" fontSize="0.875rem" className="block mb-2" color={colorScheme.background}>
-       Phone *
+          <SemiBoldText
+            as="label"
+            fontSize="0.875rem"
+            className="block mb-2"
+            color={colorScheme.background}
+          >
+            Phone *
           </SemiBoldText>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Phone className="h-5 w-5" style={{ color: colorScheme.textTertiary }} />
+              <Phone
+                className="h-5 w-5"
+                style={{ color: colorScheme.textTertiary }}
+              />
             </div>
             <input
               type="tel"
@@ -223,25 +324,32 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
               className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
                 phoneError ? 'border-red-500' : ''
               }`}
-                style={{
+              style={{
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                focusRing: colorScheme.focusRing
+                focusRing: colorScheme.focusRing,
               }}
               placeholder={
-                selectedCountry === 'Nigeria' ? 'e.g. 08086392101' : 
-                selectedCountry === 'Ghana' ? 'e.g. 0241234567' :
-                selectedCountry === 'United States' ? 'e.g. 5551234567' :
-                'Enter phone number'
+                selectedCountry === 'Nigeria'
+                  ? 'e.g. 08086392101'
+                  : selectedCountry === 'Ghana'
+                    ? 'e.g. 0241234567'
+                    : selectedCountry === 'United States'
+                      ? 'e.g. 5551234567'
+                      : 'Enter phone number'
               }
               disabled={isLoading}
             />
             {phoneError && (
-              
-               <SemiBoldText as="label" fontSize="0.875rem" className="block mb-2" color={colorScheme.background}>
-   {phoneError}
-          </SemiBoldText>
+              <SemiBoldText
+                as="label"
+                fontSize="0.875rem"
+                className="block mb-2"
+                color={colorScheme.background}
+              >
+                {phoneError}
+              </SemiBoldText>
             )}
           </div>
         </div>
@@ -249,26 +357,33 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
 
       {/* Address Field */}
       <div>
-       
-         <SemiBoldText as="label" fontSize="0.875rem" className="block mb-2" color={colorScheme.background}>
-   Address *
-          </SemiBoldText>
+        <SemiBoldText
+          as="label"
+          fontSize="0.875rem"
+          className="block mb-2"
+          color={colorScheme.background}
+        >
+          Address *
+        </SemiBoldText>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <MapPin className="h-5 w-5" style={{ color: colorScheme.textTertiary }} />
+            <MapPin
+              className="h-5 w-5"
+              style={{ color: colorScheme.textTertiary }}
+            />
           </div>
           <input
             type="text"
             required
             value={shippingInfo.address}
-            onChange={(e) => handleChange('address', e.target.value)}
+            onChange={e => handleChange('address', e.target.value)}
             className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2"
-      style={{
-                backgroundColor: colorScheme.gray[100],
-                borderColor: colorScheme.gray[200],
-                color: colorScheme.primary,
-                focusRing: colorScheme.focusRing
-              }}
+            style={{
+              backgroundColor: colorScheme.gray[100],
+              borderColor: colorScheme.gray[200],
+              color: colorScheme.primary,
+              focusRing: colorScheme.focusRing,
+            }}
             placeholder="Enter street address"
             disabled={isLoading}
           />
@@ -278,24 +393,31 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
       {/* Location Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div>
-         
-           <SemiBoldText as="label" fontSize="0.875rem" className="block mb-2" color={colorScheme.background}>
-   Select  Country *
+          <SemiBoldText
+            as="label"
+            fontSize="0.875rem"
+            className="block mb-2"
+            color={colorScheme.background}
+          >
+            Select Country *
           </SemiBoldText>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Globe className="h-5 w-5" style={{ color: colorScheme.textTertiary }} />
+              <Globe
+                className="h-5 w-5"
+                style={{ color: colorScheme.textTertiary }}
+              />
             </div>
             <select
               required
               value={shippingInfo.country}
-              onChange={(e) => handleChange('country', e.target.value)}
+              onChange={e => handleChange('country', e.target.value)}
               className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 appearance-none"
-               style={{
+              style={{
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                focusRing: colorScheme.focusRing
+                focusRing: colorScheme.focusRing,
               }}
               disabled={isLoading}
             >
@@ -310,30 +432,37 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
         </div>
 
         <div>
-         
-          <SemiBoldText as="label" fontSize="0.875rem" className="block mb-2" color={colorScheme.background}>
-    State *
+          <SemiBoldText
+            as="label"
+            fontSize="0.875rem"
+            className="block mb-2"
+            color={colorScheme.background}
+          >
+            State *
           </SemiBoldText>
           {availableStates.length > 0 ? (
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <MapPin className="h-5 w-5" style={{ color: colorScheme.textTertiary }} />
+                <MapPin
+                  className="h-5 w-5"
+                  style={{ color: colorScheme.textTertiary }}
+                />
               </div>
               <select
                 required
                 value={shippingInfo.state}
-                onChange={(e) => handleChange('state', e.target.value)}
+                onChange={e => handleChange('state', e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 appearance-none"
-             style={{
-                backgroundColor: colorScheme.gray[100],
-                borderColor: colorScheme.gray[200],
-                color: colorScheme.primary,
-                focusRing: colorScheme.focusRing
-              }}
+                style={{
+                  backgroundColor: colorScheme.gray[100],
+                  borderColor: colorScheme.gray[200],
+                  color: colorScheme.primary,
+                  focusRing: colorScheme.focusRing,
+                }}
                 disabled={isLoading}
               >
                 <option value="">Select state</option>
-                {availableStates.map((state) => (
+                {availableStates.map(state => (
                   <option key={state} value={state}>
                     {state}
                   </option>
@@ -345,36 +474,41 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
               type="text"
               required
               value={shippingInfo.state}
-              onChange={(e) => handleChange('state', e.target.value)}
+              onChange={e => handleChange('state', e.target.value)}
               className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2"
-           style={{
+              style={{
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                focusRing: colorScheme.focusRing
-              }}ceholder="Enter state"
+                focusRing: colorScheme.focusRing,
+              }}
+              ceholder="Enter state"
               disabled={isLoading}
             />
           )}
         </div>
 
         <div className="lg:col-span-2">
-         
-            <SemiBoldText as="label" fontSize="0.875rem" className="block mb-2" color={colorScheme.background}>
-     Nearest Location *
+          <SemiBoldText
+            as="label"
+            fontSize="0.875rem"
+            className="block mb-2"
+            color={colorScheme.background}
+          >
+            Nearest Location *
           </SemiBoldText>
           <input
             type="text"
             required
             value={shippingInfo.nearestLocation}
-            onChange={(e) => handleChange('nearestLocation', e.target.value)}
+            onChange={e => handleChange('nearestLocation', e.target.value)}
             className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2"
             style={{
-                backgroundColor: colorScheme.gray[100],
-                borderColor: colorScheme.gray[200],
-                color: colorScheme.primary,
-                focusRing: colorScheme.focusRing
-              }}
+              backgroundColor: colorScheme.gray[100],
+              borderColor: colorScheme.gray[200],
+              color: colorScheme.primary,
+              focusRing: colorScheme.focusRing,
+            }}
             placeholder="e.g., bus stop, landmark"
             disabled={isLoading}
           />

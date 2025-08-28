@@ -1,8 +1,8 @@
 // src/components/ui/fonts/colors.ts
 
 // Base color interfaces
-type BackgroundColor = string
-type Color = string
+type BackgroundColor = string;
+type Color = string;
 
 interface GrayScale {
   50: string;
@@ -36,13 +36,13 @@ export interface ColorScheme {
   success: string;
   warning: string;
   info: string;
-  
+
   // Text colors
   text: string;
   textSecondary: string;
   textTertiary: string;
   textInverted: string;
-  
+
   // Background colors
   background: string;
   backgroundSecondary: string;
@@ -51,41 +51,41 @@ export interface ColorScheme {
   card: string;
   body: string;
   footer: string;
-  
+
   // Interactive elements
   button: string;
   buttonText: string;
   buttonHover: string;
   buttonActive: string;
-  
+
   // Borders and dividers
   border: string;
   borderLight: string;
   borderDark: string;
-  
+
   // Gray scale
   gray: GrayScale;
-  
+
   // Gradients
   primaryGradient: string;
   primaryGradientLight: string;
   secondaryGradient: string;
-  
+
   // Focus states
   focusRing: string;
-  
+
   // Shadows
   shadowSm: string;
   shadowMd: string;
   shadowLg: string;
-  
+
   // Border radius
   borderRadius: BorderRadius;
-  
+
   // Additional colors
   heading: string;
   white: string;
-  
+
   // Material-like color scheme additions
   tertiary?: BackgroundColor;
   onTertiary?: Color;
@@ -95,162 +95,168 @@ export interface ColorScheme {
 }
 
 const baseGrayScale: GrayScale = {
-  50: "#F9FAFB",
-  100: "#F3F4F6",
-  200: "#E5E7EB",
-  300: "#D1D5DB",
-  400: "#9CA3AF",
-  500: "#6B7280",
-  600: "#4B5563",
-  700: "#374151",
-  800: "#1F2937",
-  900: "#111827",
+  50: '#F9FAFB',
+  100: '#F3F4F6',
+  200: '#E5E7EB',
+  300: '#D1D5DB',
+  400: '#9CA3AF',
+  500: '#6B7280',
+  600: '#4B5563',
+  700: '#374151',
+  800: '#1F2937',
+  900: '#111827',
 };
 
 const baseBorderRadius: BorderRadius = {
-  small: "4px",
-  medium: "8px",
-  large: "12px",
-  xlarge: "16px",
-  full: "9999px",
+  small: '4px',
+  medium: '8px',
+  large: '12px',
+  xlarge: '16px',
+  full: '9999px',
 };
 
 export const darkShades: ColorScheme = {
   // Base colors
-  primary: "#7C3AED",
-  primaryLight: "#8B5CF6",
-  primaryDark: "#5B21B6",
-  secondary: "#10B981",
-  accent: "#F59E0B",
-  error: "#EF4444",
-  success: "#10B981",
-  warning: "#F59E0B",
-  info: "#3B82F6",
-  
+  primary: '#7C3AED',
+  primaryLight: '#8B5CF6',
+  primaryDark: '#5B21B6',
+  secondary: '#10B981',
+  accent: '#F59E0B',
+  error: '#EF4444',
+  success: '#10B981',
+  warning: '#F59E0B',
+  info: '#3B82F6',
+
   // Text colors
-  text: "#FFFFFF",
-  textSecondary: "#E5E7EB",
-  textTertiary: "#9CA3AF",
-  textInverted: "#1F2937",
-  
+  text: '#FFFFFF',
+  textSecondary: '#E5E7EB',
+  textTertiary: '#9CA3AF',
+  textInverted: '#1F2937',
+
   // Background colors
-  background: "#1E1E2C",
-  backgroundSecondary: "#252538",
-  surface: "#252538",
-  surfaceVariant: "#2D2D42",
-  card: "#2D2D42",
-  body: "#1E1E2C",
-  footer: "#121220",
-  
+  background: '#1E1E2C',
+  backgroundSecondary: '#252538',
+  surface: '#252538',
+  surfaceVariant: '#2D2D42',
+  card: '#2D2D42',
+  body: '#1E1E2C',
+  footer: '#121220',
+
   // Interactive elements
-  button: "#7C3AED",
-  buttonText: "#FFFFFF",
-  buttonHover: "#8B5CF6",
-  buttonActive: "#6D28D9",
-  
+  button: '#7C3AED',
+  buttonText: '#FFFFFF',
+  buttonHover: '#8B5CF6',
+  buttonActive: '#6D28D9',
+
   // Borders
-  border: "#374151",
-  borderLight: "#4B5563",
-  borderDark: "#1F2937",
-  
+  border: '#374151',
+  borderLight: '#4B5563',
+  borderDark: '#1F2937',
+
   // Gray scale
   gray: baseGrayScale,
-  
+
   // Gradients
-  primaryGradient: "linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%)",
-  primaryGradientLight: "linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(91, 33, 182, 0.1) 100%)",
-  secondaryGradient: "linear-gradient(135deg, #10B981 0%, #059669 100%)",
-  
+  primaryGradient: 'linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%)',
+  primaryGradientLight:
+    'linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(91, 33, 182, 0.1) 100%)',
+  secondaryGradient: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+
   // Focus states
-  focusRing: "0 0 0 3px rgba(124, 58, 237, 0.5)",
-  
+  focusRing: '0 0 0 3px rgba(124, 58, 237, 0.5)',
+
   // Shadows
-  shadowSm: "0 1px 3px rgba(0, 0, 0, 0.5)",
-  shadowMd: "0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3)",
-  shadowLg: "0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.25)",
-  
+  shadowSm: '0 1px 3px rgba(0, 0, 0, 0.5)',
+  shadowMd:
+    '0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3)',
+  shadowLg:
+    '0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.25)',
+
   // Border radius
   borderRadius: baseBorderRadius,
-  
+
   // Additional colors
-  heading: "#FFFFFF",
-  white: "#FFFFFF",
-  
+  heading: '#FFFFFF',
+  white: '#FFFFFF',
+
   // Material-like colors
-  tertiary: "#2D2D42" as BackgroundColor,
-  onTertiary: "#FFFFFF" as Color,
-  onPrimary: "#FFFFFF" as Color,
-  onSecondary: "#FFFFFF" as Color,
-  outline: "#4B5563",
+  tertiary: '#2D2D42' as BackgroundColor,
+  onTertiary: '#FFFFFF' as Color,
+  onPrimary: '#FFFFFF' as Color,
+  onSecondary: '#FFFFFF' as Color,
+  outline: '#4B5563',
 };
 
 export const lightShades: ColorScheme = {
   // Base colors
-  primary: "#6D28D9",
-  primaryLight: "#8B5CF6",
-  primaryDark: "#5B21B6",
-  secondary: "#10B981",
-  accent: "#F59E0B",
-  error: "#EF4444",
-  success: "#10B981",
-  warning: "#F59E0B",
-  info: "#3B82F6",
-  
+  primary: '#6D28D9',
+  primaryLight: '#8B5CF6',
+  primaryDark: '#5B21B6',
+  secondary: '#10B981',
+  accent: '#F59E0B',
+  error: '#EF4444',
+  success: '#10B981',
+  warning: '#F59E0B',
+  info: '#3B82F6',
+
   // Text colors
-  text: "#1F2937",
-  textSecondary: "#4B5563",
-  textTertiary: "#6B7280",
-  textInverted: "#FFFFFF",
-  
+  text: '#1F2937',
+  textSecondary: '#4B5563',
+  textTertiary: '#6B7280',
+  textInverted: '#FFFFFF',
+
   // Background colors
-  background: "#F8FAFC",
-  backgroundSecondary: "#EDF2F7",
-  surface: "#FFFFFF",
-  surfaceVariant: "#F3F4F6",
-  card: "#FFFFFF",
-  body: "#F8FAFC",
-  footer: "#EDF2F7",
-  
+  background: '#F8FAFC',
+  backgroundSecondary: '#EDF2F7',
+  surface: '#FFFFFF',
+  surfaceVariant: '#F3F4F6',
+  card: '#FFFFFF',
+  body: '#F8FAFC',
+  footer: '#EDF2F7',
+
   // Interactive elements
-  button: "#6D28D9",
-  buttonText: "#FFFFFF",
-  buttonHover: "#7C3AED",
-  buttonActive: "#5B21B6",
-  
+  button: '#6D28D9',
+  buttonText: '#FFFFFF',
+  buttonHover: '#7C3AED',
+  buttonActive: '#5B21B6',
+
   // Borders
-  border: "#E5E7EB",
-  borderLight: "#F3F4F6",
-  borderDark: "#D1D5DB",
-  
+  border: '#E5E7EB',
+  borderLight: '#F3F4F6',
+  borderDark: '#D1D5DB',
+
   // Gray scale
   gray: baseGrayScale,
-  
+
   // Gradients
-  primaryGradient: "linear-gradient(135deg, #6D28D9 0%, #5B21B6 100%)",
-  primaryGradientLight: "linear-gradient(135deg, rgba(109, 40, 217, 0.1) 0%, rgba(91, 33, 182, 0.1) 100%)",
-  secondaryGradient: "linear-gradient(135deg, #10B981 0%, #059669 100%)",
-  
+  primaryGradient: 'linear-gradient(135deg, #6D28D9 0%, #5B21B6 100%)',
+  primaryGradientLight:
+    'linear-gradient(135deg, rgba(109, 40, 217, 0.1) 0%, rgba(91, 33, 182, 0.1) 100%)',
+  secondaryGradient: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+
   // Focus states
-  focusRing: "0 0 0 3px rgba(109, 40, 217, 0.3)",
-  
+  focusRing: '0 0 0 3px rgba(109, 40, 217, 0.3)',
+
   // Shadows
-  shadowSm: "0 1px 3px rgba(0, 0, 0, 0.1)",
-  shadowMd: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-  shadowLg: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-  
+  shadowSm: '0 1px 3px rgba(0, 0, 0, 0.1)',
+  shadowMd:
+    '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+  shadowLg:
+    '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+
   // Border radius
   borderRadius: baseBorderRadius,
-  
+
   // Additional colors
-  heading: "#1F2937",
-  white: "#FFFFFF",
-  
+  heading: '#1F2937',
+  white: '#FFFFFF',
+
   // Material-like colors
-  tertiary: "#F3F4F6" as BackgroundColor,
-  onTertiary: "#1F2937" as Color,
-  onPrimary: "#FFFFFF" as Color,
-  onSecondary: "#FFFFFF" as Color,
-  outline: "#D1D5DB",
+  tertiary: '#F3F4F6' as BackgroundColor,
+  onTertiary: '#1F2937' as Color,
+  onPrimary: '#FFFFFF' as Color,
+  onSecondary: '#FFFFFF' as Color,
+  outline: '#D1D5DB',
 };
 
 // Utility types for theme usage

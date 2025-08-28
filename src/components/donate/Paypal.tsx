@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import {
@@ -89,7 +91,11 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
       setPaymentStatus('idle');
       setShowCancelDialog(false);
     }
-    const popup = window.open('', 'paypal', 'width=800,height=600,scrollbars=yes');
+    const popup = window.open(
+      '',
+      'paypal',
+      'width=800,height=600,scrollbars=yes'
+    );
     if (!popup) {
       toast.error('Enable pop‑ups to continue with PayPal');
       return;
@@ -126,24 +132,41 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
       return {
         title: 'Complete Payment in Popup',
         description: 'Finish your donation in the PayPal window',
-        icon: <FaExternalLinkAlt className={`text-3xl`} style={{ color: colorScheme.primary }} />,
+        icon: (
+          <FaExternalLinkAlt
+            className={`text-3xl`}
+            style={{ color: colorScheme.primary }}
+          />
+        ),
       };
     if (paymentStatus === 'canceled')
       return {
         title: 'Payment Canceled',
         description: 'You can retry or choose another method',
-        icon: <FaTimesCircle className="text-3xl" style={{ color: colorScheme.error }} />,
+        icon: (
+          <FaTimesCircle
+            className="text-3xl"
+            style={{ color: colorScheme.error }}
+          />
+        ),
       };
     if (paymentCompleted)
       return {
         title: 'Payment Completed!',
         description: 'Thank you for your donation',
-        icon: <FaCheckCircle className="text-3xl" style={{ color: colorScheme.success }} />,
+        icon: (
+          <FaCheckCircle
+            className="text-3xl"
+            style={{ color: colorScheme.success }}
+          />
+        ),
       };
     return {
       title: 'Donate with PayPal',
       description: `You're about to donate ${formatAmount(amount)}`,
-      icon: <FaPaypal className="text-3xl" style={{ color: colorScheme.primary }} />,
+      icon: (
+        <FaPaypal className="text-3xl" style={{ color: colorScheme.primary }} />
+      ),
     };
   })();
 
@@ -157,15 +180,25 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
       >
         <div className={`p-5 bg-gradient-to-r ${colorScheme.primaryGradient}`}>
           <div className="flex justify-center">
-            <div className="p-3 rounded-full shadow-lg" style={{ background: colorScheme.background }}>
-              <FaPaypal className="h-8 w-8" style={{ color: colorScheme.primary }} />
+            <div
+              className="p-3 rounded-full shadow-lg"
+              style={{ background: colorScheme.background }}
+            >
+              <FaPaypal
+                className="h-8 w-8"
+                style={{ color: colorScheme.primary }}
+              />
             </div>
           </div>
         </div>
         <div className="p-6">
           <div className="flex flex-col items-center text-center mb-6">
             <div className="mb-4">{statusContent.icon}</div>
-            <ExtraBoldText fontSize="20px" style={{ color: colorScheme.text }} className="mb-2">
+            <ExtraBoldText
+              fontSize="20px"
+              style={{ color: colorScheme.text }}
+              className="mb-2"
+            >
               {statusContent.title}
             </ExtraBoldText>
             <RegularText style={{ color: colorScheme.textSecondary }}>
@@ -174,9 +207,14 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
           </div>
 
           {paymentStatus === 'idle' && !paymentCompleted && (
-            <div className={`rounded-lg p-4 mb-6 border ${colorScheme.border}`} style={{ background: colorScheme.card }}>
+            <div
+              className={`rounded-lg p-4 mb-6 border ${colorScheme.border}`}
+              style={{ background: colorScheme.card }}
+            >
               <div className="flex justify-between">
-                <RegularText style={{ color: colorScheme.textSecondary }}>Donation Amount:</RegularText>
+                <RegularText style={{ color: colorScheme.textSecondary }}>
+                  Donation Amount:
+                </RegularText>
                 <BoldText style={{ color: colorScheme.primary }}>
                   {formatAmount(amount)}
                 </BoldText>
@@ -187,7 +225,9 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={onBack}
-              disabled={paymentStatus !== 'idle' && paymentStatus !== 'canceled'}
+              disabled={
+                paymentStatus !== 'idle' && paymentStatus !== 'canceled'
+              }
               className={`px-5 py-3 rounded-lg border ${
                 paymentStatus !== 'idle' && paymentStatus !== 'canceled'
                   ? 'opacity-50 cursor-not-allowed'
@@ -195,7 +235,7 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
               } ${colorScheme.border}`}
               style={{
                 color: colorScheme.text,
-                background: colorScheme.background
+                background: colorScheme.background,
               }}
             >
               Back
@@ -223,8 +263,8 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
                 paymentCompleted
                   ? `${colorScheme.success} hover:${colorScheme.success}`
                   : paymentStatus === 'canceled'
-                  ? `${colorScheme.warning} hover:${colorScheme.warning}`
-                  : `${colorScheme.button} hover:${colorScheme.buttonHover}`
+                    ? `${colorScheme.warning} hover:${colorScheme.warning}`
+                    : `${colorScheme.button} hover:${colorScheme.buttonHover}`
               } ${
                 paymentStatus === 'popupOpen' ||
                 (paymentStatus === 'idle' && paymentCompleted)
@@ -261,20 +301,29 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
         className="fixed inset-0 z-10 overflow-y-auto"
       >
         <div className="min-h-screen px-4 text-center">
-          <Dialog.Overlay className="fixed inset-0" style={{ background: colorScheme.text, opacity: 0.3 }} />
-          <span className="inline-block h-screen align-middle" aria-hidden="true">
+          <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+          <span
+            className="inline-block h-screen align-middle"
+            aria-hidden="true"
+          >
             &#8203;
           </span>
-          <div 
-            className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle shadow-xl rounded-2xl" 
-            style={{ 
+          <div
+            className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle shadow-xl rounded-2xl"
+            style={{
               background: colorScheme.background,
-              border: `1px solid ${colorScheme.border}`
+              border: `1px solid ${colorScheme.border}`,
             }}
           >
             <div className="flex items-center mb-4">
-              <FaTimesCircle className="text-3xl mr-3" style={{ color: colorScheme.error }} />
-              <Dialog.Title className="text-lg font-medium" style={{ color: colorScheme.text }}>
+              <FaTimesCircle
+                className="text-3xl mr-3"
+                style={{ color: colorScheme.error }}
+              />
+              <Dialog.Title
+                className="text-lg font-medium"
+                style={{ color: colorScheme.text }}
+              >
                 Payment Not Completed
               </Dialog.Title>
             </div>
@@ -287,7 +336,7 @@ const PayPalStep: React.FC<PayPalStepProps> = ({
                 style={{
                   color: colorScheme.text,
                   background: colorScheme.background,
-                  border: `1px solid ${colorScheme.border}`
+                  border: `1px solid ${colorScheme.border}`,
                 }}
                 onClick={() => setShowCancelDialog(false)}
               >

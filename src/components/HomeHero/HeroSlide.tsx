@@ -57,7 +57,11 @@ const HeroSlide = ({
             <MusicSlide slide={slide} setIsModalOpen={setIsModalOpen} />
           )}
           {slide.type === 'video' && (
-            <VideoSlide slide={slide} toggleMute={toggleMute} isMuted={isMuted} />
+            <VideoSlide
+              slide={slide}
+              toggleMute={toggleMute}
+              isMuted={isMuted}
+            />
           )}
         </motion.div>
       </div>

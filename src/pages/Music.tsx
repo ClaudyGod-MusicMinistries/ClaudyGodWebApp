@@ -55,7 +55,7 @@ const SecurityUtils = {
         'utm_campaign',
         'tag',
       ];
-      safeParams.forEach((param) => parsedUrl.searchParams.delete(param));
+      safeParams.forEach(param => parsedUrl.searchParams.delete(param));
       return parsedUrl.toString();
     } catch (error) {
       console.error('Invalid URL:', url);
@@ -66,9 +66,7 @@ const SecurityUtils = {
   isTrustedDomain: (url: string, trustedDomains: string[]) => {
     try {
       const parsedUrl = new URL(url);
-      return trustedDomains.some((domain) =>
-        parsedUrl.hostname.endsWith(domain)
-      );
+      return trustedDomains.some(domain => parsedUrl.hostname.endsWith(domain));
     } catch (error) {
       return false;
     }
@@ -105,16 +103,19 @@ export const MusicData = () => {
   const SecuredLink = ({
     platform,
   }: {
-    platform: typeof securedMusicPlatforms[0];
+    platform: (typeof securedMusicPlatforms)[0];
   }) => {
     const [isHovered, setIsHovered] = useState(false);
     const sanitizedUrl = SecurityUtils.sanitizeUrl(platform.url);
-    const isTrusted = SecurityUtils.isTrustedDomain(sanitizedUrl, TRUSTED_DOMAINS);
+    const isTrusted = SecurityUtils.isTrustedDomain(
+      sanitizedUrl,
+      TRUSTED_DOMAINS
+    );
 
     return (
       <motion.a
         href={sanitizedUrl}
-        onClick={(e) => handleLinkClick(platform.url, e)}
+        onClick={e => handleLinkClick(platform.url, e)}
         className={`flex items-center px-6 py-4 rounded-xl shadow-lg transition-all ${platform.bgColor} ${platform.textColor} ${
           isHovered ? 'scale-[1.03] shadow-xl -translate-y-1' : ''
         } ${isTrusted ? 'ring-2 ring-white/30' : 'opacity-80'}`}
@@ -256,7 +257,7 @@ export const MusicData = () => {
             viewport={{ once: true }}
             transition={{ staggerChildren: 0.1 }}
           >
-            {securedMusicPlatforms.map((platform) => (
+            {securedMusicPlatforms.map(platform => (
               <SecuredLink key={platform.name} platform={platform} />
             ))}
           </motion.div>
@@ -329,7 +330,7 @@ export const MusicData = () => {
           </motion.div>
 
           <div className="space-y-16">
-            {albums.map((album) => (
+            {albums.map(album => (
               <motion.div
                 key={album.id}
                 className="grid md:grid-cols-3 gap-10 items-start rounded-2xl shadow-lg p-6 max-w-6xl mx-auto"
@@ -394,62 +395,64 @@ export const MusicData = () => {
                   </div>
 
                   <div className="mt-10">
-  <ExtraBoldText
-    className="max-md:text-2xl md:text-4xl mb-6 text-center"
-    style={{ color: colorScheme.text }}
-  >
-    Experience the Sound - Stream Now!
-  </ExtraBoldText>
+                    <ExtraBoldText
+                      className="max-md:text-2xl md:text-4xl mb-6 text-center"
+                      style={{ color: colorScheme.text }}
+                    >
+                      Experience the Sound - Stream Now!
+                    </ExtraBoldText>
 
-  <motion.div
-    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl mx-auto"
-  >
-    {securedMusicPlatforms.map((platform, i) => {
-      const sanitizedUrl = SecurityUtils.sanitizeUrl(platform.url);
+                    <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl mx-auto">
+                      {securedMusicPlatforms.map((platform, i) => {
+                        const sanitizedUrl = SecurityUtils.sanitizeUrl(
+                          platform.url
+                        );
 
-      return (
-        <motion.div
-          key={i}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full"
-        >
-          <CustomButton
-            size="sm"
-            style={{
-              backgroundColor: colorScheme.body,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "0.5rem",
-              padding: "0.75rem 1rem",
-              borderRadius: "0.75rem",
-            }}
-            onClick={(e: React.MouseEvent) => {
-              e.preventDefault();
-              setRedirectUrl(sanitizedUrl);
-              setIsModalOpen(true);
-            }}
-            fullWidth
-          >
-            <BoldText
-              fontSize="0.9rem"
-              style={{ lineHeight: "1.2", textAlign: "center" }}
-            >
-              Play on {platform.name}{" "}
-              <FontAwesomeIcon
-                // icon={faExternalLinkAlt}
-                style={{ fontSize: "0.8rem" }}
-                icon={"function"}
-              />
-            </BoldText>
-          </CustomButton>
-        </motion.div>
-      );
-    })}
-  </motion.div>
-</div>
-
+                        return (
+                          <motion.div
+                            key={i}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full"
+                          >
+                            <CustomButton
+                              size="sm"
+                              style={{
+                                backgroundColor: colorScheme.body,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                gap: '0.5rem',
+                                padding: '0.75rem 1rem',
+                                borderRadius: '0.75rem',
+                              }}
+                              onClick={(e: React.MouseEvent) => {
+                                e.preventDefault();
+                                setRedirectUrl(sanitizedUrl);
+                                setIsModalOpen(true);
+                              }}
+                              fullWidth
+                            >
+                              <BoldText
+                                fontSize="0.9rem"
+                                style={{
+                                  lineHeight: '1.2',
+                                  textAlign: 'center',
+                                }}
+                              >
+                                Play on {platform.name}{' '}
+                                <FontAwesomeIcon
+                                  // icon={faExternalLinkAlt}
+                                  style={{ fontSize: '0.8rem' }}
+                                  icon={'function'}
+                                />
+                              </BoldText>
+                            </CustomButton>
+                          </motion.div>
+                        );
+                      })}
+                    </motion.div>
+                  </div>
                 </div>
               </motion.div>
             ))}

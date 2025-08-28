@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { CheckCircle } from "lucide-react";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { CheckCircle } from 'lucide-react';
 
 const SuccessPage = () => {
   const { orderId } = useParams<{ orderId: string }>();
   const [order, setOrder] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchOrder = async () => {
       try {
         const res = await fetch(`http://localhost:10000/api/order/${orderId}`);
         const data = await res.json();
-        
+
         if (res.ok) {
           setOrder(data);
         } else {
-          setError(data.error || "Failed to load order details");
+          setError(data.error || 'Failed to load order details');
         }
       } catch (err) {
-        setError("Network error occurred");
+        setError('Network error occurred');
       } finally {
         setLoading(false);
       }
@@ -30,7 +30,8 @@ const SuccessPage = () => {
   }, [orderId]);
 
   if (loading) return <div className="text-center py-10">Loading...</div>;
-  if (error) return <div className="text-center py-10 text-red-500">{error}</div>;
+  if (error)
+    return <div className="text-center py-10 text-red-500">{error}</div>;
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -47,11 +48,13 @@ const SuccessPage = () => {
         <div className="space-y-3">
           {order.items.map((item: any) => (
             <div key={item.productId} className="flex justify-between">
-              <span>{item.name} (x{item.quantity})</span>
+              <span>
+                {item.name} (x{item.quantity})
+              </span>
               <span>${(item.price * item.quantity).toFixed(2)}</span>
             </div>
           ))}
-          
+
           <div className="border-t pt-3 mt-3">
             <div className="flex justify-between font-semibold">
               <span>Total</span>
@@ -66,7 +69,9 @@ const SuccessPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <p className="font-medium">Name</p>
-            <p>{order.shippingInfo.firstName} {order.shippingInfo.lastName}</p>
+            <p>
+              {order.shippingInfo.firstName} {order.shippingInfo.lastName}
+            </p>
           </div>
           <div>
             <p className="font-medium">Email</p>
@@ -101,7 +106,7 @@ const SuccessPage = () => {
 
       <div className="mt-8 text-center">
         <button
-          onClick={() => window.location.href = "/"}
+          onClick={() => (window.location.href = '/')}
           className="bg-purple-700 text-white px-6 py-3 rounded-lg"
         >
           Continue Shopping

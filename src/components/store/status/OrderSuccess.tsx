@@ -5,12 +5,13 @@ import { CheckCircle } from 'lucide-react';
 
 const OrderSuccess = () => {
   const location = useLocation();
-  const state = location.state as {
-    orderId: string;
-    amount: number;
-    confirmationId: string;
-    paymentMethod: string;
-  } || null;
+  const state =
+    (location.state as {
+      orderId: string;
+      amount: number;
+      confirmationId: string;
+      paymentMethod: string;
+    }) || null;
 
   // Fallback values if state is missing
   const orderId = state?.orderId || 'N/A';
@@ -25,7 +26,8 @@ const OrderSuccess = () => {
         </div>
         <h1 className="text-2xl font-bold mt-4">Payment Successful!</h1>
         <p className="mt-2 text-gray-600">
-          Your order <span className="font-semibold">#{orderId}</span> has been processed.
+          Your order <span className="font-semibold">#{orderId}</span> has been
+          processed.
         </p>
 
         <div className="mt-6 bg-gray-50 rounded-lg p-4 text-left max-w-md mx-auto">
@@ -38,13 +40,14 @@ const OrderSuccess = () => {
               <span className="font-medium">Payment Method:</span> Zelle
             </p>
             <p className="text-gray-600">
-              <span className="font-medium">Transaction ID:</span> {confirmationId}
+              <span className="font-medium">Transaction ID:</span>{' '}
+              {confirmationId}
             </p>
           </div>
         </div>
 
-        <button 
-          onClick={() => window.location.href = '/'}
+        <button
+          onClick={() => (window.location.href = '/')}
           className="mt-6 bg-purple-600 text-white py-2 px-6 rounded-lg hover:bg-purple-700 transition-colors"
         >
           Return to Home

@@ -14,16 +14,20 @@ interface LiveSessionsSectionProps {
 }
 
 export const LiveSessionsSection: React.FC<LiveSessionsSectionProps> = ({
-  title = "Check Out Our Live Sessions",
-  description = "Experience the powerful live worship sessions by Min. ClaudyGod and her worship team. These recordings capture the spirit and energy of our live performances.",
-  className = ""
+  title = 'Check Out Our Live Sessions',
+  description = 'Experience the powerful live worship sessions by Min. ClaudyGod and her worship team. These recordings capture the spirit and energy of our live performances.',
+  className = '',
 }) => {
   const { colorScheme } = useTheme();
-  
+
   // Filter only Live Sessions videos
-  const liveSessionVideos = videos.filter(video => video.category === 'Live Sessions');
-  
-  const [selectedVideo, setSelectedVideo] = useState<VideoType>(liveSessionVideos[0]);
+  const liveSessionVideos = videos.filter(
+    video => video.category === 'Live Sessions'
+  );
+
+  const [selectedVideo, setSelectedVideo] = useState<VideoType>(
+    liveSessionVideos[0]
+  );
   const [isPlaying, setIsPlaying] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
@@ -34,14 +38,15 @@ export const LiveSessionsSection: React.FC<LiveSessionsSectionProps> = ({
       const scrollAmount = 300;
       scrollContainerRef.current.scrollBy({
         left: direction === 'right' ? scrollAmount : -scrollAmount,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   };
 
   const checkScrollPosition = () => {
     if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      const { scrollLeft, scrollWidth, clientWidth } =
+        scrollContainerRef.current;
       setShowLeftArrow(scrollLeft > 0);
       setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10);
     }
@@ -53,7 +58,7 @@ export const LiveSessionsSection: React.FC<LiveSessionsSectionProps> = ({
       container.addEventListener('scroll', checkScrollPosition);
       window.addEventListener('resize', checkScrollPosition);
       checkScrollPosition();
-      
+
       return () => {
         container.removeEventListener('scroll', checkScrollPosition);
         window.removeEventListener('resize', checkScrollPosition);
@@ -62,19 +67,22 @@ export const LiveSessionsSection: React.FC<LiveSessionsSectionProps> = ({
   }, []);
 
   // Generate YouTube thumbnail URL
-  const getThumbnailUrl = (youtubeId: string, quality: 'default' | 'hq' | 'mq' | 'sd' | 'maxres' = 'hq') => {
+  const getThumbnailUrl = (
+    youtubeId: string,
+    quality: 'default' | 'hq' | 'mq' | 'sd' | 'maxres' = 'hq'
+  ) => {
     const qualities = {
-      'default': 'default.jpg',
-      'hq': 'hqdefault.jpg',
-      'mq': 'mqdefault.jpg',
-      'sd': 'sddefault.jpg',
-      'maxres': 'maxresdefault.jpg'
+      default: 'default.jpg',
+      hq: 'hqdefault.jpg',
+      mq: 'mqdefault.jpg',
+      sd: 'sddefault.jpg',
+      maxres: 'maxresdefault.jpg',
     };
     return `https://img.youtube.com/vi/${youtubeId}/${qualities[quality]}`;
   };
 
   return (
-    <section 
+    <section
       className={`w-full py-8 lg:py-16 ${className}`}
       style={{ backgroundColor: colorScheme.background }}
     >
@@ -85,10 +93,10 @@ export const LiveSessionsSection: React.FC<LiveSessionsSectionProps> = ({
           transition={{ duration: 0.5 }}
           className="flex flex-col items-center text-center mb-8 lg:mb-12"
         >
-          <ExtraBoldText 
-            fontSize="1.75rem" 
-            smFontSize="2rem" 
-            lgFontSize="2.5rem" 
+          <ExtraBoldText
+            fontSize="1.75rem"
+            smFontSize="2rem"
+            lgFontSize="2.5rem"
             style={{ color: colorScheme.text }}
             className="mb-4"
           >
@@ -101,11 +109,11 @@ export const LiveSessionsSection: React.FC<LiveSessionsSectionProps> = ({
             className="h-1 my-4 lg:my-6"
             style={{ backgroundColor: colorScheme.primary }}
           />
-          <RegularText 
-            fontSize="0.875rem" 
-            smFontSize="0.9rem" 
-            lgFontSize="1rem" 
-            style={{ color: colorScheme.textSecondary }} 
+          <RegularText
+            fontSize="0.875rem"
+            smFontSize="0.9rem"
+            lgFontSize="1rem"
+            style={{ color: colorScheme.textSecondary }}
             className="max-w-3xl mb-6 lg:mb-8 px-2"
           >
             {description}
@@ -124,17 +132,17 @@ export const LiveSessionsSection: React.FC<LiveSessionsSectionProps> = ({
               frameBorder="0"
             />
           </div>
-          <div 
+          <div
             className="p-4 rounded-b-xl"
             style={{ backgroundColor: colorScheme.cardBackground }}
           >
-            <h3 
+            <h3
               className="font-semibold text-lg mb-2"
               style={{ color: colorScheme.text }}
             >
               {selectedVideo.title}
             </h3>
-            <p 
+            <p
               className="text-sm mb-2"
               style={{ color: colorScheme.textSecondary }}
             >
@@ -160,7 +168,7 @@ export const LiveSessionsSection: React.FC<LiveSessionsSectionProps> = ({
               <ChevronLeft size={24} />
             </button>
           )}
-          
+
           {showRightArrow && (
             <button
               onClick={() => scroll('right')}
@@ -172,7 +180,7 @@ export const LiveSessionsSection: React.FC<LiveSessionsSectionProps> = ({
             </button>
           )}
 
-          <div 
+          <div
             ref={scrollContainerRef}
             className="flex overflow-x-auto scrollbar-hide gap-4 pb-4 -mx-4 px-4"
             onScroll={checkScrollPosition}
@@ -184,12 +192,12 @@ export const LiveSessionsSection: React.FC<LiveSessionsSectionProps> = ({
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
                 className={`flex-shrink-0 w-64 sm:w-72 md:w-80 cursor-pointer transition-all duration-300 ${
-                  selectedVideo.id === video.id 
-                    ? 'ring-4 scale-105' 
+                  selectedVideo.id === video.id
+                    ? 'ring-4 scale-105'
                     : 'opacity-70 hover:opacity-100'
                 } rounded-lg overflow-hidden`}
                 style={{
-                  ringColor: colorScheme.primary
+                  ringColor: colorScheme.primary,
                 }}
                 onClick={() => {
                   setSelectedVideo(video);
@@ -210,17 +218,17 @@ export const LiveSessionsSection: React.FC<LiveSessionsSectionProps> = ({
                     </div>
                   </div>
                 </div>
-                <div 
+                <div
                   className="p-3 rounded-b-lg"
                   style={{ backgroundColor: colorScheme.cardBackground }}
                 >
-                  <h3 
+                  <h3
                     className="font-semibold text-sm mb-1 line-clamp-1"
                     style={{ color: colorScheme.text }}
                   >
                     {video.title}
                   </h3>
-                  <p 
+                  <p
                     className="text-xs mb-2 line-clamp-2"
                     style={{ color: colorScheme.textSecondary }}
                   >

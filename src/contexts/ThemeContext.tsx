@@ -1,6 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState } from 'react';
-import { ColorScheme, darkShades, lightShades } from '../components/ui/fonts/color/colorScheme';
+import {
+  ColorScheme,
+  darkShades,
+  lightShades,
+} from '../components/ui/fonts/color/colorScheme';
 
 type ThemeContextType = {
   colorScheme: ColorScheme;
@@ -10,11 +14,13 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [isDarkMode, setIsDarkMode] = useState(true);
-  
+
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
-  
+
   const colorScheme = isDarkMode ? darkShades : lightShades;
 
   return (

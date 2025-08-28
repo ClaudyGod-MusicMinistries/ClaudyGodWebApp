@@ -9,26 +9,27 @@ const platforms = [
     name: 'Spotify',
     color: '#1DB954',
     link: 'https://open.spotify.com/album/1zCT0YUVggnzkZJK5VP0yd',
-    description: 'Stream your favorite tracks on Spotify.'
+    description: 'Stream your favorite tracks on Spotify.',
   },
   {
     name: 'Apple Music',
     color: '#FA2C56',
     link: 'https://music.apple.com/ng/album/you-are-our-everything-single/1803827230',
-    description: 'Enjoy premium sound and curated playlists on Apple Music.'
+    description: 'Enjoy premium sound and curated playlists on Apple Music.',
   },
   {
     name: 'YouTube Music',
     color: '#FF0000',
     link: 'https://www.youtube.com/watch?v=fK_tCBcnqGs',
-    description: 'Watch and listen to the latest music videos on YouTube Music.'
+    description:
+      'Watch and listen to the latest music videos on YouTube Music.',
   },
   {
     name: 'Deezer',
     color: '#00C7F2',
     link: 'https://www.deezer.com/us/album/695949191',
-    description: 'Discover new sounds every day with Deezer.'
-  }
+    description: 'Discover new sounds every day with Deezer.',
+  },
 ];
 
 const StreamingPlatforms: React.FC = () => {
@@ -48,10 +49,10 @@ const StreamingPlatforms: React.FC = () => {
             <h1 className="text-4xl font-bold text-gray-800 mb-3 tracking-tight">
               YOU ARE OUR EVERYTHING
             </h1>
-            <p className="text-xl text-purple-600 mb-4 font-medium">CLAUDYGOD</p>
-            <p className="text-gray-600">
-             STREAM . PLAY . REPEAT
+            <p className="text-xl text-purple-600 mb-4 font-medium">
+              CLAUDYGOD
             </p>
+            <p className="text-gray-600">STREAM . PLAY . REPEAT</p>
           </div>
         </div>
 
@@ -74,7 +75,9 @@ const StreamingPlatforms: React.FC = () => {
                   <FontAwesomeIcon icon={faExternalLinkAlt} />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-800">{p.name}</h3>
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    {p.name}
+                  </h3>
                   <p className="text-sm text-gray-500 leading-snug">
                     {p.description}
                   </p>
@@ -83,8 +86,6 @@ const StreamingPlatforms: React.FC = () => {
             </motion.a>
           ))}
         </div>
-
-       
       </div>
     </section>
   );

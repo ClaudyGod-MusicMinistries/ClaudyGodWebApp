@@ -5,7 +5,16 @@ import { ColorScheme, GrayScale } from '../fonts/colors';
 import { useTheme } from '../../contexts/ThemeContext';
 
 type ButtonVariant = 'solid' | 'outline' | 'ghost';
-type ButtonColor = 'primary' | 'secondary' | 'accent' | 'error' | 'success' | 'warning' | 'info' | 'gray' | 'white';
+type ButtonColor =
+  | 'primary'
+  | 'secondary'
+  | 'accent'
+  | 'error'
+  | 'success'
+  | 'warning'
+  | 'info'
+  | 'gray'
+  | 'white';
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
 interface IconButtonProps {
@@ -23,10 +32,11 @@ const sizeClasses: Record<ButtonSize, string> = {
   xs: 'p-1.5 text-xs',
   sm: 'p-2 text-sm',
   md: 'p-2.5 text-base',
-  lg: 'p-3 text-lg'
+  lg: 'p-3 text-lg',
 };
 
-const baseClasses = "rounded-full transition-all duration-200 flex items-center justify-center focus:outline-none focus:ring-2";
+const baseClasses =
+  'rounded-full transition-all duration-200 flex items-center justify-center focus:outline-none focus:ring-2';
 
 export const IconButton = ({
   icon,
@@ -36,7 +46,7 @@ export const IconButton = ({
   size = 'md',
   className = '',
   ariaLabel,
-  disabled = false
+  disabled = false,
 }: IconButtonProps) => {
   const { colorScheme } = useTheme();
 
@@ -45,7 +55,7 @@ export const IconButton = ({
       return {
         solid: `bg-${colorScheme.white} text-${colorScheme.textInverted}`,
         outline: `border border-${colorScheme.white} text-${colorScheme.white} hover:bg-${colorScheme.white}/10`,
-        ghost: `text-${colorScheme.white} hover:bg-${colorScheme.white}/10`
+        ghost: `text-${colorScheme.white} hover:bg-${colorScheme.white}/10`,
       };
     }
 
@@ -53,7 +63,7 @@ export const IconButton = ({
       return {
         solid: `bg-${colorScheme.gray[200]} text-${colorScheme.text} hover:bg-${colorScheme.gray[300]}`,
         outline: `border border-${colorScheme.gray[300]} text-${colorScheme.text} hover:bg-${colorScheme.gray[100]}`,
-        ghost: `text-${colorScheme.textSecondary} hover:bg-${colorScheme.gray[100]}`
+        ghost: `text-${colorScheme.textSecondary} hover:bg-${colorScheme.gray[100]}`,
       };
     }
 
@@ -63,7 +73,7 @@ export const IconButton = ({
     return {
       solid: `bg-${colorValue} text-${colorScheme.buttonText} hover:bg-${colorScheme.buttonHover}`,
       outline: `border border-${colorValue} text-${colorValue} hover:bg-${colorValue}/10`,
-      ghost: `text-${colorValue} hover:bg-${colorValue}/10`
+      ghost: `text-${colorValue} hover:bg-${colorValue}/10`,
     };
   };
 
@@ -78,12 +88,14 @@ export const IconButton = ({
       aria-label={ariaLabel}
       disabled={disabled}
       style={{
-        focusRing: colorScheme.focusRing
+        focusRing: colorScheme.focusRing,
       }}
     >
-      <FontAwesomeIcon 
-        icon={icon} 
-        className={size === 'xs' ? 'text-xs' : size === 'sm' ? 'text-sm' : 'text-base'}
+      <FontAwesomeIcon
+        icon={icon}
+        className={
+          size === 'xs' ? 'text-xs' : size === 'sm' ? 'text-sm' : 'text-base'
+        }
       />
     </button>
   );

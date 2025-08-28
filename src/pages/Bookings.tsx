@@ -6,14 +6,21 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useTheme } from '../contexts/ThemeContext';
 import CustomButton from '../components/ui/fonts/buttons/CustomButton';
 
-import { BoldText, SemiBoldText, RegularText } from '../components/ui/fonts/typography';
+import {
+  BoldText,
+  SemiBoldText,
+  RegularText,
+} from '../components/ui/fonts/typography';
 
 import { submitBooking } from '../components/api/bookingApi';
 import { Herosection } from '../components/util/Herosection';
 import { Back3 } from '../assets/';
 import { NewsletterForm } from '../components/util/Newsletter';
 import { Modal } from '../components/Modal';
-import { COUNTRY_STATE_CITY_DATA, MONTHS } from '../components/util/bookingConstants';
+import {
+  COUNTRY_STATE_CITY_DATA,
+  MONTHS,
+} from '../components/util/bookingConstants';
 import { PersonalInfoSection } from '../components/Bookings/PersonalInfo';
 import { EventInfoSection } from '../components/Bookings/EventInfo';
 import { LocationSection } from '../components/Bookings/LocationInfo';
@@ -41,7 +48,14 @@ export const Bookings: React.FC = () => {
       eventType: '',
       eventDetails: '',
       eventDate: { day: 1, month: 'January', year: new Date().getFullYear() },
-      address: { address1: '', address2: '', country: '', state: '', city: '', zipCode: '' },
+      address: {
+        address1: '',
+        address2: '',
+        country: '',
+        state: '',
+        city: '',
+        zipCode: '',
+      },
       agreeTerms: false,
     },
   });
@@ -72,15 +86,22 @@ export const Bookings: React.FC = () => {
     }
   }, [country, state, setValue]);
 
-  const isBlank = (value: unknown) => typeof value === 'string' ? !value.trim() : value == null;
+  const isBlank = (value: unknown) =>
+    typeof value === 'string' ? !value.trim() : value == null;
 
   const onSubmit = async (data: any) => {
-    const requiredTop = ['firstName', 'lastName', 'email', 'phone', 'eventType'];
+    const requiredTop = [
+      'firstName',
+      'lastName',
+      'email',
+      'phone',
+      'eventType',
+    ];
     const requiredAddr = ['country', 'state', 'city', 'address1'];
 
     const missing = [
-      ...requiredTop.filter((k) => isBlank(data[k])),
-      ...requiredAddr.filter((k) => isBlank(data.address[k])),
+      ...requiredTop.filter(k => isBlank(data[k])),
+      ...requiredAddr.filter(k => isBlank(data.address[k])),
     ];
 
     if (missing.length) {
@@ -117,13 +138,21 @@ export const Bookings: React.FC = () => {
           serviceType: 'Event Booking',
           provider: { '@type': 'Person', name: 'ClaudyGod' },
           areaServed: ['US', 'Nigeria', 'Worldwide'],
-          availableChannel: { '@type': 'ServiceChannel', serviceUrl: 'https://claudygod.org/bookings' },
+          availableChannel: {
+            '@type': 'ServiceChannel',
+            serviceUrl: 'https://claudygod.org/bookings',
+          },
         }}
       />
 
-      <Modal isOpen={showThankYouModal} onClose={() => setShowThankYouModal(false)} title="Thank You!">
+      <Modal
+        isOpen={showThankYouModal}
+        onClose={() => setShowThankYouModal(false)}
+        title="Thank You!"
+      >
         <RegularText className="mb-4">
-          Thank you for contacting us! We will review your request and get in touch shortly.
+          Thank you for contacting us! We will review your request and get in
+          touch shortly.
         </RegularText>
         <div className="flex justify-end">
           <CustomButton
@@ -144,34 +173,43 @@ export const Bookings: React.FC = () => {
 
       <div className="max-w-5xl mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <BoldText as="h1" 
-          style={{color: colorScheme.primary }}
-          fontSize="2.5rem" className="mb-4">
+          <BoldText
+            as="h1"
+            style={{ color: colorScheme.primary }}
+            fontSize="2.5rem"
+            className="mb-4"
+          >
             Booking Request Form
           </BoldText>
-          <div 
-            className="w-24 h-1 mx-auto rounded-full mb-4" 
+          <div
+            className="w-24 h-1 mx-auto rounded-full mb-4"
             style={{ background: colorScheme.primary }}
           />
-          <RegularText className="text-lg max-w-3xl mx-auto"
-            style={{color: colorScheme.body }}>
-            Please fill out all required fields below. Our team will review your request within 48 hours.
+          <RegularText
+            className="text-lg max-w-3xl mx-auto"
+            style={{ color: colorScheme.body }}
+          >
+            Please fill out all required fields below. Our team will review your
+            request within 48 hours.
           </RegularText>
         </div>
 
-        <div 
-          className="rounded-2xl shadow-xl overflow-hidden border" 
-          style={{ 
+        <div
+          className="rounded-2xl shadow-xl overflow-hidden border"
+          style={{
             // backgroundColor: colorScheme.surface,
-            borderColor: colorScheme.borderLight
+            borderColor: colorScheme.borderLight,
           }}
         >
-          <div 
-            className="py-4 px-8" 
+          <div
+            className="py-4 px-8"
             style={{ background: colorScheme.primary }}
           >
-            <SemiBoldText as="h2" className="text-white"
-             style={{ background: colorScheme.primary }}>
+            <SemiBoldText
+              as="h2"
+              className="text-white"
+              style={{ background: colorScheme.primary }}
+            >
               Event Information
             </SemiBoldText>
           </div>
@@ -180,29 +218,50 @@ export const Bookings: React.FC = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="p-8">
               <div className="grid grid-cols-1 gap-8">
                 <div>
-                  <SemiBoldText as="h3" className="text-lg mb-4 pb-2 border-b" 
-                  style={{ borderColor: colorScheme.background, color:colorScheme.background }}>
+                  <SemiBoldText
+                    as="h3"
+                    className="text-lg mb-4 pb-2 border-b"
+                    style={{
+                      borderColor: colorScheme.background,
+                      color: colorScheme.background,
+                    }}
+                  >
                     Contact Information
                   </SemiBoldText>
                   <PersonalInfoSection countryCode={watch('countryCode')} />
                 </div>
 
                 <div>
-                  <SemiBoldText as="h3" className="text-lg mb-4 pb-2 border-b" 
-                    style={{ borderColor: colorScheme.background, color:colorScheme.background }}>
+                  <SemiBoldText
+                    as="h3"
+                    className="text-lg mb-4 pb-2 border-b"
+                    style={{
+                      borderColor: colorScheme.background,
+                      color: colorScheme.background,
+                    }}
+                  >
                     Event Details
                   </SemiBoldText>
                   <EventInfoSection MONTHS={MONTHS} />
                 </div>
 
                 <div>
-                  <SemiBoldText as="h3" 
-                  className="text-lg mb-4 pb-2 border-b" 
-                   style={{ borderColor: colorScheme.background, color:colorScheme.background }}>
+                  <SemiBoldText
+                    as="h3"
+                    className="text-lg mb-4 pb-2 border-b"
+                    style={{
+                      borderColor: colorScheme.background,
+                      color: colorScheme.background,
+                    }}
+                  >
                     Event Location
                   </SemiBoldText>
-                  <LocationSection states={states} cities={cities} 
-                  country={country} COUNTRY_STATE_CITY_DATA={COUNTRY_STATE_CITY_DATA} />
+                  <LocationSection
+                    states={states}
+                    cities={cities}
+                    country={country}
+                    COUNTRY_STATE_CITY_DATA={COUNTRY_STATE_CITY_DATA}
+                  />
                 </div>
 
                 <TermsSection />
@@ -225,8 +284,8 @@ export const Bookings: React.FC = () => {
         </div>
       </div>
 
-      <div 
-        className="py-12" 
+      <div
+        className="py-12"
         // style={{ background: colorScheme.secondary }}
       >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -252,19 +311,22 @@ export const Bookings: React.FC = () => {
                 desc: 'A team member will contact you to discuss details and availability',
               },
             ].map(({ step, title, desc }) => (
-              <div 
-                key={step} 
+              <div
+                key={step}
                 className="p-6 rounded-xl shadow-md border text-center"
-                style={{ 
+                style={{
                   backgroundColor: colorScheme.surface,
-                  borderColor: colorScheme.border
+                  borderColor: colorScheme.border,
                 }}
               >
-                <div 
+                <div
                   className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4"
                   style={{ backgroundColor: colorScheme.secondary }}
                 >
-                  <BoldText className="text-xl" style={{ color: colorScheme.secondaryText }}>
+                  <BoldText
+                    className="text-xl"
+                    style={{ color: colorScheme.secondaryText }}
+                  >
                     {step}
                   </BoldText>
                 </div>

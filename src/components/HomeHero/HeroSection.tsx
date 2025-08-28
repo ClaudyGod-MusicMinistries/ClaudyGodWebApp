@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import {  AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { heroSlides } from '../data/HeroSlide';
 import HeroSlide from './HeroSlide';
 import { PaginationDots } from './Pagination';
 import StreamingModal from '../StreamingModel';
-
 
 export const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -29,29 +28,32 @@ export const HeroSection = () => {
 
   return (
     <section className="relative h-[100vh] md:h-[120vh] w-full overflow-hidden">
-      <StreamingModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      <StreamingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
         platforms={heroSlides[2].content?.streamingPlatforms || []}
       />
-      
+
       <AnimatePresence initial={false} custom={direction}>
-        {heroSlides.map((slide, index) => index === currentSlide && (
-          <HeroSlide 
-            key={slide.id}
-            slide={slide}
-            direction={direction}
-            isMuted={isMuted}
-            toggleMute={toggleMute}
-            setIsModalOpen={setIsModalOpen}
-          />
-        ))}
+        {heroSlides.map(
+          (slide, index) =>
+            index === currentSlide && (
+              <HeroSlide
+                key={slide.id}
+                slide={slide}
+                direction={direction}
+                isMuted={isMuted}
+                toggleMute={toggleMute}
+                setIsModalOpen={setIsModalOpen}
+              />
+            )
+        )}
       </AnimatePresence>
 
-      <PaginationDots 
-        slides={heroSlides} 
-        currentSlide={currentSlide} 
-        goToSlide={goToSlide} 
+      <PaginationDots
+        slides={heroSlides}
+        currentSlide={currentSlide}
+        goToSlide={goToSlide}
       />
     </section>
   );

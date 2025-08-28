@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { color, motion } from 'framer-motion';
-import { CreditCard, Smartphone, Building, ArrowLeft, Globe, Landmark } from 'lucide-react';
+import {
+  CreditCard,
+  Smartphone,
+  Building,
+  ArrowLeft,
+  Globe,
+  Landmark,
+} from 'lucide-react';
 import { StripePayment } from './paymentPlatforms/stripe';
 import { PayPalPayment } from './paymentPlatforms/paypal';
 import { ZellePayment } from './paymentPlatforms/zelle';
@@ -26,7 +33,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   setPaymentMethod,
   onNext,
   onBack,
-  orderTotal
+  orderTotal,
 }) => {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const { colorScheme } = useTheme();
@@ -37,36 +44,36 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
       name: 'Credit/Debit Card',
       description: 'Visa, Mastercard, American Express',
       icon: CreditCard,
-      color: colorScheme.info
+      color: colorScheme.info,
     },
     {
       id: 'paypal',
       name: 'PayPal',
       description: 'Pay with your PayPal account',
       icon: Smartphone,
-      color: colorScheme.primary
+      color: colorScheme.primary,
     },
     {
       id: 'zelle',
       name: 'Zelle',
       description: 'Send money with Zelle',
       icon: Building,
-      color: colorScheme.primary
+      color: colorScheme.primary,
     },
     {
       id: 'paystack',
       name: 'Paystack',
       description: 'Nigerian payment gateway',
       icon: Globe,
-      color: colorScheme.success
+      color: colorScheme.success,
     },
     {
       id: 'nigerian-bank',
       name: 'Nigerian Bank Transfer',
       description: 'Direct bank transfer to Nigerian account',
       icon: Landmark,
-      color: colorScheme.secondary
-    }
+      color: colorScheme.secondary,
+    },
   ];
 
   const handleMethodSelect = (methodId: string) => {
@@ -119,19 +126,19 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
         <BoldText as="h2" fontSize="1.5rem" color={colorScheme.text}>
           Payment Method
         </BoldText>
-    <CustomButton
-  variant="text"
-  size="sm"
-  icon={<FontAwesomeIcon icon={faArrowLeft} className="h-4 w-4" />}
-  onClick={onBack}
-  className="text-purple-600 hover:text-purple-700"
->
-  Back
-</CustomButton>
+        <CustomButton
+          variant="text"
+          size="sm"
+          icon={<FontAwesomeIcon icon={faArrowLeft} className="h-4 w-4" />}
+          onClick={onBack}
+          className="text-purple-600 hover:text-purple-700"
+        >
+          Back
+        </CustomButton>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        {paymentOptions.map((option) => (
+        {paymentOptions.map(option => (
           <motion.div
             key={option.id}
             whileHover={{ scale: 1.02 }}
@@ -148,17 +155,20 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
               onClick={() => handleMethodSelect(option.id)}
             >
               <div className="flex items-center w-full">
-                <div 
+                <div
                   className="p-3 rounded-lg mr-4 text-white"
                   style={{ backgroundColor: colorScheme.accent }}
                 >
                   <option.icon className="h-6 w-6" />
                 </div>
                 <div className="text-left">
-                  <SemiBoldText
-                  style={{ color: colorScheme.accent }}
-                  >{option.name}</SemiBoldText>
-                  <RegularText fontSize="0.875rem" color={colorScheme.textSecondary}>
+                  <SemiBoldText style={{ color: colorScheme.accent }}>
+                    {option.name}
+                  </SemiBoldText>
+                  <RegularText
+                    fontSize="0.875rem"
+                    color={colorScheme.textSecondary}
+                  >
                     {option.description}
                   </RegularText>
                 </div>

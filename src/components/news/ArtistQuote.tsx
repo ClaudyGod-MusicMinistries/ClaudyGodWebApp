@@ -17,14 +17,14 @@ export const ArtistQuote = () => {
       style={{
         backgroundColor: colorScheme.surface,
         borderLeft: `4px solid ${colorScheme.accent}`,
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
       }}
     >
       <div className="text-center">
-        <div 
+        <div
           className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full mb-3 sm:mb-4 md:mb-5 lg:mb-6"
           style={{
-            background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.primary})`
+            background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.primary})`,
           }}
         >
           <img
@@ -33,20 +33,20 @@ export const ArtistQuote = () => {
             className="rounded-xl w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 object-cover"
             onLoad={() => setLoadedImage(true)}
             style={{
-              border: `2px solid ${colorScheme.surface}`
+              border: `2px solid ${colorScheme.surface}`,
             }}
           />
           {!loadedImage && (
-            <div 
+            <div
               className="border-2 border-dashed rounded-xl w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 animate-pulse"
               style={{
                 backgroundColor: colorScheme.surfaceVariant,
-                borderColor: colorScheme.secondary
+                borderColor: colorScheme.secondary,
               }}
             />
           )}
         </div>
-        
+
         <RegularText
           fontSize="1rem"
           smFontSize="1.1rem"
@@ -55,34 +55,35 @@ export const ArtistQuote = () => {
           className="mb-3 sm:mb-4 md:mb-5 lg:mb-6 px-1 sm:px-2"
           style={{ color: colorScheme.textSecondary, lineHeight: '1.6' }}
         >
-          "My Vision is to reach the world with the love of Jesus, to proclaim truth always, and to
-          redirect mankind to God through Worship and the Word."
+          "My Vision is to reach the world with the love of Jesus, to proclaim
+          truth always, and to redirect mankind to God through Worship and the
+          Word."
         </RegularText>
-        
+
         <ExtraBoldText
           fontSize="1rem"
           smFontSize="1.1rem"
           mdFontSize="1.2rem"
           lgFontSize="1.3rem"
           className="tracking-wide"
-          style={{ 
+          style={{
             color: colorScheme.accent,
           }}
         >
           — Min. ClaudyGod
         </ExtraBoldText>
-        
+
         {/* Decorative elements for visual appeal */}
         <div className="flex justify-center mt-4 sm:mt-5">
-          <div 
+          <div
             className="w-6 h-1 rounded-full mx-1"
             style={{ backgroundColor: colorScheme.accent, opacity: 0.6 }}
           ></div>
-          <div 
+          <div
             className="w-4 h-1 rounded-full mx-1"
             style={{ backgroundColor: colorScheme.accent, opacity: 0.4 }}
           ></div>
-          <div 
+          <div
             className="w-2 h-1 rounded-full mx-1"
             style={{ backgroundColor: colorScheme.accent, opacity: 0.2 }}
           ></div>

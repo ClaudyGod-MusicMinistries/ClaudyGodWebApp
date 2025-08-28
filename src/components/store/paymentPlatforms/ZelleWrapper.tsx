@@ -11,7 +11,9 @@ const ZellePaymentWrapper = () => {
 
   if (!amount || !orderId) {
     // Handle missing required data - maybe redirect back to checkout
-    return <div>Missing payment information. Please complete checkout first.</div>;
+    return (
+      <div>Missing payment information. Please complete checkout first.</div>
+    );
   }
 
   return <ZellePayment amount={amount} orderId={orderId} />;

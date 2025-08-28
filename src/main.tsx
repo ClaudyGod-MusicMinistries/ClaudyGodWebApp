@@ -19,7 +19,7 @@ const RootApp = (
     <Provider store={store}>
       <NavProvider>
         <ThemeProvider>
-        <App />
+          <App />
         </ThemeProvider>
       </NavProvider>
     </Provider>

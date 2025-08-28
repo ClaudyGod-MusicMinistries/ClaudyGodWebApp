@@ -1,11 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faComment, 
-  faShare, 
-  faFaceSmile 
+import {
+  faComment,
+  faShare,
+  faFaceSmile,
 } from '@fortawesome/free-solid-svg-icons';
-
 
 interface Comment {
   id: string;
@@ -40,7 +40,7 @@ const BlogPost: React.FC<BlogPostProps> = ({
   comments,
   onAddReaction,
   onAddComment,
-  onShare
+  onShare,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showReactions, setShowReactions] = useState(false);
@@ -64,16 +64,18 @@ const BlogPost: React.FC<BlogPostProps> = ({
           className="w-full h-full object-cover rounded-lg"
         />
       </div>
-      
+
       <h2 className="text-xl roboto-condensed text-purple-900 mb-3">{title}</h2>
-      
+
       <div className="flex-grow">
-        <p className={`text-gray-700 mb-3 whitespace-pre-wrap  work-sans transition-all duration-300 ${
-          isExpanded ? 'max-h-full' : 'max-h-20 overflow-hidden'
-        }`}>
+        <p
+          className={`text-gray-700 mb-3 whitespace-pre-wrap  work-sans transition-all duration-300 ${
+            isExpanded ? 'max-h-full' : 'max-h-20 overflow-hidden'
+          }`}
+        >
           {content}
         </p>
-        
+
         <button
           className="text-purple-600 raleway-medium text-sm mb-4  hover:text-purple-800 transition"
           onClick={() => setIsExpanded(!isExpanded)}
@@ -84,7 +86,7 @@ const BlogPost: React.FC<BlogPostProps> = ({
 
       <div className="border-t pt-3 mt-2">
         <div className="flex justify-between items-center text-sm text-gray-600">
-          <span className='work-sans'>{date}</span>
+          <span className="work-sans">{date}</span>
           <div className="flex space-x-4 relative">
             <button
               onClick={() => setShowReactions(!showReactions)}
@@ -93,7 +95,7 @@ const BlogPost: React.FC<BlogPostProps> = ({
             >
               <FontAwesomeIcon icon={faFaceSmile} />
             </button>
-            
+
             <button
               onClick={() => setShowCommentInput(!showCommentInput)}
               className="hover:text-purple-700 raleway-medium transition"
@@ -101,7 +103,7 @@ const BlogPost: React.FC<BlogPostProps> = ({
             >
               <FontAwesomeIcon icon={faComment} />
             </button>
-            
+
             <button
               onClick={onShare}
               className="hover:text-purple-700  raleway-medium transition"
@@ -122,7 +124,9 @@ const BlogPost: React.FC<BlogPostProps> = ({
                   className="p-2 hover:bg-gray-100 rounded-full transition-transform transform hover:scale-110 flex flex-col items-center"
                 >
                   <span className="text-lg">{emoji}</span>
-                  <span className="text-xs text-gray-600">{reactions[emoji] || 0}</span>
+                  <span className="text-xs text-gray-600">
+                    {reactions[emoji] || 0}
+                  </span>
                 </button>
               ))}
             </div>
@@ -134,7 +138,10 @@ const BlogPost: React.FC<BlogPostProps> = ({
             {Object.entries(reactions)
               .filter(([_, count]) => count > 0)
               .map(([emoji, count]) => (
-                <span key={emoji} className="inline-flex items-center px-2 py-1 bg-gray-100 rounded-full text-xs">
+                <span
+                  key={emoji}
+                  className="inline-flex items-center px-2 py-1 bg-gray-100 rounded-full text-xs"
+                >
                   {emoji} {count}
                 </span>
               ))}
@@ -145,7 +152,7 @@ const BlogPost: React.FC<BlogPostProps> = ({
           <div className="mt-3 animate-fade-in">
             <textarea
               value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
+              onChange={e => setNewComment(e.target.value)}
               placeholder="Write a comment..."
               className="w-full p-2 border rounded text-sm resize-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               rows={2}
@@ -169,18 +176,22 @@ const BlogPost: React.FC<BlogPostProps> = ({
 
         {comments.length > 0 && (
           <div className="mt-3">
-            <h4 className="raleway-medium text-sm text-gray-700 mb-2">Comments</h4>
+            <h4 className="raleway-medium text-sm text-gray-700 mb-2">
+              Comments
+            </h4>
             <ul className="space-y-2">
               {comments.map(comment => (
                 <li key={comment.id} className="bg-gray-50 p-2 rounded text-sm">
-                  <p className="text-gray-800  raleway-light ">{comment.text}</p>
+                  <p className="text-gray-800  raleway-light ">
+                    {comment.text}
+                  </p>
                   <span className="text-xs text-gray-500">
-                    {new Date(comment.date).toLocaleDateString(undefined, { 
-                      year: 'numeric', 
-                      month: 'short', 
+                    {new Date(comment.date).toLocaleDateString(undefined, {
+                      year: 'numeric',
+                      month: 'short',
                       day: 'numeric',
                       hour: '2-digit',
-                      minute: '2-digit'
+                      minute: '2-digit',
                     })}
                   </span>
                 </li>
@@ -193,4 +204,4 @@ const BlogPost: React.FC<BlogPostProps> = ({
   );
 };
 
-export  default BlogPost
+export default BlogPost;

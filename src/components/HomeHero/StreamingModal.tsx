@@ -54,7 +54,7 @@ export const StreamingPlatformsModal = ({
               backgroundColor: `${colorScheme.surface}dd`,
               backdropFilter: 'blur(12px)',
             }}
-            onClick={(e) => e.stopPropagation()}
+            onClick={e => e.stopPropagation()}
           >
             {/* Modal Header */}
             <div className="flex justify-between items-center mb-6">
@@ -77,7 +77,7 @@ export const StreamingPlatformsModal = ({
 
             {/* Platform List */}
             <div className="grid grid-cols-1 gap-3">
-              {platforms.map((platform) => (
+              {platforms.map(platform => (
                 <motion.div key={platform.name} whileHover={{ scale: 1.03 }}>
                   <CustomButton
                     href={platform.url}

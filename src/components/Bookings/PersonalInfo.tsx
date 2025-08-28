@@ -2,14 +2,24 @@ import { useFormContext } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, User, Mail, Building } from 'lucide-react';
 
-export const PersonalInfoSection = ({ countryCode }: { countryCode: string }) => {
-  const { register, formState: { errors } } = useFormContext();
+export const PersonalInfoSection = ({
+  countryCode,
+}: {
+  countryCode: string;
+}) => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+          <label
+            htmlFor="firstName"
+            className="block text-sm font-medium text-gray-700 mb-1 flex items-center"
+          >
             <User className="h-4 w-4 mr-2 text-purple-700" />
             First Name
           </label>
@@ -26,23 +36,35 @@ export const PersonalInfoSection = ({ countryCode }: { countryCode: string }) =>
           </div>
           <AnimatePresence>
             {errors.firstName && (
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 className="text-red-500 text-xs mt-1.5 flex items-center"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 mr-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                    clipRule="evenodd"
+                  />
                 </svg>
                 {errors.firstName.message}
               </motion.p>
             )}
           </AnimatePresence>
         </div>
-        
+
         <div>
-          <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+          <label
+            htmlFor="lastName"
+            className="block text-sm font-medium text-gray-700 mb-1 flex items-center"
+          >
             <User className="h-4 w-4 mr-2 text-purple-700" />
             Last Name
           </label>
@@ -59,14 +81,23 @@ export const PersonalInfoSection = ({ countryCode }: { countryCode: string }) =>
           </div>
           <AnimatePresence>
             {errors.lastName && (
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 className="text-red-500 text-xs mt-1.5 flex items-center"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 mr-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                    clipRule="evenodd"
+                  />
                 </svg>
                 {errors.lastName.message}
               </motion.p>
@@ -76,7 +107,10 @@ export const PersonalInfoSection = ({ countryCode }: { countryCode: string }) =>
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-gray-700 mb-1 flex items-center"
+        >
           <Mail className="h-4 w-4 mr-2 text-purple-700" />
           Email Address
         </label>
@@ -94,14 +128,23 @@ export const PersonalInfoSection = ({ countryCode }: { countryCode: string }) =>
         </div>
         <AnimatePresence>
           {errors.email && (
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               className="text-red-500 text-xs mt-1.5 flex items-center"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 mr-1"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                  clipRule="evenodd"
+                />
               </svg>
               {errors.email.message}
             </motion.p>
@@ -110,7 +153,10 @@ export const PersonalInfoSection = ({ countryCode }: { countryCode: string }) =>
       </div>
 
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+        <label
+          htmlFor="phone"
+          className="block text-sm font-medium text-gray-700 mb-1 flex items-center"
+        >
           <Phone className="h-4 w-4 mr-2 text-purple-700" />
           Contact Number
         </label>
@@ -147,14 +193,23 @@ export const PersonalInfoSection = ({ countryCode }: { countryCode: string }) =>
         </div>
         <AnimatePresence>
           {errors.phone && (
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               className="text-red-500 text-xs mt-1.5 flex items-center"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 mr-1"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                  clipRule="evenodd"
+                />
               </svg>
               {errors.phone.message}
             </motion.p>
@@ -163,7 +218,10 @@ export const PersonalInfoSection = ({ countryCode }: { countryCode: string }) =>
       </div>
 
       <div>
-        <label htmlFor="organization" className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+        <label
+          htmlFor="organization"
+          className="block text-sm font-medium text-gray-700 mb-1 flex items-center"
+        >
           <Building className="h-4 w-4 mr-2 text-purple-700" />
           Organization
         </label>
@@ -180,14 +238,23 @@ export const PersonalInfoSection = ({ countryCode }: { countryCode: string }) =>
         </div>
         <AnimatePresence>
           {errors.organization && (
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               className="text-red-500 text-xs mt-1.5 flex items-center"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 mr-1"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                  clipRule="evenodd"
+                />
               </svg>
               {errors.organization.message}
             </motion.p>

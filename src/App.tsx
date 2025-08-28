@@ -1,6 +1,11 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { AnimatePresence } from 'framer-motion';
-import { Routes, Route, useLocation, HashRouter as Router } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  useLocation,
+  HashRouter as Router,
+} from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout/Mainlayout';
 
@@ -19,15 +24,12 @@ import { News } from './pages/News';
 import DonationComplete from './components/donate/DonationSuccess';
 import StreamingPlatforms from './components/Homepage/Streaming';
 
-
-
 // Store components
 import { Checkout } from './components/store/Checkout';
 import { CartPage } from './components/store/CartPage';
 import ZellePaymentWrapper from './components/store/paymentPlatforms/ZelleWrapper';
 import { PaymentPending } from './components/store/status/PaymentPending';
 import OrderSuccess from './components/store/status/OrderSuccess';
-
 
 function AppRoutes() {
   const location = useLocation();
@@ -51,7 +53,7 @@ function AppRoutes() {
           <Route path="news" element={<News />} />
           <Route path="cart" element={<CartPage />} />
           <Route path="donation-complete" element={<DonationComplete />} />
-           <Route path="stream" element={<StreamingPlatforms />} />
+          <Route path="stream" element={<StreamingPlatforms />} />
           {/* Payment routes */}
           <Route path="checkout/zelle" element={<ZellePaymentWrapper />} />
           <Route path="payment-pending" element={<PaymentPending />} />
