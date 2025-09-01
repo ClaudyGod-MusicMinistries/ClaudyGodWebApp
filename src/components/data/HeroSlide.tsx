@@ -9,7 +9,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { DesktopBg, Back3, Resize4, Main } from '../../assets';
-// import { bgVideo } from '../../assets';
 import { Transition, Variants } from 'framer-motion';
 
 export interface HeroSlide {
@@ -17,8 +16,7 @@ export interface HeroSlide {
   imageUrl?: string;
   imageUrlMobile?: string;
   imageUrlDesktop?: string;
-  videoUrl?: string;
-  type: 'quote' | 'form' | 'streaming' | 'cta' | 'music' | 'video';
+  type: 'quote' | 'form' | 'streaming' | 'cta' | 'music';
   content?: {
     quote?: string;
     reference?: string;
@@ -35,8 +33,6 @@ export interface TextVariantsProps {
 
 export interface SlideContentProps {
   slide: HeroSlide;
-  isMuted: boolean;
-  toggleMute: () => void;
   navigate: ReturnType<typeof useNavigate>;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }
@@ -49,7 +45,7 @@ export const textVariants: Variants = {
     y: 0,
     scale: 1,
     transition: {
-      type: 'spring', // ✅ literal type
+      type: 'spring',
       stiffness: 120,
       damping: 10,
       duration: 0.5,
@@ -88,7 +84,7 @@ export const slideVariants: Variants = {
 
 // Spring transition for modal
 const springTransition: Transition = {
-  type: 'spring', // ✅ literal string
+  type: 'spring',
   damping: 25,
   stiffness: 300,
 };
@@ -167,9 +163,9 @@ export const heroSlides: HeroSlide[] = [
     },
   },
   {
-    id: 2,
+    id: 4,
     imageUrl: Resize4,
-    type: 'video',
+    type: 'quote',
     content: {
       quote: 'Praise the Lord Most High',
       reference: '— Psalm 100:4',

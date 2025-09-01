@@ -5,9 +5,9 @@ import {
   musicCover3,
   musicCover4,
   musicCover5,
-  MusicBan4,
-  MusicBan2,
-  MusicBan3,
+  music4,
+  music2,
+  music3,
 } from '../../assets';
 
 export interface VideoProps {
@@ -57,21 +57,21 @@ export const videos: VideoProps[] = [
   {
     id: '6',
     title: 'You are our Everything',
-    thumbnailUrl: MusicBan4,
+    thumbnailUrl: music4,
     duration: '5:15',
     youtubeUrl: 'https://youtu.be/mK26U9psCCI?si=pfzzYdmBVyRKN9ZS',
   },
   {
     id: '7',
     title: 'Step Aside',
-    thumbnailUrl: MusicBan2,
+    thumbnailUrl: music2,
     duration: '5:15',
     youtubeUrl: 'https://youtu.be/Q2Xz0g4Q-Ro?si=Ebx6hYvfBs2pbwvS',
   },
   {
     id: '8',
     title: 'Alleluia Worship',
-    thumbnailUrl: MusicBan3,
+    thumbnailUrl: music3,
     duration: '5:15',
     youtubeUrl: 'https://youtu.be/qdNP8A4fW-U?si=R15Gspr3i5eLeDm0',
   },

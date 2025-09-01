@@ -1,5 +1,4 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -8,21 +7,21 @@ import { ExtraBoldText, RegularText } from '../ui/fonts/typography';
 import CustomButton from '../ui/fonts/buttons/CustomButton';
 import { useTheme } from '../../contexts/ThemeContext';
 
-interface StreamingPlatformsModalProps {
+interface StreamingModalProps {
   isOpen: boolean;
   onClose: () => void;
   platforms?: {
-    name: string; // ✅ ensure it's string
+    name: string;
     url?: string;
     icon: IconDefinition;
   }[];
 }
 
-export const StreamingPlatformsModal = ({
+export const StreamingModal = ({
   isOpen,
   onClose,
   platforms = [],
-}: StreamingPlatformsModalProps) => {
+}: StreamingModalProps) => {
   const { colorScheme } = useTheme();
 
   return (

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { color, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { MusicBan1 } from '../../assets';
+import { music1 } from '../../assets';
 import {
   ExtraBoldText,
   RegularText,
@@ -135,7 +135,7 @@ const DiagonalSection: React.FC<{
                   className="w-full h-full object-cover"
                   onError={e => {
                     const target = e.currentTarget;
-                    target.src = MusicBan1;
+                    target.src = music1;
                   }}
                 />
               </div>

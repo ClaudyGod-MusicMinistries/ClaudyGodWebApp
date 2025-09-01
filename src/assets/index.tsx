@@ -51,20 +51,19 @@ import MusicBan5 from './MusicBanner5.webp';
 import MusicBan6 from './MusicBanner6.webp';
 import MusicBan7 from './MusicBanner7.webp';
 import MusicBan8 from './MusicBanner8.webp';
-import Ministry1 from './ministry1.webp';
-import ministry2 from './Ministry2.webp';
-import ministry3 from './Ministry3.webp';
-import ministry4 from './Ministry4.webp';
-import ministry5 from './Ministry5.webp';
-import ministry6 from './Ministry6.webp';
-import ministry7 from './Ministry7.webp';
-import ministry8 from './Ministry8.webp';
-import ministry9 from './Ministry9.webp';
-import ministry10 from './Ministry10.webp';
-import ministry11 from './Ministry11.webp';
-import ministry12 from './Ministry12.webp';
-import ministry13 from './Ministry13.webp';
-import ministry14 from './Ministry14.webp';
+// import Ministry1 from './ministry1.webp';
+// import ministry3 from './Ministry3.webp';
+// import ministry4 from './Ministry4.webp';
+// import ministry5 from './Ministry5.webp';
+// import ministry6 from './Ministry6.webp';
+// import ministry7 from './Ministry7.webp';
+// import ministry8 from './Ministry8.webp';
+// import ministry9 from './Ministry9.webp';
+// import ministry10 from './Ministry10.webp';
+// import ministry11 from './Ministry11.webp';
+// import ministry12 from './Ministry12.webp';
+// import ministry13 from './Ministry13.webp';
+// import ministry14 from './Ministry14.webp';
 import backUp from './abt_bck.webp';
 import bgresize from './bgResize.webp';
 import ministry15 from './Ministry15.webp';
@@ -134,22 +133,21 @@ export {
   AudioMack,
   Aba1,
   Aba2,
-  MusicBan1,
-  MusicBan2,
-  MusicBan3,
-  MusicBan4,
+  // MusicBan1,
+  // MusicBan2,
+  // MusicBan3,
+  // MusicBan4,
   musicCover1,
   Resize3,
-  MusicBan5,
-  MusicBan6,
-  MusicBan7,
-  MusicBan8,
-  Ministry1,
-  ministry2,
-  ministry3,
-  ministry4,
-  ministry5,
-  ministry6,
+  // MusicBan5,
+  // MusicBan6,
+  // MusicBan7,
+  // MusicBan8,
+  // Ministry1,
+  // ministry3,
+  // ministry4,
+  // ministry5,
+  // ministry6,
   music1,
   music2,
   music3,
@@ -160,19 +158,20 @@ export {
   music8,
   music9,
   backUp,
-  ministry7,
-  ministry8,
-  ministry9,
-  ministry10,
-  ministry11,
-  ministry12,
+  // ministry7,
+  // ministry8,
+  // ministry9,
+  // ministry10,
+  // ministry11,
+  // ministry12,
   VideoArt,
-  ministry13,
-  ministry14,
-  ministry15,
-  ministry16,
-  ministry17,
-  ministry18,
-  ministry19,
-  ministry20,
+  //   ministry13,
+  //   ministry14,
+  //   ministry15,
+  //   ministry16,
+  //   ministry17,
+  //   ministry18,
+  //   ministry19,
+  //   ministry20,
+  // };
 };

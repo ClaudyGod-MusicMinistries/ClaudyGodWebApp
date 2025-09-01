@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { heroSlides } from '../data/HeroSlide';
 import HeroSlide from './HeroSlide';
 import { PaginationDots } from './Pagination';
-import StreamingModal from '../StreamingModel';
+import { StreamingModal } from '../HomeHero/StreamingModal';
 
 export const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(1);
-  const [isMuted, setIsMuted] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,8 +24,6 @@ export const HeroSection = () => {
     setDirection(index > currentSlide ? 1 : -1);
     setCurrentSlide(index);
   };
-
-  const toggleMute = () => setIsMuted(!isMuted);
 
   return (
     <section className="relative h-[100vh] md:h-[120vh] w-full overflow-hidden">
@@ -42,16 +41,15 @@ export const HeroSection = () => {
                 key={slide.id}
                 slide={slide}
                 direction={direction}
-                isMuted={isMuted}
-                toggleMute={toggleMute}
                 setIsModalOpen={setIsModalOpen}
+                navigate={navigate}
               />
             )
         )}
       </AnimatePresence>
 
       <PaginationDots
-        slides={heroSlides}
+        totalSlides={heroSlides.length}
         currentSlide={currentSlide}
         goToSlide={goToSlide}
       />

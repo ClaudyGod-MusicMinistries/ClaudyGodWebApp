@@ -13,6 +13,7 @@ interface HeroSectionProps {
   ctaText?: string;
   onCtaClick?: () => void;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export const Herosection: React.FC<HeroSectionProps> = ({

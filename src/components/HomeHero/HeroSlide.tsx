@@ -1,18 +1,14 @@
-import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import SlideBackground from './SlideBackground';
 import { QuoteSlide } from './QuoteSlide';
 import { CtaSlide } from './CtaSlide';
 import { MusicSlide } from './MusicSlide';
-import { VideoSlide } from './VideoSlide';
 import { slideVariants, HeroSlide as HeroSlideType } from '../data/HeroSlide';
 import { NavigateFunction } from 'react-router-dom';
 
 interface HeroSlideProps {
   slide: HeroSlideType;
   direction: number;
-  isMuted: boolean;
-  toggleMute: () => void;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   navigate: NavigateFunction;
 }
@@ -20,13 +16,9 @@ interface HeroSlideProps {
 const HeroSlide = ({
   slide,
   direction,
-  isMuted,
-  toggleMute,
   setIsModalOpen,
   navigate,
 }: HeroSlideProps) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
   return (
     <motion.div
       custom={direction}
@@ -36,7 +28,7 @@ const HeroSlide = ({
       exit="exit"
       className="absolute inset-0 h-full w-full"
     >
-      <SlideBackground slide={slide} isMuted={isMuted} videoRef={videoRef} />
+      <SlideBackground slide={slide} />
 
       <div className="container ml-4 md:ml-10 mt-6 md:mt-10 relative mx-auto flex h-full items-center px-4">
         <motion.div
@@ -55,13 +47,6 @@ const HeroSlide = ({
           {slide.type === 'cta' && <CtaSlide navigate={navigate} />}
           {slide.type === 'music' && (
             <MusicSlide slide={slide} setIsModalOpen={setIsModalOpen} />
-          )}
-          {slide.type === 'video' && (
-            <VideoSlide
-              slide={slide}
-              toggleMute={toggleMute}
-              isMuted={isMuted}
-            />
           )}
         </motion.div>
       </div>

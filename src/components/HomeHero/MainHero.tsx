@@ -2,15 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { heroSlides } from '../data/HeroSlide';
-//import { HeroSlide } from '../data/HeroSlide';
 
 import { SlideContainer } from './SliderContainer';
 import { PaginationDots } from './Pagination';
-import { StreamingPlatformsModal } from './StreamingModal';
+import { StreamingModal } from '../HomeHero/StreamingModal'; // Check if this is correct path
 import { QuoteSlide } from './QuoteSlide';
 import { CtaSlide } from './CtaSlide';
 import { MusicSlide } from './MusicSlide';
-import { VideoSlide } from './VideoSlide';
 
 export const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -48,10 +46,10 @@ export const Hero = () => {
 
   return (
     <section className="relative h-[100vh] md:h-[120vh] w-full overflow-hidden">
-      <StreamingPlatformsModal
+      <StreamingModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        platforms={heroSlides[2].content?.streamingPlatforms}
+        platforms={heroSlides[2].content?.streamingPlatforms || []}
       />
 
       <AnimatePresence initial={false} custom={direction}>
@@ -71,7 +69,6 @@ export const Hero = () => {
                 {slide.type === 'music' && (
                   <MusicSlide slide={slide} setIsModalOpen={setIsModalOpen} />
                 )}
-                {slide.type === 'video' && <VideoSlide slide={slide} />}
               </SlideContainer>
             )
         )}

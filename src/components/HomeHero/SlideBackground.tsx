@@ -1,34 +1,19 @@
 import { motion } from 'framer-motion';
-import { HeroSlide, imageVariants } from '../types/homeHero';
+import { HeroSlide, imageVariants } from '../data/HeroSlide';
+import React from 'react';
 
-const SlideBackground = ({
-  slide,
-  isMuted,
-  videoRef,
-}: {
+interface SlideBackgroundProps {
   slide: HeroSlide;
-  isMuted: boolean;
-  videoRef: React.RefObject<HTMLVideoElement>;
-}) => (
-  <motion.div
-    variants={imageVariants}
-    initial="hidden"
-    animate="visible"
-    className="absolute inset-0 h-full w-full"
-  >
-    {slide.type === 'video' ? (
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted={isMuted}
-        playsInline
-        className="h-full w-full object-cover object-center brightness-60"
-      >
-        <source src={slide.videoUrl} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    ) : (
+}
+
+const SlideBackground = ({ slide }: SlideBackgroundProps) => {
+  return (
+    <motion.div
+      variants={imageVariants}
+      initial="hidden"
+      animate="visible"
+      className="absolute inset-0 h-full w-full"
+    >
       <div className="relative h-full w-full">
         {slide.imageUrlMobile && slide.imageUrlDesktop ? (
           <>
@@ -43,13 +28,13 @@ const SlideBackground = ({
               className="hidden md:block h-full w-full object-cover object-center"
             />
           </>
-        ) : (
+        ) : slide.imageUrl ? (
           <img
             src={slide.imageUrl}
             alt="Background"
             className="h-full w-full object-cover object-center"
           />
-        )}
+        ) : null}
         <div
           className={`absolute inset-0 ${
             slide.type === 'cta' || slide.type === 'music'
@@ -58,8 +43,8 @@ const SlideBackground = ({
           }`}
         />
       </div>
-    )}
-  </motion.div>
-);
+    </motion.div>
+  );
+};
 
 export default SlideBackground;

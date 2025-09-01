@@ -1,6 +1,6 @@
 // src/data/storeData.ts
 import { Product } from '../types/storeTypes';
-import { Shop1, Shop2, Shop3, Shop4, MusicBan8, MusicBan6 } from '../../assets';
+import { Shop1, Shop2, Shop3, Shop4, music8, music6 } from '../../assets';
 
 // Define Category type
 export interface Category {
@@ -52,7 +52,7 @@ export const products: Product[] = [
   {
     id: '5',
     name: 'ClaudyGod Music EP',
-    image: MusicBan8,
+    image: music8,
     price: 10,
     category: 'music',
     description: 'Digital EP: Pay. Stream. Download.',
@@ -60,7 +60,7 @@ export const products: Product[] = [
   {
     id: '6',
     name: 'Get our Latest Album',
-    image: MusicBan6,
+    image: music6,
     price: 10,
     category: 'music',
     description: 'Full album digital download.',
