@@ -26,18 +26,31 @@ Claudy God Web App is a modern, production-ready website built to boost the onli
 
 ✅ Vercel/Netlify Ready – Pre-configured for seamless deployment
 
+
 🛠️ Tech Stack
-Tool	Purpose
-React 18	Modern UI library
-TypeScript	Type-safe JavaScript
-Vite	Fast build tool and dev server
-Tailwind CSS	Utility-first CSS framework
-ESLint	Code linting and quality
-Prettier	Code formatting
-Husky	Git hooks management
-lint-staged	Run commands on staged files
-React Router	Client-side routing
-Axios	HTTP client for API requests
+
+| Tool                      | Purpose                                        |
+| ---------------- | ---------------------------------------------- |
+| React 18                  | Modern UI library                    |
+| TypeScript                | Type-safe JavaScript                 |
+| Vite                      | Fast build tool and dev server       |
+|Tailwind CSS               | 	Utility-first CSS framework        |
+| ESLint                    | Code linting and quality             |
+|Prettier                   |	Code formatting                      |
+| Render                    |Hosting/Deployment                    |
+| npm                       | Dependency management                |
+| React Router              | Routing and navigation               |
+| Axios                     | HTTP client for APIs                 |
+| Prettier                  | Maintain a clean codebase            |
+| Husky                     | Git hooks management                 |
+|Run                        |commands on staged files               |
+|lint-staged	              | Pre-commit commands for staged files  |
+| clsx                      | Conditionally join class names        |
+| tailwind-merge   | Merge and resolve Tailwind CSS class conflicts |
+
+
+	
+
 
 🚀 Getting Started
 
