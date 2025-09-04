@@ -33,11 +33,12 @@ const VideoCard = ({
 
   return (
     <motion.div
-      className="relative cursor-pointer group overflow-hidden rounded-xl shadow-lg"
+      className="relative cursor-pointer group overflow-hidden rounded-xl shadow-lg flex flex-col h-full"
       onClick={onClick}
       whileHover={{ y: -5 }}
       transition={{ duration: 0.3 }}
     >
+      {/* Thumbnail */}
       <div className="relative aspect-video overflow-hidden">
         <img
           src={`https://img.youtube.com/vi/${content.youtubeId}/hqdefault.jpg`}
@@ -46,7 +47,7 @@ const VideoCard = ({
         />
         <div className="absolute inset-0 flex items-center justify-center">
           <div
-            className="w-16 h-16 rounded-full flex items-center justify-center border-2"
+            className="w-14 h-14 rounded-full flex items-center justify-center border-2"
             style={{
               backgroundColor: `${colorScheme.textSecondary}20`,
               backdropFilter: 'blur(8px)',
@@ -55,20 +56,25 @@ const VideoCard = ({
           >
             <FontAwesomeIcon
               icon={faPlay}
-              className="text-xl pl-1"
+              className="text-lg pl-1"
               style={{ color: colorScheme.text }}
             />
           </div>
         </div>
       </div>
 
-      <div className="p-4" style={{ backgroundColor: colorScheme.surface }}>
-        <div className="flex items-center gap-15">
+      {/* Content */}
+      <div
+        className="flex flex-col justify-between flex-1 p-4"
+        style={{ backgroundColor: colorScheme.surface }}
+      >
+        {/* Top row */}
+        <div className="flex items-center justify-between mb-2">
           <LightText
-            className="px-2 py-1 rounded-full"
+            className="px-2 py-0.5 rounded-full truncate max-w-[50%]"
             style={{
               color: colorScheme.text,
-              fontSize: '0.8rem',
+              fontSize: '0.75rem',
               backgroundColor: `${colorScheme.primary}20`,
             }}
           >
@@ -76,15 +82,26 @@ const VideoCard = ({
           </LightText>
 
           <LightText
-            style={{ color: colorScheme.gray[300], fontSize: '0.8rem' }}
+            className="truncate max-w-[45%]"
+            style={{ color: colorScheme.gray[300], fontSize: '0.75rem' }}
           >
             {content.date}
           </LightText>
         </div>
 
-        <BoldText style={{ color: colorScheme.text }}>{content.title}</BoldText>
+        {/* Title */}
+        <BoldText
+          className="text-sm font-semibold line-clamp-2 mb-1"
+          style={{ color: colorScheme.text }}
+        >
+          {content.title}
+        </BoldText>
 
-        <LightText style={{ color: colorScheme.accent }}>
+        {/* Teacher */}
+        <LightText
+          className="text-xs truncate"
+          style={{ color: colorScheme.accent }}
+        >
           {content.teacher}
         </LightText>
       </div>
@@ -246,7 +263,6 @@ const ContentSection = ({
             ></div>
             <RegularText
               fontSize="1rem"
-              bold
               style={{ color: colorScheme.primary }}
               className="tracking-wider"
             >

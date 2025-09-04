@@ -1,5 +1,7 @@
 // Define type for video objects
 export interface VideoItem {
+  category: string;
+  category: string;
   id: string;
   title: string;
   description: string;

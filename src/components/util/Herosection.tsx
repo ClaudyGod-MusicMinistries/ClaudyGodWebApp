@@ -14,6 +14,7 @@ interface HeroSectionProps {
   onCtaClick?: () => void;
   className?: string;
   children?: React.ReactNode;
+  overlayColor?: string;
 }
 
 export const Herosection: React.FC<HeroSectionProps> = ({

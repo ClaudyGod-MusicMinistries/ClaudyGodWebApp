@@ -149,7 +149,7 @@ export const Blog: React.FC = () => {
     `${fadeInClass} translate-y-8 opacity-0 ${isMounted ? `!translate-y-0 !opacity-100 delay-[${index * 75}ms]` : ''}`;
 
   return (
-    <div className="min-h-screen relative overflow-x-hidden">
+    <main className="min-h-screen relative overflow-x-hidden">
       {/* Modern Glass Morphism Background */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-gray-100/20 backdrop-blur-3xl" />
@@ -175,7 +175,7 @@ export const Blog: React.FC = () => {
       <div className="relative">
         {/* Article Detail Overlay - now full viewport */}
         {currentArticle && (
-          <div className="fixed inset-0 z-50 overflow-y-auto bg-white/95 backdrop-blur-lg">
+          <section className="fixed inset-0 z-50 overflow-y-auto bg-white/95 backdrop-blur-lg">
             <Suspense
               fallback={
                 <div className="w-full h-full flex items-center justify-center">
@@ -188,12 +188,14 @@ export const Blog: React.FC = () => {
                 onClose={handleCloseArticle}
               />
             </Suspense>
-          </div>
+          </section>
         )}
 
-        <Heroblog
-          className={`${fadeInClass} ${isMounted ? 'opacity-100' : 'opacity-0'}`}
-        />
+        <header>
+          <Heroblog
+            className={`${fadeInClass} ${isMounted ? 'opacity-100' : 'opacity-0'}`}
+          />
+        </header>
 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -202,11 +204,11 @@ export const Blog: React.FC = () => {
                 <div className="border-2 border-dashed rounded-2xl w-full h-80 md:h-96 animate-pulse bg-white/50" />
               }
             >
-              <div
+              <figure
                 className={`${fadeInUpClass} transition-delay-100 rounded-3xl overflow-hidden shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700 bg-white/80 backdrop-blur-lg border border-white/20`}
               >
                 <LazyWelcomeImage />
-              </div>
+              </figure>
             </Suspense>
             <Suspense
               fallback={
@@ -215,17 +217,17 @@ export const Blog: React.FC = () => {
                 </div>
               }
             >
-              <div
+              <article
                 className={`${fadeInUpClass} bg-white/80 backdrop-blur-lg p-8 rounded-3xl shadow-2xl border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700`}
               >
                 <LazyBlogWelcome />
-              </div>
+              </article>
             </Suspense>
           </div>
         </section>
 
-        <div className="relative py-12">
-          <div className="relative flex justify-center">
+        <section className="relative py-12">
+          <header className="relative flex justify-center">
             <ExtraBoldText
               className={`px-6 ${fadeInUpClass}`}
               fontSize="2rem"
@@ -239,18 +241,18 @@ export const Blog: React.FC = () => {
             >
               LATEST BLOG POSTS
             </ExtraBoldText>
-          </div>
+          </header>
           <div className="absolute inset-x-0 -bottom-4 flex justify-center">
             <div
               className={`h-[2px] w-32 bg-gradient-to-r from-transparent via-${colorScheme.primary} to-transparent ${fadeInClass} ${isMounted ? 'opacity-100 delay-300' : 'opacity-0'}`}
             />
           </div>
-        </div>
+        </section>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {currentPosts.map((post, index) => (
-              <div
+              <article
                 key={post.id}
                 className={`${staggerClass(index)} h-full transform transition-all duration-700 hover:-translate-y-3 will-change-transform`}
               >
@@ -275,11 +277,11 @@ export const Blog: React.FC = () => {
                     />
                   </div>
                 </Suspense>
-              </div>
+              </article>
             ))}
           </div>
 
-          <div
+          <nav
             className={`mt-16 ${fadeInClass} ${isMounted ? 'opacity-100 delay-500' : 'opacity-0'}`}
           >
             <Pagination
@@ -288,10 +290,10 @@ export const Blog: React.FC = () => {
               onPageChange={handlePageChange}
               className="justify-center"
             />
-          </div>
-        </div>
+          </nav>
+        </section> */}
 
-        <div
+        <section
           className={`max-w-7xl mx-auto px-4 py-16 ${fadeInClass} ${isMounted ? 'opacity-100 delay-300' : 'opacity-0'}`}
         >
           <Suspense
@@ -299,22 +301,24 @@ export const Blog: React.FC = () => {
               <div className="h-96 rounded-3xl animate-pulse bg-white/50" />
             }
           >
-            <div className="bg-white/80 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500">
+            <article className="bg-white/80 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500">
               <Interview />
-            </div>
+            </article>
           </Suspense>
-        </div>
+        </section>
 
-        <DonationCallToAction
-          title="Partner with Our Ministry"
-          subtitle="Your Support Makes a Difference"
-          description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
-          goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
-          donateUrl="/donate"
-          className={`${fadeInClass} ${isMounted ? 'opacity-100 delay-400' : 'opacity-0'}`}
-        />
+        <section>
+          <DonationCallToAction
+            title="Partner with Our Ministry"
+            subtitle="Your Support Makes a Difference"
+            description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+            goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+            donateUrl="/donate"
+            className={`${fadeInClass} ${isMounted ? 'opacity-100 delay-400' : 'opacity-0'}`}
+          />
+        </section>
 
-        <div
+        <aside
           className={`fixed bottom-8 right-8 z-50 ${fadeInClass} ${isMounted ? 'opacity-100 delay-700' : 'opacity-0'}`}
         >
           <Suspense
@@ -324,9 +328,9 @@ export const Blog: React.FC = () => {
           >
             <LazyChatbot className="transform transition-all hover:scale-105 hover:shadow-lg" />
           </Suspense>
-        </div>
+        </aside>
 
-        <div
+        <section
           className={`max-w-4xl mx-auto px-4 py-16 ${fadeInClass} ${isMounted ? 'opacity-100 delay-500' : 'opacity-0'}`}
         >
           <Suspense
@@ -342,7 +346,7 @@ export const Blog: React.FC = () => {
               />
             </div>
           </Suspense>
-        </div>
+        </section>
       </div>
 
       {/* Modern animations */}
@@ -406,6 +410,6 @@ export const Blog: React.FC = () => {
           background: rgba(0, 0, 0, 0.3);
         }
       `}</style>
-    </div>
+    </main>
   );
 };

@@ -23,6 +23,7 @@ import { MinistryData } from './pages/Ministry';
 import { News } from './pages/News';
 import DonationComplete from './components/donate/DonationSuccess';
 import StreamingPlatforms from './components/Homepage/Streaming';
+import { CityHighlightsLayout } from './components/news/cityHighlight';
 
 // Store components
 import { Checkout } from './components/store/Checkout';
@@ -54,6 +55,7 @@ function AppRoutes() {
           <Route path="cart" element={<CartPage />} />
           <Route path="donation-complete" element={<DonationComplete />} />
           <Route path="stream" element={<StreamingPlatforms />} />
+          <Route path="/tour/:city" element={<CityHighlightsLayout />} />
           {/* Payment routes */}
           <Route path="checkout/zelle" element={<ZellePaymentWrapper />} />
           <Route path="payment-pending" element={<PaymentPending />} />

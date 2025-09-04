@@ -108,7 +108,7 @@ const DonateHeroSlider: React.FC = () => {
   }, [images.length, shouldAnimate, isNavOpen]);
 
   return (
-    <div
+    <section
       className={`relative w-full ${isNavOpen ? 'filter blur-sm opacity-75 transition-all duration-300' : ''}`}
     >
       {/* Mobile Version */}
@@ -150,7 +150,7 @@ const DonateHeroSlider: React.FC = () => {
         ))}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-purple-900/30 z-10" />
       </div>
-    </div>
+    </section>
   );
 };
 
@@ -158,7 +158,7 @@ const DonationGuide = () => {
   const { colorScheme } = useTheme();
 
   return (
-    <motion.div
+    <motion.aside
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -231,7 +231,7 @@ const DonationGuide = () => {
           </ul>
         </div>
       </div>
-    </motion.div>
+    </motion.aside>
   );
 };
 
@@ -247,14 +247,14 @@ const FeatureCard = ({
   const { colorScheme } = useTheme();
 
   return (
-    <motion.div
+    <motion.article
       whileHover={{ y: -5 }}
       style={{
         backgroundColor: colorScheme.white,
         borderRadius: colorScheme.borderRadius.large,
         borderColor: colorScheme.gray[100],
       }}
-      className="p-4 sm:p-6 rounded-xl shadow-sm border hover:shadow-md transition-shadow h-full"
+      className="p-4 sm:p-6 rounded-xl shadow-sm border hover:shadow-md transition-shadow h-full flex flex-col"
     >
       <div
         style={{ backgroundColor: colorScheme.gray[100] }}
@@ -273,10 +273,14 @@ const FeatureCard = ({
       >
         {title}
       </SemiBoldText>
-      <LightText style={{ color: colorScheme.background }} fontSize="14px">
+      <LightText
+        style={{ color: colorScheme.background }}
+        fontSize="14px"
+        className="flex-grow"
+      >
         {description}
       </LightText>
-    </motion.div>
+    </motion.article>
   );
 };
 
@@ -353,12 +357,7 @@ export const DonateData: React.FC = () => {
   const currencySymbol = getCurrencySymbol();
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className={`min-h-screen ${isNavOpen ? 'overflow-hidden max-h-screen' : ''}`}
-    >
+    <main className="min-h-screen">
       <SEO
         title="Support Gospel Music Ministry | Donate to ClaudyGod"
         description="Partner with ClaudyGod Ministries to spread the gospel through music. Your donations support worship events, albums, and global outreach."
@@ -382,7 +381,7 @@ export const DonateData: React.FC = () => {
       <DonateHeroSlider />
 
       {isCheckout ? (
-        <div
+        <section
           className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75' : ''}`}
         >
           {currency === 'NGN' ? (
@@ -402,15 +401,15 @@ export const DonateData: React.FC = () => {
               onComplete={handlePaymentComplete}
             />
           )}
-        </div>
+        </section>
       ) : (
-        <motion.div
+        <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75 transition-all duration-300' : ''}`}
         >
-          <div className="text-center mb-12 md:mb-16">
+          <header className="text-center mb-12 md:mb-16">
             <ExtraBoldText
               style={{ color: colorScheme.primary }}
               fontSize="32px"
@@ -437,14 +436,9 @@ export const DonateData: React.FC = () => {
               will meet all your needs according to the riches of His glory in
               Christ Jesus." (Philippians 4:19)
             </LightText>
-          </div>
+          </header>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ staggerChildren: 0.1 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 md:mb-16"
-          >
+          <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 md:mb-16">
             <FeatureCard
               icon={faGlobe}
               title="Global Support"
@@ -460,7 +454,7 @@ export const DonateData: React.FC = () => {
               title="Trusted Ministry"
               description="We are accountable for every donation and provide regular ministry updates to our supporters."
             />
-          </motion.div>
+          </section>
 
           <div className="flex justify-center my-8 md:my-10">
             <div
@@ -469,7 +463,7 @@ export const DonateData: React.FC = () => {
             ></div>
           </div>
 
-          <motion.div
+          <motion.article
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
@@ -479,7 +473,7 @@ export const DonateData: React.FC = () => {
             }}
             className="max-w-4xl mx-auto px-4 py-6 sm:py-8 rounded-xl shadow-sm"
           >
-            <div className="text-center mb-8 md:mb-10">
+            <header className="text-center mb-8 md:mb-10">
               <ExtraBoldText
                 style={{ color: colorScheme.primary }}
                 fontSize="28px"
@@ -495,7 +489,7 @@ export const DonateData: React.FC = () => {
                 Select your currency and amount to support our gospel music
                 ministry
               </LightText>
-            </div>
+            </header>
 
             <DonationGuide />
 
@@ -618,7 +612,7 @@ export const DonateData: React.FC = () => {
               </CustomButton>
             </form>
 
-            <div className="mt-6 sm:mt-8 text-center">
+            <footer className="mt-6 sm:mt-8 text-center">
               <ExtraLightText
                 style={{ color: colorScheme.gray[500] }}
                 fontSize="12px"
@@ -626,10 +620,10 @@ export const DonateData: React.FC = () => {
                 Your donation is securely processed. All major cards and payment
                 methods accepted.
               </ExtraLightText>
-            </div>
-          </motion.div>
+            </footer>
+          </motion.article>
 
-          <div className="mt-12 sm:mt-16 text-center">
+          <footer className="mt-12 sm:mt-16 text-center">
             <SemiBoldText
               style={{ color: colorScheme.primary }}
               fontSize="18px"
@@ -653,8 +647,8 @@ export const DonateData: React.FC = () => {
               </span>{' '}
               for assistance with your donation.
             </LightText>
-          </div>
-        </motion.div>
+          </footer>
+        </motion.section>
       )}
 
       <DonationCallToAction
@@ -665,6 +659,6 @@ export const DonateData: React.FC = () => {
         goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
         donateUrl="/donate"
       />
-    </motion.div>
+    </main>
   );
 };

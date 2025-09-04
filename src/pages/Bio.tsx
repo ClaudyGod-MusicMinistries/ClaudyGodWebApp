@@ -2,7 +2,6 @@
 import { SEO } from '../components/util/SEO';
 import React from 'react';
 import { motion } from 'framer-motion';
-// import { HeroSection } from '../components/util/Herosection';
 import { Herosection } from '../components/util/Herosection';
 import { About1, About2 } from '../assets';
 import { NewsletterForm } from '../components/util/Newsletter';
@@ -63,80 +62,80 @@ export const Biography: React.FC = () => {
         }}
       />
 
-      <div>
+      <main>
         {/* Enhanced Hero Section */}
-        <Herosection
-          title="ClaudyGod Music & Ministries"
-          backgroundImage={About1}
-          className="relative "
-        >
-          <div className="absolute inset-0 z-10" />
-          <motion.div
-            className="absolute inset-0 z-20 flex flex-col items-center
-             justify-center text-center px-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
+        <header>
+          <Herosection
+            title="ClaudyGod Music & Ministries"
+            backgroundImage={About1}
+            className="relative"
           >
+            <div className="absolute inset-0 z-10" />
             <motion.div
-              initial={{ y: -20 }}
-              animate={{ y: 0 }}
-              transition={{ delay: 0.2, duration: 0.7 }}
-            >
-              <ExtraBoldText
-                style={{
-                  color: colorScheme.text,
-                  fontSize: '3rem',
-                  lineHeight: '1.2',
-                }}
-                useThemeColor={false}
-              >
-                ClaudyGod
-              </ExtraBoldText>
-            </motion.div>
-
-            <motion.div
+              className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              style={{
-                width: '6rem',
-                height: '0.25rem',
-                background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.primary})`,
-                marginBottom: '1.5rem',
-              }}
-            />
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
+              transition={{ duration: 0.8 }}
             >
-              <SemiBoldText
-                style={{
-                  color: colorScheme.text,
-                  fontSize: '1.5rem',
-                  maxWidth: '48rem',
-                }}
-                useThemeColor={false}
+              <motion.div
+                initial={{ y: -20 }}
+                animate={{ y: 0 }}
+                transition={{ delay: 0.2, duration: 0.7 }}
               >
-                American Contemporary Christian Music & Afro-Gospel Artist
-              </SemiBoldText>
+                <ExtraBoldText
+                  style={{
+                    color: colorScheme.text,
+                    fontSize: '3rem',
+                    lineHeight: '1.2',
+                  }}
+                  useThemeColor={false}
+                >
+                  ClaudyGod
+                </ExtraBoldText>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                style={{
+                  width: '6rem',
+                  height: '0.25rem',
+                  background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.primary})`,
+                  marginBottom: '1.5rem',
+                }}
+              />
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+              >
+                <SemiBoldText
+                  style={{
+                    color: colorScheme.text,
+                    fontSize: '1.5rem',
+                    maxWidth: '48rem',
+                  }}
+                  useThemeColor={false}
+                >
+                  American Contemporary Christian Music & Afro-Gospel Artist
+                </SemiBoldText>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </Herosection>
+          </Herosection>
+        </header>
 
         {/* Main Content */}
-        <div
+        <article
           style={{
             maxWidth: '80rem',
             margin: '0 auto',
             padding: '3rem 1rem',
-            // backgroundColor: colorScheme.body
           }}
         >
           {/* Section Header */}
-          <div style={{ marginBottom: '4rem' }}>
+          <header style={{ marginBottom: '4rem' }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -146,10 +145,8 @@ export const Biography: React.FC = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.75rem',
-                // backgroundColor: colorScheme.gray[100],
                 padding: '0.5rem 1.25rem',
                 borderRadius: '9999px',
-                // marginBottom: "1.5rem"
               }}
             >
               <FontAwesomeIcon
@@ -200,7 +197,6 @@ export const Biography: React.FC = () => {
                   color: colorScheme.accent,
                   fontSize: '1.5rem',
                   lineHeight: '1.6',
-                  // marginBottom: "2rem",
                   maxWidth: '64rem',
                 }}
                 useThemeColor={false}
@@ -218,14 +214,13 @@ export const Biography: React.FC = () => {
               style={{
                 width: '6rem',
                 height: '0.25rem',
-                // background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.accent})`,
                 borderRadius: '9999px',
               }}
             />
-          </div>
+          </header>
 
           {/* Biography Sections */}
-          <div style={{ display: 'grid', gap: '5rem' }}>
+          <section style={{ display: 'grid', gap: '5rem' }}>
             <BioSection
               imageSrc={About2}
               altText="ClaudyGod portrait"
@@ -233,7 +228,7 @@ export const Biography: React.FC = () => {
             />
 
             {/* Enhanced Responsive Quote Section */}
-            <motion.div
+            <motion.blockquote
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -296,7 +291,7 @@ export const Biography: React.FC = () => {
                   - ClaudyGod
                 </SemiBoldText>
               </div>
-            </motion.div>
+            </motion.blockquote>
 
             <BioSection
               imageSrc={About2}
@@ -305,15 +300,14 @@ export const Biography: React.FC = () => {
               reverse
               hideOnSmall
             />
-          </div>
-        </div>
+          </section>
+        </article>
 
         {/* Divider */}
         <div
           style={{
             position: 'relative',
             margin: '2.5rem 0',
-            // backgroundColor: colorScheme.body
           }}
         >
           <div
@@ -340,7 +334,6 @@ export const Biography: React.FC = () => {
           >
             <span
               style={{
-                // backgroundColor: colorScheme.body,
                 padding: '0 1rem',
               }}
             >
@@ -352,16 +345,18 @@ export const Biography: React.FC = () => {
           </div>
         </div>
 
-        <DonationCallToAction
-          title="Partner with Our Ministry"
-          subtitle="Your Support Makes a Difference"
-          description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
-          goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
-          donateUrl="/donate"
-        />
+        <section>
+          <DonationCallToAction
+            title="Partner with Our Ministry"
+            subtitle="Your Support Makes a Difference"
+            description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+            goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+            donateUrl="/donate"
+          />
+        </section>
 
         {/* Newsletter Section */}
-        <div
+        <section
           style={{
             background: `linear-gradient(to bottom right, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
             padding: '4rem 0',
@@ -376,8 +371,8 @@ export const Biography: React.FC = () => {
           >
             <NewsletterForm />
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </>
   );
 };

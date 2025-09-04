@@ -33,7 +33,6 @@ const ScrollAnimationWrapper = ({
     </motion.div>
   );
 };
-
 export const Home = () => {
   return (
     <>
@@ -51,44 +50,75 @@ export const Home = () => {
             target: 'https://claudygod.org/search?q={search_term_string}',
             'query-input': 'required name=search_term_string',
           },
+          publisher: {
+            '@type': 'Organization',
+            name: 'ClaudyGod Ministries',
+          },
         }}
       />
+
       <div className="overflow-x-hidden">
         <ScrollToTop />
 
         <ScrollAnimationWrapper>
-          <Hero />
-        </ScrollAnimationWrapper>
-        <ScrollAnimationWrapper>
-          <Welcome />
-        </ScrollAnimationWrapper>
-        <ScrollAnimationWrapper>
-          <LatestRelease />
-        </ScrollAnimationWrapper>
-        <ScrollAnimationWrapper>
-          <ShopPreview />
-        </ScrollAnimationWrapper>
-        <DonationCallToAction
-          title="Partner with Our Ministry"
-          subtitle="Your Support Makes a Difference"
-          description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, 
-  and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
-          goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
-          donateUrl="/donate"
-        />
-        <ScrollAnimationWrapper>
-          <FeaturedVideos />
+          <section aria-labelledby="hero">
+            <Hero />
+          </section>
         </ScrollAnimationWrapper>
 
         <ScrollAnimationWrapper>
-          <AudioMackComponent />
-        </ScrollAnimationWrapper>
-        <ScrollAnimationWrapper>
-          <DownloadSection />
+          <section aria-labelledby="welcome">
+            <Welcome />
+          </section>
         </ScrollAnimationWrapper>
 
         <ScrollAnimationWrapper>
-          <NewsletterForm />
+          <section aria-labelledby="latest-release">
+            <LatestRelease />
+          </section>
+        </ScrollAnimationWrapper>
+
+        <ScrollAnimationWrapper>
+          <section aria-labelledby="shop-preview">
+            <ShopPreview />
+          </section>
+        </ScrollAnimationWrapper>
+
+        <ScrollAnimationWrapper>
+          <section aria-labelledby="donation">
+            <DonationCallToAction
+              title="Partner with Our Ministry"
+              subtitle="Your Support Makes a Difference"
+              description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, 
+    and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+              goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+              donateUrl="/donate"
+            />
+          </section>
+        </ScrollAnimationWrapper>
+
+        <ScrollAnimationWrapper>
+          <section aria-labelledby="videos">
+            <FeaturedVideos />
+          </section>
+        </ScrollAnimationWrapper>
+
+        <ScrollAnimationWrapper>
+          <section aria-labelledby="music">
+            <AudioMackComponent />
+          </section>
+        </ScrollAnimationWrapper>
+
+        <ScrollAnimationWrapper>
+          <section aria-labelledby="download">
+            <DownloadSection />
+          </section>
+        </ScrollAnimationWrapper>
+
+        <ScrollAnimationWrapper>
+          <section aria-labelledby="newsletter">
+            <NewsletterForm />
+          </section>
         </ScrollAnimationWrapper>
       </div>
     </>

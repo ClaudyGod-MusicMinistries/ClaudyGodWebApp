@@ -41,7 +41,7 @@ export const ContactData: React.FC = () => {
   }, []);
 
   return (
-    <div
+    <main
       className="relative overflow-hidden"
       style={{
         background: `linear-gradient(to bottom, white, ${colorScheme.gray[50]})`,
@@ -49,14 +49,8 @@ export const ContactData: React.FC = () => {
     >
       {/* Decorative elements */}
       <div className="absolute inset-0 opacity-5">
-        <div
-          className="absolute top-0 left-0 w-64 h-64 rounded-full blur-3xl"
-          // style={{ backgroundColor: colorScheme.accent }}
-        ></div>
-        <div
-          className="absolute bottom-0 right-0 w-80 h-80 rounded-full blur-3xl"
-          // style={{ backgroundColor: colorScheme.secondary }}
-        ></div>
+        <div className="absolute top-0 left-0 w-64 h-64 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full blur-3xl"></div>
       </div>
 
       <SuccessModal
@@ -64,7 +58,7 @@ export const ContactData: React.FC = () => {
         onClose={() => setIsModalOpen(false)}
       />
 
-      <div className="relative">
+      <section className="relative">
         <div className="absolute inset-0 z-10" />
         <Herosection
           title="ClaudyGod Music & Ministries / Contact"
@@ -72,10 +66,10 @@ export const ContactData: React.FC = () => {
           className="relative z-0"
           style={{ borderRadius: colorScheme.borderRadius.large }}
         />
-      </div>
+      </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
-        <motion.div
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+        <motion.header
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -90,9 +84,9 @@ export const ContactData: React.FC = () => {
           <LightText style={{ color: colorScheme.background }} fontSize="15px">
             Please leave a prayer request, testimony or a comment...
           </LightText>
-        </motion.div>
+        </motion.header>
 
-        <motion.div
+        <motion.header
           className="text-center mb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -104,25 +98,22 @@ export const ContactData: React.FC = () => {
           >
             Get In Touch With Us
           </SemiBoldText>
-        </motion.div>
+        </motion.header>
 
-        <div
-          className="grid grid-cols-1 lg:grid-cols-2 
-        gap-12 mb-20"
-        >
-          <motion.div
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+          <motion.article
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="bg-white rounded-2xl shadow-xl p-6 md:p-8"
             style={{
               borderRadius: colorScheme.borderRadius.large,
-              // backgroundColor: colorScheme.background
             }}
           >
             <ContactForm onSuccess={() => setIsModalOpen(true)} />
-          </motion.div>
-          <motion.div
+          </motion.article>
+
+          <motion.article
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -133,10 +124,10 @@ export const ContactData: React.FC = () => {
             }}
           >
             <ContactInfo />
-          </motion.div>
+          </motion.article>
         </div>
 
-        <motion.div
+        <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
@@ -149,9 +140,9 @@ export const ContactData: React.FC = () => {
             goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
             donateUrl="/donate"
           />
-        </motion.div>
+        </motion.section>
 
-        <motion.div
+        <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
@@ -162,10 +153,10 @@ export const ContactData: React.FC = () => {
           }}
         >
           <NewsletterForm />
-        </motion.div>
-      </div>
+        </motion.section>
+      </section>
 
-      <div
+      <footer
         className="relative overflow-hidden"
         style={{
           background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary})`,
@@ -215,7 +206,7 @@ export const ContactData: React.FC = () => {
               </LightText>
             </motion.div>
 
-            <motion.div
+            <motion.nav
               className="flex justify-center space-x-4 sm:space-x-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -268,10 +259,10 @@ export const ContactData: React.FC = () => {
                   />
                 </motion.a>
               ))}
-            </motion.div>
+            </motion.nav>
           </div>
         </div>
-      </div>
-    </div>
+      </footer>
+    </main>
   );
 };

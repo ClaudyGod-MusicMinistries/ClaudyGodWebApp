@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { SEO } from '../components/util/SEO';
 import { motion } from 'framer-motion';
@@ -7,14 +6,11 @@ import { Cover } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DownloadSection } from '../components/util/Download';
 import {
-  faExternalLinkAlt,
   faInfoCircle,
   faArrowDown,
+  faExternalLinkAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import {
-  latestReleasePlatforms,
-  securedMusicPlatforms,
-} from '../components/data/musicData';
+import { securedMusicPlatforms } from '../components/data/musicData';
 import { NewsletterForm } from '../components/util/Newsletter';
 import { DonationCallToAction } from '../components/util/DonationSupport';
 import { SecurityModal } from '../components/util/modals/SecurityModal';
@@ -57,17 +53,15 @@ const SecurityUtils = {
       ];
       safeParams.forEach(param => parsedUrl.searchParams.delete(param));
       return parsedUrl.toString();
-    } catch (error) {
-      console.error('Invalid URL:', url);
+    } catch {
       return '#';
     }
   },
-
   isTrustedDomain: (url: string, trustedDomains: string[]) => {
     try {
       const parsedUrl = new URL(url);
       return trustedDomains.some(domain => parsedUrl.hostname.endsWith(domain));
-    } catch (error) {
+    } catch {
       return false;
     }
   },
@@ -88,15 +82,12 @@ export const MusicData = () => {
 
   const handleLinkClick = (url: string, e: React.MouseEvent) => {
     e.preventDefault();
-    const sanitizedUrl = SecurityUtils.sanitizeUrl(url);
-    setRedirectUrl(sanitizedUrl);
+    setRedirectUrl(SecurityUtils.sanitizeUrl(url));
     setIsModalOpen(true);
   };
 
   const handleRedirect = () => {
-    if (redirectUrl) {
-      window.open(redirectUrl, '_blank', 'noopener,noreferrer');
-    }
+    if (redirectUrl) window.open(redirectUrl, '_blank', 'noopener,noreferrer');
     setIsModalOpen(false);
   };
 
@@ -105,7 +96,6 @@ export const MusicData = () => {
   }: {
     platform: (typeof securedMusicPlatforms)[0];
   }) => {
-    const [isHovered, setIsHovered] = useState(false);
     const sanitizedUrl = SecurityUtils.sanitizeUrl(platform.url);
     const isTrusted = SecurityUtils.isTrustedDomain(
       sanitizedUrl,
@@ -116,19 +106,10 @@ export const MusicData = () => {
       <motion.a
         href={sanitizedUrl}
         onClick={e => handleLinkClick(platform.url, e)}
-        className={`flex items-center px-6 py-4 rounded-xl shadow-lg transition-all ${platform.bgColor} ${platform.textColor} ${
-          isHovered ? 'scale-[1.03] shadow-xl -translate-y-1' : ''
-        } ${isTrusted ? 'ring-2 ring-white/30' : 'opacity-80'}`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: 0.1 * securedMusicPlatforms.indexOf(platform),
-          type: 'spring',
-          stiffness: 300,
-        }}
-        whileHover={{ scale: 1.05 }}
+        className={`flex items-center px-6 py-4 rounded-xl shadow-md transition-all ${platform.bgColor} ${platform.textColor} ${
+          isTrusted ? 'ring-2 ring-white/30' : 'opacity-80'
+        }`}
+        whileHover={{ scale: 1.05, y: -4 }}
         whileTap={{ scale: 0.98 }}
       >
         <FontAwesomeIcon icon={platform.icon} className="mr-3 text-xl" />
@@ -143,26 +124,14 @@ export const MusicData = () => {
   };
 
   return (
-    <div
-      className="min-h-screen relative overflow-x-hidden"
+    <main
+      className="min-h-screen"
       style={{ backgroundColor: colorScheme.gray[100] }}
     >
       <SEO
         title="ClaudyGod Music - Stream Gospel Albums & Singles"
-        description="Stream ClaudyGod's gospel music on all platforms. New albums 'Very Glorious', 'Lover of My Soul', and 'King of Heaven' available now."
+        description="Stream ClaudyGod's gospel music on all platforms."
         keywords="gospel music, christian albums, worship songs, claudygod music"
-        structuredData={{
-          '@context': 'https://schema.org',
-          '@type': 'MusicGroup',
-          name: 'ClaudyGod',
-          url: 'https://claudygod.org/music',
-          genre: 'Gospel, Contemporary Christian, Afro-Gospel',
-          image: 'https://claudygod.org/music/src/assets/album-cover.jpg',
-          sameAs: [
-            'https://open.spotify.com/artist/...',
-            'https://music.apple.com/artist/...',
-          ],
-        }}
       />
 
       {/* Security Modal */}
@@ -173,188 +142,107 @@ export const MusicData = () => {
         redirectUrl={redirectUrl || ''}
       />
 
-      {/* Hero Section */}
+      {/* Hero */}
       <section
-        className="pt-32 pb-24 relative overflow-hidden"
+        className="py-24 px-6 text-center relative flex flex-col items-center justify-center"
         style={{
           background: `linear-gradient(to bottom right, ${colorScheme.primary}, ${colorScheme.primary})`,
         }}
       >
-        <div className="absolute inset-0 opacity-10">
-          <div
-            className="absolute top-0 left-0 w-64 h-64 rounded-full blur-3xl"
-            style={{ backgroundColor: colorScheme.accent }}
-          ></div>
-          <div
-            className="absolute bottom-0 right-0 w-96 h-96 rounded-full blur-3xl"
-            style={{ backgroundColor: colorScheme.secondary }}
-          ></div>
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <ExtraBoldText
-              fontSize="3rem"
-              style={{ color: colorScheme.gray[300] }}
-            >
-              Music
-            </ExtraBoldText>
-            <div
-              className="w-24 h-1.5 rounded-full mb-8"
-              style={{
-                background: `linear-gradient(to right, 
-                ${colorScheme.accent}, ${colorScheme.accent})`,
-              }}
-            ></div>
-            <LightText style={{ color: colorScheme.text }}>
-              Experience the divine fusion of American Contemporary Christian
-              Music and Afro-Gospel Songs through ClaudyGod's Inspirational
-              Journey.
-            </LightText>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Streaming Platforms - Main Section */}
-      <section className="py-16 relative">
+        <ExtraBoldText fontSize="3rem" style={{ color: colorScheme.gray[300] }}>
+          Music
+        </ExtraBoldText>
         <div
-          className="absolute inset-x-0 top-0 h-16 -translate-y-full"
-          style={{
-            background: `linear-gradient(to bottom, ${colorScheme.primary}10, transparent)`,
-          }}
-        ></div>
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <ExtraBoldText
-                fontSize="1.5rem"
-                style={{ color: colorScheme.primary }}
-              >
-                Available On All Platforms
-              </ExtraBoldText>
-              <LightText
-                className="md:text-xl max-md:text-base max-w-2xl mx-auto"
-                style={{ color: colorScheme.gray[600] }}
-              >
-                Stream ClaudyGod's music everywhere, Anytime, Anyday, Anywhere.
-              </LightText>
-            </motion.div>
-          </div>
-
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 max-w-5xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ staggerChildren: 0.1 }}
-          >
-            {securedMusicPlatforms.map(platform => (
-              <SecuredLink key={platform.name} platform={platform} />
-            ))}
-          </motion.div>
-
-          <motion.div
-            className="mt-10 text-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-          >
-            <div
-              className="inline-flex items-center px-5 py-3 rounded-full border"
-              style={{
-                backgroundColor: colorScheme.gray[100],
-                borderColor: colorScheme.gray[200],
-              }}
-            >
-              <FontAwesomeIcon
-                icon={faInfoCircle}
-                className="mr-3 text-lg"
-                style={{ color: colorScheme.primary }}
-              />
-              <LightText style={{ color: colorScheme.primary }}>
-                We verify all external links for your security
-              </LightText>
-            </div>
-          </motion.div>
-        </div>
+          className="w-24 h-1.5 rounded-full my-6"
+          style={{ backgroundColor: colorScheme.accent }}
+        />
+        <LightText style={{ color: colorScheme.text }} className="max-w-2xl">
+          Experience the divine fusion of American Contemporary Christian and
+          Afro-Gospel songs.
+        </LightText>
       </section>
 
-      {/* Latest Release Section */}
-      <section
-        className="py-16"
-        style={{
-          background: `linear-gradient(to bottom right, ${colorScheme.background}, ${colorScheme.gray[50]})`,
-        }}
-      >
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="p-8 rounded-2xl shadow-xl mb-16 text-center overflow-hidden relative"
-            style={{
-              background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.accent})`,
-            }}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+      {/* Streaming Platforms */}
+      <section className="py-16 px-6">
+        <header className="text-center mb-12">
+          <ExtraBoldText
+            fontSize="1.5rem"
+            style={{ color: colorScheme.primary }}
           >
-            <div className="absolute inset-0 opacity-20">
-              <div
-                className="absolute top-0 left-0 w-48 h-48 rounded-full blur-3xl"
-                style={{ backgroundColor: colorScheme.accent }}
-              ></div>
-              <div
-                className="absolute bottom-0 right-0 w-64 h-64 rounded-full blur-3xl"
-                style={{ backgroundColor: colorScheme.secondary }}
-              ></div>
-            </div>
-            <ExtraBoldText fontSize="2rem">
-              Latest Release: You Are Our Everything
-            </ExtraBoldText>
-            <div
-              className="w-32 h-1 rounded-full mx-auto mt-4"
-              style={{
-                background: `linear-gradient(to right, ${colorScheme.accent}, 
-                ${colorScheme.accent})`,
-              }}
-            ></div>
-          </motion.div>
+            Available On All Platforms
+          </ExtraBoldText>
+          <LightText
+            className="max-w-xl mx-auto"
+            style={{ color: colorScheme.gray[600] }}
+          >
+            Stream ClaudyGod's music everywhere, anytime, anyday, anywhere.
+          </LightText>
+        </header>
 
-          <div className="space-y-16">
-            {albums.map(album => (
-              <motion.div
-                key={album.id}
-                className="grid md:grid-cols-3 gap-10 items-start rounded-2xl shadow-lg p-6 max-w-6xl mx-auto"
-                style={{ backgroundColor: colorScheme.card }}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <div className="md:col-span-1">
-                  <div className="overflow-hidden rounded-xl shadow-xl">
-                    <img
-                      src={album.image}
-                      alt={album.title}
-                      className="w-full h-auto object-cover transition-transform duration-500 hover:scale-105"
-                    />
-                  </div>
-                </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
+          {securedMusicPlatforms.map(platform => (
+            <SecuredLink key={platform.name} platform={platform} />
+          ))}
+        </div>
 
-                <div className="md:col-span-2">
+        <footer className="mt-10 flex justify-center">
+          <div
+            className="inline-flex items-center px-5 py-3 rounded-full border"
+            style={{
+              backgroundColor: colorScheme.gray[100],
+              borderColor: colorScheme.gray[200],
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faInfoCircle}
+              className="mr-3 text-lg"
+              style={{ color: colorScheme.primary }}
+            />
+            <LightText style={{ color: colorScheme.primary }}>
+              We verify all external links for your security
+            </LightText>
+          </div>
+        </footer>
+      </section>
+
+      {/* Latest Release */}
+      <section
+        className="py-16 px-6"
+        style={{ backgroundColor: colorScheme.background }}
+      >
+        <header className="text-center mb-16">
+          <ExtraBoldText fontSize="2rem">
+            Latest Release: You Are Our Everything
+          </ExtraBoldText>
+          <div
+            className="w-32 h-1 rounded-full mx-auto mt-4"
+            style={{ backgroundColor: colorScheme.accent }}
+          />
+        </header>
+
+        <div className="max-w-6xl mx-auto grid gap-16">
+          {albums.map(album => (
+            <article
+              key={album.id}
+              className="grid md:grid-cols-3 gap-10 items-start rounded-2xl shadow-lg p-6"
+              style={{ backgroundColor: colorScheme.card }}
+            >
+              {/* Album Cover */}
+              <div className="overflow-hidden rounded-xl shadow-xl">
+                <img
+                  src={album.image}
+                  alt={album.title}
+                  className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+
+              {/* Album Info */}
+              {/* Album Info */}
+              <div className="md:col-span-2 flex flex-col justify-between">
+                <header>
                   <ExtraBoldText
                     className="text-3xl mb-2"
                     style={{ color: colorScheme.text }}
-                    fontSize="2rem"
                   >
                     {album.title}
                   </ExtraBoldText>
@@ -363,114 +251,87 @@ export const MusicData = () => {
                     style={{ color: colorScheme.gray[200] }}
                   >
                     Released{' '}
-                    <SemiBoldText
-                      style={{ color: colorScheme.primary }}
-                      fontSize="1rem"
-                    >
+                    <SemiBoldText style={{ color: colorScheme.primary }}>
                       {album.year}
                     </SemiBoldText>
                   </LightText>
+                </header>
 
-                  <div className="my-10 text-center">
-                    <LightText
-                      className="mb-6 italic max-w-md mx-auto"
-                      style={{ color: colorScheme.text }}
-                      fontSize="1rem"
-                    >
-                      Now available on all major streaming platforms
-                    </LightText>
-
-                    <div className="flex flex-col items-center">
-                      <motion.div
-                        animate={{ y: [0, -10, 0] }}
-                        transition={{ repeat: Infinity, duration: 1.5 }}
-                      >
-                        <FontAwesomeIcon
-                          icon={faArrowDown}
-                          className="mb-3 text-2xl"
-                          style={{ color: colorScheme.primary }}
-                        />
-                      </motion.div>
-                    </div>
-                  </div>
-
-                  <div className="mt-10">
-                    <ExtraBoldText
-                      className="max-md:text-2xl md:text-4xl mb-6 text-center"
-                      style={{ color: colorScheme.text }}
-                    >
-                      Experience the Sound - Stream Now!
-                    </ExtraBoldText>
-
-                    <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl mx-auto">
-                      {securedMusicPlatforms.map((platform, i) => {
-                        const sanitizedUrl = SecurityUtils.sanitizeUrl(
-                          platform.url
-                        );
-
-                        return (
-                          <motion.div
-                            key={i}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="w-full"
-                          >
-                            <CustomButton
-                              size="sm"
-                              style={{
-                                backgroundColor: colorScheme.body,
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                gap: '0.5rem',
-                                padding: '0.75rem 1rem',
-                                borderRadius: '0.75rem',
-                              }}
-                              onClick={(e: React.MouseEvent) => {
-                                e.preventDefault();
-                                setRedirectUrl(sanitizedUrl);
-                                setIsModalOpen(true);
-                              }}
-                              fullWidth
-                            >
-                              <BoldText
-                                fontSize="0.9rem"
-                                style={{
-                                  lineHeight: '1.2',
-                                  textAlign: 'center',
-                                }}
-                              >
-                                Play on {platform.name}{' '}
-                                <FontAwesomeIcon
-                                  // icon={faExternalLinkAlt}
-                                  style={{ fontSize: '0.8rem' }}
-                                  icon={'function'}
-                                />
-                              </BoldText>
-                            </CustomButton>
-                          </motion.div>
-                        );
-                      })}
-                    </motion.div>
-                  </div>
+                <div className="text-center my-8">
+                  <LightText
+                    className="italic mb-4"
+                    style={{ color: colorScheme.text }}
+                  >
+                    Now available on all major streaming platforms
+                  </LightText>
+                  <motion.div
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.5 }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faArrowDown}
+                      className="text-2xl"
+                      style={{ color: colorScheme.primary }}
+                    />
+                  </motion.div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
+
+                {/* Platform Buttons */}
+                <div
+                  className="
+      flex flex-wrap justify-center gap-2
+      sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
+      max-w-2xl mx-auto
+    "
+                >
+                  {securedMusicPlatforms.map(platform => {
+                    const sanitizedUrl = SecurityUtils.sanitizeUrl(
+                      platform.url
+                    );
+                    return (
+                      <CustomButton
+                        key={platform.name}
+                        size="sm"
+                        className="flex justify-between items-center w-[140px] sm:w-full gap-2 mx-1 mb-2"
+                        style={{ backgroundColor: colorScheme.body }}
+                        onClick={e => {
+                          e.preventDefault();
+                          setRedirectUrl(sanitizedUrl);
+                          setIsModalOpen(true);
+                        }}
+                      >
+                        <BoldText
+                          className="truncate text-left"
+                          fontSize="11px"
+                        >
+                          Play on {platform.name}
+                        </BoldText>
+
+                        <FontAwesomeIcon
+                          icon={faExternalLinkAlt}
+                          className="text-xs"
+                        />
+                      </CustomButton>
+                    );
+                  })}
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
+      {/* Footer CTAs */}
       <DonationCallToAction
         title="Partner with Our Ministry"
         subtitle="Your Support Makes a Difference"
-        description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+        description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts."
         goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
         donateUrl="/donate"
       />
-
       <AudioMackComponent />
       <DownloadSection />
       <NewsletterForm />
-    </div>
+    </main>
   );
 };
