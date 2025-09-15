@@ -8,7 +8,7 @@ interface ModalProps {
   children?: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const { colorScheme } = useTheme();
 
   if (!isOpen) return null;

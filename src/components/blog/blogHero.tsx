@@ -2,15 +2,21 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { ExtraBoldText, RegularText } from '../ui/fonts/typography';
-
 import { useTheme } from '../../contexts/ThemeContext';
 
-export const Heroblog: React.FC = () => {
+// 1️⃣ Define props including className
+type HeroblogProps = {
+  className?: string;
+};
+
+// 2️⃣ Accept props in the component
+export const Heroblog: React.FC<HeroblogProps> = ({ className }) => {
   const { colorScheme } = useTheme();
 
   return (
     <div
-      className="relative"
+      // merge default classes with incoming className
+      className={`relative ${className || ''}`}
       style={{
         background: `linear-gradient(to right, ${colorScheme.background}, ${colorScheme.background})`,
       }}

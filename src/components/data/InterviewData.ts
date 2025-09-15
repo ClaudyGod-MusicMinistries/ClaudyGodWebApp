@@ -1,7 +1,5 @@
 // Define type for video objects
 export interface VideoItem {
-  category: string;
-  category: string;
   id: string;
   title: string;
   description: string;
@@ -38,6 +36,15 @@ export const videos: VideoItem[] = [
   {
     id: 'MvCiYuE7OiE',
     title: 'Magic FM Aba Radio Interview (clip)',
+    description: 'ClaudyGod Music Tour - Nigeria',
+    date: 'July 12, 2025',
+    duration: '32:15',
+    channel: 'Magic FM',
+  },
+  {
+    id: 'knstGZFNOOY',
+    title:
+      'Exciting & Insightful Radio Interview with Buzz FM 89.7 Aba, Nigeria',
     description: 'ClaudyGod Music Tour - Nigeria',
     date: 'July 12, 2025',
     duration: '32:15',

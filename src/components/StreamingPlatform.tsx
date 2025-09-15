@@ -7,11 +7,13 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 interface StreamingPlatformsProps {
   platforms: MusicPlatform[];
   onLinkClick: (url: string, e: React.MouseEvent) => void;
+  customStyle?: string; // ✅ Added optional prop
 }
 
 export const StreamingPlatforms = ({
   platforms,
   onLinkClick,
+  customStyle = '', // default value
 }: StreamingPlatformsProps) => {
   return (
     <section className="py-12 bg-gray-50">
@@ -25,7 +27,8 @@ export const StreamingPlatforms = ({
           </p>
         </div>
 
-        <div className="flex flex-wrap raleway-medium justify-center gap-4">
+        {/* Flex container with optional customStyle */}
+        <div className={`flex flex-wrap raleway-medium gap-4 ${customStyle}`}>
           {platforms.map(platform => (
             <SecuredLink
               key={platform.name}

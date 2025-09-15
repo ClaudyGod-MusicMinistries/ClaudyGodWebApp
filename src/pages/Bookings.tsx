@@ -27,6 +27,7 @@ import { LocationSection } from '../components/Bookings/LocationInfo';
 import { TermsSection } from '../components/Bookings/TermsSubmit';
 import { DownloadSection } from '../components/util/Download';
 import { SEO } from '../components/util/SEO';
+import { CountryCode } from '@/components/types/booking';
 // import { color } from 'framer-motion';
 
 export const Bookings: React.FC = () => {
@@ -65,8 +66,10 @@ export const Bookings: React.FC = () => {
   const state = watch('address.state');
 
   useEffect(() => {
-    if (country && COUNTRY_STATE_CITY_DATA[country]) {
-      const keys = Object.keys(COUNTRY_STATE_CITY_DATA[country].states);
+    if (country && COUNTRY_STATE_CITY_DATA[country as CountryCode]) {
+      const keys = Object.keys(
+        COUNTRY_STATE_CITY_DATA[country as CountryCode].states
+      );
       setStates(keys);
       setValue('address.state', '');
       setValue('address.city', '');
@@ -77,8 +80,9 @@ export const Bookings: React.FC = () => {
   }, [country, setValue]);
 
   useEffect(() => {
-    if (country && state && COUNTRY_STATE_CITY_DATA[country]) {
-      const list = COUNTRY_STATE_CITY_DATA[country].states[state] || [];
+    if (country && state && COUNTRY_STATE_CITY_DATA[country as CountryCode]) {
+      const list =
+        COUNTRY_STATE_CITY_DATA[country as CountryCode].states[state] || [];
       setCities(list);
       setValue('address.city', '');
     } else {
@@ -259,7 +263,7 @@ export const Bookings: React.FC = () => {
                   <LocationSection
                     states={states}
                     cities={cities}
-                    country={country}
+                    country={country as CountryCode} // <-- cast here
                     COUNTRY_STATE_CITY_DATA={COUNTRY_STATE_CITY_DATA}
                   />
                 </div>
@@ -325,7 +329,7 @@ export const Bookings: React.FC = () => {
                 >
                   <BoldText
                     className="text-xl"
-                    style={{ color: colorScheme.secondaryText }}
+                    style={{ color: colorScheme.secondary }} // ✅ use existing property
                   >
                     {step}
                   </BoldText>

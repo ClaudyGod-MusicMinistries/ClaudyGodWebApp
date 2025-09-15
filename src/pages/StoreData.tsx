@@ -115,7 +115,12 @@ export const StoreData = () => {
         <CategoryFilter
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
-          categories={['all', 'music', 'apparel', 'books']}
+          categories={[
+            { id: 'all', name: 'All' },
+            { id: 'music', name: 'Music' },
+            { id: 'apparel', name: 'Apparel' },
+            { id: 'books', name: 'Books' },
+          ]}
         />
 
         {/* Featured Products (Carousel) */}

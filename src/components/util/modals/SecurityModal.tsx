@@ -1,14 +1,14 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faShieldAlt,
   faTimes,
   faCopy,
-  faArrowRight, // Added for continue button
-  faBan, // Added for cancel button
+  faArrowRight,
+  faBan,
 } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '../../../contexts/ThemeContext';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { LightText, ExtraBoldText } from '../../ui/fonts/typography';
 import CustomButton from '../../../components/ui/fonts/buttons/CustomButton';
 
@@ -36,22 +36,33 @@ export const SecurityModal = ({
   const { colorScheme } = useTheme();
   const [copyAttempted, setCopyAttempted] = useState(false);
   const [showCopiedMessage, setShowCopiedMessage] = useState(false);
+  const divRef = useRef<HTMLDivElement>(null);
+
+  const showTemporaryMessage = () => {
+    setShowCopiedMessage(true);
+    setTimeout(() => setShowCopiedMessage(false), 2000);
+  };
+
+  useEffect(() => {
+    const div = divRef.current;
+    if (!div) return;
+
+    const handleSelectStart = (e: Event) => {
+      e.preventDefault();
+      setCopyAttempted(true);
+      showTemporaryMessage();
+    };
+
+    div.addEventListener('selectstart', handleSelectStart);
+    return () => {
+      div.removeEventListener('selectstart', handleSelectStart);
+    };
+  }, []);
 
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     setCopyAttempted(true);
     showTemporaryMessage();
-  };
-
-  const handleSelectStart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setCopyAttempted(true);
-    showTemporaryMessage();
-  };
-
-  const showTemporaryMessage = () => {
-    setShowCopiedMessage(true);
-    setTimeout(() => setShowCopiedMessage(false), 2000);
   };
 
   useEffect(() => {
@@ -109,6 +120,7 @@ export const SecurityModal = ({
             </LightText>
             <div className="relative">
               <div
+                ref={divRef}
                 className="p-3 rounded-lg break-words text-sm font-mono select-none"
                 style={{
                   backgroundColor: colorScheme.gray[100],
@@ -118,31 +130,33 @@ export const SecurityModal = ({
                   cursor: 'default',
                 }}
                 onContextMenu={handleContextMenu}
-                onSelectStart={handleSelectStart}
               >
                 {redirectUrl}
               </div>
-              {copyAttempted && (
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/80 backdrop-blur-sm"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                >
-                  <div className="text-center p-4">
-                    <FontAwesomeIcon
-                      icon={faCopy}
-                      className="text-2xl mb-2"
-                      style={{ color: colorScheme.accent }}
-                    />
-                    <LightText style={{ color: colorScheme.gray[100] }}>
-                      {showCopiedMessage
-                        ? 'URL copying is disabled for security'
-                        : 'Links are protected'}
-                    </LightText>
-                  </div>
-                </motion.div>
-              )}
+
+              <AnimatePresence>
+                {copyAttempted && (
+                  <motion.div
+                    className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/80 backdrop-blur-sm"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <div className="text-center p-4">
+                      <FontAwesomeIcon
+                        icon={faCopy}
+                        className="text-2xl mb-2"
+                        style={{ color: colorScheme.accent }}
+                      />
+                      <LightText style={{ color: colorScheme.gray[100] }}>
+                        {showCopiedMessage
+                          ? 'URL copying is disabled for security'
+                          : 'Links are protected'}
+                      </LightText>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
 
@@ -150,29 +164,22 @@ export const SecurityModal = ({
             <CustomButton
               variant="secondary"
               onClick={onClose}
-              className="flex-1 rounded-lg flex items-center justify-center gap-3 px-4 py-3" // Added padding and increased gap
+              className="flex-1 rounded-lg flex items-center justify-center gap-3 px-4 py-3"
             >
-              <FontAwesomeIcon
-                icon={faBan}
-                className="mr-2 text-sm" // Added margin-right and size control
-              />
+              <FontAwesomeIcon icon={faBan} className="mr-2 text-sm" />
               {cancelText}
             </CustomButton>
 
-            {/* Continue Button with improved spacing */}
             <CustomButton
               variant="primary"
               onClick={onContinue}
-              className="flex-1 rounded-lg flex items-center justify-center gap-3 px-4 py-3" // Added padding and increased gap
+              className="flex-1 rounded-lg flex items-center justify-center gap-3 px-4 py-3"
               style={{
                 background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary})`,
               }}
             >
               {continueText}
-              <FontAwesomeIcon
-                icon={faArrowRight}
-                className="ml-2 text-sm" // Added margin-left and size control
-              />
+              <FontAwesomeIcon icon={faArrowRight} className="ml-2 text-sm" />
             </CustomButton>
           </div>
         </div>

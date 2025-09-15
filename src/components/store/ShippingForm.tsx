@@ -4,6 +4,7 @@ import { User, Mail, Phone, MapPin, Globe } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 import { BoldText, RegularText, SemiBoldText } from '../ui/fonts/typography';
 import CustomButton from '../ui/fonts/buttons/CustomButton';
+import { COUNTRY_STATES } from '../data/shippingData';
 
 interface ShippingInfo {
   firstName: string;
@@ -23,100 +24,6 @@ interface ShippingFormProps {
   onSubmit: (e: React.FormEvent) => void;
   isLoading?: boolean;
 }
-
-// Country-state mapping
-const COUNTRY_STATES: Record<string, string[]> = {
-  Nigeria: [
-    'Lagos',
-    'Abuja',
-    'Kano',
-    'Ogun',
-    'Rivers',
-    'Delta',
-    'Enugu',
-    'Anambra',
-    'Kaduna',
-    'Oyo',
-    'Imo',
-    'Katsina',
-  ],
-  Ghana: [
-    'Greater Accra',
-    'Ashanti',
-    'Western',
-    'Central',
-    'Eastern',
-    'Volta',
-    'Northern',
-    'Upper East',
-    'Upper West',
-  ],
-  'United States': [
-    'Alabama',
-    'Alaska',
-    'Arizona',
-    'Arkansas',
-    'California',
-    'Colorado',
-    'Connecticut',
-    'Delaware',
-    'Florida',
-    'Georgia',
-    'Hawaii',
-    'Idaho',
-    'Illinois',
-    'Indiana',
-    'Iowa',
-    'Kansas',
-    'Kentucky',
-    'Louisiana',
-    'Maine',
-    'Maryland',
-    'Massachusetts',
-    'Michigan',
-    'Minnesota',
-    'Mississippi',
-    'Missouri',
-    'Montana',
-    'Nebraska',
-    'Nevada',
-    'New Hampshire',
-    'New Jersey',
-    'New Mexico',
-    'New York',
-    'North Carolina',
-    'North Dakota',
-    'Ohio',
-    'Oklahoma',
-    'Oregon',
-    'Pennsylvania',
-    'Rhode Island',
-    'South Carolina',
-    'South Dakota',
-    'Tennessee',
-    'Texas',
-    'Utah',
-    'Vermont',
-    'Virginia',
-    'Washington',
-    'West Virginia',
-    'Wisconsin',
-    'Wyoming',
-  ],
-  Canada: [
-    'Alberta',
-    'British Columbia',
-    'Manitoba',
-    'New Brunswick',
-    'Newfoundland and Labrador',
-    'Nova Scotia',
-    'Ontario',
-    'Prince Edward Island',
-    'Quebec',
-    'Saskatchewan',
-  ],
-  'United Kingdom': ['England', 'Scotland', 'Wales', 'Northern Ireland'],
-};
 
 export const ShippingForm: React.FC<ShippingFormProps> = ({
   shippingInfo,
@@ -220,7 +127,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                focusRing: colorScheme.focusRing,
+                boxShadow: `0 0 0 3px ${colorScheme.focusRing}`, // ✅ use boxShadow instead of focusRing
               }}
               placeholder="Enter first name"
               disabled={isLoading}
@@ -254,7 +161,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                focusRing: colorScheme.focusRing,
+                boxShadow: `0 0 0 3px ${colorScheme.focusRing}`, // ✅ replaced focusRing
               }}
               placeholder="Enter last name"
               disabled={isLoading}
@@ -292,7 +199,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                focusRing: colorScheme.focusRing,
+                boxShadow: `0 0 0 3px ${colorScheme.focusRing}`, // ✅ replaced focusRing
               }}
               placeholder="Enter email address"
               disabled={isLoading}
@@ -328,7 +235,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                focusRing: colorScheme.focusRing,
+                boxShadow: `0 0 0 3px ${colorScheme.focusRing}`, // ✅ replaced focusRing
               }}
               placeholder={
                 selectedCountry === 'Nigeria'
@@ -341,6 +248,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
               }
               disabled={isLoading}
             />
+
             {phoneError && (
               <SemiBoldText
                 as="label"
@@ -382,7 +290,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
               backgroundColor: colorScheme.gray[100],
               borderColor: colorScheme.gray[200],
               color: colorScheme.primary,
-              focusRing: colorScheme.focusRing,
+              boxShadow: `0 0 0 3px ${colorScheme.focusRing}`, // ✅ replaced focusRing
             }}
             placeholder="Enter street address"
             disabled={isLoading}
@@ -417,7 +325,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                focusRing: colorScheme.focusRing,
+                boxShadow: `0 0 0 3px ${colorScheme.focusRing}`,
               }}
               disabled={isLoading}
             >
@@ -457,7 +365,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
                   backgroundColor: colorScheme.gray[100],
                   borderColor: colorScheme.gray[200],
                   color: colorScheme.primary,
-                  focusRing: colorScheme.focusRing,
+                  boxShadow: `0 0 0 3px ${colorScheme.focusRing}`,
                 }}
                 disabled={isLoading}
               >
@@ -480,9 +388,9 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                focusRing: colorScheme.focusRing,
+                boxShadow: `0 0 0 3px ${colorScheme.focusRing}`,
               }}
-              ceholder="Enter state"
+              placeholder="Enter state"
               disabled={isLoading}
             />
           )}
@@ -507,7 +415,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
               backgroundColor: colorScheme.gray[100],
               borderColor: colorScheme.gray[200],
               color: colorScheme.primary,
-              focusRing: colorScheme.focusRing,
+              boxShadow: `0 0 0 3px ${colorScheme.focusRing}`,
             }}
             placeholder="e.g., bus stop, landmark"
             disabled={isLoading}

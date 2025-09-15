@@ -206,7 +206,6 @@ const DiagonalSection: React.FC<{
           </div>
         </motion.div>
       </div>
-
       <div
         className={`absolute inset-x-0 h-24 -z-10 ${
           reverse
@@ -214,11 +213,11 @@ const DiagonalSection: React.FC<{
             : 'bottom-0 skew-y-2 translate-y-[30%] bg-gradient-to-t from-purple-50 to-white'
         }`}
         style={
-          colorScheme === 'dark'
+          colorScheme.background && colorScheme.surface
             ? {
                 background: `linear-gradient(to bottom, ${colorScheme.background}, ${colorScheme.surface})`,
               }
-            : {}
+            : undefined
         }
       />
 

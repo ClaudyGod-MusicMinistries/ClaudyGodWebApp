@@ -42,6 +42,7 @@ export interface ColorScheme {
   textSecondary: string;
   textTertiary: string;
   textInverted: string;
+  subtleText: string; // 👈 added
 
   // Background colors
   background: string;
@@ -86,6 +87,9 @@ export interface ColorScheme {
   heading: string;
   white: string;
 
+  // Highlight color
+  highlight: string;
+
   // Material-like color scheme additions
   tertiary?: BackgroundColor;
   onTertiary?: Color;
@@ -116,7 +120,6 @@ const baseBorderRadius: BorderRadius = {
 };
 
 export const darkShades: ColorScheme = {
-  // Base colors
   primary: '#7C3AED',
   primaryLight: '#8B5CF6',
   primaryDark: '#5B21B6',
@@ -132,6 +135,7 @@ export const darkShades: ColorScheme = {
   textSecondary: '#E5E7EB',
   textTertiary: '#9CA3AF',
   textInverted: '#1F2937',
+  subtleText: '#9CA3AF', // 👈 added
 
   // Background colors
   background: '#1E1E2C',
@@ -142,7 +146,7 @@ export const darkShades: ColorScheme = {
   body: '#1E1E2C',
   footer: '#121220',
 
-  // Interactive elements
+  // Buttons
   button: '#7C3AED',
   buttonText: '#FFFFFF',
   buttonHover: '#8B5CF6',
@@ -153,7 +157,6 @@ export const darkShades: ColorScheme = {
   borderLight: '#4B5563',
   borderDark: '#1F2937',
 
-  // Gray scale
   gray: baseGrayScale,
 
   // Gradients
@@ -162,33 +165,26 @@ export const darkShades: ColorScheme = {
     'linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(91, 33, 182, 0.1) 100%)',
   secondaryGradient: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
 
-  // Focus states
   focusRing: '0 0 0 3px rgba(124, 58, 237, 0.5)',
 
-  // Shadows
-  shadowSm: '0 1px 3px rgba(0, 0, 0, 0.5)',
-  shadowMd:
-    '0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3)',
-  shadowLg:
-    '0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.25)',
+  shadowSm: '0 1px 3px rgba(0,0,0,0.5)',
+  shadowMd: '0 4px 6px -1px rgba(0,0,0,0.5),0 2px 4px -1px rgba(0,0,0,0.3)',
+  shadowLg: '0 10px 15px -3px rgba(0,0,0,0.5),0 4px 6px -2px rgba(0,0,0,0.25)',
 
-  // Border radius
   borderRadius: baseBorderRadius,
 
-  // Additional colors
   heading: '#FFFFFF',
   white: '#FFFFFF',
+  highlight: '#FFB703',
 
-  // Material-like colors
-  tertiary: '#2D2D42' as BackgroundColor,
-  onTertiary: '#FFFFFF' as Color,
-  onPrimary: '#FFFFFF' as Color,
-  onSecondary: '#FFFFFF' as Color,
+  tertiary: '#2D2D42',
+  onTertiary: '#FFFFFF',
+  onPrimary: '#FFFFFF',
+  onSecondary: '#FFFFFF',
   outline: '#4B5563',
 };
 
 export const lightShades: ColorScheme = {
-  // Base colors
   primary: '#6D28D9',
   primaryLight: '#8B5CF6',
   primaryDark: '#5B21B6',
@@ -199,13 +195,12 @@ export const lightShades: ColorScheme = {
   warning: '#F59E0B',
   info: '#3B82F6',
 
-  // Text colors
   text: '#1F2937',
   textSecondary: '#4B5563',
   textTertiary: '#6B7280',
   textInverted: '#FFFFFF',
+  subtleText: '#6B7280', // 👈 added
 
-  // Background colors
   background: '#F8FAFC',
   backgroundSecondary: '#EDF2F7',
   surface: '#FFFFFF',
@@ -214,48 +209,38 @@ export const lightShades: ColorScheme = {
   body: '#F8FAFC',
   footer: '#EDF2F7',
 
-  // Interactive elements
   button: '#6D28D9',
   buttonText: '#FFFFFF',
   buttonHover: '#7C3AED',
   buttonActive: '#5B21B6',
 
-  // Borders
   border: '#E5E7EB',
   borderLight: '#F3F4F6',
   borderDark: '#D1D5DB',
 
-  // Gray scale
   gray: baseGrayScale,
 
-  // Gradients
   primaryGradient: 'linear-gradient(135deg, #6D28D9 0%, #5B21B6 100%)',
   primaryGradientLight:
     'linear-gradient(135deg, rgba(109, 40, 217, 0.1) 0%, rgba(91, 33, 182, 0.1) 100%)',
   secondaryGradient: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
 
-  // Focus states
   focusRing: '0 0 0 3px rgba(109, 40, 217, 0.3)',
 
-  // Shadows
-  shadowSm: '0 1px 3px rgba(0, 0, 0, 0.1)',
-  shadowMd:
-    '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-  shadowLg:
-    '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+  shadowSm: '0 1px 3px rgba(0,0,0,0.1)',
+  shadowMd: '0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06)',
+  shadowLg: '0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05)',
 
-  // Border radius
   borderRadius: baseBorderRadius,
 
-  // Additional colors
   heading: '#1F2937',
   white: '#FFFFFF',
+  highlight: '#FFD166',
 
-  // Material-like colors
-  tertiary: '#F3F4F6' as BackgroundColor,
-  onTertiary: '#1F2937' as Color,
-  onPrimary: '#FFFFFF' as Color,
-  onSecondary: '#FFFFFF' as Color,
+  tertiary: '#F3F4F6',
+  onTertiary: '#1F2937',
+  onPrimary: '#FFFFFF',
+  onSecondary: '#FFFFFF',
   outline: '#D1D5DB',
 };
 

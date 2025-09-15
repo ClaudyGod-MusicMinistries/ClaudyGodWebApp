@@ -18,7 +18,7 @@ export const LazyImage = ({
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
-  const observerRef = useRef<IntersectionObserver>();
+  const observerRef = useRef<IntersectionObserver | null>(null); // ✅ fixed
 
   useEffect(() => {
     if (!imgRef.current) return;
@@ -75,7 +75,9 @@ export const LazyImage = ({
         ref={imgRef}
         src={isLoaded ? src : ''}
         alt={alt}
-        className={`transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0 absolute'}`}
+        className={`transition-opacity duration-300 ${
+          isLoaded ? 'opacity-100' : 'opacity-0 absolute'
+        }`}
         style={{ width, height }}
         loading="lazy"
         onError={() => setError(true)}

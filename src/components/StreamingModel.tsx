@@ -1,12 +1,7 @@
 import type { FC } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import {
-  faSpotify,
-  faYoutube,
-  faApple,
-  faDeezer,
-} from '@fortawesome/free-brands-svg-icons';
+import { streamingPlatform } from './data/StreamingPlatform';
 
 interface StreamingModalProps {
   isOpen: boolean;
@@ -14,18 +9,6 @@ interface StreamingModalProps {
 }
 
 const StreamingModal: FC<StreamingModalProps> = ({ isOpen, onClose }) => {
-  const streamingPlatforms = [
-    { name: 'Spotify', icon: faSpotify, color: 'text-green-500', link: '#' },
-    {
-      name: 'YouTube Music',
-      icon: faYoutube,
-      color: 'text-red-500',
-      link: '#',
-    },
-    { name: 'Apple Music', icon: faApple, color: 'text-black', link: '#' },
-    { name: 'Deezer', icon: faDeezer, color: 'text-pink-500', link: '#' },
-  ];
-
   if (!isOpen) return null;
 
   return (
@@ -53,7 +36,7 @@ const StreamingModal: FC<StreamingModalProps> = ({ isOpen, onClose }) => {
         </h3>
 
         <div className="space-y-3 lg:space-y-4">
-          {streamingPlatforms.map(platform => (
+          {streamingPlatform.map(platform => (
             <a
               key={platform.name}
               href={platform.link}

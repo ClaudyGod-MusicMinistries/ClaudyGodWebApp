@@ -349,67 +349,61 @@ export const Blog: React.FC = () => {
         </section>
       </div>
 
-      {/* Modern animations */}
-      <style jsx global>{`
-        @keyframes sandyMove {
-          0% {
-            background-position: 0% 0%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 100%;
-          }
-        }
+      <style>{`
+  @keyframes sandyMove {
+    0% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 100%;
+    }
+  }
 
-        @keyframes float1 {
-          0%,
-          100% {
-            transform: translate(0, 0) rotate(0deg);
-          }
-          50% {
-            transform: translate(20px, -30px) rotate(5deg);
-          }
-        }
+  @keyframes float1 {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+      transform: translate(20px, -30px) rotate(5deg);
+    }
+  }
 
-        @keyframes float2 {
-          0%,
-          100% {
-            transform: translate(0, 0) rotate(0deg);
-          }
-          50% {
-            transform: translate(-20px, 30px) rotate(-5deg);
-          }
-        }
+  @keyframes float2 {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+      transform: translate(-20px, 30px) rotate(-5deg);
+    }
+  }
 
-        .animate-float1 {
-          animation: float1 12s ease-in-out infinite;
-        }
+  .animate-float1 {
+    animation: float1 12s ease-in-out infinite;
+  }
 
-        .animate-float2 {
-          animation: float2 15s ease-in-out infinite;
-        }
+  .animate-float2 {
+    animation: float2 15s ease-in-out infinite;
+  }
 
-        /* Modern scrollbar */
-        ::-webkit-scrollbar {
-          width: 8px;
-          height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-          background: rgba(0, 0, 0, 0.05);
-        }
-
-        ::-webkit-scrollbar-thumb {
-          background: rgba(0, 0, 0, 0.2);
-          border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-          background: rgba(0, 0, 0, 0.3);
-        }
-      `}</style>
+  /* Modern scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+`}</style>
     </main>
   );
 };

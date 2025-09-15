@@ -1,10 +1,9 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, MotionProps } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../../../contexts/ThemeContext';
 import { ColorScheme } from '../color/colorScheme';
 
-// Add "outlined" as an alias for "outline"
 type Variant =
   | 'primary'
   | 'secondary'
@@ -12,15 +11,19 @@ type Variant =
   | 'outlined'
   | 'icon'
   | 'background'
-  | 'text';
-type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  | 'text'
+  | 'disabled'
+  | 'appStore'
+  | 'googlePlay'; // added
 
-interface CustomButtonProps {
-  children: React.ReactNode;
+type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'circle';
+
+interface CustomButtonProps extends MotionProps {
+  children?: React.ReactNode;
   onClick?: (e: React.MouseEvent) => void;
   variant?: Variant;
   size?: Size;
-  mdSize?: Size; // Added mdSize prop
+  mdSize?: Size;
   fullWidth?: boolean;
   className?: string;
   type?: 'button' | 'submit' | 'reset';
@@ -33,6 +36,7 @@ interface CustomButtonProps {
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
   style?: React.CSSProperties;
+  badge?: number | string;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -40,7 +44,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   onClick,
   variant = 'primary',
   size = 'md',
-  mdSize, // Added mdSize prop
+  mdSize,
   fullWidth = false,
   className = '',
   type = 'button',
@@ -53,6 +57,10 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   icon,
   iconPosition = 'left',
   style = {},
+  badge,
+  whileHover,
+  whileTap,
+  ...motionRest
 }) => {
   const { colorScheme } = useTheme();
 
@@ -62,73 +70,78 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     md: { padding: '8px 16px', fontSize: '16px' },
     lg: { padding: '12px 24px', fontSize: '18px' },
     xl: { padding: '18px 32px', fontSize: '20px' },
+    circle: {
+      width: '48px',
+      height: '48px',
+      borderRadius: '50%',
+      padding: 0,
+      fontSize: '16px',
+    },
   };
 
   const getVariantStyles = (
-    variant: Variant,
-    colorScheme: ColorScheme
+    v: Variant,
+    cs: ColorScheme
   ): React.CSSProperties => {
-    // Map "outlined" to "outline" for styling
-    const effectiveVariant = variant === 'outlined' ? 'outline' : variant;
-
+    const effectiveVariant = v === 'outlined' ? 'outline' : v;
     switch (effectiveVariant) {
       case 'primary':
         return {
-          backgroundColor: colorScheme.button,
-          color: colorScheme.buttonText,
+          backgroundColor: cs.button,
+          color: cs.buttonText,
           border: 'none',
         };
       case 'secondary':
         return {
-          backgroundColor: colorScheme.background,
-          color: colorScheme.text,
-          border: `1px solid ${colorScheme.border}`,
+          backgroundColor: cs.background,
+          color: cs.text,
+          border: `1px solid ${cs.border}`,
         };
       case 'outline':
         return {
           backgroundColor: 'transparent',
-          color: colorScheme.primary,
-          border: `1px solid ${colorScheme.primary}`,
+          color: cs.primary,
+          border: `1px solid ${cs.primary}`,
         };
       case 'icon':
         return {
           backgroundColor: 'transparent',
-          color: colorScheme.text,
+          color: cs.text,
           border: 'none',
           padding: '8px',
         };
       case 'background':
         return {
-          backgroundColor: colorScheme.background,
-          color: colorScheme.text,
+          backgroundColor: cs.background,
+          color: cs.text,
           border: 'none',
         };
       case 'text':
         return {
           backgroundColor: 'transparent',
-          color: colorScheme.text,
+          color: cs.text,
           border: 'none',
           padding: '0',
         };
+      case 'disabled':
+        return { backgroundColor: '#ddd', color: '#888', border: 'none' };
+      case 'appStore':
+        return { backgroundColor: '#000', color: '#fff', border: 'none' }; // custom Apple style
+      case 'googlePlay':
+        return { backgroundColor: '#34A853', color: '#fff', border: 'none' }; // custom Google style
       default:
         return {
-          backgroundColor: colorScheme.button,
-          color: colorScheme.buttonText,
+          backgroundColor: cs.button,
+          color: cs.buttonText,
           border: 'none',
         };
     }
   };
 
-  // Determine which size to use based on props
-  const getEffectiveSize = (): Size => {
-    // In a real implementation, you might want to use a media query hook
-    // to detect screen size and conditionally apply mdSize
-    // For now, we'll prioritize mdSize if provided
-    return mdSize || size;
-  };
+  const getEffectiveSize = (): Size => mdSize || size;
 
   const baseStyle: React.CSSProperties = {
-    borderRadius: variant === 'text' ? '0' : '8px',
+    borderRadius: size === 'circle' ? '50%' : variant === 'text' ? '0' : '8px',
     fontWeight: 600,
     fontFamily: 'WorkSans, sans-serif',
     cursor: disabled || isLoading ? 'not-allowed' : 'pointer',
@@ -137,39 +150,13 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     alignItems: 'center',
     justifyContent: 'center',
     gap: '10px',
-    width: fullWidth ? '100%' : 'auto',
+    width: fullWidth ? '100%' : undefined,
     transition: 'all 0.3s ease',
     textDecoration: 'none',
+    position: 'relative',
     ...getVariantStyles(variant, colorScheme),
-    ...sizeStyles[getEffectiveSize()], // Use the effective size
+    ...sizeStyles[getEffectiveSize()],
   };
-
-  const hoverStyle =
-    !disabled && !isLoading
-      ? {
-          backgroundColor:
-            variant === 'primary'
-              ? colorScheme.accent
-              : variant === 'secondary'
-                ? colorScheme.background
-                : variant === 'background'
-                  ? colorScheme.background + 'CC'
-                  : variant === 'icon' ||
-                      variant === 'text' ||
-                      variant === 'outlined'
-                    ? 'transparent'
-                    : colorScheme.primary + '10',
-          transform:
-            variant === 'icon' || variant === 'text' || variant === 'outlined'
-              ? 'none'
-              : 'translateY(-1px)',
-          boxShadow:
-            variant === 'icon' || variant === 'text' || variant === 'outlined'
-              ? 'none'
-              : '0 4px 6px rgba(0, 0, 0, 0.1)',
-          textDecoration: variant === 'text' ? 'underline' : 'none',
-        }
-      : {};
 
   const content = isLoading ? (
     <span
@@ -179,56 +166,56 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   ) : (
     <>
       {icon && iconPosition === 'left' && icon}
-      <span>{children}</span>
+      {children && <span>{children}</span>}
       {icon && iconPosition === 'right' && icon}
+      {badge !== undefined && (
+        <span
+          style={{
+            position: 'absolute',
+            top: '-4px',
+            right: '-4px',
+            background: 'red',
+            color: 'white',
+            fontSize: '0.7rem',
+            padding: '2px 6px',
+            borderRadius: '9999px',
+            minWidth: '18px',
+            textAlign: 'center',
+            lineHeight: 1,
+          }}
+        >
+          {badge}
+        </span>
+      )}
     </>
   );
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    if (!disabled && !isLoading && onClick) {
-      onClick(e);
-    }
+    if (!disabled && !isLoading && onClick) onClick(e);
   };
 
-  const buttonProps = {
+  const sharedProps = {
     onClick: handleClick,
     style: { ...baseStyle, ...style },
     className,
-    type: href || to ? undefined : type,
     'aria-disabled': disabled || isLoading,
-    whileHover: !disabled && !isLoading ? hoverStyle : undefined,
-    whileTap: !disabled && !isLoading ? { scale: 0.98 } : undefined,
-    disabled: disabled || isLoading,
+    whileHover: !disabled && !isLoading ? whileHover : undefined,
+    whileTap: !disabled && !isLoading ? whileTap : undefined,
     children: content,
+    ...motionRest,
   };
 
-  const linkProps = {
-    onClick: handleClick,
-    style: { ...baseStyle, ...style },
-    className,
-    target,
-    rel,
-    'aria-disabled': disabled || isLoading,
-    whileHover: !disabled && !isLoading ? hoverStyle : undefined,
-    whileTap: !disabled && !isLoading ? { scale: 0.98 } : undefined,
-    children: content,
-  };
-
-  if (href) {
-    return <motion.a {...linkProps} href={href} />;
-  }
-
+  if (href)
+    return <motion.a {...sharedProps} href={href} target={target} rel={rel} />;
   if (to) {
     return (
-      <motion.div {...linkProps}>
+      <motion.div {...sharedProps}>
         <Link
           to={to}
           className="flex items-center justify-center gap-2 w-full h-full"
           style={{ color: 'inherit', textDecoration: 'none' }}
           onClick={e => {
-            if (disabled || isLoading) {
-              e.preventDefault();
-            }
+            if (disabled || isLoading) e.preventDefault();
           }}
         >
           {content}
@@ -237,7 +224,13 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     );
   }
 
-  return <motion.button {...buttonProps} />;
+  return (
+    <motion.button
+      {...sharedProps}
+      type={type}
+      disabled={disabled || isLoading}
+    />
+  );
 };
 
 export default CustomButton;

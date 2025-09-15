@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export const TRUSTED_DOMAINS = [
   'spotify.com',
   'apple.com',

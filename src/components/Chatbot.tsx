@@ -12,13 +12,17 @@ interface Message {
   timestamp: number;
 }
 
-const Chatbot: React.FC = () => {
+/* 👇 add props here */
+interface ChatbotProps {
+  className?: string; // allow optional className or any other props you want
+}
+
+const Chatbot: React.FC<ChatbotProps> = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-responses for the chatbot
   const autoResponses = [
     'Thanks for your message! How can I help you today?',
     "That's interesting! Would you like to know more about our blog topics?",
@@ -48,7 +52,6 @@ const Chatbot: React.FC = () => {
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (input.trim() === '') return;
 
     const userMessage: Message = {
@@ -56,7 +59,6 @@ const Chatbot: React.FC = () => {
       text: input,
       timestamp: Date.now(),
     };
-
     setMessages(prev => [...prev, userMessage]);
     setInput('');
 
@@ -75,7 +77,9 @@ const Chatbot: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <div
+      className={`fixed bottom-6 right-6 z-50 flex flex-col items-end ${className || ''}`}
+    >
       {isOpen && (
         <div className="mb-4 w-80 bg-white rounded-lg shadow-xl animate-fade-in overflow-hidden">
           <div className="bg-purple-600 text-white p-3 flex justify-between items-center">

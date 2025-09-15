@@ -29,9 +29,10 @@ interface ArticleDetailProps {
     date: string;
     image: string;
   };
+  onClose: () => void; // 👈 added
 }
 
-const ArticleDetail: React.FC<ArticleDetailProps> = ({ post }) => {
+const ArticleDetail: React.FC<ArticleDetailProps> = ({ post, onClose }) => {
   const dispatch = useDispatch();
   const { colorScheme } = useTheme();
 
@@ -90,7 +91,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ post }) => {
       <div className="absolute top-4 right-4 z-60">
         <CustomButton
           variant="icon"
-          onClick={() => dispatch(closeArticle())}
+          onClick={onClose} // 👈 use the prop here
           aria-label="Close article"
           className="p-2 rounded-full"
           style={{ backgroundColor: colorScheme.background + '40' }}
@@ -108,7 +109,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ post }) => {
         <div className="mb-8">
           <CustomButton
             variant="primary"
-            onClick={() => dispatch(closeArticle())}
+            onClick={onClose} // 👈 use the prop here too
             className="inline-flex items-center"
           >
             <FontAwesomeIcon

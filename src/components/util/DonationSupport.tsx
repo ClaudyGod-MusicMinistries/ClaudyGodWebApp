@@ -15,6 +15,7 @@ type DonationCTAProps = {
   goFundMeUrl: string;
   donateUrl: string;
   isExternalDonateUrl?: boolean;
+  className?: string; // keep this
 };
 
 export const DonationCallToAction: React.FC<DonationCTAProps> = ({
@@ -24,12 +25,13 @@ export const DonationCallToAction: React.FC<DonationCTAProps> = ({
   goFundMeUrl,
   donateUrl,
   isExternalDonateUrl = false,
+  className,
 }) => {
   const { colorScheme } = useTheme();
 
   return (
     <div
-      className="relative overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl my-6 sm:my-8 md:my-12 lg:my-16 mx-3 xs:mx-4 sm:mx-5 md:mx-6 lg:mx-auto lg:max-w-6xl"
+      className={`relative overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl my-6 sm:my-8 md:my-12 lg:my-16 mx-3 xs:mx-4 sm:mx-5 md:mx-6 lg:mx-auto lg:max-w-6xl ${className || ''}`}
       style={{
         background: `linear-gradient(135deg, ${colorScheme.background} 0%, ${colorScheme.background} 100%)`,
       }}

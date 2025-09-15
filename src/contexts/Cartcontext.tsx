@@ -26,7 +26,7 @@ interface CartStore {
 // Create the store with persistence (only persisting items)
 export const useCartStore = create<CartStore>()(
   persist(
-    (set, get) => ({
+    set => ({
       items: [],
       isOpen: false,
 

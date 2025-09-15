@@ -43,7 +43,7 @@ export const ProductCarousel = ({
               <RegularText
                 as="h3"
                 fontSize="0.75rem"
-                fontWeight="bold"
+                weight="bold"
                 className="mb-1 text-purple-900"
               >
                 {product.name}
@@ -58,7 +58,7 @@ export const ProductCarousel = ({
               </RegularText>
 
               <div className="flex justify-between items-center">
-                <RegularText fontSize="0.875rem" fontWeight="medium">
+                <RegularText fontSize="0.875rem" weight="medium">
                   ${product.price.toFixed(2)}
                 </RegularText>
 
@@ -80,13 +80,13 @@ export const ProductCarousel = ({
       <div className="flex justify-between mt-4">
         <IconButton
           onClick={prevSlide}
-          icon={<FontAwesomeIcon icon={faChevronLeft} size="lg" />}
+          icon={faChevronLeft}
           variant="ghost"
           color="purple"
         />
         <IconButton
           onClick={nextSlide}
-          icon={<FontAwesomeIcon icon={faChevronRight} size="lg" />}
+          icon={faChevronRight}
           variant="ghost"
           color="purple"
         />

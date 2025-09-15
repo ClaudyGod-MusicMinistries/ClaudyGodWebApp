@@ -1,8 +1,9 @@
 // src/components/ui/buttons/IconButton.tsx
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { ColorScheme, GrayScale } from '../fonts/colors';
-import { useTheme } from '../../contexts/ThemeContext';
+import { ColorScheme } from '../color/colorScheme';
+import { useTheme } from '../../../../contexts/ThemeContext';
 
 type ButtonVariant = 'solid' | 'outline' | 'ghost';
 type ButtonColor =
@@ -14,7 +15,8 @@ type ButtonColor =
   | 'warning'
   | 'info'
   | 'gray'
-  | 'white';
+  | 'white'
+  | 'purple';
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
 interface IconButtonProps {
@@ -67,7 +69,7 @@ export const IconButton = ({
       };
     }
 
-    const colorKey = color === 'accent' ? 'warning' : color; // Map accent to warning for your scheme
+    const colorKey = color === 'accent' ? 'warning' : color;
     const colorValue = colorScheme[colorKey as keyof ColorScheme];
 
     return {
@@ -88,11 +90,11 @@ export const IconButton = ({
       aria-label={ariaLabel}
       disabled={disabled}
       style={{
-        focusRing: colorScheme.focusRing,
+        boxShadow: colorScheme.focusRing, // ✅ use boxShadow instead of focusRing
       }}
     >
       <FontAwesomeIcon
-        icon={icon}
+        icon={icon} // ✅ IconDefinition
         className={
           size === 'xs' ? 'text-xs' : size === 'sm' ? 'text-sm' : 'text-base'
         }

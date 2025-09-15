@@ -30,7 +30,7 @@ export const ProductGrid = ({
           <RegularText
             as="h3"
             fontSize="1.125rem"
-            fontWeight="bold"
+            weight="bold" // <-- Use 'weight' instead of 'fontWeight'
             className="mb-2 text-purple-900"
           >
             {product.name}
@@ -45,7 +45,7 @@ export const ProductGrid = ({
           </RegularText>
 
           <div className="flex justify-between items-center">
-            <RegularText fontSize="0.75rem" fontWeight="medium">
+            <RegularText fontSize="0.75rem" weight="bold">
               ${product.price.toFixed(2)}
             </RegularText>
 
