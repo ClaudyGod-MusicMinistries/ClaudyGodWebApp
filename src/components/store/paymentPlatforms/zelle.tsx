@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 interface ZellePaymentProps {
   amount: number;
   orderId: string;
+  onNext: () => void;
 }
 
 export const ZellePayment: React.FC<ZellePaymentProps> = ({

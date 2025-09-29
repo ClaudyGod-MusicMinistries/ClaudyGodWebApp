@@ -1,14 +1,23 @@
 // src/data/storeData.ts
 import { Product } from '../types/storeTypes';
 import { Shop1, Shop2, Shop3, Shop4, music8, music6 } from '../../assets';
+import {
+  CreditCard,
+  Smartphone,
+  Building,
+  Globe,
+  Landmark,
+} from 'lucide-react';
+import { useTheme } from '../../contexts/ThemeContext';
 
-// Define Category type
+// -----------------
+// Category type & data
+// -----------------
 export interface Category {
   id: string;
   name: string;
 }
 
-// Updated to array of objects with id and name
 export const categories: Category[] = [
   { id: 'all', name: 'All' },
   { id: 'clothing', name: 'Clothing' },
@@ -16,6 +25,9 @@ export const categories: Category[] = [
   { id: 'music', name: 'Music' },
 ];
 
+// -----------------
+// Products data
+// -----------------
 export const products: Product[] = [
   {
     id: '1',
@@ -66,3 +78,64 @@ export const products: Product[] = [
     description: 'Full album digital download.',
   },
 ];
+
+// -----------------
+// Payment options
+// -----------------
+
+// Define a type for each payment option (optional but gives IntelliSense)
+// storeData.ts
+export interface PaymentOption {
+  id: string;
+  name: string;
+  description: string;
+  icon: React.ComponentType<{
+    size?: number;
+    color?: string;
+    className?: string; // ✅ added
+  }>;
+  color: string;
+}
+
+// ✅ Hook to get payment options with theme colors
+export const usePaymentOptions = (): PaymentOption[] => {
+  const { colorScheme } = useTheme();
+
+  return [
+    {
+      id: 'stripe',
+      name: 'Credit/Debit Card',
+      description: 'Visa, Mastercard, American Express',
+      icon: CreditCard,
+      color: colorScheme.info,
+    },
+    {
+      id: 'paypal',
+      name: 'PayPal',
+      description: 'Pay with your PayPal account',
+      icon: Smartphone,
+      color: colorScheme.primary,
+    },
+    {
+      id: 'zelle',
+      name: 'Zelle',
+      description: 'Send money with Zelle',
+      icon: Building,
+      color: colorScheme.primary,
+    },
+    {
+      id: 'paystack',
+      name: 'Paystack',
+      description: 'Nigerian payment gateway',
+      icon: Globe,
+      color: colorScheme.success,
+    },
+    {
+      id: 'nigerian-bank',
+      name: 'Nigerian Bank Transfer',
+      description: 'Direct bank transfer to Nigerian account',
+      icon: Landmark,
+      color: colorScheme.secondary,
+    },
+  ];
+};

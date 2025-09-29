@@ -3,6 +3,7 @@ import { CreditCard, Lock } from 'lucide-react';
 
 interface StripePaymentProps {
   onNext: () => void;
+  amount: number;
 }
 
 export const StripePayment: React.FC<StripePaymentProps> = ({ onNext }) => {

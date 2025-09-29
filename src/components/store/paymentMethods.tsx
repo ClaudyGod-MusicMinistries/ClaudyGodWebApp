@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
-import { color, motion } from 'framer-motion';
-import {
-  CreditCard,
-  Smartphone,
-  Building,
-  ArrowLeft,
-  Globe,
-  Landmark,
-} from 'lucide-react';
+import { motion } from 'framer-motion';
+
 import { StripePayment } from './paymentPlatforms/stripe';
 import { PayPalPayment } from './paymentPlatforms/paypal';
 import { ZellePayment } from './paymentPlatforms/zelle';
 import { PaystackPayment } from './paymentPlatforms/paystack';
 import { NigerianBankTransfer } from './paymentPlatforms/NigerianAcct';
+import { usePaymentOptions } from '../data/storeData';
 import { useTheme } from '../../contexts/ThemeContext';
 
 import { BoldText, SemiBoldText, RegularText } from '../ui/fonts/typography';
@@ -38,43 +32,8 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const { colorScheme } = useTheme();
 
-  const paymentOptions = [
-    {
-      id: 'stripe',
-      name: 'Credit/Debit Card',
-      description: 'Visa, Mastercard, American Express',
-      icon: CreditCard,
-      color: colorScheme.info,
-    },
-    {
-      id: 'paypal',
-      name: 'PayPal',
-      description: 'Pay with your PayPal account',
-      icon: Smartphone,
-      color: colorScheme.primary,
-    },
-    {
-      id: 'zelle',
-      name: 'Zelle',
-      description: 'Send money with Zelle',
-      icon: Building,
-      color: colorScheme.primary,
-    },
-    {
-      id: 'paystack',
-      name: 'Paystack',
-      description: 'Nigerian payment gateway',
-      icon: Globe,
-      color: colorScheme.success,
-    },
-    {
-      id: 'nigerian-bank',
-      name: 'Nigerian Bank Transfer',
-      description: 'Direct bank transfer to Nigerian account',
-      icon: Landmark,
-      color: colorScheme.secondary,
-    },
-  ];
+  // ✅ call your hook to get the array
+  const paymentOptions = usePaymentOptions();
 
   const handleMethodSelect = (methodId: string) => {
     setPaymentMethod(methodId);
@@ -88,7 +47,9 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
       case 'paypal':
         return <PayPalPayment amount={orderTotal} onNext={onNext} />;
       case 'zelle':
-        return <ZellePayment amount={orderTotal} onNext={onNext} />;
+        return (
+          <ZellePayment amount={orderTotal} onNext={onNext} orderId={''} />
+        );
       case 'paystack':
         return <PaystackPayment amount={orderTotal} onNext={onNext} />;
       case 'nigerian-bank':
