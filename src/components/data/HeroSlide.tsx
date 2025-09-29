@@ -12,6 +12,10 @@ import { DesktopBg, Back3, Resize4, Main } from '../../assets';
 import { Transition, Variants } from 'framer-motion';
 
 export interface HeroSlide {
+  videoUrl: any;
+  videoUrl: string | undefined;
+  videoUrl: any;
+  videoUrl: any;
   id: number;
   imageUrl?: string;
   imageUrlMobile?: string;
