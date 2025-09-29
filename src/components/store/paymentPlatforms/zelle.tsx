@@ -7,12 +7,14 @@ import { useNavigate } from 'react-router-dom';
 interface ZellePaymentProps {
   amount: number;
   orderId: string;
-  onNext: () => void;
+  /** called after a successful confirmation, with the transaction id */
+  onSubmit?: (txId?: string) => void; // now using onSubmit
 }
 
 export const ZellePayment: React.FC<ZellePaymentProps> = ({
   amount,
   orderId,
+  onSubmit, // destructure onSubmit
 }) => {
   const [copied, setCopied] = useState(false);
   const [confirmationId, setConfirmationId] = useState('');
@@ -23,7 +25,6 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
 
   const zelleEmail = 'info@claudyGod.com';
 
-  /* ---------- helpers ---------- */
   const copyToClipboard = () => {
     navigator.clipboard.writeText(zelleEmail);
     setCopied(true);
@@ -53,7 +54,6 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
     return true;
   };
 
-  /* ---------- submit ---------- */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -62,14 +62,15 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
 
     setIsSubmitting(true);
 
-    // Simulate a short delay while you might call a backend
     setTimeout(() => {
-      // Temporary: log everything instead of hitting an API
       console.log('Zelle payment confirmed', {
         orderId,
         amount,
         confirmationId,
       });
+
+      // notify parent
+      onSubmit?.(confirmationId);
 
       navigate('/order-success', {
         state: {
@@ -82,7 +83,6 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
     }, 800);
   };
 
-  /* ---------- UI ---------- */
   return (
     <motion.form
       onSubmit={handleSubmit}
@@ -91,7 +91,6 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      {/* Banner */}
       <div className="bg-blue-50 p-4 rounded-lg flex items-start border border-blue-100">
         <Building className="h-5 w-5 text-blue-600 mr-2 mt-0.5 flex-shrink-0" />
         <div>
@@ -104,9 +103,7 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
         </div>
       </div>
 
-      {/* Card */}
       <div className="bg-white border p-6 rounded-lg shadow-sm">
-        {/* Accordion header */}
         <button
           type="button"
           onClick={() => setInstructionsExpanded(!instructionsExpanded)}
@@ -121,7 +118,6 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
           </span>
         </button>
 
-        {/* Steps */}
         {instructionsExpanded && (
           <ol className="space-y-3 text-sm list-decimal list-inside pl-2 mb-6">
             <li>Open your banking app or website</li>
@@ -155,20 +151,12 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
               Enter the amount:{' '}
               <span className="font-bold">${amount.toFixed(2)}</span>
             </li>
-            {/* <li>
-              Add your order number{' '}
-              <span className="font-mono bg-gray-100 px-1 rounded">
-                #{orderId}
-              </span>{' '}
-              in the memo/notes
-            </li> */}
             <li>
               Complete the transaction and paste the confirmation ID below
             </li>
           </ol>
         )}
 
-        {/* Transaction ID input */}
         <div className="mt-4">
           <div className="flex justify-between items-center mb-1">
             <label className="text-sm font-medium">Zelle Transaction ID</label>
@@ -228,7 +216,6 @@ export const ZellePayment: React.FC<ZellePaymentProps> = ({
           )}
         </div>
 
-        {/* Submit button */}
         <motion.button
           type="submit"
           disabled={isSubmitting || !confirmationId}

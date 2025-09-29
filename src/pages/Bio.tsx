@@ -63,97 +63,99 @@ export const Biography: React.FC = () => {
       />
 
       <main>
-        {/* Enhanced Hero Section */}
-        <header>
-          <Herosection
-            title="ClaudyGod Music & Ministries"
-            backgroundImage={About1}
-            className="relative"
-          >
-            <div className="absolute inset-0 z-10" />
-            <motion.div
-              className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
-            >
-              <motion.div
-                initial={{ y: -20 }}
-                animate={{ y: 0 }}
-                transition={{ delay: 0.2, duration: 0.7 }}
-              >
-                <ExtraBoldText
-                  style={{
-                    color: colorScheme.text,
-                    fontSize: '3rem',
-                    lineHeight: '1.2',
-                  }}
-                  useThemeColor={false}
-                >
-                  ClaudyGod
-                </ExtraBoldText>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.8 }}
-                style={{
-                  width: '6rem',
-                  height: '0.25rem',
-                  background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.primary})`,
-                  marginBottom: '1.5rem',
-                }}
-              />
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-              >
-                <SemiBoldText
-                  style={{
-                    color: colorScheme.text,
-                    fontSize: '1.5rem',
-                    maxWidth: '48rem',
-                  }}
-                  useThemeColor={false}
-                >
-                  American Contemporary Christian Music & Afro-Gospel Artist
-                </SemiBoldText>
-              </motion.div>
-            </motion.div>
-          </Herosection>
-        </header>
-
-        {/* Main Content */}
-        <article
+        {/* Fixed Hero Section with better image positioning */}
+        <Herosection
+          title=""
+          subtitle=""
+          backgroundImage={About1}
+          overlayColor="rgba(0,0,0,0.3)" // Lighter overlay
+          backgroundPosition="center 30%" // Adjust this to show the face
+          className="min-h-[90vh] md:min-h-[95vh]"
           style={{
-            maxWidth: '80rem',
-            margin: '0 auto',
-            padding: '3rem 1rem',
+            backgroundAttachment: 'fixed', // Optional: creates parallax effect
           }}
         >
+          <motion.div
+            className="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full h-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.div
+              initial={{ y: -20 }}
+              animate={{ y: 0 }}
+              transition={{ delay: 0.2, duration: 0.7 }}
+              className="mb-6"
+            >
+              <ExtraBoldText
+                style={{
+                  color: '#ffffff',
+                  fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                  lineHeight: '1.1',
+                  textShadow: '0 4px 8px rgba(0,0,0,0.6)',
+                  marginBottom: '1rem',
+                }}
+                useThemeColor={false}
+              >
+                ClaudyGod
+              </ExtraBoldText>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-8 mx-auto"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="max-w-3xl"
+            >
+              <SemiBoldText
+                style={{
+                  color: '#ffffff',
+                  fontSize: 'clamp(1.25rem, 3vw, 2rem)',
+                  textShadow: '0 2px 4px rgba(0,0,0,0.6)',
+                  lineHeight: '1.4',
+                }}
+                useThemeColor={false}
+              >
+                American Contemporary Christian Music & Afro-Gospel Artist
+              </SemiBoldText>
+            </motion.div>
+
+            {/* Optional: Add a scroll indicator */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2, duration: 0.8 }}
+              className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+            >
+              <div className="animate-bounce w-6 h-10 border-2 border-white rounded-full flex justify-center">
+                <div className="w-1 h-3 bg-white rounded-full mt-2"></div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </Herosection>
+
+        {/* Rest of your content remains the same */}
+        <article className="max-w-7xl mx-auto px-4 py-12 md:py-16">
           {/* Section Header */}
-          <header style={{ marginBottom: '4rem' }}>
+          <header className="mb-12 md:mb-16 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                padding: '0.5rem 1.25rem',
-                borderRadius: '9999px',
-              }}
+              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-opacity-10 mb-6"
+              style={{ backgroundColor: `${colorScheme.primary}20` }}
             >
               <FontAwesomeIcon
                 icon={faMicrophoneAlt}
-                style={{
-                  color: colorScheme.primary,
-                }}
+                style={{ color: colorScheme.primary }}
               />
               <LightText
                 style={{
@@ -176,7 +178,7 @@ export const Biography: React.FC = () => {
               <ExtraBoldText
                 style={{
                   color: colorScheme.primary,
-                  fontSize: '3rem',
+                  fontSize: 'clamp(2rem, 4vw, 3rem)',
                   lineHeight: '1.2',
                   marginBottom: '1rem',
                 }}
@@ -191,13 +193,13 @@ export const Biography: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
+              className="max-w-4xl mx-auto"
             >
               <SemiBoldText
                 style={{
                   color: colorScheme.accent,
-                  fontSize: '1.5rem',
+                  fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
                   lineHeight: '1.6',
-                  maxWidth: '64rem',
                 }}
                 useThemeColor={false}
               >
@@ -211,65 +213,48 @@ export const Biography: React.FC = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              style={{
-                width: '6rem',
-                height: '0.25rem',
-                borderRadius: '9999px',
-              }}
+              className="w-24 h-1 mx-auto mt-6 rounded-full"
+              style={{ backgroundColor: colorScheme.accent }}
             />
           </header>
 
           {/* Biography Sections */}
-          <section style={{ display: 'grid', gap: '5rem' }}>
+          <section className="space-y-12 md:space-y-20">
             <BioSection
               imageSrc={About2}
               altText="ClaudyGod portrait"
               texts={firstSectionTexts}
             />
 
-            {/* Enhanced Responsive Quote Section */}
+            {/* Quote Section */}
             <motion.blockquote
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
+              className="relative my-12 md:my-16 p-6 md:p-8 rounded-2xl"
               style={{
-                position: 'relative',
-                margin: '4rem 0',
-                padding: '2rem',
-                borderRadius: colorScheme.borderRadius.large,
-                background: `linear-gradient(to bottom right, 
-                ${colorScheme.primary}, 
-                ${colorScheme.gray[100]})`,
+                background: `linear-gradient(135deg, ${colorScheme.primary}15, ${colorScheme.gray[100]})`,
                 border: `1px solid ${colorScheme.gray[200]}`,
               }}
             >
               <div
-                style={{
-                  position: 'absolute',
-                  top: '1rem',
-                  right: '1rem',
-                  color: colorScheme.gray[300],
-                  fontSize: '3rem',
-                }}
+                className="absolute top-4 right-4 text-3xl md:text-4xl opacity-20"
+                style={{ color: colorScheme.primary }}
               >
                 <FontAwesomeIcon icon={faQuoteRight} />
               </div>
-              <div style={{ maxWidth: '48rem', margin: '0 auto' }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+              <div className="max-w-4xl mx-auto">
+                <div className="flex items-start">
                   <FontAwesomeIcon
                     icon={faHandsPraying}
-                    style={{
-                      color: colorScheme.accent,
-                      marginTop: '0.25rem',
-                      marginRight: '0.75rem',
-                      fontSize: '1.25rem',
-                    }}
+                    className="mt-1 mr-4 text-lg"
+                    style={{ color: colorScheme.accent }}
                   />
                   <LightText
                     style={{
                       color: colorScheme.text,
-                      fontSize: '1.25rem',
+                      fontSize: 'clamp(1.125rem, 2vw, 1.375rem)',
                       lineHeight: '1.6',
                       fontStyle: 'italic',
                     }}
@@ -304,38 +289,17 @@ export const Biography: React.FC = () => {
         </article>
 
         {/* Divider */}
-        <div
-          style={{
-            position: 'relative',
-            margin: '2.5rem 0',
-          }}
-        >
-          <div
-            style={{
-              position: 'absolute',
-              inset: '0',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
+        <div className="relative my-10">
+          <div className="absolute inset-0 flex items-center">
             <div
-              style={{
-                width: '100%',
-                borderTop: `1px solid ${colorScheme.gray[200]}`,
-              }}
-            ></div>
+              className="w-full border-t"
+              style={{ borderColor: colorScheme.gray[200] }}
+            />
           </div>
-          <div
-            style={{
-              position: 'relative',
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
+          <div className="relative flex justify-center">
             <span
-              style={{
-                padding: '0 1rem',
-              }}
+              className="px-4"
+              style={{ backgroundColor: colorScheme.background }}
             >
               <FontAwesomeIcon
                 icon={faMicrophoneAlt}
@@ -345,7 +309,8 @@ export const Biography: React.FC = () => {
           </div>
         </div>
 
-        <section>
+        {/* Donation Section */}
+        <section className="my-12 md:my-16">
           <DonationCallToAction
             title="Partner with Our Ministry"
             subtitle="Your Support Makes a Difference"
@@ -357,18 +322,12 @@ export const Biography: React.FC = () => {
 
         {/* Newsletter Section */}
         <section
+          className="py-12 md:py-16"
           style={{
-            background: `linear-gradient(to bottom right, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
-            padding: '4rem 0',
+            background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
           }}
         >
-          <div
-            style={{
-              maxWidth: '48rem',
-              margin: '0 auto',
-              padding: '0 1rem',
-            }}
-          >
+          <div className="max-w-4xl mx-auto px-4">
             <NewsletterForm />
           </div>
         </section>

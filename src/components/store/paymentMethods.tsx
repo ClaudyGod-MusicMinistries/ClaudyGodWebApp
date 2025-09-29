@@ -17,7 +17,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 interface PaymentMethodsProps {
   paymentMethod: string;
   setPaymentMethod: (method: string) => void;
-  onNext: () => void;
+  onNext: (txId?: string) => void;
   onBack: () => void;
   orderTotal: number;
 }
@@ -32,7 +32,6 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const { colorScheme } = useTheme();
 
-  // ✅ call your hook to get the array
   const paymentOptions = usePaymentOptions();
 
   const handleMethodSelect = (methodId: string) => {
@@ -48,12 +47,12 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
         return <PayPalPayment amount={orderTotal} onNext={onNext} />;
       case 'zelle':
         return (
-          <ZellePayment amount={orderTotal} onNext={onNext} orderId={''} />
+          <ZellePayment amount={orderTotal} orderId="" onSubmit={onNext} />
         );
       case 'paystack':
         return <PaystackPayment amount={orderTotal} onNext={onNext} />;
       case 'nigerian-bank':
-        return <NigerianBankTransfer amount={orderTotal} onNext={onNext} />;
+        return <NigerianBankTransfer amount={orderTotal} onSubmit={onNext} />;
       default:
         return null;
     }

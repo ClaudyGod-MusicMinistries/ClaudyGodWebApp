@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { User, Mail, Phone, MapPin, Globe } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
-import { BoldText, RegularText, SemiBoldText } from '../ui/fonts/typography';
+import { SemiBoldText } from '../ui/fonts/typography';
 import CustomButton from '../ui/fonts/buttons/CustomButton';
 import { COUNTRY_STATES } from '../data/shippingData';
 
@@ -18,11 +18,22 @@ interface ShippingInfo {
   nearestLocation: string;
 }
 
+// add a type for your cart items so TS stops complaining
+interface CartItem {
+  id: string | number;
+  name: string;
+  quantity: number;
+  price: number;
+  // add any other fields you really use here
+}
+
 interface ShippingFormProps {
   shippingInfo: ShippingInfo;
   setShippingInfo: (info: ShippingInfo) => void;
   onSubmit: (e: React.FormEvent) => void;
   isLoading?: boolean;
+  cartTotal: number;
+  cartItems: CartItem[];
 }
 
 export const ShippingForm: React.FC<ShippingFormProps> = ({
@@ -44,7 +55,6 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
   const handleChange = (field: keyof ShippingInfo, value: string) => {
     if (field === 'country') {
       setSelectedCountry(value);
-      // Reset state when country changes
       setShippingInfo({
         ...shippingInfo,
         [field]: value,
@@ -88,12 +98,10 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validatePhoneNumber(shippingInfo.phone, selectedCountry)) {
       setPhoneError(`Invalid phone number format for ${selectedCountry}`);
       return;
     }
-
     onSubmit(e);
   };
 
@@ -127,7 +135,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                boxShadow: `0 0 0 3px ${colorScheme.focusRing}`, // ✅ use boxShadow instead of focusRing
+                boxShadow: `0 0 0 3px ${colorScheme.focusRing}`,
               }}
               placeholder="Enter first name"
               disabled={isLoading}
@@ -161,7 +169,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                boxShadow: `0 0 0 3px ${colorScheme.focusRing}`, // ✅ replaced focusRing
+                boxShadow: `0 0 0 3px ${colorScheme.focusRing}`,
               }}
               placeholder="Enter last name"
               disabled={isLoading}
@@ -199,7 +207,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                boxShadow: `0 0 0 3px ${colorScheme.focusRing}`, // ✅ replaced focusRing
+                boxShadow: `0 0 0 3px ${colorScheme.focusRing}`,
               }}
               placeholder="Enter email address"
               disabled={isLoading}
@@ -235,7 +243,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
                 backgroundColor: colorScheme.gray[100],
                 borderColor: colorScheme.gray[200],
                 color: colorScheme.primary,
-                boxShadow: `0 0 0 3px ${colorScheme.focusRing}`, // ✅ replaced focusRing
+                boxShadow: `0 0 0 3px ${colorScheme.focusRing}`,
               }}
               placeholder={
                 selectedCountry === 'Nigeria'
@@ -290,7 +298,7 @@ export const ShippingForm: React.FC<ShippingFormProps> = ({
               backgroundColor: colorScheme.gray[100],
               borderColor: colorScheme.gray[200],
               color: colorScheme.primary,
-              boxShadow: `0 0 0 3px ${colorScheme.focusRing}`, // ✅ replaced focusRing
+              boxShadow: `0 0 0 3px ${colorScheme.focusRing}`,
             }}
             placeholder="Enter street address"
             disabled={isLoading}

@@ -256,7 +256,11 @@ export const CheckoutPage: React.FC = () => {
             )}
 
             {paymentInfo.method === 'zelle' && showZelleForm && (
-              <ZellePayment amount={total} onSubmit={finalizeOrder} />
+              <ZellePayment
+                amount={total}
+                onSubmit={finalizeOrder}
+                orderId={''}
+              />
             )}
 
             {paymentInfo.method === 'nigerian-bank' && !showBankForm && (

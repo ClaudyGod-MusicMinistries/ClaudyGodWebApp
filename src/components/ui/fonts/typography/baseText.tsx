@@ -27,7 +27,10 @@ type TextVariant =
 
 interface BaseTextProps {
   children: React.ReactNode;
+  /** Original prop */
   weight?: FontWeight;
+  /** Alias to allow fontWeight usage in JSX */
+  fontWeight?: FontWeight;
   color?: string;
   margin?: string;
   lineHeight?: string;
@@ -91,6 +94,7 @@ const variantMap: Record<string, { fontSize: FontSize; weight: FontWeight }> = {
 export const BaseText: React.FC<BaseTextProps> = ({
   children,
   weight,
+  fontWeight, // alias
   color,
   margin,
   lineHeight,
@@ -107,11 +111,11 @@ export const BaseText: React.FC<BaseTextProps> = ({
   const { colorScheme } = useTheme();
 
   const variantSettings = variant ? variantMap[variant] : null;
-  const finalWeight = weight || variantSettings?.weight || 'regular';
+  const finalWeight =
+    weight || fontWeight || variantSettings?.weight || 'regular';
   const finalFontSize = fontSize || variantSettings?.fontSize || 'md';
 
   const textColor = useThemeColor && !color ? colorScheme.text : color;
-
   const resolvedFontSize = fontSizeMap[finalFontSize] || finalFontSize;
 
   const styles: React.CSSProperties = {
@@ -132,7 +136,7 @@ export const BaseText: React.FC<BaseTextProps> = ({
   );
 };
 
-// Now all derived components are safe
+// Derived components
 export const ExtraLightText: React.FC<BaseTextProps> = props => (
   <BaseText {...props} weight="extralight" />
 );

@@ -30,7 +30,7 @@ const HeroSlide = ({
     >
       <SlideBackground slide={slide} />
 
-      <div className="container ml-4 md:ml-10 mt-6 md:mt-10 relative mx-auto flex h-full items-center px-4">
+      <div className="container mx-auto mt-24 md:mt-28 relative flex h-[calc(100%-6rem)] items-center px-4">
         <motion.div
           initial="hidden"
           animate="visible"

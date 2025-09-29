@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { heroSlides } from '../data/HeroSlide';
-
+import { Navbar } from '../navbar/Navbar'; // Import Navbar
 import { SlideContainer } from './SliderContainer';
 import { PaginationDots } from './Pagination';
-import { StreamingModal } from '../HomeHero/StreamingModal'; // Check if this is correct path
+import { StreamingModal } from '../HomeHero/StreamingModal';
 import { QuoteSlide } from './QuoteSlide';
 import { CtaSlide } from './CtaSlide';
 import { MusicSlide } from './MusicSlide';
@@ -46,6 +46,9 @@ export const Hero = () => {
 
   return (
     <section className="relative h-[100vh] md:h-[120vh] w-full overflow-hidden">
+      {/* Navbar inside Hero */}
+      <Navbar isInsideHero={true} />
+
       <StreamingModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
