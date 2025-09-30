@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// MusicSlide.tsx
 import { motion } from 'framer-motion';
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 import {

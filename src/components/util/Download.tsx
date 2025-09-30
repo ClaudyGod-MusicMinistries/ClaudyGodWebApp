@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { motion, Variants } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faApple, faGooglePlay } from '@fortawesome/free-brands-svg-icons';
+
 import { useEffect, useRef, useMemo } from 'react';
+import { google, apple } from '../../assets/';
 import {
   ExtraBoldText,
   LightText,
@@ -222,46 +223,39 @@ export const DownloadSection = () => {
               variants={containerVariants}
             >
               <motion.div className="flex-1" variants={itemVariants}>
-                <CustomButton
+                <a
                   href="https://www.claudygod.com/claudygod-tv-apple"
-                  icon={<FontAwesomeIcon icon={faApple} />}
-                  variant="appStore"
-                  size="sm"
-                  whileHover="hover"
-                  whileTap="tap"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full"
                 >
-                  <div className="text-left">
-                    <RegularText className="text-[10px] tracking-wide">
-                      Download on the
-                    </RegularText>
-                    <SemiBoldText className="text-base tracking-tight">
-                      App Store
-                    </SemiBoldText>
-                  </div>
-                </CustomButton>
+                  <motion.img
+                    src={apple}
+                    alt="Download on App Store"
+                    className="w-full h-auto cursor-pointer rounded-lg"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                  />
+                </a>
               </motion.div>
 
               <motion.div className="flex-1" variants={itemVariants}>
-                <CustomButton
+                <a
                   href="https://www.claudygod.com/claudygod-tv-andrioid"
-                  icon={<FontAwesomeIcon icon={faGooglePlay} />}
-                  variant="googlePlay"
-                  size="sm"
-                  whileHover="hover"
-                  whileTap="tap"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full"
                 >
-                  <div className="text-left">
-                    <RegularText
-                      style={{ color: colorScheme.textSecondary }}
-                      className="text-[10px] tracking-wide uppercase"
-                    >
-                      Get it on
-                    </RegularText>
-                    <SemiBoldText className="text-base tracking-tight">
-                      Google Play
-                    </SemiBoldText>
-                  </div>
-                </CustomButton>
+                  <motion.img
+                    src={google}
+                    alt="Get it on Google Play"
+                    className="w-full h-auto cursor-pointer rounded-lg"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                  />
+                </a>
               </motion.div>
             </motion.div>
 

@@ -1,14 +1,24 @@
+// SlideContainer.tsx
 import { motion } from 'framer-motion';
-import { HeroSlide, imageVariants, slideVariants } from '../data/HeroSlide';
+import {
+  slideVariants,
+  imageVariants,
+  HeroSlide as HeroSlideType,
+} from '../data/HeroSlide';
+import { NavigateFunction } from 'react-router-dom';
 import React, { RefObject } from 'react';
+import { QuoteSlide } from './QuoteSlide';
+import { CtaSlide } from './CtaSlide';
+import { MusicSlide } from './MusicSlide';
 
 interface SlideContainerProps {
-  slide: HeroSlide;
+  slide: HeroSlideType;
   direction: number;
   isMuted: boolean;
   toggleMute: () => void;
   videoRef: RefObject<HTMLVideoElement>;
-  children: React.ReactNode;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  navigate: NavigateFunction;
 }
 
 export const SlideContainer = ({
@@ -17,7 +27,8 @@ export const SlideContainer = ({
   isMuted,
   toggleMute,
   videoRef,
-  children,
+  setIsModalOpen,
+  navigate,
 }: SlideContainerProps) => (
   <motion.div
     custom={direction}
@@ -97,7 +108,7 @@ export const SlideContainer = ({
       </button>
     )}
 
-    <div className="container ml-4 md:ml-10 mt-6 md:mt-10 relative mx-auto flex h-full items-center px-4">
+    <div className="container mx-auto mt-24 md:mt-28 relative flex h-[calc(100%-6rem)] items-center px-4">
       <motion.div
         initial="hidden"
         animate="visible"
@@ -110,7 +121,11 @@ export const SlideContainer = ({
         }}
         className="max-w-4xl text-white"
       >
-        {children}
+        {slide.type === 'quote' && <QuoteSlide slide={slide} />}
+        {slide.type === 'cta' && <CtaSlide navigate={navigate} />}
+        {slide.type === 'music' && (
+          <MusicSlide slide={slide} setIsModalOpen={setIsModalOpen} />
+        )}
       </motion.div>
     </div>
   </motion.div>

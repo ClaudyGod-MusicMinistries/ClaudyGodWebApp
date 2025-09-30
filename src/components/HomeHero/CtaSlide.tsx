@@ -1,3 +1,4 @@
+// CtaSlide.tsx
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -13,7 +14,7 @@ export const CtaSlide = ({
 
   return (
     <div className="space-y-6 sm:space-y-8 md:space-y-12 w-full px-4 sm:px-6 lg:px-20 xl:px-28">
-      {/* Title Section - Mobile & Desktop */}
+      {/* Title Section */}
       <motion.div className="flex flex-col items-start gap-2 md:gap-4">
         <ExtraBoldText
           fontSize="2rem"

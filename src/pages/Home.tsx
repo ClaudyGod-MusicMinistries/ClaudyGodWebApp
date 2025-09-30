@@ -1,3 +1,4 @@
+// pages/Home.tsx
 import { SEO } from '../components/util/SEO';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
@@ -33,6 +34,7 @@ const ScrollAnimationWrapper = ({
     </motion.div>
   );
 };
+
 export const Home = () => {
   return (
     <>
@@ -60,11 +62,10 @@ export const Home = () => {
       <div className="overflow-x-hidden">
         <ScrollToTop />
 
-        <ScrollAnimationWrapper>
-          <section aria-labelledby="hero">
-            <Hero />
-          </section>
-        </ScrollAnimationWrapper>
+        {/* Hero Section - Add padding-top to account for fixed navbar */}
+        <section aria-labelledby="hero" className="pt-20">
+          <Hero />
+        </section>
 
         <ScrollAnimationWrapper>
           <section aria-labelledby="welcome">
@@ -89,8 +90,7 @@ export const Home = () => {
             <DonationCallToAction
               title="Partner with Our Ministry"
               subtitle="Your Support Makes a Difference"
-              description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, 
-    and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+              description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
               goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
               donateUrl="/donate"
             />

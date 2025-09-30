@@ -1,4 +1,4 @@
-// src/components/Bio/Biography.tsx
+// Biography.tsx
 import { SEO } from '../components/util/SEO';
 import React from 'react';
 import { motion } from 'framer-motion';
@@ -63,16 +63,16 @@ export const Biography: React.FC = () => {
       />
 
       <main>
-        {/* Fixed Hero Section with better image positioning */}
+        {/* Hero Section */}
         <Herosection
           title=""
           subtitle=""
           backgroundImage={About1}
-          overlayColor="rgba(0,0,0,0.3)" // Lighter overlay
-          backgroundPosition="center 30%" // Adjust this to show the face
+          overlayColor="rgba(0,0,0,0.3)"
+          backgroundPosition="center 30%"
           className="min-h-[90vh] md:min-h-[95vh]"
           style={{
-            backgroundAttachment: 'fixed', // Optional: creates parallax effect
+            backgroundAttachment: 'fixed',
           }}
         >
           <motion.div
@@ -127,7 +127,7 @@ export const Biography: React.FC = () => {
               </SemiBoldText>
             </motion.div>
 
-            {/* Optional: Add a scroll indicator */}
+            {/* Scroll indicator */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -141,7 +141,7 @@ export const Biography: React.FC = () => {
           </motion.div>
         </Herosection>
 
-        {/* Rest of your content remains the same */}
+        {/* Biography Content */}
         <article className="max-w-7xl mx-auto px-4 py-12 md:py-16">
           {/* Section Header */}
           <header className="mb-12 md:mb-16 text-center">
@@ -287,27 +287,6 @@ export const Biography: React.FC = () => {
             />
           </section>
         </article>
-
-        {/* Divider */}
-        <div className="relative my-10">
-          <div className="absolute inset-0 flex items-center">
-            <div
-              className="w-full border-t"
-              style={{ borderColor: colorScheme.gray[200] }}
-            />
-          </div>
-          <div className="relative flex justify-center">
-            <span
-              className="px-4"
-              style={{ backgroundColor: colorScheme.background }}
-            >
-              <FontAwesomeIcon
-                icon={faMicrophoneAlt}
-                style={{ color: colorScheme.primary }}
-              />
-            </span>
-          </div>
-        </div>
 
         {/* Donation Section */}
         <section className="my-12 md:my-16">

@@ -11,7 +11,6 @@ interface HeroSectionProps {
   children?: React.ReactNode;
   overlayColor?: string;
   style?: React.CSSProperties;
-  /** New prop to control background position */
   backgroundPosition?: string;
 }
 
@@ -25,7 +24,7 @@ export const Herosection: React.FC<HeroSectionProps> = ({
   children,
   overlayColor = 'rgba(0,0,0,0.4)',
   style,
-  backgroundPosition = 'center center', // Default to center
+  backgroundPosition = 'center center',
 }) => {
   const { colorScheme } = useTheme();
 
@@ -35,9 +34,10 @@ export const Herosection: React.FC<HeroSectionProps> = ({
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
-        backgroundPosition: backgroundPosition, // Use the prop
+        backgroundPosition: backgroundPosition,
         backgroundRepeat: 'no-repeat',
-        backgroundColor: colorScheme.background,
+        // REMOVE this line - it's causing the background color
+        // backgroundColor: colorScheme.background,
         ...style,
       }}
     >

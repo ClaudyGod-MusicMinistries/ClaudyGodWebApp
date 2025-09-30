@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
   useState,
   useEffect,
@@ -9,7 +10,6 @@ import React, {
 import { useDispatch, useSelector } from 'react-redux';
 import { Heroblog } from '../components/blog/blogHero';
 import { blogPosts } from '../components/blog/blogsData';
-import Pagination from '../components/util/pagination';
 import Interview from '../components/blog/Interview';
 import { NewsletterForm } from '../components/util/Newsletter';
 import { DonationCallToAction } from '../components/util/DonationSupport';

@@ -60,6 +60,10 @@ import Aba2 from './aba2.jpg';
 import owerri1 from './news_imsu.jpg';
 import ph from './news_ph.jpg';
 
+// downloadBtn
+import apple from './app_store.png';
+import google from './play_store.png';
+
 // video
 import bgVideo from '/mainBanner.webm';
 
@@ -121,4 +125,6 @@ export {
   music9,
   backUp,
   VideoArt,
+  apple,
+  google,
 };

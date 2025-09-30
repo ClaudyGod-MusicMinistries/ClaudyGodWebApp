@@ -1,14 +1,11 @@
+// components/HomeHero/MainHero.tsx
 import { useState, useEffect, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { heroSlides } from '../data/HeroSlide';
-import { Navbar } from '../navbar/Navbar'; // Import Navbar
 import { SlideContainer } from './SliderContainer';
 import { PaginationDots } from './Pagination';
 import { StreamingModal } from '../HomeHero/StreamingModal';
-import { QuoteSlide } from './QuoteSlide';
-import { CtaSlide } from './CtaSlide';
-import { MusicSlide } from './MusicSlide';
 
 export const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -45,10 +42,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative h-[100vh] md:h-[120vh] w-full overflow-hidden">
-      {/* Navbar inside Hero */}
-      <Navbar isInsideHero={true} />
-
+    <section className="relative h-[100vh] md:h-[120vh] w-full overflow-hidden -mt-20">
       <StreamingModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -66,13 +60,9 @@ export const Hero = () => {
                 isMuted={isMuted}
                 toggleMute={toggleMute}
                 videoRef={videoRef as React.RefObject<HTMLVideoElement>}
-              >
-                {slide.type === 'quote' && <QuoteSlide slide={slide} />}
-                {slide.type === 'cta' && <CtaSlide navigate={navigate} />}
-                {slide.type === 'music' && (
-                  <MusicSlide slide={slide} setIsModalOpen={setIsModalOpen} />
-                )}
-              </SlideContainer>
+                setIsModalOpen={setIsModalOpen}
+                navigate={navigate}
+              />
             )
         )}
       </AnimatePresence>
