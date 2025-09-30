@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { ReactNode, Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -13,9 +14,7 @@ import { Transition, Variants } from 'framer-motion';
 
 export interface HeroSlide {
   videoUrl: any;
-  videoUrl: string | undefined;
-  videoUrl: any;
-  videoUrl: any;
+  // videoUrl: string | undefined;
   id: number;
   imageUrl?: string;
   imageUrlMobile?: string;
@@ -118,12 +117,14 @@ export const heroSlides: HeroSlide[] = [
         'Enter Into His Gates With Thanksgiving And Into His Courts With Praise; Be Thankful Unto Him, and Bless His Name.',
       reference: '— Psalm 100:4',
     },
+    videoUrl: undefined,
   },
   {
     id: 2,
     imageUrl: Resize4,
     type: 'cta',
     content: {},
+    videoUrl: undefined,
   },
   {
     id: 3,
@@ -165,6 +166,7 @@ export const heroSlides: HeroSlide[] = [
         },
       ],
     },
+    videoUrl: undefined,
   },
   {
     id: 4,
@@ -174,5 +176,6 @@ export const heroSlides: HeroSlide[] = [
       quote: 'Praise the Lord Most High',
       reference: '— Psalm 100:4',
     },
+    videoUrl: undefined,
   },
 ];

@@ -67,7 +67,6 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
     closeNav();
   }, [location, closeNav]);
 
-  // Define navigation items with proper icons
   const navigationItems = [
     { to: '/', name: 'Home', icon: faHouse },
     { to: '/biography', name: 'About', icon: faUser },
@@ -84,7 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
 
   return (
     <>
-      {/* Spacer div that matches TopBanner height - only shows when navbar is scrolled */}
+      {/* Spacer div for TopBanner */}
       <div
         className={`fixed top-0 left-0 right-0 h-8 bg-purple-900 transition-all duration-500 z-40 ${
           scrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'
@@ -92,40 +91,31 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
       />
 
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-gray-900/95 backdrop-blur-xl shadow-2xl py-2 transform translate-y-0'
-            : 'bg-transparent backdrop-blur-0 shadow-none py-0 transform translate-y-0'
+            ? 'bg-gray-900/95 backdrop-blur-md shadow-lg py-2'
+            : 'bg-transparent py-4'
         }`}
-        style={{
-          // Smooth background transition using theme colors when scrolled
-          backgroundColor: scrolled
-            ? `${colorScheme.background}95`
-            : 'transparent',
-          // Move navbar down when not scrolled to account for TopBanner
-          marginTop: scrolled ? '0' : '2rem',
-        }}
+        style={{ marginTop: scrolled ? '0' : '2rem' }}
       >
         {/* Desktop Header */}
-        <div className="container mx-auto flex items-center justify-between h-14 px-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
           {/* Logo - Left */}
           <Link
             to="/"
             onClick={closeNav}
-            className="flex items-center justify-start flex-shrink-0 hover:opacity-80 transition-all duration-300 hover:scale-105"
+            className="flex items-center flex-shrink-0 hover:opacity-80 transition-opacity -ml-6"
           >
-            <div className="h-9 w-9 flex items-center justify-center transition-transform duration-300">
-              <img
-                src={Log}
-                alt="Logo"
-                className="h-7 w-7 transition-all duration-300"
-              />
+            <div className="h-10 w-10 flex items-center justify-center bg-white/10 rounded-full p-1">
+              <img src={Log} alt="Logo" className="h-7 w-7 rounded-full" />
             </div>
-            <div className="ml-2 transition-all duration-300">
+
+            <div className="h-8 w-px bg-white/40 mx-3" />
+
+            <div>
               <BoldText
-                variant="brand"
                 style={{ color: scrolled ? colorScheme.text : 'white' }}
-                className="text-sm transition-colors duration-300"
+                className="text-lg leading-tight"
               >
                 ClaudyGod
               </BoldText>
@@ -135,8 +125,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
                     ? colorScheme.secondary
                     : 'rgba(255, 255, 255, 0.9)',
                 }}
-                fontSize="9px"
-                className="transition-colors duration-300"
+                className="text-xs leading-tight"
               >
                 Music & Ministry
               </LightText>
@@ -145,21 +134,17 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
 
           {/* Desktop Navigation - Center */}
           <nav className="hidden lg:flex items-center justify-center flex-1">
-            <div className="flex items-center justify-center space-x-1 xl:space-x-2 transition-all duration-500">
+            <div className="flex items-center space-x-4">
               {navigationItems.map(link => (
                 <NavLink
                   key={link.to}
                   to={link.to}
                   end={link.to === '/'}
-                  onClick={() => {
-                    if (location.pathname === link.to) {
-                      scrollToTop();
-                    }
-                  }}
+                  onClick={() => location.pathname === link.to && scrollToTop()}
                   className={({ isActive }) =>
-                    `flex items-center text-[10px] xl:text-xs transition-all duration-300 hover:opacity-80 px-3 py-2 rounded-lg whitespace-nowrap transform hover:scale-105 ${
+                    `flex items-center text-xs transition-colors duration-200 px-2 py-1.5 rounded-md ${
                       isActive
-                        ? 'text-purple-400 font-semibold bg-white/10 shadow-lg'
+                        ? 'text-purple-300 font-medium bg-white/10'
                         : scrolled
                           ? 'text-gray-200 hover:text-white hover:bg-white/5'
                           : 'text-white hover:text-white/90 hover:bg-white/10'
@@ -168,18 +153,9 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
                 >
                   <FontAwesomeIcon
                     icon={link.icon}
-                    className="mr-1 text-[10px] xl:text-xs transition-all duration-300"
-                    style={{
-                      color: scrolled
-                        ? location.pathname === link.to
-                          ? '#a78bfa'
-                          : '#e5e7eb'
-                        : 'white',
-                    }}
+                    className="mr-1.5 text-[10px]"
                   />
-                  <span className="font-medium transition-colors duration-300">
-                    {link.name}
-                  </span>
+                  <span className="text-xs">{link.name}</span>
                 </NavLink>
               ))}
             </div>
@@ -189,144 +165,115 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
           <div className="hidden lg:flex items-center justify-end flex-shrink-0">
             <button
               onClick={() => setIsModalOpen(true)}
-              className={`px-4 py-2 rounded-full text-xs transition-all duration-500 hover:opacity-90 flex items-center hover:scale-105 whitespace-nowrap transform ${
+              className={`px-5 py-2 rounded-full transition-all flex items-center whitespace-nowrap -mr-6 ${
                 scrolled
-                  ? 'bg-purple-600 text-white shadow-lg border border-purple-400'
-                  : 'bg-white/20 text-white border border-white/30 backdrop-blur-sm'
+                  ? 'bg-purple-600 text-white shadow-md hover:bg-purple-700'
+                  : 'bg-white/20 text-white backdrop-blur-sm hover:bg-white/30'
               }`}
-              style={{
-                transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-              }}
             >
-              <FontAwesomeIcon
-                icon={faHeadset}
-                className="mr-2 transition-all duration-300"
-              />
-              <SemiBoldText
-                fontSize="11px"
-                className="transition-all duration-300"
-              >
+              <FontAwesomeIcon icon={faHeadset} className="mr-2 text-sm" />
+              <SemiBoldText className="text-sm font-semibold">
                 Listen Now
               </SemiBoldText>
             </button>
           </div>
 
           {/* Mobile Menu Toggle */}
-          <div className="flex lg:hidden items-center justify-end gap-2">
-            <StreamingModal
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
-            />
-            <div className="flex justify-end flex-1">
-              <button
-                onClick={toggleNav}
-                className={`p-2 hover:opacity-80 rounded transition-all duration-300 ${
-                  scrolled
-                    ? 'bg-purple-600 text-white shadow-lg'
-                    : 'bg-white/20 text-white backdrop-blur-sm'
-                } transform hover:scale-110`}
-              >
-                <FontAwesomeIcon
-                  icon={isNavOpen ? faTimes : faBars}
-                  className="h-4 w-4 transition-transform duration-300"
-                />
-              </button>
-            </div>
+          <div className="flex lg:hidden items-center">
+            <button
+              onClick={toggleNav}
+              className={`p-2 rounded-md transition-colors ${
+                scrolled
+                  ? 'bg-purple-600 text-white hover:bg-purple-700'
+                  : 'bg-white/20 text-white backdrop-blur-sm hover:bg-white/30'
+              }`}
+            >
+              <FontAwesomeIcon
+                icon={isNavOpen ? faTimes : faBars}
+                className="h-5 w-5"
+              />
+            </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
         <div
-          className={`lg:hidden fixed inset-0 z-50 transition-all duration-500 ease-out ${
-            isNavOpen
-              ? 'translate-x-0 opacity-100'
-              : 'translate-x-full opacity-0'
+          className={`lg:hidden fixed inset-0 z-50 transition-transform duration-300 ${
+            isNavOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
           <div
-            className="absolute inset-0 bg-black/70 backdrop-blur-2xl transition-all duration-500"
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={toggleNav}
           />
 
-          <div className="relative w-3/4 h-full ml-auto transform transition-all duration-500 ease-out bg-white shadow-2xl">
-            <div className="flex justify-between items-center p-4 border-b border-gray-200 bg-gradient-to-r from-purple-600 to-purple-700">
+          <div className="relative w-80 h-full ml-auto bg-white shadow-xl">
+            <div className="flex justify-between items-center p-4 bg-gradient-to-r from-purple-600 to-purple-700">
               <Link to="/" onClick={closeNav} className="flex items-center">
-                <div className="h-8 w-8 flex items-center justify-center bg-white rounded-full p-1">
+                <div className="h-10 w-10 flex items-center justify-center bg-white rounded-full">
                   <img src={Log} alt="Logo" className="h-6 w-6" />
                 </div>
-                <div className="ml-2">
-                  <BoldText
-                    variant="brand"
-                    style={{ color: 'white' }}
-                    className="text-base"
-                  >
+                <div className="ml-3">
+                  <BoldText style={{ color: 'white' }} className="text-lg">
                     ClaudyGod
                   </BoldText>
                   <LightText
                     style={{ color: 'rgba(255, 255, 255, 0.9)' }}
-                    fontSize="10px"
+                    className="text-xs"
                   >
                     Music & Ministry
                   </LightText>
                 </div>
               </Link>
+
               <button
                 onClick={toggleNav}
-                className="p-2 hover:opacity-80 rounded-full bg-white/20 text-white transition-all duration-300 hover:scale-110 backdrop-blur-sm"
+                className="p-2 text-white hover:bg-white/20 rounded-md transition-colors"
               >
-                <FontAwesomeIcon icon={faTimes} className="h-4 w-4" />
+                <FontAwesomeIcon icon={faTimes} className="h-5 w-5" />
               </button>
             </div>
 
-            <nav className="p-4 h-[calc(100vh-64px)] overflow-y-auto bg-gradient-to-b from-white to-gray-50">
-              <ul className="space-y-3">
+            <nav className="p-4 h-[calc(100vh-80px)] overflow-y-auto">
+              <ul className="space-y-2">
                 {navigationItems.map(link => (
                   <li key={link.to}>
                     <button
                       onClick={() => handleMobileNavigation(link.to)}
-                      className={`flex items-center w-full p-4 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg ${
+                      className={`flex items-center w-full p-3 rounded-lg transition-colors ${
                         location.pathname === link.to
-                          ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg'
-                          : 'bg-white text-gray-800 hover:bg-gray-100 border border-gray-200'
+                          ? 'bg-purple-600 text-white'
+                          : 'text-gray-700 hover:bg-gray-100'
                       }`}
                     >
-                      <FontAwesomeIcon
-                        icon={link.icon}
-                        className="mr-4 text-lg transition-transform duration-300"
-                        style={{
-                          color:
-                            location.pathname === link.to
-                              ? 'white'
-                              : colorScheme.primary,
-                        }}
-                      />
-                      <LightText
-                        fontSize="14px"
-                        className="font-medium transition-colors duration-300"
-                      >
-                        {link.name}
-                      </LightText>
+                      <FontAwesomeIcon icon={link.icon} className="mr-3" />
+                      <LightText className="text-base">{link.name}</LightText>
                     </button>
                   </li>
                 ))}
               </ul>
 
-              <div className="mt-8 p-4 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl shadow-lg">
+              <div className="mt-6 p-4 bg-purple-500 rounded-lg">
                 <button
                   onClick={() => {
                     setIsModalOpen(true);
                     closeNav();
                   }}
-                  className="w-full px-4 py-3 rounded-full bg-white text-purple-600 text-sm font-bold flex items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  className="w-full px-4 py-3 rounded-full bg-white text-purple-600 text-sm font-medium flex items-center justify-center hover:bg-gray-50 transition-colors"
                 >
-                  <FontAwesomeIcon icon={faHeadset} className="mr-3 text-lg" />
-                  <SemiBoldText fontSize="14px">Listen Now</SemiBoldText>
+                  <FontAwesomeIcon icon={faHeadset} className="mr-2" />
+                  <SemiBoldText>Listen Now</SemiBoldText>
                 </button>
               </div>
             </nav>
           </div>
         </div>
       </header>
+
+      <StreamingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 };

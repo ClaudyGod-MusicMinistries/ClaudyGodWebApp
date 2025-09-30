@@ -71,6 +71,13 @@ const fontFamilyMap: Record<FontWeight, string> = {
   extraregular: 'Bricolage, sans-serif',
 };
 
+// NEW: Custom font family map for the additional fonts
+const customFontFamilyMap: Record<string, string> = {
+  LukiestGuy: 'LukiestGuy, cursive',
+  Ultra: 'Ultra, serif',
+  AbrilFatFace: 'AbrilFatFace, serif',
+};
+
 const fontSizeMap: Record<string, string> = {
   xs: '12px',
   sm: '14px',
@@ -118,8 +125,13 @@ export const BaseText: React.FC<BaseTextProps> = ({
   const textColor = useThemeColor && !color ? colorScheme.text : color;
   const resolvedFontSize = fontSizeMap[finalFontSize] || finalFontSize;
 
+  // UPDATED: Check if a custom font family is specified
+  const resolvedFontFamily = fontFamily
+    ? customFontFamilyMap[fontFamily] || fontFamily
+    : fontFamilyMap[finalWeight];
+
   const styles: React.CSSProperties = {
-    fontFamily: fontFamily || fontFamilyMap[finalWeight],
+    fontFamily: resolvedFontFamily,
     fontWeight: fontWeights[finalWeight],
     margin,
     lineHeight,
@@ -160,4 +172,15 @@ export const ExtraBoldText: React.FC<BaseTextProps> = props => (
 );
 export const ExtraRegularText: React.FC<BaseTextProps> = props => (
   <BaseText {...props} weight="extraregular" />
+);
+
+// NEW: Convenience components for the custom fonts
+export const LukiestGuyText: React.FC<BaseTextProps> = props => (
+  <BaseText {...props} fontFamily="LukiestGuy" />
+);
+export const UltraText: React.FC<BaseTextProps> = props => (
+  <BaseText {...props} fontFamily="Ultra" />
+);
+export const AbrilFatFaceText: React.FC<BaseTextProps> = props => (
+  <BaseText {...props} fontFamily="AbrilFatFace" />
 );
