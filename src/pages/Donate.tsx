@@ -9,6 +9,9 @@ import {
   faCreditCard,
   faHandHoldingUsd,
   faShieldAlt,
+  faHeart,
+  faPrayingHands,
+  faDonate,
 } from '@fortawesome/free-solid-svg-icons';
 import { Donate1, Donate2 } from '../assets/';
 import { useNavContext } from '../contexts/NavContext';
@@ -18,12 +21,14 @@ import { PaymentPlatforms } from '../components/donate/payment';
 import { NigerianBankTransfer } from '../components/donate/NigeriaAcct';
 import { LayoutTemplate } from '../components/util/hero';
 import { DonationCallToAction } from '../components/util/DonationSupport';
+import { NewsletterForm } from '../components/util/Newsletter';
 import {
   SemiBoldText,
   BoldText,
   LightText,
   ExtraBoldText,
   ExtraLightText,
+  RegularText,
 } from '../components/ui/fonts/typography';
 import CustomButton from '../components/ui/fonts/buttons/CustomButton';
 
@@ -81,86 +86,14 @@ const CurrencySelector = ({
   );
 };
 
-const DonateHeroSlider: React.FC = () => {
-  const { isNavOpen } = useNavContext();
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [shouldAnimate, setShouldAnimate] = useState(true);
-  const images = [Donate1, Donate2];
-
-  useEffect(() => {
-    if (isNavOpen) {
-      setShouldAnimate(false);
-      return;
-    }
-
-    setShouldAnimate(true);
-    let interval: NodeJS.Timeout | null = null;
-
-    if (shouldAnimate) {
-      interval = setInterval(() => {
-        setCurrentImageIndex(prev => (prev + 1) % images.length);
-      }, 5000);
-    }
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [images.length, shouldAnimate, isNavOpen]);
-
-  return (
-    <section
-      className={`relative w-full ${isNavOpen ? 'filter blur-sm opacity-75 transition-all duration-300' : ''}`}
-    >
-      {/* Mobile Version */}
-      <div className="md:hidden relative h-[50vh] min-h-[300px] w-full overflow-hidden bg-black">
-        {images.map((img, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            <div className="absolute inset-0 flex items-center justify-center p-4">
-              <img
-                src={img}
-                alt="Donation slide"
-                className="h-full w-full object-cover"
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Desktop Version */}
-      <div className="hidden md:block relative h-[90vh] min-h-100px w-full overflow-hidden">
-        {images.map((img, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            <LayoutTemplate
-              title="Partner with Us to Spread the Gospel"
-              subtitle="Your donation makes a difference in our music ministry"
-              backgroundImage={img}
-              className="absolute inset-0 z-0"
-            />
-          </div>
-        ))}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-purple-900/30 z-10" />
-      </div>
-    </section>
-  );
-};
-
 const DonationGuide = () => {
   const { colorScheme } = useTheme();
 
   return (
     <motion.aside
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       transition={{ duration: 0.5 }}
       style={{
         backgroundColor: colorScheme.gray[50],
@@ -357,7 +290,10 @@ export const DonateData: React.FC = () => {
   const currencySymbol = getCurrencySymbol();
 
   return (
-    <main className="min-h-screen">
+    <main
+      className="min-h-screen"
+      style={{ backgroundColor: colorScheme.background }}
+    >
       <SEO
         title="Support Gospel Music Ministry | Donate to ClaudyGod"
         description="Partner with ClaudyGod Ministries to spread the gospel through music. Your donations support worship events, albums, and global outreach."
@@ -378,7 +314,67 @@ export const DonateData: React.FC = () => {
         }}
       />
 
-      <DonateHeroSlider />
+      {/* Hero Section */}
+      <LayoutTemplate
+        backgroundImage={Donate1}
+        overlayColor="rgba(0,0,0,0.75)"
+        backgroundPosition="center center"
+        className="h-[100vh] md:h-[100vh]"
+        title={''}
+      >
+        <motion.div
+          className="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full h-full"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div
+            initial={{ y: -20 }}
+            animate={{ y: 0 }}
+            transition={{ delay: 0.2, duration: 0.7 }}
+            className="mb-6"
+          >
+            <ExtraBoldText
+              style={{
+                color: '#ffffff',
+                fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                lineHeight: '1.1',
+                textShadow: '0 4px 8px rgba(0,0,0,0.6)',
+                marginBottom: '1rem',
+              }}
+              useThemeColor={false}
+            >
+              Support Our Ministry
+            </ExtraBoldText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-8 mx-auto"
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="max-w-3xl"
+          >
+            <SemiBoldText
+              style={{
+                color: '#ffffff',
+                fontSize: 'clamp(1.25rem, 3vw, 2rem)',
+                textShadow: '0 2px 4px rgba(0,0,0,0.6)',
+                lineHeight: '1.4',
+              }}
+              useThemeColor={false}
+            >
+              Partner with us to spread the gospel through music
+            </SemiBoldText>
+          </motion.div>
+        </motion.div>
+      </LayoutTemplate>
 
       {isCheckout ? (
         <section
@@ -403,262 +399,365 @@ export const DonateData: React.FC = () => {
           )}
         </section>
       ) : (
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75 transition-all duration-300' : ''}`}
-        >
-          <header className="text-center mb-12 md:mb-16">
-            <ExtraBoldText
-              style={{ color: colorScheme.primary }}
-              fontSize="32px"
-              className="mb-4"
+        /* Donation Content */
+        <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+          {/* Section Header */}
+          <header className="mb-12 md:mb-16 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-opacity-10 mb-6"
+              style={{ backgroundColor: `${colorScheme.primary}20` }}
             >
-              Support Our Ministry
-            </ExtraBoldText>
-            <div
+              <FontAwesomeIcon
+                icon={faDonate}
+                style={{ color: colorScheme.primary }}
+              />
+              <LightText
+                style={{
+                  color: colorScheme.primary,
+                  fontSize: '0.875rem',
+                  letterSpacing: '0.05em',
+                }}
+                useThemeColor={false}
+              >
+                SUPPORT MINISTRY
+              </LightText>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <ExtraBoldText
+                style={{
+                  color: colorScheme.primary,
+                  fontSize: 'clamp(2rem, 4vw, 3rem)',
+                  lineHeight: '1.2',
+                  marginBottom: '1rem',
+                }}
+                useThemeColor={false}
+              >
+                Support Our Ministry
+              </ExtraBoldText>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="max-w-4xl mx-auto"
+            >
+              <SemiBoldText
+                style={{
+                  color: colorScheme.accent,
+                  fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
+                  lineHeight: '1.6',
+                }}
+                useThemeColor={false}
+              >
+                "Each of you should give what you have decided in your heart to
+                give, not reluctantly or under compulsion, for God loves a
+                cheerful giver." (2 Corinthians 9:7)
+              </SemiBoldText>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="w-24 h-1 mx-auto mt-6 rounded-full"
               style={{ backgroundColor: colorScheme.accent }}
-              className="w-24 h-1 mx-auto mt-4 mb-6 md:mb-8"
-            ></div>
-            <LightText
-              style={{ color: colorScheme.background }}
-              fontSize="16px"
-              className="max-w-3xl mx-auto leading-relaxed"
-            >
-              "Each of you should give what you have decided in your heart to
-              give, not reluctantly or under compulsion, for God loves a
-              cheerful giver." (2 Corinthians 9:7)
-              <br />
-              <br />
-              We appreciate your support and donations towards the ministry. You
-              partner with us to advance the gospel through music. "And my God
-              will meet all your needs according to the riches of His glory in
-              Christ Jesus." (Philippians 4:19)
-            </LightText>
+            />
           </header>
 
-          <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 md:mb-16">
-            <FeatureCard
-              icon={faGlobe}
-              title="Global Support"
-              description="Your donation helps us reach audiences worldwide with gospel music and messages of hope."
-            />
-            <FeatureCard
-              icon={faCreditCard}
-              title="Secure Payments"
-              description="All transactions are encrypted and processed through trusted payment gateways for your security."
-            />
-            <FeatureCard
-              icon={faShieldAlt}
-              title="Trusted Ministry"
-              description="We are accountable for every donation and provide regular ministry updates to our supporters."
-            />
+          {/* Scripture Quote */}
+          <motion.blockquote
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative my-12 md:my-16 p-6 md:p-8 rounded-2xl text-center"
+            style={{
+              background: `linear-gradient(135deg, ${colorScheme.gray[900]}, ${colorScheme.gray[800]})`,
+              border: `1px solid ${colorScheme.gray[700]}`,
+            }}
+          >
+            <div className="max-w-4xl mx-auto">
+              <div className="flex items-center justify-center mb-4">
+                <FontAwesomeIcon
+                  icon={faPrayingHands}
+                  className="mr-3 text-lg"
+                  style={{ color: colorScheme.accent }}
+                />
+                <LightText
+                  style={{
+                    color: 'white',
+                    fontSize: 'clamp(1.025rem, 2vw, 1.375rem)',
+                    lineHeight: '1.6',
+                    fontStyle: 'italic',
+                  }}
+                  useThemeColor={false}
+                >
+                  "And my God will meet all your needs according to the riches
+                  of His glory in Christ Jesus." (Philippians 4:19)
+                </LightText>
+              </div>
+              <RegularText
+                style={{
+                  color: colorScheme.primary,
+                  fontSize: '1rem',
+                }}
+                useThemeColor={false}
+              >
+                We appreciate your support and donations towards the ministry.
+                You partner with us to advance the gospel through music.
+              </RegularText>
+            </div>
+          </motion.blockquote>
+
+          {/* Feature Cards */}
+          <section className="mb-12 md:mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-6"
+            >
+              <FeatureCard
+                icon={faGlobe}
+                title="Global Support"
+                description="Your donation helps us reach audiences worldwide with gospel music and messages of hope."
+              />
+              <FeatureCard
+                icon={faCreditCard}
+                title="Secure Payments"
+                description="All transactions are encrypted and processed through trusted payment gateways for your security."
+              />
+              <FeatureCard
+                icon={faShieldAlt}
+                title="Trusted Ministry"
+                description="We are accountable for every donation and provide regular ministry updates to our supporters."
+              />
+            </motion.div>
           </section>
 
-          <div className="flex justify-center my-8 md:my-10">
-            <div
-              style={{ backgroundColor: colorScheme.accent }}
-              className="h-1 w-16 rounded-full"
-            ></div>
-          </div>
+          {/* Donation Form */}
+          <section className="mb-20">
+            <motion.article
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              style={{
+                backgroundColor: colorScheme.white,
+                borderRadius: colorScheme.borderRadius.xlarge,
+              }}
+              className="max-w-4xl mx-auto px-4 py-6 sm:py-8 rounded-xl shadow-sm"
+            >
+              <header className="text-center mb-8 md:mb-10">
+                <ExtraBoldText
+                  style={{ color: colorScheme.primary }}
+                  fontSize="28px"
+                  className="mb-3 md:mb-4"
+                >
+                  Make a Donation
+                </ExtraBoldText>
+                <LightText
+                  style={{ color: colorScheme.primary }}
+                  fontSize="14px"
+                  className="max-w-xl mx-auto"
+                >
+                  Select your currency and amount to support our gospel music
+                  ministry
+                </LightText>
+              </header>
 
-          <motion.article
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            style={{
-              backgroundColor: colorScheme.white,
-              borderRadius: colorScheme.borderRadius.xlarge,
-            }}
-            className="max-w-4xl mx-auto px-4 py-6 sm:py-8 rounded-xl shadow-sm"
-          >
-            <header className="text-center mb-8 md:mb-10">
-              <ExtraBoldText
-                style={{ color: colorScheme.primary }}
-                fontSize="28px"
-                className="mb-3 md:mb-4"
+              <DonationGuide />
+
+              <form
+                onSubmit={handleSubmit}
+                style={{
+                  backgroundColor: colorScheme.gray[50],
+                  borderRadius: colorScheme.borderRadius.large,
+                }}
+                className="p-4 sm:p-6 md:p-8 rounded-lg"
               >
-                Make a Donation
-              </ExtraBoldText>
+                <div className="mb-4 sm:mb-6">
+                  <SemiBoldText
+                    style={{ color: colorScheme.primary }}
+                    fontSize="16px"
+                    className="mb-2"
+                  >
+                    Your Name
+                  </SemiBoldText>
+                  <input
+                    type="text"
+                    id="name"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    style={{
+                      borderColor: colorScheme.gray[300],
+                      borderRadius: colorScheme.borderRadius.medium,
+                      color: colorScheme.primary,
+                      backgroundColor: colorScheme.white,
+                    }}
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border focus:outline-none focus:ring-2 focus:border-transparent"
+                    placeholder="Enter your name"
+                    required
+                  />
+                </div>
+
+                <div className="mb-6 sm:mb-8">
+                  <SemiBoldText
+                    style={{ color: colorScheme.primary }}
+                    fontSize="16px"
+                    className="mb-2"
+                  >
+                    Select Amount ({currency})
+                  </SemiBoldText>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3 mb-4">
+                    {suggestedAmounts.map(amt => (
+                      <motion.button
+                        key={amt}
+                        type="button"
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => setAmount(amt.toString())}
+                        style={{
+                          borderRadius: colorScheme.borderRadius.medium,
+                          borderColor:
+                            amount === amt.toString()
+                              ? colorScheme.accent
+                              : colorScheme.gray[300],
+                          backgroundColor:
+                            amount === amt.toString()
+                              ? colorScheme.accent
+                              : colorScheme.white,
+                          color:
+                            amount === amt.toString()
+                              ? colorScheme.white
+                              : colorScheme.primary,
+                        }}
+                        className="py-2 sm:py-3 px-2 rounded-lg border transition-all text-sm sm:text-base"
+                      >
+                        {currencySymbol}
+                        {amt}
+                      </motion.button>
+                    ))}
+                  </div>
+
+                  <div className="mb-4 sm:mb-6">
+                    <LightText
+                      style={{ color: colorScheme.primary }}
+                      fontSize="14px"
+                      className="mb-2"
+                    >
+                      Or enter a custom amount
+                    </LightText>
+                    <div className="flex flex-col sm:flex-row">
+                      <div className="w-full sm:w-auto mb-2 sm:mb-0">
+                        <CurrencySelector
+                          currency={currency}
+                          setCurrency={setCurrency}
+                        />
+                      </div>
+                      <input
+                        type="number"
+                        id="amount"
+                        value={amount}
+                        onChange={e => setAmount(e.target.value)}
+                        style={{
+                          borderColor: colorScheme.gray[300],
+                          borderRadius: colorScheme.borderRadius.medium,
+                          color: colorScheme.primary,
+                          backgroundColor: colorScheme.white,
+                        }}
+                        className="flex-1 w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-r-lg focus:outline-none focus:ring-2 focus:border-transparent"
+                        placeholder="Enter amount"
+                        min="1"
+                        step="0.01"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <CustomButton
+                  type="submit"
+                  variant="primary"
+                  size="lg"
+                  icon={<FontAwesomeIcon icon={faHandHoldingUsd} />}
+                  className="w-full shadow-md hover:shadow-lg"
+                >
+                  <BoldText>Donate Now</BoldText>
+                </CustomButton>
+              </form>
+
+              <footer className="mt-6 sm:mt-8 text-center">
+                <ExtraLightText
+                  style={{ color: colorScheme.gray[500] }}
+                  fontSize="12px"
+                >
+                  Your donation is securely processed. All major cards and
+                  payment methods accepted.
+                </ExtraLightText>
+              </footer>
+            </motion.article>
+
+            <motion.footer
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mt-12 sm:mt-16 text-center"
+            >
+              <SemiBoldText
+                style={{ color: colorScheme.primary }}
+                fontSize="18px"
+                className="mb-3 sm:mb-4"
+              >
+                Have questions about donating?
+              </SemiBoldText>
               <LightText
                 style={{ color: colorScheme.primary }}
                 fontSize="14px"
-                className="max-w-xl mx-auto"
+                className="max-w-2xl mx-auto"
               >
-                Select your currency and amount to support our gospel music
-                ministry
+                Contact us at{' '}
+                <span style={{ color: colorScheme.accent }}>
+                  info@ClaudyGod.com
+                </span>{' '}
+                or call
+                <span style={{ color: colorScheme.accent }}>
+                  {' '}
+                  +1 (385) 219‑6632
+                </span>{' '}
+                for assistance with your donation.
               </LightText>
-            </header>
-
-            <DonationGuide />
-
-            <form
-              onSubmit={handleSubmit}
-              style={{
-                backgroundColor: colorScheme.gray[50],
-                borderRadius: colorScheme.borderRadius.large,
-              }}
-              className="p-4 sm:p-6 md:p-8 rounded-lg"
-            >
-              <div className="mb-4 sm:mb-6">
-                <SemiBoldText
-                  style={{ color: colorScheme.primary }}
-                  fontSize="16px"
-                  className="mb-2"
-                >
-                  Your Name
-                </SemiBoldText>
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  onChange={e => setName(e.target.value)}
-                  style={{
-                    borderColor: colorScheme.gray[300],
-                    borderRadius: colorScheme.borderRadius.medium,
-                    color: colorScheme.primary,
-                    backgroundColor: colorScheme.white,
-                  }}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 border focus:outline-none focus:ring-2 focus:border-transparent"
-                  placeholder="Enter your name"
-                  required
-                />
-              </div>
-
-              <div className="mb-6 sm:mb-8">
-                <SemiBoldText
-                  style={{ color: colorScheme.primary }}
-                  fontSize="16px"
-                  className="mb-2"
-                >
-                  Select Amount ({currency})
-                </SemiBoldText>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3 mb-4">
-                  {suggestedAmounts.map(amt => (
-                    <motion.button
-                      key={amt}
-                      type="button"
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => setAmount(amt.toString())}
-                      style={{
-                        borderRadius: colorScheme.borderRadius.medium,
-                        borderColor:
-                          amount === amt.toString()
-                            ? colorScheme.accent
-                            : colorScheme.gray[300],
-                        backgroundColor:
-                          amount === amt.toString()
-                            ? colorScheme.accent
-                            : colorScheme.white,
-                        color:
-                          amount === amt.toString()
-                            ? colorScheme.white
-                            : colorScheme.primary,
-                      }}
-                      className="py-2 sm:py-3 px-2 rounded-lg border transition-all text-sm sm:text-base"
-                    >
-                      {currencySymbol}
-                      {amt}
-                    </motion.button>
-                  ))}
-                </div>
-
-                <div className="mb-4 sm:mb-6">
-                  <LightText
-                    style={{ color: colorScheme.primary }}
-                    fontSize="14px"
-                    className="mb-2"
-                  >
-                    Or enter a custom amount
-                  </LightText>
-                  <div className="flex flex-col sm:flex-row">
-                    <div className="w-full sm:w-auto mb-2 sm:mb-0">
-                      <CurrencySelector
-                        currency={currency}
-                        setCurrency={setCurrency}
-                      />
-                    </div>
-                    <input
-                      type="number"
-                      id="amount"
-                      value={amount}
-                      onChange={e => setAmount(e.target.value)}
-                      style={{
-                        borderColor: colorScheme.gray[300],
-                        borderRadius: colorScheme.borderRadius.medium,
-                        color: colorScheme.primary,
-                        backgroundColor: colorScheme.white,
-                      }}
-                      className="flex-1 w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-r-lg focus:outline-none focus:ring-2 focus:border-transparent"
-                      placeholder="Enter amount"
-                      min="1"
-                      step="0.01"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <CustomButton
-                type="submit"
-                variant="primary"
-                size="lg"
-                icon={<FontAwesomeIcon icon={faHandHoldingUsd} />}
-                className="w-full shadow-md hover:shadow-lg"
-              >
-                <BoldText>Donate Now</BoldText>
-              </CustomButton>
-            </form>
-
-            <footer className="mt-6 sm:mt-8 text-center">
-              <ExtraLightText
-                style={{ color: colorScheme.gray[500] }}
-                fontSize="12px"
-              >
-                Your donation is securely processed. All major cards and payment
-                methods accepted.
-              </ExtraLightText>
-            </footer>
-          </motion.article>
-
-          <footer className="mt-12 sm:mt-16 text-center">
-            <SemiBoldText
-              style={{ color: colorScheme.primary }}
-              fontSize="18px"
-              className="mb-3 sm:mb-4"
-            >
-              Have questions about donating?
-            </SemiBoldText>
-            <LightText
-              style={{ color: colorScheme.primary }}
-              fontSize="14px"
-              className="max-w-2xl mx-auto"
-            >
-              Contact us at{' '}
-              <span style={{ color: colorScheme.accent }}>
-                info@ClaudyGod.com
-              </span>{' '}
-              or call
-              <span style={{ color: colorScheme.accent }}>
-                {' '}
-                +1 (385) 219‑6632
-              </span>{' '}
-              for assistance with your donation.
-            </LightText>
-          </footer>
-        </motion.section>
+            </motion.footer>
+          </section>
+        </article>
       )}
 
-      <DonationCallToAction
-        title="Partner with Our Ministry"
-        subtitle="Your Support Makes a Difference"
-        description="Join us in spreading the gospel through music. Your generous donations help fund worship events,
-         album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
-        goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
-        donateUrl="/donate"
-      />
+      {/* Newsletter Section */}
+      <section
+        className="py-12 md:py-16"
+        style={{
+          background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
+        }}
+      >
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <NewsletterForm />
+        </div>
+      </section>
     </main>
   );
 };

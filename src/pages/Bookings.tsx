@@ -4,12 +4,21 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTheme } from '../contexts/ThemeContext';
-import CustomButton from '../components/ui/fonts/buttons/CustomButton';
+import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCalendarAlt,
+  faClock,
+  faUserCheck,
+} from '@fortawesome/free-solid-svg-icons';
 
+import CustomButton from '../components/ui/fonts/buttons/CustomButton';
 import {
   BoldText,
   SemiBoldText,
   RegularText,
+  LightText,
+  ExtraBoldText,
 } from '../components/ui/fonts/typography';
 
 import { submitBooking } from '../components/api/bookingApi';
@@ -28,7 +37,6 @@ import { TermsSection } from '../components/Bookings/TermsSubmit';
 import { DownloadSection } from '../components/util/Download';
 import { SEO } from '../components/util/SEO';
 import { CountryCode } from '@/components/types/booking';
-// import { color } from 'framer-motion';
 
 export const Bookings: React.FC = () => {
   const { colorScheme } = useTheme();
@@ -116,7 +124,7 @@ export const Bookings: React.FC = () => {
     try {
       setLoading(true);
       await submitBooking(data);
-      toast.success(`'Booking submitted! We'll Touch be in  shortly.'`);
+      toast.success(`'Booking submitted! We'll be in touch shortly.'`);
       reset();
       setShowThankYouModal(true);
     } catch (error: any) {
@@ -169,39 +177,154 @@ export const Bookings: React.FC = () => {
         </div>
       </Modal>
 
+      {/* Hero Section */}
       <LayoutTemplate
-        title="Book ClaudyGod for Your Event"
-        subtitle="Fill out the form below to request a booking"
         backgroundImage={Back3}
-      />
-
-      <div className="max-w-5xl mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <BoldText
-            as="h1"
-            style={{ color: colorScheme.primary }}
-            fontSize="2.5rem"
-            className="mb-4"
+        overlayColor="rgba(0,0,0,0.75)"
+        backgroundPosition="center center"
+        className="h-[100vh] md:h-[100vh]"
+        title={''}
+      >
+        <motion.div
+          className="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full h-full"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div
+            initial={{ y: -20 }}
+            animate={{ y: 0 }}
+            transition={{ delay: 0.2, duration: 0.7 }}
+            className="mb-6"
           >
-            Booking Request Form
-          </BoldText>
-          <div
-            className="w-24 h-1 mx-auto rounded-full mb-4"
-            style={{ background: colorScheme.primary }}
+            <ExtraBoldText
+              style={{
+                color: '#ffffff',
+                fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                lineHeight: '1.1',
+                textShadow: '0 4px 8px rgba(0,0,0,0.6)',
+                marginBottom: '1rem',
+              }}
+              useThemeColor={false}
+            >
+              Book ClaudyGod
+            </ExtraBoldText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-8 mx-auto"
           />
-          <RegularText
-            className="text-lg max-w-3xl mx-auto"
-            style={{ color: colorScheme.body }}
-          >
-            Please fill out all required fields below. Our team will review your
-            request within 48 hours.
-          </RegularText>
-        </div>
 
-        <div
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="max-w-3xl"
+          >
+            <SemiBoldText
+              style={{
+                color: '#ffffff',
+                fontSize: 'clamp(1.25rem, 3vw, 2rem)',
+                textShadow: '0 2px 4px rgba(0,0,0,0.6)',
+                lineHeight: '1.4',
+              }}
+              useThemeColor={false}
+            >
+              Fill out the form below to request a booking for your worship
+              event, concert, or church service
+            </SemiBoldText>
+          </motion.div>
+        </motion.div>
+      </LayoutTemplate>
+
+      {/* Booking Content */}
+      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        {/* Section Header */}
+        <header className="mb-12 md:mb-16 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-opacity-10 mb-6"
+            style={{ backgroundColor: `${colorScheme.primary}20` }}
+          >
+            <FontAwesomeIcon
+              icon={faCalendarAlt}
+              style={{ color: colorScheme.primary }}
+            />
+            <LightText
+              style={{
+                color: colorScheme.primary,
+                fontSize: '0.875rem',
+                letterSpacing: '0.05em',
+              }}
+              useThemeColor={false}
+            >
+              EVENT BOOKING
+            </LightText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <ExtraBoldText
+              style={{
+                color: colorScheme.primary,
+                fontSize: 'clamp(2rem, 4vw, 3rem)',
+                lineHeight: '1.2',
+                marginBottom: '1rem',
+              }}
+              useThemeColor={false}
+            >
+              Booking Request Form
+            </ExtraBoldText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-4xl mx-auto"
+          >
+            <SemiBoldText
+              style={{
+                color: colorScheme.accent,
+                fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
+                lineHeight: '1.6',
+              }}
+              useThemeColor={false}
+            >
+              Please fill out all required fields below. Our team will review
+              your request within 48 hours.
+            </SemiBoldText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="w-24 h-1 mx-auto mt-6 rounded-full"
+            style={{ backgroundColor: colorScheme.accent }}
+          />
+        </header>
+
+        {/* Booking Form */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
           className="rounded-2xl shadow-xl overflow-hidden border"
           style={{
-            // backgroundColor: colorScheme.surface,
             borderColor: colorScheme.borderLight,
           }}
         >
@@ -263,7 +386,7 @@ export const Bookings: React.FC = () => {
                   <LocationSection
                     states={states}
                     cities={cities}
-                    country={country as CountryCode} // <-- cast here
+                    country={country as CountryCode}
                     COUNTRY_STATE_CITY_DATA={COUNTRY_STATE_CITY_DATA}
                   />
                 </div>
@@ -285,38 +408,71 @@ export const Bookings: React.FC = () => {
               </div>
             </form>
           </FormProvider>
-        </div>
-      </div>
+        </motion.div>
+      </article>
 
-      <div
-        className="py-12"
-        // style={{ background: colorScheme.secondary }}
+      {/* Process Section */}
+      <section
+        className="py-12 md:py-16"
+        style={{ background: colorScheme.gray[50] }}
       >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <BoldText as="h2" className="text-center text-3xl mb-4">
-            What to Expect After Submitting
-          </BoldText>
+          <motion.header
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <ExtraBoldText
+              style={{
+                color: colorScheme.primary,
+                fontSize: 'clamp(2rem, 4vw, 3rem)',
+                lineHeight: '1.2',
+                marginBottom: '1rem',
+              }}
+              useThemeColor={false}
+            >
+              What to Expect After Submitting
+            </ExtraBoldText>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="w-24 h-1 mx-auto mt-4 rounded-full"
+              style={{ backgroundColor: colorScheme.accent }}
+            />
+          </motion.header>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
             {[
               {
                 step: '1',
+                icon: faClock,
                 title: 'Confirmation Email',
                 desc: "You'll receive an immediate confirmation that we've received your request",
               },
               {
                 step: '2',
+                icon: faCalendarAlt,
                 title: 'Review Process',
                 desc: 'Our team will review your request within 48 business hours',
               },
               {
                 step: '3',
+                icon: faUserCheck,
                 title: 'Personal Contact',
                 desc: 'A team member will contact you to discuss details and availability',
               },
-            ].map(({ step, title, desc }) => (
-              <div
+            ].map(({ step, icon, title, desc }) => (
+              <motion.div
                 key={step}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: step * 0.1 }}
                 className="p-6 rounded-xl shadow-md border text-center"
                 style={{
                   backgroundColor: colorScheme.surface,
@@ -327,25 +483,38 @@ export const Bookings: React.FC = () => {
                   className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4"
                   style={{ backgroundColor: colorScheme.secondary }}
                 >
-                  <BoldText
+                  <FontAwesomeIcon
+                    icon={icon}
                     className="text-xl"
-                    style={{ color: colorScheme.secondary }} // ✅ use existing property
-                  >
-                    {step}
-                  </BoldText>
+                    style={{ color: colorScheme.white }}
+                  />
                 </div>
                 <SemiBoldText as="h3" className="text-lg mb-2">
                   {title}
                 </SemiBoldText>
-                <RegularText>{desc}</RegularText>
-              </div>
+                <RegularText style={{ color: colorScheme.textSecondary }}>
+                  {desc}
+                </RegularText>
+              </motion.div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
+      {/* Download Section */}
       <DownloadSection />
-      <NewsletterForm />
+
+      {/* Newsletter Section */}
+      <section
+        className="py-12 md:py-16"
+        style={{
+          background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
+        }}
+      >
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <NewsletterForm />
+        </div>
+      </section>
     </div>
   );
 };

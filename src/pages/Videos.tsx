@@ -16,13 +16,16 @@ import { NewsletterForm } from '../components/util/Newsletter';
 import { AudioMackComponent } from '../components/Homepage/AmazonMusic';
 import { DownloadSection } from '../components/util/Download';
 import { videos } from '../components/data/videosData';
-// import { DonationCallToAction } from '../components/util/DonationSupport';
+import { LayoutTemplate } from '../components/util/hero';
+import { SEO } from '../components/util/SEO';
 
 import { useTheme } from '../contexts/ThemeContext';
 import {
   LightText,
   ExtraBoldText,
   BoldText,
+  SemiBoldText,
+  RegularText,
 } from '../components/ui/fonts/typography';
 import CustomButton from '../components/ui/fonts/buttons/CustomButton';
 
@@ -62,109 +65,195 @@ export const VideosData: React.FC = () => {
   };
 
   return (
-    <div>
-      {/* Enhanced Hero Section */}
-      <motion.section
-        className="pt-32 pb-24  relative"
-        style={{
-          background: `linear-gradient(to bottom right, 
-          ${colorScheme.background}, ${colorScheme.background})`,
+    <div style={{ backgroundColor: colorScheme.background }}>
+      <SEO
+        title="ClaudyGod Videos - Music Videos, Visualizers & Live Sessions"
+        description="Watch ClaudyGod's music videos, visualizers, and live worship sessions. Experience the divine fusion of American Contemporary Christian Music and Afro-Gospel."
+        keywords="claudygod videos, gospel music videos, worship sessions, christian music visualizers, live performances"
+        canonical="https://claudygod.org/videos"
+        image="https://claudygod.org/images/videos-og.jpg"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'VideoGallery',
+          name: 'ClaudyGod Video Collection',
+          description: 'Music videos, visualizers and live worship sessions',
+          url: 'https://claudygod.org/videos',
+          publisher: {
+            '@type': 'Person',
+            name: 'ClaudyGod',
+          },
         }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
+      />
+
+      <VideoPlayerModal
+        videoId={selectedVideoId}
+        onClose={() => setSelectedVideoId(null)}
+      />
+
+      {/* Hero Section */}
+      <LayoutTemplate
+        backgroundImage="https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+        overlayColor="rgba(0,0,0,0.75)"
+        backgroundPosition="center center"
+        className="h-[100vh] md:h-[100vh]"
+        title={''}
       >
-        <div className="container mx-auto px-4 relative">
-          {/* Decorative elements */}
-          <div
-            className="absolute top-0 left-0 w-full h-full opacity-10"
-            style={{
-              backgroundImage:
-                "url('https://www.transparenttextures.com/patterns/carbon-fibre.png')",
-            }}
-          ></div>
-          <div
-            className="absolute top-10 right-10 text-9xl"
-            style={{ color: `${colorScheme.accent}30` }}
+        <motion.div
+          className="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full h-full"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div
+            initial={{ y: -20 }}
+            animate={{ y: 0 }}
+            transition={{ delay: 0.2, duration: 0.7 }}
+            className="mb-6"
           >
-            <FontAwesomeIcon icon={faVideo} />
-          </div>
+            <ExtraBoldText
+              style={{
+                color: '#ffffff',
+                fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                lineHeight: '1.1',
+                textShadow: '0 4px 8px rgba(0,0,0,0.6)',
+                marginBottom: '1rem',
+              }}
+              useThemeColor={false}
+            >
+              Videos
+            </ExtraBoldText>
+          </motion.div>
 
           <motion.div
-            className="relative z-10 max-w-4xl"
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7 }}
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-8 mx-auto"
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="max-w-3xl"
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-            >
-              <ExtraBoldText
-                fontSize="3rem"
-                style={{ color: colorScheme.gray[300] }}
-              >
-                Videos
-              </ExtraBoldText>
-            </motion.div>
-
-            <motion.div
-              className="h-1 mb-8"
+            <SemiBoldText
               style={{
-                background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary})`,
-                width: '6rem',
+                color: '#ffffff',
+                fontSize: 'clamp(1.25rem, 3vw, 2rem)',
+                textShadow: '0 2px 4px rgba(0,0,0,0.6)',
+                lineHeight: '1.4',
               }}
-              initial={{ width: 0 }}
-              animate={{ width: '6rem' }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-            />
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
+              useThemeColor={false}
             >
-              <LightText className="text-lg md:text-xl max-w-2xl mb-10">
-                Experience the divine fusion of American Contemporary Christian
-                Music and Afro-Gospel Songs through ClaudyGod's Inspirational
-                Journey.
-              </LightText>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-            >
-              <CustomButton
-                onClick={scrollToVideoGrid}
-                size="lg"
-                className="transition-transform duration-300 ease-in-out
-               bg-transparent hover:bg-indigo-100
-               text-indigo-700 hover:text-indigo-900"
-                style={{ backgroundColor: 'transparent' }}
-              >
-                <BoldText fontSize="1rem">
-                  <span className="p-3 rounded-md inline-flex items-center gap-2">
-                    Browse more videos
-                    <FontAwesomeIcon icon={faArrowRight} />
-                  </span>
-                </BoldText>
-              </CustomButton>
-            </motion.div>
+              Experience the divine fusion of American Contemporary Christian
+              Music and Afro-Gospel
+            </SemiBoldText>
           </motion.div>
-        </div>
-      </motion.section>
 
-      <div style={{ backgroundColor: colorScheme.background }}>
-        <VideoPlayerModal
-          videoId={selectedVideoId}
-          onClose={() => setSelectedVideoId(null)}
-        />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="mt-8"
+          >
+            <CustomButton
+              onClick={scrollToVideoGrid}
+              size="lg"
+              className="transition-transform duration-300 ease-in-out bg-transparent hover:bg-white/20 text-white border-white border-2"
+              style={{ backgroundColor: 'transparent' }}
+            >
+              <BoldText fontSize="1rem">
+                <span className="p-3 rounded-md inline-flex items-center gap-2">
+                  Browse Videos
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </span>
+              </BoldText>
+            </CustomButton>
+          </motion.div>
+        </motion.div>
+      </LayoutTemplate>
+
+      {/* Video Content */}
+      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        {/* Section Header */}
+        <header className="mb-12 md:mb-16 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-opacity-10 mb-6"
+            style={{ backgroundColor: `${colorScheme.primary}20` }}
+          >
+            <FontAwesomeIcon
+              icon={faVideo}
+              style={{ color: colorScheme.primary }}
+            />
+            <LightText
+              style={{
+                color: colorScheme.primary,
+                fontSize: '0.875rem',
+                letterSpacing: '0.05em',
+              }}
+              useThemeColor={false}
+            >
+              VIDEO COLLECTION
+            </LightText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <ExtraBoldText
+              style={{
+                color: colorScheme.primary,
+                fontSize: 'clamp(2rem, 4vw, 3rem)',
+                lineHeight: '1.2',
+                marginBottom: '1rem',
+              }}
+              useThemeColor={false}
+            >
+              Worship Through Visual Media
+            </ExtraBoldText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-4xl mx-auto"
+          >
+            <SemiBoldText
+              style={{
+                color: colorScheme.accent,
+                fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
+                lineHeight: '1.6',
+              }}
+              useThemeColor={false}
+            >
+              Explore our collection of music videos, visualizers, and live
+              worship sessions that bring the gospel to life through powerful
+              visual storytelling
+            </SemiBoldText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="w-24 h-1 mx-auto mt-6 rounded-full"
+            style={{ backgroundColor: colorScheme.accent }}
+          />
+        </header>
 
         {/* Diagonal Sections */}
-        <section className="pt-16 md:pt-24">
+        <section className="space-y-12 md:space-y-20">
           <DiagonalSection
             title="Music Videos"
             description="Professionally produced music videos showcasing ClaudyGod's worship ministry"
@@ -199,176 +288,205 @@ export const VideosData: React.FC = () => {
             }}
           />
         </section>
+      </article>
 
-        {/* CTA Section */}
-        <div
-          className="py-16 text-center"
-          style={{
-            background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary})`,
-          }}
-        >
-          <CustomButton
-            variant="primary"
-            onClick={scrollToVideoGrid}
-            className="px-10 py-4 text-xl md:text-2xl
-             flex items-center  mx-auto"
-            whileHover={{
-              scale: 1.05,
-              backgroundColor: colorScheme.white,
-              color: colorScheme.primary,
-            }}
-            whileTap={{ scale: 0.98 }}
+      {/* CTA Section */}
+      <section
+        className="py-16 text-center"
+        style={{
+          background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary})`,
+        }}
+      >
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
-            <BoldText>
-              Explore Full Collection
-              <span className="ml-2 gap-9">
-                <FontAwesomeIcon icon={faArrowRight} />
-              </span>
-            </BoldText>
-          </CustomButton>
+            <CustomButton
+              variant="primary"
+              onClick={scrollToVideoGrid}
+              className="px-10 py-4 text-xl md:text-2xl flex items-center mx-auto"
+              whileHover={{
+                scale: 1.05,
+                backgroundColor: colorScheme.white,
+                color: colorScheme.primary,
+              }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <BoldText>
+                Explore Full Collection
+                <span className="ml-2">
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </span>
+              </BoldText>
+            </CustomButton>
+          </motion.div>
         </div>
+      </section>
 
-        {/* Video Grid Section */}
-        <div
-          ref={videoGridRef}
-          className="pt-16 pb-24"
-          style={{
-            background: `linear-gradient(to bottom, ${colorScheme.background}, ${colorScheme.gray[50]})`,
-          }}
-        >
-          <div className="container mx-auto px-4 md:px-8">
-            {/* Category Filter */}
-            <div className="flex flex-wrap justify-center gap-4 mb-16">
-              {(
-                ['All', 'Music Videos', 'Visualizers', 'Live Sessions'] as const
-              ).map(category => (
-                <motion.div
-                  key={category}
-                  whileHover={{
-                    scale: 1.05,
-                    backgroundColor:
-                      hoveredCategory === category
-                        ? colorScheme.primary
-                        : colorScheme.gray[100],
-                    color:
-                      hoveredCategory === category
-                        ? colorScheme.primary
-                        : colorScheme.primary,
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  onMouseEnter={() => setHoveredCategory(category)}
-                  onMouseLeave={() => setHoveredCategory(null)}
-                >
-                  <CustomButton
-                    variant={
-                      activeCategory === category ? 'primary' : 'secondary'
-                    }
-                    onClick={() => {
-                      setActiveCategory(category);
-                      setCurrentPage(1);
-                    }}
-                    className="px-6 py-3 rounded-full flex items-center gap-3" // Increased gap from 2 to 3
-                  >
-                    <BoldText className="flex items-center gap-4">
-                      {' '}
-                      {/* Added nested flex container */}
-                      <FontAwesomeIcon icon={categoryIcons[category]} />
-                      <span>{category}</span>{' '}
-                      {/* Wrapped text in span for better spacing control */}
-                    </BoldText>
-                  </CustomButton>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Video Grid */}
-            {paginatedVideos.length > 0 ? (
+      {/* Video Grid Section */}
+      <section
+        ref={videoGridRef}
+        className="py-16 md:py-24"
+        style={{
+          background: `linear-gradient(to bottom, ${colorScheme.background}, ${colorScheme.gray[50]})`,
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Category Filter */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-wrap justify-center gap-4 mb-16"
+          >
+            {(
+              ['All', 'Music Videos', 'Visualizers', 'Live Sessions'] as const
+            ).map(category => (
               <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
+                key={category}
+                whileHover={{
+                  scale: 1.05,
+                  backgroundColor:
+                    hoveredCategory === category
+                      ? colorScheme.primary
+                      : colorScheme.gray[100],
+                  color:
+                    hoveredCategory === category
+                      ? colorScheme.primary
+                      : colorScheme.primary,
+                }}
+                whileTap={{ scale: 0.95 }}
+                onMouseEnter={() => setHoveredCategory(category)}
+                onMouseLeave={() => setHoveredCategory(null)}
               >
-                {paginatedVideos.map(video => (
-                  <VideoCard
-                    key={video.id}
-                    content={video}
-                    onSelect={setSelectedVideoId}
-                  />
-                ))}
-              </motion.div>
-            ) : (
-              <div className="text-center py-12">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="inline-block p-6 rounded-full mb-6"
-                  style={{ backgroundColor: colorScheme.gray[100] }}
-                >
-                  <FontAwesomeIcon
-                    icon={faVideo}
-                    className="text-4xl"
-                    style={{ color: colorScheme.primary }}
-                  />
-                </motion.div>
-                <ExtraBoldText
-                  className="text-xl md:text-2xl mb-4"
-                  style={{ color: colorScheme.primary }}
-                >
-                  No videos found in this category
-                </ExtraBoldText>
                 <CustomButton
-                  variant="text"
-                  onClick={() => setActiveCategory('All')}
+                  variant={
+                    activeCategory === category ? 'primary' : 'secondary'
+                  }
+                  onClick={() => {
+                    setActiveCategory(category);
+                    setCurrentPage(1);
+                  }}
+                  className="px-6 py-3 rounded-full flex items-center gap-3"
                 >
-                  <BoldText style={{ color: colorScheme.primary }}>
-                    View all videos
+                  <BoldText className="flex items-center gap-2">
+                    <FontAwesomeIcon icon={categoryIcons[category]} />
+                    <span>{category}</span>
                   </BoldText>
                 </CustomButton>
-              </div>
-            )}
-
-            {/* Pagination */}
-            {paginatedVideos.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                <PaginationControls
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={setCurrentPage}
-                />
               </motion.div>
-            )}
-          </div>
-        </div>
+            ))}
+          </motion.div>
 
-        {/* Divider */}
+          {/* Video Grid */}
+          {paginatedVideos.length > 0 ? (
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              {paginatedVideos.map(video => (
+                <VideoCard
+                  key={video.id}
+                  content={video}
+                  onSelect={setSelectedVideoId}
+                />
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="text-center py-12"
+            >
+              <div
+                className="inline-block p-6 rounded-full mb-6"
+                style={{ backgroundColor: colorScheme.gray[100] }}
+              >
+                <FontAwesomeIcon
+                  icon={faVideo}
+                  className="text-4xl"
+                  style={{ color: colorScheme.primary }}
+                />
+              </div>
+              <ExtraBoldText
+                className="text-xl md:text-2xl mb-4"
+                style={{ color: colorScheme.primary }}
+              >
+                No videos found in this category
+              </ExtraBoldText>
+              <CustomButton
+                variant="text"
+                onClick={() => setActiveCategory('All')}
+              >
+                <BoldText style={{ color: colorScheme.primary }}>
+                  View all videos
+                </BoldText>
+              </CustomButton>
+            </motion.div>
+          )}
+
+          {/* Pagination */}
+          {paginatedVideos.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="mt-12"
+            >
+              <PaginationControls
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+            </motion.div>
+          )}
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div
+        className="relative h-24"
+        style={{
+          backgroundColor: colorScheme.primary,
+        }}
+      >
         <div
-          className="relative h-24"
-          style={{
-            backgroundColor: colorScheme.primary,
-          }}
+          className="absolute inset-0 flex items-center justify-center"
+          style={{ backgroundColor: colorScheme.primary }}
         >
           <div
-            className="absolute inset-0 flex items-center justify-center"
-            style={{ backgroundColor: colorScheme.primary }}
-          >
-            <div
-              className="w-24 h-1"
-              style={{ backgroundColor: `${colorScheme.white}30` }}
-            ></div>
-          </div>
+            className="w-24 h-1"
+            style={{ backgroundColor: `${colorScheme.white}30` }}
+          ></div>
         </div>
-
-        {/* Additional Sections */}
-        <AudioMackComponent />
-        <DownloadSection />
-        {/* 
-        <NewsletterForm /> */}
       </div>
+
+      {/* Additional Sections */}
+      <AudioMackComponent />
+
+      {/* Download Section */}
+      <DownloadSection />
+
+      {/* Newsletter Section */}
+      <section
+        className="py-12 md:py-16"
+        style={{
+          background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
+        }}
+      >
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <NewsletterForm />
+        </div>
+      </section>
     </div>
   );
 };

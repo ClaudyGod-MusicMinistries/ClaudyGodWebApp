@@ -2,7 +2,13 @@
 import { useState, Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faTimes,
+  faArrowRight,
+  faNewspaper,
+  faMusic,
+  faMapMarkerAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { Tour1 } from '../assets/';
 
@@ -18,11 +24,18 @@ import { DonationCallToAction } from '../components/util/DonationSupport';
 import { FollowUs } from '../components/news/Tournews';
 import { AlbumsSection } from '../components/news/AlbumSection';
 import { LiveSessionsSection } from '../components/news/Session';
+import { SEO } from '../components/util/SEO';
 
 // Design System
-import { ExtraBoldText, RegularText } from '../components/ui/fonts/typography';
+import {
+  ExtraBoldText,
+  RegularText,
+  SemiBoldText,
+  LightText,
+} from '../components/ui/fonts/typography';
 import CustomButton from '../components/ui/fonts/buttons/CustomButton';
 import { useTheme } from '../contexts/ThemeContext';
+import { LayoutTemplate } from '../components/util/hero';
 
 export const News = () => {
   const { colorScheme } = useTheme();
@@ -57,144 +70,299 @@ export const News = () => {
 
   return (
     <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
+      <SEO
+        title="ClaudyGod News & Updates - Music Tours & Ministry Events"
+        description="Stay updated with the latest news from ClaudyGod Ministries. Music tours, worship events, album releases, and ministry updates."
+        keywords="claudygod news, gospel music tours, worship events, ministry updates, christian events"
+        canonical="https://claudygod.org/news"
+        image="https://claudygod.org/images/news-og.jpg"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'NewsArticle',
+          headline: 'ClaudyGod News & Updates',
+          description: 'Latest news and updates from ClaudyGod Ministries',
+          datePublished: new Date().toISOString(),
+          author: {
+            '@type': 'Person',
+            name: 'ClaudyGod',
+          },
+          publisher: {
+            '@type': 'Organization',
+            name: 'ClaudyGod Ministries',
+          },
+        }}
+      />
+
       {/* ===== Hero ===== */}
-      <header className="flex-shrink-0 w-full">
-        <HeroSlider />
-      </header>
+      <LayoutTemplate
+        backgroundImage={Tour1}
+        overlayColor="rgba(0,0,0,0.75)"
+        backgroundPosition="center center"
+        className="h-[100vh] md:h-[100vh]"
+        title={''}
+      >
+        <motion.div
+          className="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full h-full"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div
+            initial={{ y: -20 }}
+            animate={{ y: 0 }}
+            transition={{ delay: 0.2, duration: 0.7 }}
+            className="mb-6"
+          >
+            <ExtraBoldText
+              style={{
+                color: '#ffffff',
+                fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                lineHeight: '1.1',
+                textShadow: '0 4px 8px rgba(0,0,0,0.6)',
+                marginBottom: '1rem',
+              }}
+              useThemeColor={false}
+            >
+              News & Updates
+            </ExtraBoldText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-8 mx-auto"
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="max-w-3xl"
+          >
+            <SemiBoldText
+              style={{
+                color: '#ffffff',
+                fontSize: 'clamp(1.25rem, 3vw, 2rem)',
+                textShadow: '0 2px 4px rgba(0,0,0,0.6)',
+                lineHeight: '1.4',
+              }}
+              useThemeColor={false}
+            >
+              Stay updated with the latest from ClaudyGod Ministries
+            </SemiBoldText>
+          </motion.div>
+        </motion.div>
+      </LayoutTemplate>
 
       {/* ===== Main Content ===== */}
       <main className="flex-grow flex flex-col w-full">
-        {/* Music Tour Intro */}
-        <section
-          id="music"
-          className="py-12 px-4 sm:px-6 lg:px-8 lg:py-20"
-          style={{
-            background: `linear-gradient(to bottom, 
-              ${colorScheme.text}, 
-              ${colorScheme.surface}, 
-              ${colorScheme.surfaceVariant}
-            )`,
-          }}
-        >
-          {/* Header */}
-          <motion.header
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col items-center mb-12 lg:mb-16 text-center"
-          >
-            <ExtraBoldText
-              fontSize="2rem"
-              mdFontSize="3rem"
-              style={{ color: colorScheme.background }}
-              className="mb-4"
-            >
-              ClaudyGod - Uniting Hearts in Worship Across Various Cities
-            </ExtraBoldText>
-
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="max-w-3xl mt-2 text-sm lg:text-base"
-              style={{ color: colorScheme.background }}
-            >
-              Bringing divine worship experiences to communities worldwide
-              through music, prayer, and fellowship
-            </motion.p>
-
-            <motion.span
-              initial={{ width: 0 }}
-              animate={{ width: '5rem' }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="block h-1 my-4 lg:my-6"
-              style={{ backgroundColor: colorScheme.primary }}
-            />
-          </motion.header>
-
-          {/* Image + Text Grid */}
-          <article className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-12 lg:mb-20">
-            {/* Image */}
-            <motion.figure
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+        {/* News Content */}
+        <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+          {/* Section Header */}
+          <header className="mb-12 md:mb-16 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="relative rounded-2xl overflow-hidden aspect-video lg:aspect-square order-2 lg:order-1"
+              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-opacity-10 mb-6"
+              style={{ backgroundColor: `${colorScheme.primary}20` }}
             >
-              <img
-                src={Tour1}
-                alt="ClaudyGod in worship"
-                className="w-full h-full object-cover"
-                loading="eager"
+              <FontAwesomeIcon
+                icon={faNewspaper}
+                style={{ color: colorScheme.primary }}
               />
-              <figcaption
-                className="absolute inset-0"
+              <LightText
                 style={{
-                  background: `linear-gradient(to top, ${colorScheme.background} 0%, transparent 30%)`,
+                  color: colorScheme.primary,
+                  fontSize: '0.875rem',
+                  letterSpacing: '0.05em',
                 }}
-              />
-            </motion.figure>
+                useThemeColor={false}
+              >
+                LATEST UPDATES
+              </LightText>
+            </motion.div>
 
-            {/* Text */}
-            <motion.section
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="order-1 lg:order-2 flex flex-col"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
               <ExtraBoldText
-                fontSize="1.5rem"
-                className="mb-4"
-                style={{ color: colorScheme.text }}
+                style={{
+                  color: colorScheme.primary,
+                  fontSize: 'clamp(2rem, 4vw, 3rem)',
+                  lineHeight: '1.2',
+                  marginBottom: '1rem',
+                }}
+                useThemeColor={false}
               >
-                What to Expect - Music Tour
+                Ministry News & Events
               </ExtraBoldText>
+            </motion.div>
 
-              <RegularText
-                style={{ color: colorScheme.text }}
-                className="mb-3 text-sm lg:text-base"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="max-w-4xl mx-auto"
+            >
+              <SemiBoldText
+                style={{
+                  color: colorScheme.accent,
+                  fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
+                  lineHeight: '1.6',
+                }}
+                useThemeColor={false}
               >
-                "My mission is to create spaces where people can encounter God
-                through worship..."
-              </RegularText>
+                Bringing divine worship experiences to communities worldwide
+                through music, prayer, and fellowship
+              </SemiBoldText>
+            </motion.div>
 
-              <RegularText
-                style={{ color: colorScheme.textSecondary }}
-                className="mb-6 text-sm lg:text-base"
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="w-24 h-1 mx-auto mt-6 rounded-full"
+              style={{ backgroundColor: colorScheme.accent }}
+            />
+          </header>
+
+          {/* Music Tour Intro */}
+          <section className="mb-20">
+            <motion.article
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
+            >
+              {/* Image */}
+              <motion.figure
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="relative rounded-2xl overflow-hidden aspect-video lg:aspect-square order-2 lg:order-1"
               >
-                Join me on this journey as we take worship beyond church walls
-                and into communities that hunger for spiritual connection.
-              </RegularText>
-
-              <div className="flex">
-                <CustomButton
+                <img
+                  src={Tour1}
+                  alt="ClaudyGod in worship"
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                />
+                <figcaption
+                  className="absolute inset-0"
                   style={{
-                    backgroundColor: colorScheme.primary,
-                    color: colorScheme.onPrimary,
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '12px 16px',
-                    justifyContent: 'space-between',
+                    background: `linear-gradient(to top, ${colorScheme.background} 0%, transparent 30%)`,
                   }}
-                  aria-label="View tour highlights"
-                  onClick={() => setShowHighlightsModal(true)}
-                >
-                  <span className="text-sm">Tour Highlights</span>
-                  <FontAwesomeIcon
-                    icon={faArrowRight}
-                    style={{ marginLeft: '20px', fontSize: '16px' }}
-                    aria-hidden="true"
-                  />
-                </CustomButton>
-              </div>
-            </motion.section>
-          </article>
-        </section>
+                />
+              </motion.figure>
 
-        {/* Albums Section */}
-        <section>
-          <AlbumsSection openVideoModal={openVideoModal} />
-        </section>
+              {/* Text */}
+              <motion.section
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="order-1 lg:order-2 flex flex-col"
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4 w-fit"
+                  style={{ backgroundColor: `${colorScheme.primary}10` }}
+                >
+                  <FontAwesomeIcon
+                    icon={faMusic}
+                    style={{ color: colorScheme.primary }}
+                  />
+                  <LightText
+                    style={{
+                      color: colorScheme.primary,
+                      fontSize: '0.875rem',
+                    }}
+                    useThemeColor={false}
+                  >
+                    MUSIC TOUR
+                  </LightText>
+                </motion.div>
+
+                <ExtraBoldText
+                  fontSize="1.75rem"
+                  className="mb-4"
+                  style={{ color: colorScheme.text }}
+                >
+                  What to Expect - Music Tour
+                </ExtraBoldText>
+
+                <RegularText
+                  style={{ color: colorScheme.text }}
+                  className="mb-3 text-base lg:text-lg"
+                >
+                  "My mission is to create spaces where people can encounter God
+                  through worship..."
+                </RegularText>
+
+                <RegularText
+                  style={{ color: colorScheme.textSecondary }}
+                  className="mb-6 text-base lg:text-lg"
+                >
+                  Join me on this journey as we take worship beyond church walls
+                  and into communities that hunger for spiritual connection.
+                </RegularText>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  className="flex"
+                >
+                  <CustomButton
+                    style={{
+                      backgroundColor: colorScheme.primary,
+                      color: colorScheme.onPrimary,
+                      display: 'flex',
+                      alignItems: 'center',
+                      padding: '12px 16px',
+                      justifyContent: 'space-between',
+                    }}
+                    aria-label="View tour highlights"
+                    onClick={() => setShowHighlightsModal(true)}
+                  >
+                    <span className="text-sm">Tour Highlights</span>
+                    <FontAwesomeIcon
+                      icon={faArrowRight}
+                      style={{ marginLeft: '20px', fontSize: '16px' }}
+                      aria-hidden="true"
+                    />
+                  </CustomButton>
+                </motion.div>
+              </motion.section>
+            </motion.article>
+          </section>
+
+          {/* Albums Section */}
+          <section className="mb-20">
+            <AlbumsSection openVideoModal={openVideoModal} />
+          </section>
+
+          {/* Other Content Sections */}
+          <section className="space-y-20">
+            <FollowUs />
+            <LiveSessionsSection />
+            <ArtistQuote />
+          </section>
+        </article>
 
         {/* Highlights Modal */}
         <AnimatePresence>
@@ -266,6 +434,10 @@ export const News = () => {
                           setShowHighlightsModal(false);
                         }}
                       >
+                        <FontAwesomeIcon
+                          icon={faMapMarkerAlt}
+                          className="mr-2"
+                        />
                         {city}
                       </motion.div>
                     )
@@ -275,11 +447,6 @@ export const News = () => {
             </motion.section>
           )}
         </AnimatePresence>
-
-        {/* Other Content Sections */}
-        <FollowUs />
-        <LiveSessionsSection />
-        <ArtistQuote />
       </main>
 
       {/* ===== Footer ===== */}
@@ -297,14 +464,28 @@ export const News = () => {
           </Suspense>
         )}
 
-        <DonationCallToAction
-          title="Partner with Our Ministry"
-          subtitle="Your Support Makes a Difference"
-          description="Join us in spreading the gospel through music."
-          goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
-          donateUrl="/donate"
-        />
-        <NewsletterForm />
+        {/* Donation Section */}
+        <section className="my-12 md:my-16">
+          <DonationCallToAction
+            title="Partner with Our Ministry"
+            subtitle="Your Support Makes a Difference"
+            description="Join us in spreading the gospel through music."
+            goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+            donateUrl="/donate"
+          />
+        </section>
+
+        {/* Newsletter Section */}
+        <section
+          className="py-12 md:py-16"
+          style={{
+            background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
+          }}
+        >
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <NewsletterForm />
+          </div>
+        </section>
       </footer>
     </div>
   );
