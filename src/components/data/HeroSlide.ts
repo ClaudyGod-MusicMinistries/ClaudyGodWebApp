@@ -9,7 +9,7 @@ import {
   faPodcast,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { DesktopBg, Back3, Resize4, Main } from '../../assets';
+import { DesktopBg, Back3, Tour1, Resize4, Main } from '../../assets';
 import { Transition, Variants } from 'framer-motion';
 
 export interface HeroSlide {
@@ -62,7 +62,7 @@ export const imageVariants: Variants = {
     scale: 1,
     opacity: 1,
     transition: {
-      duration: 1.2,
+      duration: 3, // Increased to 3 seconds
       ease: 'easeInOut',
     } as Transition,
   },
@@ -76,12 +76,12 @@ export const slideVariants: Variants = {
   center: {
     x: 0,
     opacity: 1,
-    transition: { duration: 1.5, ease: 'easeInOut' } as Transition,
+    transition: { duration: 2.5, ease: 'easeInOut' } as Transition, // Increased to 2.5 seconds
   },
   exit: (direction: number) => ({
     x: direction > 0 ? '-100%' : '100%',
     opacity: 0,
-    transition: { duration: 2.5, ease: 'easeInOut' } as Transition,
+    transition: { duration: 2.5, ease: 'easeInOut' } as Transition, // Increased to 2.5 seconds
   }),
 };
 
@@ -109,8 +109,8 @@ export const modalVariants: Variants = {
 export const heroSlides: HeroSlide[] = [
   {
     id: 1,
-    imageUrlMobile: Main,
-    imageUrlDesktop: DesktopBg,
+    imageUrlMobile: Tour1,
+    imageUrlDesktop: Tour1,
     type: 'quote',
     content: {
       quote:
@@ -170,7 +170,7 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     id: 4,
-    imageUrl: Resize4,
+    imageUrl: Tour1,
     type: 'quote',
     content: {
       quote: 'Praise the Lord Most High',

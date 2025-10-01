@@ -27,6 +27,7 @@ const HeroSlide = ({
       animate="center"
       exit="exit"
       className="absolute inset-0 h-full w-full"
+      transition={{ duration: 1.2 }} // Added transition prop for longer slide duration
     >
       <SlideBackground slide={slide} />
 
@@ -38,7 +39,10 @@ const HeroSlide = ({
             hidden: { opacity: 0 },
             visible: {
               opacity: 1,
-              transition: { staggerChildren: 0.2 },
+              transition: {
+                staggerChildren: 0.3, // Increased stagger for slower content reveal
+                duration: 1.5, // Added duration for content animation
+              },
             },
           }}
           className="max-w-4xl text-white"

@@ -5,22 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import StreamingModal from '../StreamingModel';
 import { useNavContext } from '../../contexts/NavContext';
 import { useTheme } from '../../contexts/ThemeContext';
-import {
-  faUser,
-  faMusic,
-  faVideo,
-  faNewspaper,
-  faBlog,
-  faCalendar,
-  faStore,
-  faHandsPraying,
-  faHandHoldingDollar,
-  faEnvelope,
-  faHouse,
-  faHeadset,
-  faBars,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons';
+import { faHeadset, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { navigationItems } from '../data/navbar';
 import { BoldText, LightText, SemiBoldText } from '../ui/fonts/typography';
 
 interface NavbarProps {
@@ -67,20 +53,6 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
     closeNav();
   }, [location, closeNav]);
 
-  const navigationItems = [
-    { to: '/', name: 'Home', icon: faHouse },
-    { to: '/biography', name: 'About', icon: faUser },
-    { to: '/music', name: 'Music', icon: faMusic },
-    { to: '/videos', name: 'Videos', icon: faVideo },
-    { to: '/bookings', name: 'Bookings', icon: faCalendar },
-    { to: '/blogs', name: 'Blogs', icon: faBlog },
-    { to: '/ministry', name: 'Ministry', icon: faHandsPraying },
-    { to: '/news', name: 'News', icon: faNewspaper },
-    { to: '/store', name: 'Store', icon: faStore },
-    { to: '/contact', name: 'Contact', icon: faEnvelope },
-    { to: '/donate', name: 'Donate', icon: faHandHoldingDollar },
-  ];
-
   return (
     <>
       {/* Spacer div for TopBanner */}
@@ -115,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
             <div>
               <BoldText
                 style={{ color: scrolled ? colorScheme.text : 'white' }}
-                className="text-lg leading-tight"
+                className="text-base leading-snug"
               >
                 ClaudyGod
               </BoldText>
@@ -125,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
                     ? colorScheme.secondary
                     : 'rgba(255, 255, 255, 0.9)',
                 }}
-                className="text-xs leading-tight"
+                className="text-[11px] leading-snug"
               >
                 Music & Ministry
               </LightText>
@@ -134,7 +106,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
 
           {/* Desktop Navigation - Center */}
           <nav className="hidden lg:flex items-center justify-center flex-1">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
               {navigationItems.map(link => (
                 <NavLink
                   key={link.to}
@@ -165,16 +137,19 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
           <div className="hidden lg:flex items-center justify-end flex-shrink-0">
             <button
               onClick={() => setIsModalOpen(true)}
-              className={`px-5 py-2 rounded-full transition-all flex items-center whitespace-nowrap -mr-6 ${
+              className={`px-3 py-1.5 rounded-full transition-all flex items-center whitespace-nowrap ${
                 scrolled
                   ? 'bg-purple-600 text-white shadow-md hover:bg-purple-700'
                   : 'bg-white/20 text-white backdrop-blur-sm hover:bg-white/30'
               }`}
             >
-              <FontAwesomeIcon icon={faHeadset} className="mr-2 text-sm" />
-              <SemiBoldText className="text-sm font-semibold">
+              <FontAwesomeIcon
+                icon={faHeadset}
+                className="mr-1.5 text-[10px]"
+              />
+              <LightText className="text-[5px] font-medium">
                 Listen Now
-              </SemiBoldText>
+              </LightText>
             </button>
           </div>
 
