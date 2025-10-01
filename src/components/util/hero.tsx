@@ -1,8 +1,13 @@
 // components/Herosection.tsx
 import React from 'react';
+import { LAYOUT_CONSTANTS } from './Layout';
 
-interface HeroSectionProps {
+interface LayoutTemplateProps {
+  title: string;
+  subtitle?: string;
   backgroundImage: string;
+  ctaText?: string;
+  onCtaClick?: () => void;
   className?: string;
   children?: React.ReactNode;
   overlayColor?: string;
@@ -10,17 +15,17 @@ interface HeroSectionProps {
   backgroundPosition?: string;
 }
 
-export const Herosection: React.FC<HeroSectionProps> = ({
+export const LayoutTemplate: React.FC<LayoutTemplateProps> = ({
   backgroundImage,
   className = '',
-  children,
-  overlayColor = 'rgba(0,0,0,0.7)',
+  children, // Make sure this is destructured
+  overlayColor = 'rgba(0,0,0,0.4)',
   style,
   backgroundPosition = 'center center',
 }) => {
   return (
     <section
-      className={`relative w-full h-[100vh] md:h-[100vh] overflow-hidden ${className}`}
+      className={`relative w-full ${LAYOUT_CONSTANTS.HERO_HEIGHT.mobile} md:${LAYOUT_CONSTANTS.HERO_HEIGHT.desktop} overflow-hidden ${className}`}
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
@@ -29,15 +34,13 @@ export const Herosection: React.FC<HeroSectionProps> = ({
         ...style,
       }}
     >
-      {/* Very Dark Black Overlay */}
       <div
         className="absolute inset-0"
         style={{ backgroundColor: overlayColor }}
       />
 
-      <div className="container mx-auto relative flex h-full items-center px-4">
-        <div className="max-w-4xl text-white">{children}</div>
-      </div>
+      {/* ADD THIS: Render the children */}
+      <div className="relative z-10 h-full">{children}</div>
     </section>
   );
 };

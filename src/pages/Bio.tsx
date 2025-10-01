@@ -2,7 +2,7 @@
 import { SEO } from '../components/util/SEO';
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Herosection } from '../components/util/Herosection';
+import { LayoutTemplate } from '../components/util/hero';
 import { About1, About2 } from '../assets';
 import { NewsletterForm } from '../components/util/Newsletter';
 import { BioSection } from '../components/Bio/BioSectio';
@@ -64,16 +64,12 @@ export const Biography: React.FC = () => {
 
       <main>
         {/* Hero Section */}
-        <Herosection
-          title=""
-          subtitle=""
+        <LayoutTemplate
           backgroundImage={About1}
-          overlayColor="rgba(0,0,0,0.3)"
+          overlayColor="rgba(0,0,0,0.75)" // Darker overlay for better text contrast
           backgroundPosition="center 30%"
-          className="min-h-[90vh] md:min-h-[95vh]"
-          style={{
-            backgroundAttachment: 'fixed',
-          }}
+          className="h-[100vh] md:h-[100vh]" // Consistent height
+          title={''}
         >
           <motion.div
             className="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full h-full"
@@ -126,23 +122,11 @@ export const Biography: React.FC = () => {
                 American Contemporary Christian Music & Afro-Gospel Artist
               </SemiBoldText>
             </motion.div>
-
-            {/* Scroll indicator */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.2, duration: 0.8 }}
-              className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-            >
-              <div className="animate-bounce w-6 h-10 border-2 border-white rounded-full flex justify-center">
-                <div className="w-1 h-3 bg-white rounded-full mt-2"></div>
-              </div>
-            </motion.div>
           </motion.div>
-        </Herosection>
+        </LayoutTemplate>
 
         {/* Biography Content */}
-        <article className="max-w-7xl mx-auto px-4 py-12 md:py-16">
+        <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           {/* Section Header */}
           <header className="mb-12 md:mb-16 text-center">
             <motion.div
@@ -234,13 +218,13 @@ export const Biography: React.FC = () => {
               transition={{ duration: 0.6 }}
               className="relative my-12 md:my-16 p-6 md:p-8 rounded-2xl"
               style={{
-                background: `linear-gradient(135deg, ${colorScheme.primary}15, ${colorScheme.gray[100]})`,
-                border: `1px solid ${colorScheme.gray[200]}`,
+                background: `linear-gradient(135deg, ${colorScheme.gray[900]}, ${colorScheme.gray[800]})`, // darker gradient
+                border: `1px solid ${colorScheme.gray[700]}`,
               }}
             >
               <div
                 className="absolute top-4 right-4 text-3xl md:text-4xl opacity-20"
-                style={{ color: colorScheme.primary }}
+                style={{ color: colorScheme.accent }}
               >
                 <FontAwesomeIcon icon={faQuoteRight} />
               </div>
@@ -253,15 +237,15 @@ export const Biography: React.FC = () => {
                   />
                   <LightText
                     style={{
-                      color: colorScheme.text,
-                      fontSize: 'clamp(1.125rem, 2vw, 1.375rem)',
+                      color: 'white', // force white text for visibility
+                      fontSize: 'clamp(1.025rem, 2vw, 1.375rem)',
                       lineHeight: '1.6',
                       fontStyle: 'italic',
                     }}
                     useThemeColor={false}
                   >
-                    "I heard God say to me, 'I love your worship.' That moment
-                    defined my calling and ministry."
+                    I heard God say to me, 'I love your worship.' That moment
+                    defined my calling and ministry.
                   </LightText>
                 </div>
                 <SemiBoldText
@@ -306,7 +290,7 @@ export const Biography: React.FC = () => {
             background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
           }}
         >
-          <div className="max-w-4xl mx-auto px-4">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <NewsletterForm />
           </div>
         </section>

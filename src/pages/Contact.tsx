@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
-import { Herosection } from '../components/util/Herosection';
+import { LayoutTemplate } from '../components/util/hero';
 import { Log } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ContactForm from '../components/contact/ContactForm';
@@ -60,7 +60,7 @@ export const ContactData: React.FC = () => {
 
       <section className="relative">
         <div className="absolute inset-0 z-10" />
-        <Herosection
+        <LayoutTemplate
           title="ClaudyGod Music & Ministries / Contact"
           backgroundImage={Log}
           className="relative z-0"

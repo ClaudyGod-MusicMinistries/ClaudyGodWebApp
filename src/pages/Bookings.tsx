@@ -13,7 +13,7 @@ import {
 } from '../components/ui/fonts/typography';
 
 import { submitBooking } from '../components/api/bookingApi';
-import { Herosection } from '../components/util/Herosection';
+import { LayoutTemplate } from '../components/util/hero';
 import { Back3 } from '../assets/';
 import { NewsletterForm } from '../components/util/Newsletter';
 import { Modal } from '../components/Modal';
@@ -169,7 +169,7 @@ export const Bookings: React.FC = () => {
         </div>
       </Modal>
 
-      <Herosection
+      <LayoutTemplate
         title="Book ClaudyGod for Your Event"
         subtitle="Fill out the form below to request a booking"
         backgroundImage={Back3}

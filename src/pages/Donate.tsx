@@ -16,7 +16,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { SEO } from '../components/util/SEO';
 import { PaymentPlatforms } from '../components/donate/payment';
 import { NigerianBankTransfer } from '../components/donate/NigeriaAcct';
-import { Herosection } from '../components/util/Herosection';
+import { LayoutTemplate } from '../components/util/hero';
 import { DonationCallToAction } from '../components/util/DonationSupport';
 import {
   SemiBoldText,
@@ -140,7 +140,7 @@ const DonateHeroSlider: React.FC = () => {
               index === currentImageIndex ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            <Herosection
+            <LayoutTemplate
               title="Partner with Us to Spread the Gospel"
               subtitle="Your donation makes a difference in our music ministry"
               backgroundImage={img}

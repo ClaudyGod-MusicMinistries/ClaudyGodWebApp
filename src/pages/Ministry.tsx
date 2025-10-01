@@ -8,7 +8,7 @@ import {
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
-import { Herosection } from '../components/util/Herosection';
+import { LayoutTemplate } from '../components/util/hero';
 import { NewsletterForm } from '../components/util/Newsletter';
 import { About1 } from '../assets/';
 import { teachingsData, TeachingType } from '../components/data/MinistryData';
@@ -357,7 +357,7 @@ export const MinistryData = () => {
 
   return (
     <div style={{ backgroundColor: colorScheme.background }}>
-      <Herosection
+      <LayoutTemplate
         title="ClaudyGod Music & Ministries"
         subtitle="Spiritual Teachings & Podcasts"
         backgroundImage={About1}
