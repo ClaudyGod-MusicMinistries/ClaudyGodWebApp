@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
-import { BoldText, ExtraBoldText } from '../ui/fonts/typography';
+import { BoldText, UltraText, ShadowsText } from '../ui/fonts/typography';
 import CustomButton from '../ui/fonts/buttons/CustomButton';
 
 export const CtaSlide = ({
@@ -16,7 +16,7 @@ export const CtaSlide = ({
     <div className="space-y-6 sm:space-y-8 md:space-y-12 w-full px-4 sm:px-6 lg:px-20 xl:px-28">
       {/* Title Section */}
       <motion.div className="flex flex-col items-start gap-2 md:gap-4">
-        <ExtraBoldText
+        <UltraText
           fontSize="2rem"
           smFontSize="1.5rem"
           mdFontSize="4rem"
@@ -25,9 +25,10 @@ export const CtaSlide = ({
           className="drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] text-left leading-tight"
         >
           Want to Bring
-        </ExtraBoldText>
+        </UltraText>
 
-        <ExtraBoldText
+        {/* ClaudyGod with Shadows font */}
+        <ShadowsText
           fontSize="2rem"
           smFontSize="1.5rem"
           mdFontSize="4rem"
@@ -36,9 +37,9 @@ export const CtaSlide = ({
           className="drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] text-left leading-tight"
         >
           ClaudyGod Live
-        </ExtraBoldText>
+        </ShadowsText>
 
-        <ExtraBoldText
+        <UltraText
           fontSize="2.5rem"
           smFontSize="1.5rem"
           mdFontSize="4rem"
@@ -47,7 +48,7 @@ export const CtaSlide = ({
           className="drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] text-left leading-tight"
         >
           To your City?
-        </ExtraBoldText>
+        </UltraText>
       </motion.div>
 
       {/* Mobile View */}
@@ -60,6 +61,7 @@ export const CtaSlide = ({
         <motion.div>
           <BoldText
             fontSize="1.1rem"
+            smFontSize="1.3rem"
             style={{ color: colorScheme.textSecondary }}
             className="leading-snug max-w-md drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] text-left"
           >
@@ -155,7 +157,7 @@ export const CtaSlide = ({
               </CustomButton>
             </motion.div>
 
-            <BoldText
+            <UltraText
               fontSize="1.25rem"
               mdFontSize="1.5rem"
               lgFontSize="1.75rem"
@@ -163,7 +165,7 @@ export const CtaSlide = ({
               className="tracking-widest drop-shadow-[0_3px_6px_rgba(0,0,0,0.8)]"
             >
               Let's Make It Happen
-            </BoldText>
+            </UltraText>
           </motion.div>
 
           {/* Additional Info */}

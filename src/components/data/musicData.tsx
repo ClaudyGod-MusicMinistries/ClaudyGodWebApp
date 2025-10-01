@@ -103,3 +103,9 @@ export const latestReleasePlatforms = [
     safeRedirect: true,
   },
 ];
+export const streamingPlatforms = [
+  { name: 'Spotify', icon: faSpotify, url: '#' },
+  { name: 'Apple Music', icon: faApple, url: '#' },
+  { name: 'YouTube Music', icon: faYoutube, url: '#' },
+  { name: 'Deezer', icon: faDeezer, url: '#' },
+];

@@ -78,7 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
             onClick={closeNav}
             className="flex items-center flex-shrink-0 hover:opacity-80 transition-opacity -ml-6"
           >
-            <div className="h-10 w-10 flex items-center justify-center bg-white/10 rounded-full p-1">
+            <div className="h-10 w-10 flex items-center justify-center bg-white/10 rounded-full p-1 ml-3">
               <img src={Log} alt="Logo" className="h-7 w-7 rounded-full" />
             </div>
 
