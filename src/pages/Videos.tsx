@@ -25,9 +25,9 @@ import {
   ExtraBoldText,
   BoldText,
   SemiBoldText,
-  RegularText,
 } from '../components/ui/fonts/typography';
 import CustomButton from '../components/ui/fonts/buttons/CustomButton';
+import { Resize4 } from '../assets/';
 
 const VIDEOS_PER_PAGE = 6;
 
@@ -92,8 +92,8 @@ export const VideosData: React.FC = () => {
 
       {/* Hero Section */}
       <LayoutTemplate
-        backgroundImage="https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-        overlayColor="rgba(0,0,0,0.75)"
+        backgroundImage={Resize4}
+        overlayColor="rgba(0,0,0,0.55)"
         backgroundPosition="center center"
         className="h-[100vh] md:h-[100vh]"
         title={''}

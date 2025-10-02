@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SEO } from '../components/util/SEO';
 import { motion } from 'framer-motion';
 import { AudioMackComponent } from '../components/Homepage/AmazonMusic';
-import { Cover } from '../assets/';
+import { Cover, Back3 } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DownloadSection } from '../components/util/Download';
 import {
@@ -10,7 +10,6 @@ import {
   faArrowDown,
   faExternalLinkAlt,
   faMusic,
-  faHeadphones,
 } from '@fortawesome/free-solid-svg-icons';
 import { securedMusicPlatforms } from '../components/data/musicData';
 import { NewsletterForm } from '../components/util/Newsletter';
@@ -24,7 +23,6 @@ import {
   LightText,
   ExtraBoldText,
   BoldText,
-  RegularText,
 } from '../components/ui/fonts/typography';
 import CustomButton from '../components/ui/fonts/buttons/CustomButton';
 
@@ -130,7 +128,7 @@ export const MusicData = () => {
   return (
     <main
       className="min-h-screen"
-      style={{ backgroundColor: colorScheme.background }}
+      style={{ backgroundColor: `${colorScheme.gray}200` }}
     >
       <SEO
         title="ClaudyGod Music - Stream Gospel Albums & Singles"
@@ -162,8 +160,8 @@ export const MusicData = () => {
 
       {/* Hero Section */}
       <LayoutTemplate
-        backgroundImage={Cover}
-        overlayColor="rgba(0,0,0,0.75)"
+        backgroundImage={Back3}
+        overlayColor="rgba(0,0,0,0.55)"
         backgroundPosition="center center"
         className="h-[100vh] md:h-[100vh]"
         title={''}
@@ -186,7 +184,7 @@ export const MusicData = () => {
                 fontSize: 'clamp(2.5rem, 6vw, 5rem)',
                 lineHeight: '1.1',
                 textShadow: '0 4px 8px rgba(0,0,0,0.6)',
-                marginBottom: '1rem',
+                // marginBottom: '1rem',
               }}
               useThemeColor={false}
             >
@@ -198,7 +196,7 @@ export const MusicData = () => {
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-8 mx-auto"
+            className="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-5 mx-auto"
           />
 
           <motion.div
@@ -224,7 +222,10 @@ export const MusicData = () => {
       </LayoutTemplate>
 
       {/* Music Content */}
-      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <article
+        className="max-w-7xl mx-auto 
+      px-4 sm:px-6 lg:px-8 py-12 md:py-16"
+      >
         {/* Section Header */}
         <header className="mb-12 md:mb-16 text-center">
           <motion.div
@@ -356,7 +357,10 @@ export const MusicData = () => {
         </section>
 
         {/* Latest Release */}
-        <section className="mb-20">
+        <section
+          className="mb-20"
+          style={{ backgroundColor: colorScheme.background }}
+        >
           <motion.header
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -66,7 +66,7 @@ export const Biography: React.FC = () => {
         {/* Hero Section */}
         <LayoutTemplate
           backgroundImage={About1}
-          overlayColor="rgba(0,0,0,0.75)" // Darker overlay for better text contrast
+          overlayColor="rgba(0,0,0,0.55)" // Darker overlay for better text contrast
           backgroundPosition="center 30%"
           className="h-[100vh] md:h-[100vh]" // Consistent height
           title={''}
@@ -223,11 +223,12 @@ export const Biography: React.FC = () => {
               }}
             >
               <div
-                className="absolute top-4 right-4 text-3xl md:text-4xl opacity-20"
+                className="absolute top-4 right-4 text-xl md:text-2xl opacity-90"
                 style={{ color: colorScheme.accent }}
               >
                 <FontAwesomeIcon icon={faQuoteRight} />
               </div>
+
               <div className="max-w-4xl mx-auto">
                 <div className="flex items-start">
                   <FontAwesomeIcon

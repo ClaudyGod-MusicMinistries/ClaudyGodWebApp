@@ -15,8 +15,22 @@ import { NewsletterForm } from '../components/util/Newsletter';
 import { DonationCallToAction } from '../components/util/DonationSupport';
 import { openArticle, closeArticle } from '../store/blogs';
 import { RootState } from '../store/store';
-import { ExtraBoldText, RegularText } from '../components/ui/fonts/typography';
+import {
+  ExtraBoldText,
+  RegularText,
+  SemiBoldText,
+  LightText,
+} from '../components/ui/fonts/typography';
 import { useTheme } from '../contexts/ThemeContext';
+import { LayoutTemplate } from '../components/util/hero';
+import { SEO } from '../components/util/SEO';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faBookOpen,
+  faNewspaper,
+  faQuoteRight,
+} from '@fortawesome/free-solid-svg-icons';
+import { motion } from 'framer-motion';
 
 const LazyBlogWelcome = lazy(() => import('../components/blog/blogWelcome'));
 const LazyWelcomeImage = lazy(() => import('../components/util/WelcomeImage'));
@@ -149,7 +163,29 @@ export const Blog: React.FC = () => {
     `${fadeInClass} translate-y-8 opacity-0 ${isMounted ? `!translate-y-0 !opacity-100 delay-[${index * 75}ms]` : ''}`;
 
   return (
-    <main className="min-h-screen relative overflow-x-hidden">
+    <main
+      className="min-h-screen relative overflow-x-hidden"
+      style={{ backgroundColor: colorScheme.background }}
+    >
+      <SEO
+        title="ClaudyGod Blog - Ministry Insights & Spiritual Teachings"
+        description="Explore insightful blog posts, ministry updates, and spiritual teachings from ClaudyGod. Join our community of faith and growth."
+        keywords="claudygod blog, ministry insights, spiritual teachings, christian blog, gospel articles"
+        canonical="https://claudygod.org/blog"
+        image="https://claudygod.org/images/blog-og.jpg"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'Blog',
+          name: 'ClaudyGod Ministry Blog',
+          description: 'Spiritual insights and ministry updates',
+          url: 'https://claudygod.org/blog',
+          publisher: {
+            '@type': 'Person',
+            name: 'ClaudyGod',
+          },
+        }}
+      />
+
       {/* Modern Glass Morphism Background */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-gray-100/20 backdrop-blur-3xl" />
@@ -191,123 +227,257 @@ export const Blog: React.FC = () => {
           </section>
         )}
 
-        <header>
-          <Heroblog
-            className={`${fadeInClass} ${isMounted ? 'opacity-100' : 'opacity-0'}`}
-          />
-        </header>
-
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <Suspense
-              fallback={
-                <div className="border-2 border-dashed rounded-2xl w-full h-80 md:h-96 animate-pulse bg-white/50" />
-              }
-            >
-              <figure
-                className={`${fadeInUpClass} transition-delay-100 rounded-3xl overflow-hidden shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700 bg-white/80 backdrop-blur-lg border border-white/20`}
-              >
-                <LazyWelcomeImage />
-              </figure>
-            </Suspense>
-            <Suspense
-              fallback={
-                <div className="h-80 flex items-center justify-center bg-white/50 rounded-xl">
-                  <RegularText>Loading welcome message...</RegularText>
-                </div>
-              }
-            >
-              <article
-                className={`${fadeInUpClass} bg-white/80 backdrop-blur-lg p-8 rounded-3xl shadow-2xl border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700`}
-              >
-                <LazyBlogWelcome />
-              </article>
-            </Suspense>
-          </div>
-        </section>
-
-        <section className="relative py-12">
-          <header className="relative flex justify-center">
-            <ExtraBoldText
-              className={`px-6 ${fadeInUpClass}`}
-              fontSize="2rem"
-              style={{
-                backgroundImage: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary})`,
-                color: 'transparent',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                textShadow: '0 2px 10px rgba(0,0,0,0.05)',
-              }}
-            >
-              LATEST BLOG POSTS
-            </ExtraBoldText>
-          </header>
-          <div className="absolute inset-x-0 -bottom-4 flex justify-center">
-            <div
-              className={`h-[2px] w-32 bg-gradient-to-r from-transparent via-${colorScheme.primary} to-transparent ${fadeInClass} ${isMounted ? 'opacity-100 delay-300' : 'opacity-0'}`}
-            />
-          </div>
-        </section>
-
-        {/* <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {currentPosts.map((post, index) => (
-              <article
-                key={post.id}
-                className={`${staggerClass(index)} h-full transform transition-all duration-700 hover:-translate-y-3 will-change-transform`}
-              >
-                <Suspense
-                  fallback={
-                    <div className="rounded-3xl w-full h-96 animate-pulse bg-white/50" />
-                  }
-                >
-                  <div className="bg-white/80 backdrop-blur-lg rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 h-full flex flex-col border border-white/20 group">
-                    <LazyBlogPost
-                      id={post.id}
-                      title={post.title}
-                      content={post.content}
-                      date={post.date}
-                      image={post.image}
-                      reactions={reactions[post.id] || {}}
-                      comments={comments[post.id] || []}
-                      onAddReaction={handleAddReaction}
-                      onAddComment={handleAddComment}
-                      onShare={handleShare}
-                      onReadArticle={handleReadArticle}
-                    />
-                  </div>
-                </Suspense>
-              </article>
-            ))}
-          </div>
-
-          <nav
-            className={`mt-16 ${fadeInClass} ${isMounted ? 'opacity-100 delay-500' : 'opacity-0'}`}
-          >
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-              className="justify-center"
-            />
-          </nav>
-        </section> */}
-
-        <section
-          className={`max-w-7xl mx-auto px-4 py-16 ${fadeInClass} ${isMounted ? 'opacity-100 delay-300' : 'opacity-0'}`}
+        {/* Hero Section */}
+        <LayoutTemplate
+          backgroundImage="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+          overlayColor="rgba(0,0,0,0.55)"
+          backgroundPosition="center center"
+          className="h-[100vh] md:h-[100vh]"
+          title={''}
         >
-          <Suspense
-            fallback={
-              <div className="h-96 rounded-3xl animate-pulse bg-white/50" />
-            }
+          <motion.div
+            className="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full h-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
           >
-            <article className="bg-white/80 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500">
-              <Interview />
-            </article>
-          </Suspense>
-        </section>
+            <motion.div
+              initial={{ y: -20 }}
+              animate={{ y: 0 }}
+              transition={{ delay: 0.2, duration: 0.7 }}
+              className="mb-6"
+            >
+              <ExtraBoldText
+                style={{
+                  color: '#ffffff',
+                  fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                  lineHeight: '1.1',
+                  textShadow: '0 4px 8px rgba(0,0,0,0.6)',
+                  marginBottom: '1rem',
+                }}
+                useThemeColor={false}
+              >
+                Ministry Blog
+              </ExtraBoldText>
+            </motion.div>
 
-        <section>
+            <motion.div
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-8 mx-auto"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="max-w-3xl"
+            >
+              <SemiBoldText
+                style={{
+                  color: '#ffffff',
+                  fontSize: 'clamp(1.25rem, 3vw, 2rem)',
+                  textShadow: '0 2px 4px rgba(0,0,0,0.6)',
+                  lineHeight: '1.4',
+                }}
+                useThemeColor={false}
+              >
+                Insights, teachings, and updates from ClaudyGod Ministries
+              </SemiBoldText>
+            </motion.div>
+          </motion.div>
+        </LayoutTemplate>
+
+        {/* Blog Content */}
+        <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+          {/* Section Header */}
+          <header className="mb-12 md:mb-16 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-opacity-10 mb-6"
+              style={{ backgroundColor: `${colorScheme.primary}20` }}
+            >
+              <FontAwesomeIcon
+                icon={faBookOpen}
+                style={{ color: colorScheme.primary }}
+              />
+              <LightText
+                style={{
+                  color: colorScheme.primary,
+                  fontSize: '0.875rem',
+                  letterSpacing: '0.05em',
+                }}
+                useThemeColor={false}
+              >
+                MINISTRY INSIGHTS
+              </LightText>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <ExtraBoldText
+                style={{
+                  color: colorScheme.primary,
+                  fontSize: 'clamp(2rem, 4vw, 3rem)',
+                  lineHeight: '1.2',
+                  marginBottom: '1rem',
+                }}
+                useThemeColor={false}
+              >
+                Spiritual Insights & Ministry Updates
+              </ExtraBoldText>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="max-w-4xl mx-auto"
+            >
+              <SemiBoldText
+                style={{
+                  color: colorScheme.accent,
+                  fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
+                  lineHeight: '1.6',
+                }}
+                useThemeColor={false}
+              >
+                Explore our collection of blog posts, interviews, and spiritual
+                teachings that inspire faith and growth in your journey with
+                Christ.
+              </SemiBoldText>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="w-24 h-1 mx-auto mt-6 rounded-full"
+              style={{ backgroundColor: colorScheme.accent }}
+            />
+          </header>
+
+          {/* Welcome Section */}
+          <section className="mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+            >
+              <Suspense
+                fallback={
+                  <div className="border-2 border-dashed rounded-2xl w-full h-80 md:h-96 animate-pulse bg-white/50" />
+                }
+              >
+                <figure
+                  className={`${fadeInUpClass} transition-delay-100 rounded-3xl overflow-hidden shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700 bg-white/80 backdrop-blur-lg border border-white/20`}
+                >
+                  <LazyWelcomeImage />
+                </figure>
+              </Suspense>
+              <Suspense
+                fallback={
+                  <div className="h-80 flex items-center justify-center bg-white/50 rounded-xl">
+                    <RegularText>Loading welcome message...</RegularText>
+                  </div>
+                }
+              >
+                <article
+                  className={`${fadeInUpClass} bg-white/80 backdrop-blur-lg p-8 rounded-3xl shadow-2xl border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700`}
+                >
+                  <LazyBlogWelcome />
+                </article>
+              </Suspense>
+            </motion.div>
+          </section>
+
+          {/* Quote Section */}
+          <motion.blockquote
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative my-12 md:my-16 p-6 md:p-8 rounded-2xl text-center"
+            style={{
+              background: `linear-gradient(135deg, ${colorScheme.gray[900]}, ${colorScheme.gray[800]})`,
+              border: `1px solid ${colorScheme.gray[700]}`,
+            }}
+          >
+            <div className="max-w-4xl mx-auto">
+              <div
+                className="absolute top-4 right-4 text-3xl md:text-4xl opacity-20"
+                style={{ color: colorScheme.accent }}
+              >
+                <FontAwesomeIcon icon={faQuoteRight} />
+              </div>
+              <div className="flex items-center justify-center mb-4">
+                <FontAwesomeIcon
+                  icon={faNewspaper}
+                  className="mr-3 text-lg"
+                  style={{ color: colorScheme.accent }}
+                />
+                <LightText
+                  style={{
+                    color: 'white',
+                    fontSize: 'clamp(1.025rem, 2vw, 1.375rem)',
+                    lineHeight: '1.6',
+                    fontStyle: 'italic',
+                  }}
+                  useThemeColor={false}
+                >
+                  "Through these writings, may your faith be strengthened and
+                  your understanding of God's word deepened."
+                </LightText>
+              </div>
+              <SemiBoldText
+                style={{
+                  textAlign: 'right',
+                  marginTop: '1rem',
+                  color: colorScheme.primary,
+                  fontSize: '1rem',
+                }}
+                useThemeColor={false}
+              >
+                - Minister ClaudyGod
+              </SemiBoldText>
+            </div>
+          </motion.blockquote>
+
+          {/* Interview Section */}
+          <section className="mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <Suspense
+                fallback={
+                  <div className="h-96 rounded-3xl animate-pulse bg-white/50" />
+                }
+              >
+                <article className="bg-white/80 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500">
+                  <Interview />
+                </article>
+              </Suspense>
+            </motion.div>
+          </section>
+        </article>
+
+        {/* Donation Section */}
+        <section className="my-12 md:my-16">
           <DonationCallToAction
             title="Partner with Our Ministry"
             subtitle="Your Support Makes a Difference"
@@ -318,6 +488,38 @@ export const Blog: React.FC = () => {
           />
         </section>
 
+        {/* Newsletter Section */}
+        <section
+          className="py-12 md:py-16"
+          style={{
+            background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
+          }}
+        >
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <Suspense
+                fallback={
+                  <div className="h-60 rounded-3xl animate-pulse bg-white/50" />
+                }
+              >
+                <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500">
+                  <NewsletterForm
+                    className="rounded-2xl"
+                    title="Join Our Knowledge Community"
+                    description="Get exclusive insights and early access to our latest research and articles"
+                  />
+                </div>
+              </Suspense>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Chatbot */}
         <aside
           className={`fixed bottom-8 right-8 z-50 ${fadeInClass} ${isMounted ? 'opacity-100 delay-700' : 'opacity-0'}`}
         >
@@ -329,24 +531,6 @@ export const Blog: React.FC = () => {
             <LazyChatbot className="transform transition-all hover:scale-105 hover:shadow-lg" />
           </Suspense>
         </aside>
-
-        <section
-          className={`max-w-4xl mx-auto px-4 py-16 ${fadeInClass} ${isMounted ? 'opacity-100 delay-500' : 'opacity-0'}`}
-        >
-          <Suspense
-            fallback={
-              <div className="h-60 rounded-3xl animate-pulse bg-white/50" />
-            }
-          >
-            <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500">
-              <NewsletterForm
-                className="rounded-2xl"
-                title="Join Our Knowledge Community"
-                description="Get exclusive insights and early access to our latest research and articles"
-              />
-            </div>
-          </Suspense>
-        </section>
       </div>
 
       <style>{`

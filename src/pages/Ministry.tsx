@@ -270,7 +270,7 @@ export const MinistryData = () => {
       {/* Hero Section */}
       <LayoutTemplate
         backgroundImage={About1}
-        overlayColor="rgba(0,0,0,0.75)"
+        overlayColor="rgba(0,0,0,0.55)"
         backgroundPosition="center center"
         className="h-[100vh] md:h-[100vh]"
         title={''}

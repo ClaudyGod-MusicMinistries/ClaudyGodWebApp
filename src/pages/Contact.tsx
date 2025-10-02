@@ -87,7 +87,7 @@ export const ContactData: React.FC = () => {
       {/* Hero Section */}
       <LayoutTemplate
         backgroundImage={Log}
-        overlayColor="rgba(0,0,0,0.75)"
+        overlayColor="rgba(0,0,0,0.55)"
         backgroundPosition="center center"
         className="h-[100vh] md:h-[100vh]"
         title={''}
