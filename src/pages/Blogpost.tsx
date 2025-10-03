@@ -31,6 +31,7 @@ import {
   faQuoteRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
+import { blog } from '../assets';
 
 const LazyBlogWelcome = lazy(() => import('../components/blog/blogWelcome'));
 const LazyWelcomeImage = lazy(() => import('../components/util/WelcomeImage'));
@@ -229,7 +230,7 @@ export const Blog: React.FC = () => {
 
         {/* Hero Section */}
         <LayoutTemplate
-          backgroundImage="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+          backgroundImage={blog}
           overlayColor="rgba(0,0,0,0.55)"
           backgroundPosition="center center"
           className="h-[100vh] md:h-[100vh]"

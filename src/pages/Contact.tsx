@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { LayoutTemplate } from '../components/util/hero';
-import { Log } from '../assets/';
+import { About1, bgresize, Log, Tour2 } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ContactForm from '../components/contact/ContactForm';
 import ContactInfo from '../components/contact/ContactInfo';
@@ -86,7 +86,7 @@ export const ContactData: React.FC = () => {
 
       {/* Hero Section */}
       <LayoutTemplate
-        backgroundImage={Log}
+        backgroundImage={Tour2}
         overlayColor="rgba(0,0,0,0.55)"
         backgroundPosition="center center"
         className="h-[100vh] md:h-[100vh]"

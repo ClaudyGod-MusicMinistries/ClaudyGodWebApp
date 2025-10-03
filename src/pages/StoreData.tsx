@@ -30,6 +30,7 @@ import {
   faTag,
 } from '@fortawesome/free-solid-svg-icons';
 import { LayoutTemplate } from '../components/util/hero';
+import { Back2, StoreBanner } from '../assets';
 
 export const StoreData = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -107,8 +108,8 @@ export const StoreData = () => {
 
       {/* Hero Section */}
       <LayoutTemplate
-        backgroundImage="https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
-        overlayColor="rgba(0,0,0,0.55)"
+        backgroundImage={Back2}
+        overlayColor="rgba(0,0,0,0.45)"
         backgroundPosition="center center"
         className="h-[100vh] md:h-[100vh]"
         title={''}
