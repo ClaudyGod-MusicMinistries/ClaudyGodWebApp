@@ -9,7 +9,17 @@ import {
   faPodcast,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { DesktopBg, Back3, Tour1, Resize4, Main } from '../../assets';
+import {
+  DesktopBg,
+  Back3,
+  Tour1,
+  Resize4,
+  landing_1,
+  landing_2,
+  landing_3,
+  landing_4,
+  Back2,
+} from '../../assets';
 import { Transition, Variants } from 'framer-motion';
 
 export interface HeroSlide {
@@ -109,8 +119,8 @@ export const modalVariants: Variants = {
 export const heroSlides: HeroSlide[] = [
   {
     id: 1,
-    imageUrlMobile: Tour1,
-    imageUrlDesktop: Tour1,
+    imageUrlMobile: Back2,
+    imageUrlDesktop: DesktopBg,
     type: 'quote',
     content: {
       quote:
@@ -121,7 +131,7 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     id: 2,
-    imageUrl: Resize4,
+    imageUrl: landing_2,
     type: 'cta',
     content: {},
     videoUrl: undefined,

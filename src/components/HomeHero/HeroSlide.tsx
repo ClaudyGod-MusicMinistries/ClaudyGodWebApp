@@ -40,8 +40,8 @@ const HeroSlide = ({
             visible: {
               opacity: 1,
               transition: {
-                staggerChildren: 0.3, // Increased stagger for slower content reveal
-                duration: 1.5, // Added duration for content animation
+                staggerChildren: 0.3,
+                duration: 1.5,
               },
             },
           }}

@@ -25,6 +25,10 @@ import {
   ExtraBoldText,
   BoldText,
   SemiBoldText,
+  AbrilFatFaceText,
+  ShadowsText,
+  UltraText,
+  BricolageText,
 } from '../components/ui/fonts/typography';
 import CustomButton from '../components/ui/fonts/buttons/CustomButton';
 import { Resize4, About1, Back1 } from '../assets/';
@@ -67,7 +71,7 @@ export const VideosData: React.FC = () => {
   return (
     <div
       className="min-h-screen overflow-x-hidden"
-      style={{ backgroundColor: colorScheme.background }}
+      style={{ backgroundColor: '#f8f9fa' }}
     >
       <SEO
         title="ClaudyGod Videos - Music Videos, Visualizers & Live Sessions"
@@ -113,18 +117,19 @@ export const VideosData: React.FC = () => {
             transition={{ delay: 0.2, duration: 0.7 }}
             className="mb-6"
           >
-            <ExtraBoldText
+            <AbrilFatFaceText
               style={{
                 color: '#ffffff',
                 fontSize: 'clamp(2.5rem, 6vw, 5rem)',
                 lineHeight: '1.1',
                 textShadow: '0 4px 8px rgba(0,0,0,0.6)',
+                letterSpacing: '0.02em',
                 marginBottom: '1rem',
               }}
               useThemeColor={false}
             >
               Videos
-            </ExtraBoldText>
+            </AbrilFatFaceText>
           </motion.div>
 
           <motion.div
@@ -146,6 +151,7 @@ export const VideosData: React.FC = () => {
                 fontSize: 'clamp(1.25rem, 3vw, 2rem)',
                 textShadow: '0 2px 4px rgba(0,0,0,0.6)',
                 lineHeight: '1.4',
+                letterSpacing: '0.01em',
               }}
               useThemeColor={false}
             >
@@ -188,7 +194,7 @@ export const VideosData: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-opacity-10 mb-6"
+                className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-opacity-10 mb-8"
                 style={{ backgroundColor: `${colorScheme.primary}20` }}
               >
                 <FontAwesomeIcon
@@ -207,23 +213,39 @@ export const VideosData: React.FC = () => {
                 </LightText>
               </motion.div>
 
+              {/* Main Title with Professional Font Combination */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="mb-8"
               >
-                <ExtraBoldText
-                  style={{
-                    color: colorScheme.primary,
-                    fontSize: 'clamp(2rem, 4vw, 3rem)',
-                    lineHeight: '1.2',
-                    marginBottom: '1rem',
-                  }}
-                  useThemeColor={false}
-                >
-                  Worship Through Visual Media
-                </ExtraBoldText>
+                <div className="flex flex-col items-center">
+                  <AbrilFatFaceText
+                    style={{
+                      color: colorScheme.primary,
+                      fontSize: 'clamp(2rem, 4vw, 3rem)',
+                      lineHeight: '1.1',
+                      marginBottom: '0.5rem',
+                      letterSpacing: '0.02em',
+                    }}
+                    useThemeColor={false}
+                  >
+                    Worship Through
+                  </AbrilFatFaceText>
+                  <ShadowsText
+                    style={{
+                      color: colorScheme.accent,
+                      fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)',
+                      lineHeight: '1',
+                      letterSpacing: '0.03em',
+                    }}
+                    useThemeColor={false}
+                  >
+                    Visual Media
+                  </ShadowsText>
+                </div>
               </motion.div>
 
               <motion.div
@@ -238,6 +260,7 @@ export const VideosData: React.FC = () => {
                     color: colorScheme.accent,
                     fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
                     lineHeight: '1.6',
+                    letterSpacing: '0.01em',
                   }}
                   useThemeColor={false}
                 >
@@ -298,7 +321,7 @@ export const VideosData: React.FC = () => {
 
         {/* CTA Section */}
         <section
-          className="w-full py-16 text-center"
+          className="w-full py-12 md:py-16 text-center"
           style={{
             background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.secondary})`,
           }}
@@ -310,10 +333,22 @@ export const VideosData: React.FC = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
+              <UltraText
+                style={{
+                  color: colorScheme.text,
+                  fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                  lineHeight: '1.2',
+                  marginBottom: '2rem',
+                  letterSpacing: '0.02em',
+                }}
+                useThemeColor={false}
+              >
+                Explore Our Full Video Collection
+              </UltraText>
               <CustomButton
                 variant="primary"
                 onClick={scrollToVideoGrid}
-                className="px-8 py-4 text-lg md:text-xl flex items-center mx-auto"
+                className="px-6 py-4 text-base md:text-lg flex items-center mx-auto"
                 whileHover={{
                   scale: 1.05,
                   backgroundColor: colorScheme.white,
@@ -322,7 +357,7 @@ export const VideosData: React.FC = () => {
                 whileTap={{ scale: 0.98 }}
               >
                 <BoldText>
-                  Explore Full Collection
+                  Browse All Videos
                   <span className="ml-2">
                     <FontAwesomeIcon icon={faArrowRight} />
                   </span>
@@ -335,7 +370,7 @@ export const VideosData: React.FC = () => {
         {/* Video Grid Section */}
         <section
           ref={videoGridRef}
-          className="w-full py-16 md:py-24"
+          className="w-full py-12 md:py-20"
           style={{
             background: `linear-gradient(to bottom, ${colorScheme.background}, ${colorScheme.gray[50]})`,
           }}
@@ -347,7 +382,7 @@ export const VideosData: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="flex flex-wrap justify-center gap-3 mb-12 md:mb-16"
+              className="flex flex-wrap justify-center gap-2 md:gap-3 mb-12 md:mb-16"
             >
               {(
                 ['All', 'Music Videos', 'Visualizers', 'Live Sessions'] as const
@@ -377,11 +412,20 @@ export const VideosData: React.FC = () => {
                       setActiveCategory(category);
                       setCurrentPage(1);
                     }}
-                    className="px-4 py-2 md:px-6 md:py-3 rounded-full flex items-center gap-2 text-sm md:text-base"
+                    className="px-3 py-2 md:px-4 md:py-3 rounded-full flex items-center gap-2 text-xs md:text-sm"
                   >
                     <BoldText className="flex items-center gap-2">
                       <FontAwesomeIcon icon={categoryIcons[category]} />
-                      <span>{category}</span>
+                      <span className="hidden xs:inline">{category}</span>
+                      <span className="xs:hidden">
+                        {category === 'All'
+                          ? 'All'
+                          : category === 'Music Videos'
+                            ? 'Music'
+                            : category === 'Visualizers'
+                              ? 'Visual'
+                              : 'Live'}
+                      </span>
                     </BoldText>
                   </CustomButton>
                 </motion.div>
@@ -391,7 +435,7 @@ export const VideosData: React.FC = () => {
             {/* Video Grid */}
             {paginatedVideos.length > 0 ? (
               <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+                className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
@@ -410,7 +454,7 @@ export const VideosData: React.FC = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                className="text-center py-12"
+                className="text-center py-12 md:py-16"
               >
                 <div
                   className="inline-block p-6 rounded-full mb-6"
@@ -418,16 +462,16 @@ export const VideosData: React.FC = () => {
                 >
                   <FontAwesomeIcon
                     icon={faVideo}
-                    className="text-4xl"
+                    className="text-3xl md:text-4xl"
                     style={{ color: colorScheme.primary }}
                   />
                 </div>
-                <ExtraBoldText
-                  className="text-xl md:text-2xl mb-4"
+                <UltraText
+                  className="text-lg md:text-xl lg:text-2xl mb-4"
                   style={{ color: colorScheme.primary }}
                 >
                   No videos found in this category
-                </ExtraBoldText>
+                </UltraText>
                 <CustomButton
                   variant="text"
                   onClick={() => setActiveCategory('All')}
@@ -446,7 +490,7 @@ export const VideosData: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
-                className="mt-12"
+                className="mt-12 md:mt-16"
               >
                 <PaginationControls
                   currentPage={currentPage}
@@ -460,7 +504,7 @@ export const VideosData: React.FC = () => {
 
         {/* Divider */}
         <div
-          className="relative h-16 md:h-24"
+          className="relative h-12 md:h-16 lg:h-20"
           style={{
             backgroundColor: colorScheme.primary,
           }}
@@ -470,7 +514,7 @@ export const VideosData: React.FC = () => {
             style={{ backgroundColor: colorScheme.primary }}
           >
             <div
-              className="w-24 h-1"
+              className="w-16 md:w-20 lg:w-24 h-1"
               style={{ backgroundColor: `${colorScheme.white}30` }}
             ></div>
           </div>

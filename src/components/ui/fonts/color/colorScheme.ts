@@ -42,7 +42,7 @@ export interface ColorScheme {
   textSecondary: string;
   textTertiary: string;
   textInverted: string;
-  subtleText: string; // 👈 added
+  subtleText: string;
 
   // Background colors
   background: string;
@@ -52,6 +52,7 @@ export interface ColorScheme {
   card: string;
   body: string;
   footer: string;
+  pageBackground: string; // 👈 NEW: Added #f8f9fa color
 
   // Interactive elements
   button: string;
@@ -135,7 +136,7 @@ export const darkShades: ColorScheme = {
   textSecondary: '#E5E7EB',
   textTertiary: '#9CA3AF',
   textInverted: '#1F2937',
-  subtleText: '#9CA3AF', // 👈 added
+  subtleText: '#9CA3AF',
 
   // Background colors
   background: '#1E1E2C',
@@ -145,6 +146,7 @@ export const darkShades: ColorScheme = {
   card: '#2D2D42',
   body: '#1E1E2C',
   footer: '#121220',
+  pageBackground: '#1E1E2C', // 👈 For dark mode, use the same as background
 
   // Buttons
   button: '#7C3AED',
@@ -199,7 +201,7 @@ export const lightShades: ColorScheme = {
   textSecondary: '#4B5563',
   textTertiary: '#6B7280',
   textInverted: '#FFFFFF',
-  subtleText: '#6B7280', // 👈 added
+  subtleText: '#6B7280',
 
   background: '#F8FAFC',
   backgroundSecondary: '#EDF2F7',
@@ -208,6 +210,7 @@ export const lightShades: ColorScheme = {
   card: '#FFFFFF',
   body: '#F8FAFC',
   footer: '#EDF2F7',
+  pageBackground: '#F8F9FA', // 👈 NEW: Added your color here
 
   button: '#6D28D9',
   buttonText: '#FFFFFF',

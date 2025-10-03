@@ -19,6 +19,10 @@ import Donate1 from './Donate1.jpg';
 import Donate2 from './Donate2.jpg';
 import Main from './manBack.jpg';
 import DesktopBg from './desktopBg.jpg';
+import landing_1 from './landing1.jpg';
+import landing_2 from './Landing2.jpg';
+import landing_3 from './landing3.jpg';
+import landing_4 from './landing4.jpg';
 import Isr from './Israel.webp';
 import Resize1 from './resize_abt.webp';
 import Resize2 from './resize_bg1.webp';
@@ -68,6 +72,7 @@ import google from './play_store.png';
 
 // video
 import bgVideo from '/mainBanner.webm';
+import mummy from './mummy.jpg';
 
 export {
   Log,
@@ -131,4 +136,9 @@ export {
   google,
   Tour2,
   Tour3,
+  landing_1,
+  landing_2,
+  landing_3,
+  landing_4,
+  mummy,
 };
