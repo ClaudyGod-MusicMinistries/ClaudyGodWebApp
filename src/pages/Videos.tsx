@@ -27,7 +27,7 @@ import {
   SemiBoldText,
 } from '../components/ui/fonts/typography';
 import CustomButton from '../components/ui/fonts/buttons/CustomButton';
-import { Resize4 } from '../assets/';
+import { Resize4, Back3 } from '../assets/';
 
 const VIDEOS_PER_PAGE = 6;
 
@@ -95,7 +95,7 @@ export const VideosData: React.FC = () => {
 
       {/* Hero Section */}
       <LayoutTemplate
-        backgroundImage={Resize4}
+        backgroundImage={Back3}
         overlayColor="rgba(0,0,0,0.55)"
         backgroundPosition="center center"
         className="h-[100vh] md:h-[100vh]"
@@ -163,8 +163,8 @@ export const VideosData: React.FC = () => {
             <CustomButton
               onClick={scrollToVideoGrid}
               size="lg"
-              className="transition-transform duration-300 ease-in-out bg-transparent hover:bg-white/20 text-white border-white border-2"
-              style={{ backgroundColor: 'transparent' }}
+              className="transition-transform duration-300 ease-in-out hover:bg-white/20 text-white border-white border-2"
+              style={{ backgroundColor: colorScheme.accent }}
             >
               <BoldText fontSize="1rem">
                 <span className="p-3 rounded-md inline-flex items-center gap-2">

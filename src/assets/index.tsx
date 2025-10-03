@@ -52,6 +52,8 @@ import newsBan from './bannerMain.jpg';
 import newbanner from './newsBanner.webp';
 import blog from './blogBanner.webp';
 import Tour1 from './tour_1.jpg';
+import Tour2 from './tour_2.jpg';
+import Tour3 from './tour_3.jpg';
 import veryGlorious from './veryGlorious.jpg';
 
 // tour
@@ -127,4 +129,6 @@ export {
   VideoArt,
   apple,
   google,
+  Tour2,
+  Tour3,
 };

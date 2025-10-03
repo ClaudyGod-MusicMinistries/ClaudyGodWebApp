@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SEO } from '../components/util/SEO';
 import { motion } from 'framer-motion';
 import { AudioMackComponent } from '../components/Homepage/AmazonMusic';
-import { Cover, Back3 } from '../assets/';
+import { Cover, Back3, Tour3 } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DownloadSection } from '../components/util/Download';
 import {
@@ -162,7 +162,7 @@ export const MusicData = () => {
 
       {/* Hero Section */}
       <LayoutTemplate
-        backgroundImage={Back3}
+        backgroundImage={Tour3}
         overlayColor="rgba(0,0,0,0.55)"
         backgroundPosition="center center"
         className="h-[100vh] md:h-[100vh]"

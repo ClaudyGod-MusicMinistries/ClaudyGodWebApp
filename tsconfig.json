@@ -26,6 +26,5 @@
       "@assets/*": ["assets/*"]
     }
   },
-  "references": [{ "path": "./tsconfig.node.json" }],
-  "include": ["src", "types.d.ts"]
+  "include": ["src", "types.d.ts", "vite.config.ts"]
 }

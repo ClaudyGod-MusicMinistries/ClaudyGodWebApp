@@ -65,7 +65,7 @@ export const Biography: React.FC = () => {
       <main>
         {/* Hero Section */}
         <LayoutTemplate
-          backgroundImage={About1}
+          backgroundImage={About2}
           overlayColor="rgba(0,0,0,0.55)" // Darker overlay for better text contrast
           backgroundPosition="center 30%"
           className="h-[100vh] md:h-[100vh]" // Consistent height
