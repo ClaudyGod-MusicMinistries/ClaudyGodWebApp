@@ -5,6 +5,7 @@ import {
   faEnvelope,
   faPhone,
   faCopyright,
+  faArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { Social } from '../Social';
@@ -30,31 +31,48 @@ export const Footer: React.FC = () => {
     { name: 'Contact', path: '/contact' },
   ];
 
+  const legalLinks = [
+    { name: 'Privacy Policy', path: '/privacy-policy' },
+    { name: 'Terms of Service', path: '/terms-of-service' },
+    { name: 'Cookie Policy', path: '/cookie-policy' },
+  ];
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <footer
-      className="w-full"
+      className="w-full relative overflow-hidden mt-20"
       style={{
         backgroundColor: colorScheme.footer,
         color: colorScheme.white,
       }}
     >
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-purple-500 blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-64 h-64 rounded-full bg-blue-500 blur-3xl"></div>
+      </div>
+
       {/* Top gradient border */}
       <div
-        className="h-1"
+        className="h-1 relative z-10"
         style={{
-          background: `linear-gradient(to right, ${colorScheme.accent}90, ${colorScheme.primary}, ${colorScheme.accent}90)`,
+          background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.primary}, ${colorScheme.accent})`,
         }}
       ></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 relative z-10">
+        {/* Main Footer Content - More Compact */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {/* Brand Column */}
-          <div className="flex flex-col">
-            <div className="flex items-center mb-6">
+          <div className="lg:col-span-1">
+            <div className="flex items-center mb-4">
               <div
-                className="p-1 rounded-xl mr-4"
+                className="p-1 rounded-xl mr-3 shadow-lg"
                 style={{
-                  background: `linear-gradient(to bottom right, ${colorScheme.accent}, ${colorScheme.accent})`,
+                  background: `linear-gradient(135deg, ${colorScheme.accent}, ${colorScheme.primary})`,
                 }}
               >
                 <div
@@ -62,13 +80,13 @@ export const Footer: React.FC = () => {
                   style={{ backgroundColor: colorScheme.footer }}
                 >
                   <div
-                    className="w-12 h-12 rounded-lg flex items-center justify-center"
+                    className="w-10 h-10 rounded-lg flex items-center justify-center shadow-md"
                     style={{
-                      background: `linear-gradient(to bottom right, ${colorScheme.accent}, ${colorScheme.primary})`,
+                      background: `linear-gradient(135deg, ${colorScheme.accent}, ${colorScheme.primary})`,
                     }}
                   >
                     <span
-                      className="text-white font-bold text-xl"
+                      className="text-white font-bold text-lg"
                       style={{ color: colorScheme.white }}
                     >
                       CG
@@ -78,18 +96,21 @@ export const Footer: React.FC = () => {
               </div>
               <div>
                 <ExtraBoldText
-                  fontSize="32px"
+                  fontSize="24px"
+                  className="lg:text-2xl"
                   style={{
-                    background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.secondary})`,
+                    background: `linear-gradient(135deg, ${colorScheme.accent}, ${colorScheme.secondary})`,
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
                   }}
                 >
                   ClaudyGod
                 </ExtraBoldText>
                 <LightText
-                  fontSize="14px"
+                  fontSize="12px"
                   style={{ color: colorScheme.gray[400] }}
+                  className="mt-1"
                 >
                   Music & Ministries
                 </LightText>
@@ -97,60 +118,64 @@ export const Footer: React.FC = () => {
             </div>
 
             <LightText
-              fontSize="14px"
+              fontSize="13px"
               style={{ color: colorScheme.gray[300] }}
-              className="mb-6 leading-relaxed"
+              className="mb-4 leading-relaxed"
             >
               Creating inspirational music that uplifts the soul and brings
               people closer to faith through melody and message.
             </LightText>
 
-            <div className="flex space-x-3">
-              <div
-                className="p-3 rounded-lg flex items-center justify-center"
-                style={{ backgroundColor: colorScheme.gray[800] }}
-              >
+            {/* Live Status Badge */}
+            <div className="flex items-center space-x-2 mb-4">
+              <div className="flex items-center">
                 <div
-                  className="w-3 h-3 rounded-full mr-2 animate-pulse"
+                  className="w-2 h-2 rounded-full mr-2 animate-pulse"
                   style={{ backgroundColor: colorScheme.success }}
                 ></div>
                 <LightText
-                  fontSize="12px"
+                  fontSize="11px"
                   style={{ color: colorScheme.gray[300] }}
+                  className="uppercase tracking-wide"
                 >
-                  Connect with us
+                  Online Now
                 </LightText>
               </div>
             </div>
           </div>
 
           {/* Quick Links Column */}
-          <div className="flex flex-col">
+          <div className="lg:col-span-1">
             <SemiBoldText
-              fontSize="18px"
-              className="mb-6 pb-2 tracking-wide"
+              fontSize="16px"
+              className="mb-4 pb-2 tracking-wide relative"
               style={{
                 color: colorScheme.accent,
-                borderBottom: `1px solid ${colorScheme.gray[700]}`,
               }}
             >
               Quick Links
+              <div
+                className="absolute bottom-0 left-0 w-10 h-0.5 rounded-full"
+                style={{
+                  background: `linear-gradient(to right, ${colorScheme.accent}, transparent)`,
+                }}
+              ></div>
             </SemiBoldText>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {quickLinks.map(link => (
                 <li key={link.name}>
                   <Link
                     to={link.path}
-                    className="transition-all duration-300 flex items-center group"
+                    className="transition-all duration-300 flex items-center group py-1"
                     style={{ color: colorScheme.gray[300] }}
                   >
-                    <span
-                      className="w-1 h-1 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity"
+                    <div
+                      className="w-1 h-1 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-125"
                       style={{ backgroundColor: colorScheme.accent }}
-                    ></span>
+                    ></div>
                     <LightText
-                      fontSize="14px"
-                      className="group-hover:text-purple-400"
+                      fontSize="13px"
+                      className="group-hover:translate-x-1 transition-transform duration-300 hover:text-purple-400"
                       style={{ color: 'inherit' }}
                     >
                       {link.name}
@@ -162,34 +187,46 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Contact Column */}
-          <div className="flex flex-col">
+          <div className="lg:col-span-1">
             <SemiBoldText
-              fontSize="18px"
-              className="mb-6 pb-2 tracking-wide"
+              fontSize="16px"
+              className="mb-4 pb-2 tracking-wide relative"
               style={{
                 color: colorScheme.accent,
-                borderBottom: `1px solid ${colorScheme.gray[700]}`,
               }}
             >
-              Contact Us
+              Contact Info
+              <div
+                className="absolute bottom-0 left-0 w-10 h-0.5 rounded-full"
+                style={{
+                  background: `linear-gradient(to right, ${colorScheme.accent}, transparent)`,
+                }}
+              ></div>
             </SemiBoldText>
-            <ul className="space-y-4">
-              <li className="flex">
-                <div className="flex-shrink-0 mt-1">
-                  <FontAwesomeIcon
-                    icon={faLocationDot}
-                    style={{ color: colorScheme.accent }}
-                  />
+            <ul className="space-y-3">
+              <li className="flex items-start">
+                <div className="flex-shrink-0 mt-0.5">
+                  <div
+                    className="w-6 h-6 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: colorScheme.accent + '20' }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faLocationDot}
+                      style={{ color: colorScheme.accent }}
+                      className="text-xs"
+                    />
+                  </div>
                 </div>
-                <div className="ml-4">
+                <div className="ml-3">
                   <SemiBoldText
-                    fontSize="14px"
+                    fontSize="12px"
                     style={{ color: colorScheme.gray[300] }}
+                    className="mb-0.5"
                   >
                     Our Location
                   </SemiBoldText>
                   <LightText
-                    fontSize="14px"
+                    fontSize="12px"
                     style={{ color: colorScheme.gray[400] }}
                   >
                     San Ramon, California
@@ -197,51 +234,60 @@ export const Footer: React.FC = () => {
                 </div>
               </li>
 
-              <li className="flex">
-                <div className="flex-shrink-0 mt-1">
-                  <FontAwesomeIcon
-                    icon={faEnvelope}
-                    style={{ color: colorScheme.accent }}
-                  />
+              <li className="flex items-start">
+                <div className="flex-shrink-0 mt-0.5">
+                  <div
+                    className="w-6 h-6 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: colorScheme.accent + '20' }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faEnvelope}
+                      style={{ color: colorScheme.accent }}
+                      className="text-xs"
+                    />
+                  </div>
                 </div>
-                <div className="ml-4">
+                <div className="ml-3">
                   <SemiBoldText
-                    fontSize="14px"
+                    fontSize="12px"
                     style={{ color: colorScheme.gray[300] }}
+                    className="mb-0.5"
                   >
                     Email Address
                   </SemiBoldText>
                   <a
                     href="mailto:info@claudygod.com"
-                    className="transition-colors"
+                    className="transition-colors duration-300 hover:text-purple-400"
                     style={{ color: colorScheme.gray[400] }}
                   >
-                    <LightText
-                      fontSize="14px"
-                      className="hover:text-purple-400"
-                    >
-                      info@claudygod.com
-                    </LightText>
+                    <LightText fontSize="12px">info@claudygod.com</LightText>
                   </a>
                 </div>
               </li>
 
-              <li className="flex">
-                <div className="flex-shrink-0 mt-1">
-                  <FontAwesomeIcon
-                    icon={faPhone}
-                    style={{ color: colorScheme.accent }}
-                  />
+              <li className="flex items-start">
+                <div className="flex-shrink-0 mt-0.5">
+                  <div
+                    className="w-6 h-6 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: colorScheme.accent + '20' }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faPhone}
+                      style={{ color: colorScheme.accent }}
+                      className="text-xs"
+                    />
+                  </div>
                 </div>
-                <div className="ml-4">
+                <div className="ml-3">
                   <SemiBoldText
-                    fontSize="14px"
+                    fontSize="12px"
                     style={{ color: colorScheme.gray[300] }}
+                    className="mb-0.5"
                   >
                     Phone Number
                   </SemiBoldText>
                   <LightText
-                    fontSize="14px"
+                    fontSize="12px"
                     style={{ color: colorScheme.gray[400] }}
                   >
                     +1 (385) 219‑6632
@@ -251,124 +297,148 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Social Column */}
-          <div className="flex flex-col">
+          {/* Social & Legal Column */}
+          <div className="lg:col-span-1">
             <SemiBoldText
-              fontSize="18px"
-              className="mb-6 pb-2 tracking-wide"
+              fontSize="16px"
+              className="mb-4 pb-2 tracking-wide relative"
               style={{
                 color: colorScheme.accent,
-                borderBottom: `1px solid ${colorScheme.gray[700]}`,
               }}
             >
               Connect With Us
+              <div
+                className="absolute bottom-0 left-0 w-10 h-0.5 rounded-full"
+                style={{
+                  background: `linear-gradient(to right, ${colorScheme.accent}, transparent)`,
+                }}
+              ></div>
             </SemiBoldText>
-            <div className="mb-8">
+
+            {/* Social Media */}
+            <div className="mb-6">
               <Social />
+            </div>
+
+            {/* Legal Links */}
+            <div className="space-y-2">
+              {legalLinks.map(link => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className="block transition-all duration-300 py-1 hover:text-purple-400"
+                  style={{ color: colorScheme.gray[400] }}
+                >
+                  <LightText
+                    fontSize="13px"
+                    className="transition-colors duration-300"
+                  >
+                    {link.name}
+                  </LightText>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Newsletter Section */}
-        <div className="mt-16 max-w-2xl mx-auto">
-          <div className="text-center mb-8">
-            <ExtraBoldText
-              fontSize="36px"
-              style={{ color: colorScheme.accent }}
-            >
-              Join Our Newsletter
-            </ExtraBoldText>
-            <LightText
-              fontSize="14px"
-              style={{ color: colorScheme.gray[300] }}
-              className="max-w-lg mx-auto"
-            >
-              Stay updated with our latest music releases, ministry events, and
-              inspirational content.
-            </LightText>
-          </div>
+        {/* Newsletter Section - More Compact */}
+        <div className="mt-12 max-w-3xl mx-auto">
+          <div
+            className="rounded-xl p-6 lg:p-8 mb-8 shadow-lg"
+            style={{
+              background: `linear-gradient(135deg, ${colorScheme.gray[800]}80, ${colorScheme.gray[900]}80)`,
+              backdropFilter: 'blur(10px)',
+              border: `1px solid ${colorScheme.gray[700]}50`,
+            }}
+          >
+            <div className="text-center mb-6">
+              <ExtraBoldText
+                fontSize="24px"
+                className="lg:text-2xl mb-3"
+                style={{ color: colorScheme.accent }}
+              >
+                Join Our Newsletter
+              </ExtraBoldText>
+              <LightText
+                fontSize="14px"
+                style={{ color: colorScheme.gray[300] }}
+                className="max-w-md mx-auto leading-relaxed"
+              >
+                Stay updated with our latest music releases, ministry events,
+                and inspirational content.
+              </LightText>
+            </div>
 
-          <div className="flex flex-col sm:flex-row gap-3">
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="px-5 py-3 rounded-lg focus:outline-none w-full text-base border focus:border-purple-500"
-              style={{
-                backgroundColor: colorScheme.gray[800],
-                color: colorScheme.white,
-                borderColor: colorScheme.gray[700],
-              }}
-            />
-            <CustomButton
-              variant="primary"
-              size="md"
-              className="whitespace-nowrap"
-              style={{
-                background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.secondary})`,
-              }}
-            >
-              <BoldText>Subscribe Now</BoldText>
-            </CustomButton>
+            <div className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="px-4 py-3 rounded-lg focus:outline-none w-full text-sm border-2 transition-all duration-300 focus:scale-105 focus:border-purple-500"
+                style={{
+                  backgroundColor: colorScheme.gray[800],
+                  color: colorScheme.white,
+                  borderColor: colorScheme.gray[600],
+                }}
+              />
+              <CustomButton
+                variant="primary"
+                size="md"
+                className="whitespace-nowrap transform hover:scale-105 transition-transform duration-300 shadow-lg"
+                style={{
+                  background: `linear-gradient(135deg, ${colorScheme.accent}, ${colorScheme.secondary})`,
+                }}
+              >
+                <BoldText className="text-white text-sm">Subscribe</BoldText>
+              </CustomButton>
+            </div>
           </div>
         </div>
 
-        {/* Divider */}
-        <div
-          className="w-full my-8"
-          style={{ borderTop: `1px solid ${colorScheme.gray[800]}` }}
-        ></div>
-
         {/* Streaming Section */}
-        <div className="w-full">
+        <div className="w-full mb-8">
           <Streaming />
         </div>
 
         {/* Copyright Section */}
         <div
-          className="w-full my-8"
-          style={{ borderTop: `1px solid ${colorScheme.gray[800]}` }}
+          className="w-full my-6"
+          style={{ borderTop: `1px solid ${colorScheme.gray[700]}` }}
         ></div>
-        <div className="flex flex-col md:flex-row justify-between items-center pt-4">
-          <div className="flex items-center mb-4 md:mb-0">
+
+        <div className="flex flex-col lg:flex-row justify-between items-center space-y-3 lg:space-y-0">
+          <div className="flex items-center">
             <FontAwesomeIcon
               icon={faCopyright}
               className="mr-2 text-xs"
               style={{ color: colorScheme.gray[500] }}
             />
-            <LightText fontSize="12px" style={{ color: colorScheme.gray[500] }}>
+            <LightText
+              fontSize="12px"
+              style={{ color: colorScheme.gray[500] }}
+              className="hover:text-purple-400 transition-colors duration-300"
+            >
               {currentYear} ClaudyGod Music & Ministries. All rights reserved.
             </LightText>
           </div>
 
-          <div className="flex space-x-6">
-            <a
-              href="#"
-              className="transition duration-300 text-sm"
-              style={{ color: colorScheme.gray[500] }}
-            >
-              <LightText fontSize="12px" className="hover:text-purple-400">
-                Privacy Policy
-              </LightText>
-            </a>
-            <a
-              href="#"
-              className="transition duration-300 text-sm"
-              style={{ color: colorScheme.gray[500] }}
-            >
-              <LightText fontSize="12px" className="hover:text-purple-400">
-                Terms of Service
-              </LightText>
-            </a>
-            <a
-              href="#"
-              className="transition duration-300 text-sm"
-              style={{ color: colorScheme.gray[500] }}
-            >
-              <LightText fontSize="12px" className="hover:text-purple-400">
-                Cookies
-              </LightText>
-            </a>
-          </div>
+          {/* Back to Top Button */}
+          <button
+            onClick={scrollToTop}
+            className="flex items-center space-x-2 px-3 py-1.5 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-purple-600 hover:text-white group"
+            style={{
+              backgroundColor: colorScheme.gray[800],
+              color: colorScheme.gray[300],
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faArrowUp}
+              className="text-xs group-hover:animate-bounce"
+              style={{ color: 'inherit' }}
+            />
+            <LightText fontSize="12px" style={{ color: 'inherit' }}>
+              Back to Top
+            </LightText>
+          </button>
         </div>
       </div>
     </footer>

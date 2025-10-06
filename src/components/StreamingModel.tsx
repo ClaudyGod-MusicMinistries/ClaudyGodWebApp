@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { streamingPlatform } from './data/StreamingPlatform';
+import { streamingPlatforms } from './data/StreamingPlatform';
 
 interface StreamingModalProps {
   isOpen: boolean;
@@ -23,9 +23,7 @@ const StreamingModal: FC<StreamingModalProps> = ({ isOpen, onClose }) => {
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4
-           text-gray-500 hover:text-gray-600 
-           transition"
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-600 transition"
         >
           <FontAwesomeIcon icon={faXmark} className="text-xl" />
         </button>
@@ -36,18 +34,17 @@ const StreamingModal: FC<StreamingModalProps> = ({ isOpen, onClose }) => {
         </h3>
 
         <div className="space-y-3 lg:space-y-4">
-          {streamingPlatform.map(platform => (
+          {streamingPlatforms.map(platform => (
             <a
               key={platform.name}
-              href={platform.link}
+              href={platform.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center p-3 lg:p-4 rounded-lg hover:bg-gray-100 
-              transition-colors duration-200"
+              className="flex items-center p-3 lg:p-4 rounded-lg hover:bg-gray-100 transition-colors duration-200"
             >
               <FontAwesomeIcon
                 icon={platform.icon}
-                className={`text-xl lg:text-2xl mr-3 lg:mr-4 ${platform.color}`}
+                className={`text-xl lg:text-2xl mr-3 lg:mr-4 ${platform.color.replace('bg-', 'text-').replace('hover:bg-', 'hover:text-').split(' ')[0]}`}
               />
               <span className="text-base lg:text-lg text-gray-700 font-medium">
                 {platform.name}

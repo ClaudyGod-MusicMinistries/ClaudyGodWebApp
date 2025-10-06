@@ -32,6 +32,11 @@ import ZellePaymentWrapper from './components/store/paymentPlatforms/ZelleWrappe
 import { PaymentPending } from './components/store/status/PaymentPending';
 import OrderSuccess from './components/store/status/OrderSuccess';
 
+// Add these imports
+import { PrivacyPolicy } from './components/Legal/PrivacyPolicy';
+import { TermsOfService } from './components/Legal/TermsOfService';
+import { CookiePolicy } from './components/Legal/CookiePolicy';
+
 function AppRoutes() {
   const location = useLocation();
 
@@ -60,6 +65,10 @@ function AppRoutes() {
           <Route path="checkout/zelle" element={<ZellePaymentWrapper />} />
           <Route path="payment-pending" element={<PaymentPending />} />
           <Route path="order-success/:orderId" element={<OrderSuccess />} />
+          {/* Legal routes */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
 
           {/* Fallback */}
           <Route path="*" element={<div>404 Not Found</div>} />
