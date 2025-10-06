@@ -443,9 +443,9 @@ export const Footer: React.FC = () => {
               className="text-xs group-hover:animate-bounce"
               style={{ color: 'inherit' }}
             />
-            <LightText fontSize="12px" style={{ color: 'inherit' }}>
+            {/* <LightText fontSize="12px" style={{ color: 'inherit' }}>
               Back to Top
-            </LightText>
+            </LightText> */}
           </button>
         </div>
       </div>
