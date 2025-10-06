@@ -19,6 +19,7 @@ import {
   faChevronLeft,
   faChevronRight,
   faClock,
+  faImage,
 } from '@fortawesome/free-solid-svg-icons';
 
 const VideoCard: React.FC<VideoProps> = ({
@@ -28,6 +29,35 @@ const VideoCard: React.FC<VideoProps> = ({
   youtubeUrl,
 }) => {
   const { colorScheme } = useTheme();
+  const [imageError, setImageError] = useState(false);
+  const [currentThumbnail, setCurrentThumbnail] = useState(thumbnailUrl);
+
+  // Fallback through different YouTube thumbnail qualities
+  const getFallbackThumbnail = (url: string) => {
+    if (url.includes('maxresdefault.jpg')) {
+      return url.replace('maxresdefault.jpg', 'hqdefault.jpg');
+    } else if (url.includes('hqdefault.jpg')) {
+      return url.replace('hqdefault.jpg', 'mqdefault.jpg');
+    } else if (url.includes('mqdefault.jpg')) {
+      return url.replace('mqdefault.jpg', 'sddefault.jpg');
+    }
+    return url;
+  };
+
+  const handleImageError = () => {
+    if (
+      currentThumbnail.includes('maxresdefault.jpg') ||
+      currentThumbnail.includes('hqdefault.jpg') ||
+      currentThumbnail.includes('mqdefault.jpg')
+    ) {
+      // Try next quality level
+      const fallbackUrl = getFallbackThumbnail(currentThumbnail);
+      setCurrentThumbnail(fallbackUrl);
+    } else {
+      // All fallbacks failed
+      setImageError(true);
+    }
+  };
 
   return (
     <motion.div
@@ -42,27 +72,50 @@ const VideoCard: React.FC<VideoProps> = ({
         href={youtubeUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="block relative rounded-xl overflow-hidden aspect-video shadow-lg"
+        className="block relative rounded-xl overflow-hidden aspect-video shadow-lg bg-gray-800"
       >
         <div
-          className="relative overflow-hidden rounded-xl"
+          className="relative overflow-hidden rounded-xl w-full h-full"
           style={{ borderRadius: colorScheme.borderRadius.large }}
         >
-          <img
-            src={thumbnailUrl}
-            alt={title}
-            className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
-            loading="lazy"
-          />
+          {/* YouTube Thumbnail with progressive fallback */}
+          {!imageError ? (
+            <img
+              src={currentThumbnail}
+              alt={title}
+              className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+              loading="lazy"
+              onError={handleImageError}
+            />
+          ) : (
+            // Fallback when all thumbnails fail
+            <div className="w-full h-full flex items-center justify-center bg-gray-700">
+              <div className="text-center">
+                <FontAwesomeIcon
+                  icon={faImage}
+                  className="w-12 h-12 mb-2"
+                  style={{ color: colorScheme.gray[400] }}
+                />
+                <ExtraLightText
+                  fontSize="14px"
+                  style={{ color: colorScheme.gray[400] }}
+                >
+                  Thumbnail not available
+                </ExtraLightText>
+              </div>
+            </div>
+          )}
+
+          {/* Gradient Overlay */}
           <div
-            className="absolute inset-0 flex items-end p-4"
+            className="absolute inset-0 flex items-end p-3 sm:p-4"
             style={{
-              background: `linear-gradient(to top, ${colorScheme.black}/80, transparent 60%)`,
+              background: `linear-gradient(to top, ${colorScheme.black}/90, transparent 50%)`,
               borderRadius: colorScheme.borderRadius.large,
             }}
           >
             <div
-              className="flex items-center gap-2 px-3 py-1 rounded-md"
+              className="flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-1 rounded-md"
               style={{
                 backgroundColor: colorScheme.accent + '80',
                 backdropFilter: 'blur(4px)',
@@ -74,34 +127,42 @@ const VideoCard: React.FC<VideoProps> = ({
                 style={{ color: colorScheme.white }}
               />
               <ExtraLightText
-                fontSize="12px"
+                fontSize="10px sm:text-xs"
                 style={{ color: colorScheme.white }}
               >
                 {duration}
               </ExtraLightText>
             </div>
           </div>
+
+          {/* Play Button Overlay */}
           <div
-            className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+            className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             style={{ borderRadius: colorScheme.borderRadius.large }}
           >
             <motion.div
-              className="rounded-full p-4 shadow-xl"
+              className="rounded-full p-3 sm:p-4 shadow-xl"
               style={{ backgroundColor: colorScheme.accent }}
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.3 }}
             >
               <FontAwesomeIcon
                 icon={faPlay}
-                className="w-5 h-5"
+                className="w-4 h-4 sm:w-5 sm:h-5"
                 style={{ color: colorScheme.white }}
               />
             </motion.div>
           </div>
         </div>
       </a>
-      <div className="mt-4 px-2">
-        <SemiBoldText fontSize="18px" style={{ color: colorScheme.white }}>
+
+      {/* Title */}
+      <div className="mt-3 sm:mt-4 px-2">
+        <SemiBoldText
+          fontSize="14px sm:text-[16px] md:text-[18px]"
+          className="line-clamp-2 leading-tight"
+          style={{ color: colorScheme.white }}
+        >
           {title}
         </SemiBoldText>
       </div>
@@ -114,21 +175,26 @@ export const FeaturedVideos: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState<'left' | 'right'>('right');
   const [itemsPerSlide, setItemsPerSlide] = useState(4);
-  const [autoPlay, setAutoPlay] = useState(true);
+  const [autoPlay] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
 
   // Timing controls
   const AUTO_PLAY_INTERVAL = 8000; // 8 seconds between slides
   const SLIDE_TRANSITION_DURATION = 0.8; // 800ms slide animation
-  const SLIDE_EASE = [0.25, 1, 0.5, 1]; // Custom easing curve
+  const SLIDE_EASE = 'easeInOut'; // Use a valid easing function
 
   useEffect(() => {
     const handleResize = () => {
       const w = window.innerWidth;
-      if (w >= 1280) setItemsPerSlide(4);
-      else if (w >= 1024) setItemsPerSlide(3);
-      else if (w >= 768) setItemsPerSlide(2);
-      else setItemsPerSlide(1);
+      if (w >= 1280)
+        setItemsPerSlide(4); // xl screens
+      else if (w >= 1024)
+        setItemsPerSlide(3); // lg screens
+      else if (w >= 768)
+        setItemsPerSlide(2); // md screens
+      else if (w >= 640)
+        setItemsPerSlide(1); // sm screens
+      else setItemsPerSlide(1); // xs screens
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -279,8 +345,6 @@ export const FeaturedVideos: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* </motion.div> */}
-
         {/* Video Slider */}
         <motion.div
           className="relative overflow-hidden py-8 rounded-2xl"
@@ -354,16 +418,16 @@ export const FeaturedVideos: React.FC = () => {
                 duration: SLIDE_TRANSITION_DURATION,
                 ease: SLIDE_EASE,
               }}
-              className="px-4 sm:px-8"
+              className="px-4 sm:px-6 lg:px-8"
             >
               <div
-                className={`grid gap-6 mx-auto ${
+                className={`grid gap-4 sm:gap-6 mx-auto ${
                   itemsPerSlide === 4
-                    ? 'grid-cols-4'
+                    ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
                     : itemsPerSlide === 3
-                      ? 'grid-cols-3'
+                      ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
                       : itemsPerSlide === 2
-                        ? 'grid-cols-2'
+                        ? 'grid-cols-1 sm:grid-cols-2'
                         : 'grid-cols-1'
                 }`}
               >

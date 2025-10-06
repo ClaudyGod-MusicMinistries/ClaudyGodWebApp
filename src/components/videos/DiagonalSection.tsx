@@ -63,10 +63,13 @@ const DiagonalSection: React.FC<{
         width: '100vw',
       }}
     >
-      {/* Top Divider */}
+      {/* Top Divider - Lighter and more subtle */}
       <div
-        className="w-full h-px"
-        style={{ backgroundColor: colorScheme.border }}
+        className="w-full h-[0.5px]"
+        style={{
+          backgroundColor: colorScheme.border + '30', // 30% opacity
+          background: `linear-gradient(90deg, transparent 0%, ${colorScheme.border}20 50%, transparent 100%)`,
+        }}
       />
 
       <div
@@ -108,6 +111,7 @@ const DiagonalSection: React.FC<{
               {description}
             </RegularText>
 
+            {/* Fixed Button Sizing */}
             <motion.button
               whileHover={{
                 scale: 1.05,
@@ -115,18 +119,18 @@ const DiagonalSection: React.FC<{
               }}
               whileTap={{ scale: 0.98 }}
               onClick={onExplore}
-              className="relative px-6 lg:px-8 py-3 lg:py-4 rounded-full flex items-center gap-3 group overflow-hidden w-full sm:w-auto"
+              className="relative px-6 sm:px-8 md:px-10 lg:px-8 py-3 lg:py-4 rounded-full flex items-center justify-center gap-3 group overflow-hidden w-auto min-w-[140px] sm:min-w-[160px] md:min-w-[180px]"
               style={{
                 backgroundColor: colorScheme.button,
                 color: colorScheme.buttonText,
               }}
             >
-              <SemiBoldText className="relative z-10 text-sm lg:text-base">
+              <SemiBoldText className="relative z-10 text-sm sm:text-base lg:text-base whitespace-nowrap">
                 Watch Now
               </SemiBoldText>
               <FontAwesomeIcon
                 icon={faArrowRight}
-                className="relative z-10 transition-transform duration-300 group-hover:translate-x-1 text-sm lg:text-base"
+                className="relative z-10 transition-transform duration-300 group-hover:translate-x-1 text-sm sm:text-base lg:text-base"
               />
               <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer duration-300 z-0"
@@ -136,12 +140,15 @@ const DiagonalSection: React.FC<{
           </div>
         </motion.div>
 
-        {/* Vertical Divider for Desktop */}
+        {/* Vertical Divider for Desktop - Lighter and more subtle */}
         <div
-          className={`hidden xl:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-px h-3/4 ${
+          className={`hidden xl:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[0.5px] h-3/4 ${
             reverse ? 'xl:hidden' : ''
           }`}
-          style={{ backgroundColor: colorScheme.border }}
+          style={{
+            backgroundColor: colorScheme.border + '25', // 25% opacity
+            background: `linear-gradient(180deg, transparent 0%, ${colorScheme.border}20 20%, ${colorScheme.border}20 80%, transparent 100%)`,
+          }}
         />
 
         {/* Video Slider Section */}
@@ -247,13 +254,14 @@ const DiagonalSection: React.FC<{
         </motion.div>
       </div>
 
-      {/* Bottom Divider */}
+      {/* Bottom Divider - Lighter and more subtle */}
       <div
-        className="w-full h-px"
-        style={{ backgroundColor: colorScheme.border }}
+        className="w-full h-[0.5px]"
+        style={{
+          backgroundColor: colorScheme.border + '30', // 30% opacity
+          background: `linear-gradient(90deg, transparent 0%, ${colorScheme.border}20 50%, transparent 100%)`,
+        }}
       />
-
-      {/* Diagonal Background Elements - Removed since we have clean white background */}
 
       {/* Decorative elements - Made more subtle */}
       <div

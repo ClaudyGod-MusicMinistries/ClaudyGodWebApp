@@ -1,15 +1,3 @@
-// src/data/videos.ts
-import {
-  musicCover1,
-  musicCover2,
-  musicCover3,
-  musicCover4,
-  musicCover5,
-  music4,
-  music2,
-  music3,
-} from '../../assets';
-
 export interface VideoProps {
   id: string;
   title: string;
@@ -21,57 +9,58 @@ export interface VideoProps {
 export const videos: VideoProps[] = [
   {
     id: '1',
-    title: 'We Would Reign',
-    thumbnailUrl: musicCover1,
+    title: 'Holy Forever. Spontaneous worship with ClaudyGod & Pianist Etim.',
+    thumbnailUrl: 'https://img.youtube.com/vi/oiyqAG06SUk/maxresdefault.jpg',
     duration: '4:20',
-    youtubeUrl: 'https://youtu.be/s7XLwfhVSC0?si=Y9lcjVnUTvOpyzjl',
+    youtubeUrl: 'https://youtu.be/oiyqAG06SUk?si=ZjcGT2iNybEg3nU3',
   },
   {
     id: '2',
-    title: 'You Are Our Everything',
-    thumbnailUrl: musicCover2,
+    title: '“In Christ Alone” spontaneous worship (cover) by ClaudyGod',
+    thumbnailUrl: 'https://img.youtube.com/vi/6COSk5EQ13c/maxresdefault.jpg',
     duration: '5:45',
-    youtubeUrl: 'https://youtu.be/fK_tCBcnqGs?si=6JziWWzYpINEMuYt',
+    youtubeUrl: 'https://youtu.be/6COSk5EQ13c?si=UaA4XYc9wegXBaUU',
   },
   {
     id: '3',
-    title: 'Lord of my Heart',
-    thumbnailUrl: musicCover3,
+    title: 'Thank you (My midnight cry). Live session by ClaudyGod & Band',
+    thumbnailUrl: 'https://img.youtube.com/vi/d7qZ32829gg/hqdefault.jpg',
     duration: '3:55',
-    youtubeUrl: 'https://youtu.be/iOil3NAE9V4?si=jx0MNOVe5D9MLh3b',
+    youtubeUrl: 'https://youtu.be/d7qZ32829gg?si=vYgLQCkxM6lHOqA_',
   },
   {
     id: '4',
+    title: 'VERY GLORIOUS Live Recording (Angel Inspired Song)',
+    thumbnailUrl: 'https://img.youtube.com/vi/xY4508hwPfw/hqdefault.jpg',
+    duration: '5:15',
+    youtubeUrl: 'https://youtu.be/xY4508hwPfw?si=sVBMfOezmf8IAD3V',
+  },
+  {
+    id: '5',
+    title: 'LOVE ME SO MUCH🌺🌺',
+    thumbnailUrl: 'https://img.youtube.com/vi/uro0EWsYdxc/hqdefault.jpg', // Changed to hqdefault
+    duration: '4:30',
+    youtubeUrl: 'https://youtu.be/uro0EWsYdxc?si=pFzsfJjVp335r-uA',
+  },
+
+  {
+    id: '6',
     title: 'He Put a New Song',
-    thumbnailUrl: musicCover4,
+    thumbnailUrl: 'https://img.youtube.com/vi/hto6hlHSpac/maxresdefault.jpg',
     duration: '6:10',
     youtubeUrl: 'https://youtu.be/hto6hlHSpac?si=rGFe3niOqRcK-XVN',
   },
   {
-    id: '5',
-    title: 'Lover of my Soul',
-    thumbnailUrl: musicCover5,
-    duration: '4:30',
-    youtubeUrl: 'https://youtu.be/ivj5gVeTCJQ?si=JV1kU2iW0yDuGpVH',
-  },
-  {
-    id: '6',
-    title: 'You are our Everything',
-    thumbnailUrl: music4,
-    duration: '5:15',
-    youtubeUrl: 'https://youtu.be/mK26U9psCCI?si=pfzzYdmBVyRKN9ZS',
-  },
-  {
     id: '7',
-    title: 'Step Aside',
-    thumbnailUrl: music2,
+    title: `Lord Of My Heart (Psalm 139) - ClaudyGO'D (Song writer & Singer)`,
+    thumbnailUrl: 'https://img.youtube.com/vi/SmU3mxEvkE4/maxresdefault.jpg',
     duration: '5:15',
-    youtubeUrl: 'https://youtu.be/Q2Xz0g4Q-Ro?si=Ebx6hYvfBs2pbwvS',
+    youtubeUrl: 'https://youtu.be/SmU3mxEvkE4?si=Oe41qTvleTo0plO-',
   },
   {
     id: '8',
-    title: 'Alleluia Worship',
-    thumbnailUrl: music3,
+    title: 'New!!! THERE ALL THE TIME (So good). Song by ClaudyGod',
+    thumbnailUrl: 'https://img.youtube.com/vi/qdNP8A4fW-U/maxresdefault.jpg',
     duration: '5:15',
     youtubeUrl: 'https://youtu.be/qdNP8A4fW-U?si=R15Gspr3i5eLeDm0',
   },

@@ -37,6 +37,8 @@ import musicCover3 from './musicCoverArt3.webp';
 import musicCover4 from './musicCoverArt4.webp';
 import musicCover5 from './musicCoverArt5.webp';
 import musicCover6 from './musicCoverArt6.webp';
+import stepAside from './MusicBanner2.webp';
+import aleluiaWorship from './MusicBanner3.webp';
 import music1 from './joyfulA.webp';
 import music2 from './newDay.webp';
 import music3 from './mucic1.webp';
@@ -108,6 +110,8 @@ export {
   musicCover2,
   musicCover3,
   musicCover4,
+  stepAside,
+  aleluiaWorship,
   bgVideo,
   Main,
   musicCover5,

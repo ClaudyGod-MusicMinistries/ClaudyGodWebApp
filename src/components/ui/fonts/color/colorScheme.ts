@@ -26,6 +26,7 @@ interface BorderRadius {
 }
 
 export interface ColorScheme {
+  black: any;
   // Base colors
   primary: string;
   primaryLight: string;

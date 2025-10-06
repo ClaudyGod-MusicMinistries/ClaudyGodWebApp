@@ -14,7 +14,7 @@ type Variant =
   | 'text'
   | 'disabled'
   | 'appStore'
-  | 'googlePlay'; // added
+  | 'googlePlay';
 
 type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'circle';
 
@@ -37,6 +37,7 @@ interface CustomButtonProps extends MotionProps {
   iconPosition?: 'left' | 'right';
   style?: React.CSSProperties;
   badge?: number | string;
+  hoverStyle?: React.CSSProperties;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -58,6 +59,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   iconPosition = 'left',
   style = {},
   badge,
+  hoverStyle,
   whileHover,
   whileTap,
   ...motionRest
@@ -126,9 +128,9 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       case 'disabled':
         return { backgroundColor: '#ddd', color: '#888', border: 'none' };
       case 'appStore':
-        return { backgroundColor: '#000', color: '#fff', border: 'none' }; // custom Apple style
+        return { backgroundColor: '#000', color: '#fff', border: 'none' };
       case 'googlePlay':
-        return { backgroundColor: '#34A853', color: '#fff', border: 'none' }; // custom Google style
+        return { backgroundColor: '#34A853', color: '#fff', border: 'none' };
       default:
         return {
           backgroundColor: cs.button,
@@ -157,6 +159,31 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     ...getVariantStyles(variant, colorScheme),
     ...sizeStyles[getEffectiveSize()],
   };
+
+  // Fixed: Use type assertion to handle the complex union type
+  const getCombinedWhileHover = () => {
+    if (disabled || isLoading) return undefined;
+
+    // If we have both whileHover and hoverStyle, combine them
+    if (whileHover && hoverStyle) {
+      return {
+        ...(typeof whileHover === 'object' && !Array.isArray(whileHover)
+          ? whileHover
+          : {}),
+        ...hoverStyle,
+      } as any; // Type assertion to handle complex type
+    }
+
+    // If we only have whileHover, return it
+    if (whileHover) return whileHover;
+
+    // If we only have hoverStyle, return it as TargetAndTransition
+    if (hoverStyle) return hoverStyle as any;
+
+    return undefined;
+  };
+
+  const customWhileHover = getCombinedWhileHover();
 
   const content = isLoading ? (
     <span
@@ -194,22 +221,28 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     if (!disabled && !isLoading && onClick) onClick(e);
   };
 
-  const sharedProps = {
+  // Create separate props for each element type to avoid type complexity
+  const baseMotionProps = {
     onClick: handleClick,
     style: { ...baseStyle, ...style },
     className,
     'aria-disabled': disabled || isLoading,
-    whileHover: !disabled && !isLoading ? whileHover : undefined,
+    whileHover: customWhileHover,
     whileTap: !disabled && !isLoading ? whileTap : undefined,
-    children: content,
     ...motionRest,
   };
 
-  if (href)
-    return <motion.a {...sharedProps} href={href} target={target} rel={rel} />;
+  if (href) {
+    return (
+      <motion.a {...baseMotionProps} href={href} target={target} rel={rel}>
+        {content}
+      </motion.a>
+    );
+  }
+
   if (to) {
     return (
-      <motion.div {...sharedProps}>
+      <motion.div {...baseMotionProps}>
         <Link
           to={to}
           className="flex items-center justify-center gap-2 w-full h-full"
@@ -226,10 +259,12 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 
   return (
     <motion.button
-      {...sharedProps}
+      {...baseMotionProps}
       type={type}
       disabled={disabled || isLoading}
-    />
+    >
+      {content}
+    </motion.button>
   );
 };
 

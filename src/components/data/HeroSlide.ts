@@ -19,6 +19,7 @@ import {
   landing_3,
   landing_4,
   Back2,
+  About2,
 } from '../../assets';
 import { Transition, Variants } from 'framer-motion';
 
@@ -131,7 +132,7 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     id: 2,
-    imageUrl: landing_2,
+    imageUrl: About2,
     type: 'cta',
     content: {},
     videoUrl: undefined,
@@ -180,7 +181,7 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     id: 4,
-    imageUrl: Tour1,
+    imageUrl: landing_2,
     type: 'quote',
     content: {
       quote: 'Praise the Lord Most High',
