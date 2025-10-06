@@ -21,6 +21,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Scroll to top on navigation
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -34,39 +35,24 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
     closeNav();
   };
 
-  const handleMobileNavigation = (to: string) => {
-    handleNavigation(to);
-  };
-
-  // Prevent body scrolling when mobile menu is open
+  // Disable body scroll when nav open
   useEffect(() => {
-    if (isNavOpen) {
-      // Add overflow hidden to body when menu is open
-      document.body.style.overflow = 'hidden';
-      document.body.style.height = '100vh';
-    } else {
-      // Remove overflow hidden when menu is closed
-      document.body.style.overflow = '';
-      document.body.style.height = '';
-    }
-
-    // Cleanup function to remove styles when component unmounts
+    document.body.style.overflow = isNavOpen ? 'hidden' : '';
+    document.body.style.height = isNavOpen ? '100vh' : '';
     return () => {
       document.body.style.overflow = '';
       document.body.style.height = '';
     };
   }, [isNavOpen]);
 
+  // Detect scroll
   useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 50;
-      setScrolled(isScrolled);
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close nav on route change
   useEffect(() => {
     scrollToTop();
     closeNav();
@@ -74,58 +60,37 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
 
   return (
     <>
-      {/* Spacer div for TopBanner */}
-      <div
-        className={`fixed top-0 left-0 right-0 h-8 bg-purple-900 transition-all duration-500 z-40 ${
-          scrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-      />
-
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? 'bg-gray-900/95 backdrop-blur-md shadow-lg py-2'
-            : 'bg-transparent py-4'
+          scrolled ? 'bg-gray-900 shadow-lg py-2' : 'bg-gray-900 py-3 shadow-md'
         }`}
-        style={{ marginTop: scrolled ? '0' : '2rem' }}
       >
-        {/* Desktop Header - KEEPING YOUR ORIGINAL DESIGN */}
         <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
-          {/* Logo - Left */}
+          {/* Logo */}
           <Link
             to="/"
             onClick={closeNav}
-            className="flex items-center flex-shrink-0 hover:opacity-80 transition-opacity -ml-6"
+            className="flex items-center flex-shrink-0 hover:opacity-80 transition-opacity"
           >
-            <div className="h-10 w-10 flex items-center justify-center bg-white/10 rounded-full p-1 ml-3">
+            <div className="h-10 w-10 flex items-center justify-center bg-white rounded-full p-1">
               <img src={Log} alt="Logo" className="h-7 w-7 rounded-full" />
             </div>
 
-            <div className="h-8 w-px bg-white/40 mx-3" />
+            <div className="h-8 w-px bg-white/30 mx-3" />
 
             <div>
-              <BoldText
-                style={{ color: scrolled ? colorScheme.text : 'white' }}
-                className="text-base leading-snug"
-              >
+              <BoldText className="text-white text-base leading-snug">
                 ClaudyGod
               </BoldText>
-              <LightText
-                style={{
-                  color: scrolled
-                    ? colorScheme.secondary
-                    : 'rgba(255, 255, 255, 0.9)',
-                }}
-                className="text-[11px] leading-snug"
-              >
+              <LightText className="text-[11px] text-gray-300 leading-snug">
                 Music & Ministry
               </LightText>
             </div>
           </Link>
 
-          {/* Desktop Navigation - Center - YOUR ORIGINAL SPACING */}
+          {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center justify-center flex-1">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3">
               {navigationItems.map(link => (
                 <NavLink
                   key={link.to}
@@ -133,54 +98,36 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
                   end={link.to === '/'}
                   onClick={() => location.pathname === link.to && scrollToTop()}
                   className={({ isActive }) =>
-                    `flex items-center text-xs transition-colors duration-200 px-2 py-1.5 rounded-md ${
+                    `flex items-center text-sm px-3 py-2 rounded-md transition-all duration-300 ${
                       isActive
-                        ? 'text-purple-300 font-medium bg-white/10'
-                        : scrolled
-                          ? 'text-gray-200 hover:text-white hover:bg-white/5'
-                          : 'text-white hover:text-white/90 hover:bg-white/10'
+                        ? 'bg-purple-600 text-white font-semibold shadow-sm'
+                        : 'text-gray-200 hover:text-white hover:bg-purple-700/40'
                     }`
                   }
                 >
-                  <FontAwesomeIcon
-                    icon={link.icon}
-                    className="mr-1.5 text-[10px]"
-                  />
-                  <span className="text-xs">{link.name}</span>
+                  <FontAwesomeIcon icon={link.icon} className="mr-2 text-xs" />
+                  {link.name}
                 </NavLink>
               ))}
             </div>
           </nav>
 
-          {/* Desktop Streaming Button - Right - YOUR ORIGINAL DESIGN */}
+          {/* Right Section */}
           <div className="hidden lg:flex items-center justify-end flex-shrink-0">
             <button
               onClick={() => setIsModalOpen(true)}
-              className={`px-3 py-1.5 rounded-full transition-all flex items-center whitespace-nowrap ${
-                scrolled
-                  ? 'bg-purple-600 text-white shadow-md hover:bg-purple-700'
-                  : 'bg-white/20 text-white backdrop-blur-sm hover:bg-white/30'
-              }`}
+              className="px-4 py-2 bg-purple-600 text-white rounded-full shadow-md hover:bg-purple-700 transition-all"
             >
-              <FontAwesomeIcon
-                icon={faHeadset}
-                className="mr-1.5 text-[10px]"
-              />
-              <LightText className="text-[5px] font-medium">
-                Listen Now
-              </LightText>
+              <FontAwesomeIcon icon={faHeadset} className="mr-2 text-xs" />
+              <LightText className="text-sm font-medium">Listen Now</LightText>
             </button>
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Toggle */}
           <div className="flex lg:hidden items-center">
             <button
               onClick={toggleNav}
-              className={`p-3 rounded-xl transition-all ${
-                scrolled
-                  ? 'bg-purple-600 text-white hover:bg-purple-700 shadow-lg'
-                  : 'bg-white/20 text-white backdrop-blur-sm hover:bg-white/30 border border-white/20'
-              }`}
+              className="p-3 rounded-lg bg-purple-700 text-white hover:bg-purple-800 transition-all"
             >
               <FontAwesomeIcon
                 icon={isNavOpen ? faTimes : faBars}
@@ -190,113 +137,84 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
           </div>
         </div>
 
-        {/* Mobile Menu - FIXED BACKGROUND & PREVENT SCROLLING */}
+        {/* Mobile Menu */}
         <div
-          className={`lg:hidden fixed inset-0 z-50 transition-all duration-500 ${
-            isNavOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          className={`lg:hidden fixed inset-0 z-40 transition-all duration-500 ${
+            isNavOpen
+              ? 'opacity-100 pointer-events-auto'
+              : 'opacity-0 pointer-events-none'
           }`}
         >
-          {/* Solid Backdrop - No Fading */}
+          {/* Backdrop */}
           <div
-            className={`absolute inset-0 bg-black/80 transition-opacity duration-500 ${
+            className={`absolute inset-0 bg-black/70 transition-opacity duration-500 ${
               isNavOpen ? 'opacity-100' : 'opacity-0'
             }`}
             onClick={toggleNav}
           />
 
-          {/* Solid Background Menu - Won't Fade */}
+          {/* Drawer */}
           <div
-            className={`absolute right-0 top-0 h-full w-80 bg-gradient-to-b from-gray-900 to-purple-900 shadow-2xl transform transition-transform duration-500 ease-out ${
+            className={`absolute right-0 top-0 h-full w-80 bg-gray-900 shadow-2xl transform transition-transform duration-500 ease-out ${
               isNavOpen ? 'translate-x-0' : 'translate-x-full'
             }`}
-            style={{
-              background: 'linear-gradient(135deg, #1f2937 0%, #4c1d95 100%)', // Solid gradient
-            }}
           >
-            <div className="flex justify-between items-center p-6 bg-gradient-to-r from-purple-700 to-purple-800 border-b border-purple-600/50">
+            <div className="flex justify-between items-center p-6 border-b border-gray-700">
               <Link
                 to="/"
                 onClick={closeNav}
-                className="flex items-center gap-4"
+                className="flex items-center gap-3"
               >
-                <div className="h-12 w-12 flex items-center justify-center bg-white rounded-full p-2 shadow-lg">
+                <div className="h-12 w-12 flex items-center justify-center bg-white rounded-full p-2">
                   <img src={Log} alt="Logo" className="h-7 w-7" />
                 </div>
                 <div>
-                  <BoldText style={{ color: 'white' }} className="text-lg">
-                    ClaudyGod
-                  </BoldText>
-                  <LightText
-                    style={{ color: 'rgba(255, 255, 255, 0.9)' }}
-                    className="text-sm"
-                  >
+                  <BoldText className="text-white text-lg">ClaudyGod</BoldText>
+                  <LightText className="text-gray-300 text-sm">
                     Music & Ministry
                   </LightText>
                 </div>
               </Link>
-
               <button
                 onClick={toggleNav}
-                className="p-3 text-white hover:bg-white/20 rounded-xl transition-all duration-300 shadow-lg"
+                className="p-3 text-white hover:bg-white/10 rounded-lg"
               >
                 <FontAwesomeIcon icon={faTimes} className="h-6 w-6" />
               </button>
             </div>
 
-            <nav className="p-6 h-[calc(100vh-96px)] overflow-y-auto">
+            <nav className="p-6">
               <ul className="space-y-3">
                 {navigationItems.map(link => (
                   <li key={link.to}>
                     <button
-                      onClick={() => handleMobileNavigation(link.to)}
-                      className={`flex items-center w-full p-4 rounded-xl transition-all duration-300 ${
+                      onClick={() => handleNavigation(link.to)}
+                      className={`flex items-center w-full p-3 rounded-lg transition-all duration-300 ${
                         location.pathname === link.to
-                          ? 'bg-purple-600 text-white shadow-2xl border border-purple-400/50'
-                          : 'bg-white/5 text-gray-200 hover:bg-white/10 hover:text-white border border-white/10'
+                          ? 'bg-purple-600 text-white shadow-md'
+                          : 'text-gray-300 hover:bg-purple-700/30 hover:text-white'
                       }`}
                     >
-                      <div
-                        className={`flex items-center justify-center h-10 w-10 rounded-lg mr-4 ${
-                          location.pathname === link.to
-                            ? 'bg-white/20'
-                            : 'bg-purple-500/20'
-                        }`}
-                      >
-                        <FontAwesomeIcon
-                          icon={link.icon}
-                          className={`text-lg ${
-                            location.pathname === link.to
-                              ? 'text-white'
-                              : 'text-purple-300'
-                          }`}
-                        />
-                      </div>
-                      <LightText
-                        className={`text-base font-medium ${
-                          location.pathname === link.to
-                            ? 'text-white'
-                            : 'text-gray-200'
-                        }`}
-                      >
-                        {link.name}
-                      </LightText>
+                      <FontAwesomeIcon
+                        icon={link.icon}
+                        className="mr-3 text-sm"
+                      />
+                      {link.name}
                     </button>
                   </li>
                 ))}
               </ul>
 
-              <div className="mt-8 p-6 bg-gradient-to-r from-purple-600 to-purple-700 rounded-2xl border border-purple-400/30 shadow-2xl">
+              <div className="mt-6">
                 <button
                   onClick={() => {
                     setIsModalOpen(true);
                     closeNav();
                   }}
-                  className="w-full px-6 py-4 rounded-xl bg-white text-purple-600 flex items-center justify-center gap-3 hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  className="w-full px-6 py-3 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition-all shadow-md"
                 >
-                  <FontAwesomeIcon icon={faHeadset} className="text-xl" />
-                  <SemiBoldText className="text-base tracking-wide">
-                    Listen Now
-                  </SemiBoldText>
+                  <FontAwesomeIcon icon={faHeadset} className="mr-2" />
+                  Listen Now
                 </button>
               </div>
             </nav>

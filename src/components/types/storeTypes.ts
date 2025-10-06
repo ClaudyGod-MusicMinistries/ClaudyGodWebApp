@@ -1,11 +1,13 @@
 // store/storeTypes.ts
+// src/types/storeTypes.ts
 export interface Product {
   id: string;
   name: string;
-  price: number;
-  description: string;
   image: string;
+  price: number;
   category: string;
+  description: string;
+  rating?: number; // ✅ Add this line
 }
 
 export interface CartItem extends Product {

@@ -26,7 +26,7 @@ export const categories: Category[] = [
 ];
 
 // -----------------
-// Products data
+// Products data - SINGLE SOURCE OF TRUTH
 // -----------------
 export const products: Product[] = [
   {
@@ -35,7 +35,8 @@ export const products: Product[] = [
     image: Shop1,
     price: 5,
     category: 'accessories',
-    description: 'Mug',
+    description: 'Double-Walled Ceramic Mug',
+    rating: 5.0,
   },
   {
     id: '2',
@@ -43,7 +44,8 @@ export const products: Product[] = [
     image: Shop2,
     price: 5,
     category: 'accessories',
-    description: 'Mug',
+    description: 'Ceramic Design Mug',
+    rating: 4.9,
   },
   {
     id: '3',
@@ -51,7 +53,8 @@ export const products: Product[] = [
     image: Shop3,
     price: 25,
     category: 'clothing',
-    description: 'T-Shirt',
+    description: 'Premium Cotton T-Shirt',
+    rating: 4.8,
   },
   {
     id: '4',
@@ -59,7 +62,8 @@ export const products: Product[] = [
     image: Shop4,
     price: 30,
     category: 'clothing',
-    description: 'T-Shirt',
+    description: 'Limited Edition T-Shirt',
+    rating: 4.7,
   },
   {
     id: '5',
@@ -68,6 +72,7 @@ export const products: Product[] = [
     price: 10,
     category: 'music',
     description: 'Digital EP: Pay. Stream. Download.',
+    rating: 4.9,
   },
   {
     id: '6',
@@ -76,15 +81,15 @@ export const products: Product[] = [
     price: 10,
     category: 'music',
     description: 'Full album digital download.',
+    rating: 5.0,
   },
 ];
+
+// REMOVED: Previewproducts duplicate array
 
 // -----------------
 // Payment options
 // -----------------
-
-// Define a type for each payment option (optional but gives IntelliSense)
-// storeData.ts
 export interface PaymentOption {
   id: string;
   name: string;
@@ -92,7 +97,7 @@ export interface PaymentOption {
   icon: React.ComponentType<{
     size?: number;
     color?: string;
-    className?: string; // ✅ added
+    className?: string;
   }>;
   color: string;
 }
