@@ -18,11 +18,14 @@ type Variant =
 
 type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'circle';
 
+// Add this new type for responsive sizes
+type ResponsiveSize = `${Size} ${string}:${Size}` | Size;
+
 interface CustomButtonProps extends MotionProps {
   children?: React.ReactNode;
   onClick?: (e: React.MouseEvent) => void;
   variant?: Variant;
-  size?: Size;
+  size?: ResponsiveSize; // Changed from Size to ResponsiveSize
   mdSize?: Size;
   fullWidth?: boolean;
   className?: string;
@@ -65,6 +68,15 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   ...motionRest
 }) => {
   const { colorScheme } = useTheme();
+
+  // Helper function to extract base size from responsive string
+  const getBaseSize = (sizeValue: ResponsiveSize): Size => {
+    if (typeof sizeValue === 'string' && sizeValue.includes(' ')) {
+      // Extract the first size from responsive string like "sm md:lg"
+      return sizeValue.split(' ')[0] as Size;
+    }
+    return sizeValue as Size;
+  };
 
   const sizeStyles: Record<Size, React.CSSProperties> = {
     xs: { padding: '4px 8px', fontSize: '12px' },
@@ -140,10 +152,14 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     }
   };
 
-  const getEffectiveSize = (): Size => mdSize || size;
+  const getEffectiveSize = (): Size => {
+    // Use mdSize if provided, otherwise get base size from responsive string
+    return mdSize || getBaseSize(size);
+  };
 
   const baseStyle: React.CSSProperties = {
-    borderRadius: size === 'circle' ? '50%' : variant === 'text' ? '0' : '8px',
+    borderRadius:
+      getBaseSize(size) === 'circle' ? '50%' : variant === 'text' ? '0' : '8px',
     fontWeight: 600,
     fontFamily: 'WorkSans, sans-serif',
     cursor: disabled || isLoading ? 'not-allowed' : 'pointer',

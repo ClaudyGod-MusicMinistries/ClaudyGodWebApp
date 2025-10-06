@@ -1,7 +1,14 @@
-// Biography.tsx
-import { SEO } from '../components/util/SEO';
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '../contexts/ThemeContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faMicrophoneAlt,
+  faHandsPraying,
+  faQuoteRight,
+} from '@fortawesome/free-solid-svg-icons';
+
+import { SEO } from '../components/util/SEO';
 import { LayoutTemplate } from '../components/util/hero';
 import { About1, About2 } from '../assets';
 import { NewsletterForm } from '../components/util/Newsletter';
@@ -10,25 +17,23 @@ import {
   firstSectionTexts,
   secondSectionTexts,
 } from '../components/data/Biography';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faMicrophoneAlt,
-  faHandsPraying,
-  faQuoteRight,
-} from '@fortawesome/free-solid-svg-icons';
 import { DonationCallToAction } from '../components/util/DonationSupport';
 import {
   SemiBoldText,
   LightText,
   ExtraBoldText,
 } from '../components/ui/fonts/typography';
-import { useTheme } from '../contexts/ThemeContext';
 
 export const Biography: React.FC = () => {
   const { colorScheme } = useTheme();
 
   return (
-    <>
+    <main
+      className="relative overflow-hidden"
+      style={{
+        backgroundColor: colorScheme.text,
+      }}
+    >
       <SEO
         title="ClaudyGod Biography - American Gospel Artist & Ministry Leader"
         description="Discover ClaudyGod's journey from Nigeria to becoming a California-based gospel artist. Learn about her music ministry, albums, and family life."
@@ -62,168 +67,179 @@ export const Biography: React.FC = () => {
         }}
       />
 
-      <main>
-        {/* Hero Section */}
-        <LayoutTemplate
-          backgroundImage={About2}
-          overlayColor="rgba(0,0,0,0.55)" // Darker overlay for better text contrast
-          backgroundPosition="center 30%"
-          className="h-[100vh] md:h-[100vh]" // Consistent height
-          title={''}
+      {/* Hero Section */}
+      <LayoutTemplate
+        backgroundImage={About2}
+        overlayColor="rgba(0,0,0,0.55)"
+        backgroundPosition="center center"
+        className="h-[70vh] sm:h-[80vh] md:h-[90vh] lg:h-[100vh] min-h-[500px]"
+        title={''}
+      >
+        <motion.div
+          className="relative z-20 flex flex-col items-center justify-center text-center w-full h-full px-4 sm:px-6 lg:px-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
         >
           <motion.div
-            className="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full h-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
+            initial={{ y: -20 }}
+            animate={{ y: 0 }}
+            transition={{ delay: 0.2, duration: 0.7 }}
+            className="mb-4 sm:mb-6 md:mb-8"
           >
-            <motion.div
-              initial={{ y: -20 }}
-              animate={{ y: 0 }}
-              transition={{ delay: 0.2, duration: 0.7 }}
-              className="mb-6"
+            <ExtraBoldText
+              style={{
+                color: '#ffffff',
+                fontSize: 'clamp(2rem, 8vw, 4.5rem)',
+                lineHeight: '1.1',
+                textShadow: '0 4px 12px rgba(0,0,0,0.8)',
+                marginBottom: '0.5rem',
+              }}
+              useThemeColor={false}
             >
-              <ExtraBoldText
-                style={{
-                  color: '#ffffff',
-                  fontSize: 'clamp(2.5rem, 6vw, 5rem)',
-                  lineHeight: '1.1',
-                  textShadow: '0 4px 8px rgba(0,0,0,0.6)',
-                  marginBottom: '1rem',
-                }}
-                useThemeColor={false}
-              >
-                ClaudyGod
-              </ExtraBoldText>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scaleX: 0 }}
-              animate={{ opacity: 1, scaleX: 1 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-8 mx-auto"
-            />
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="max-w-3xl"
-            >
-              <SemiBoldText
-                style={{
-                  color: '#ffffff',
-                  fontSize: 'clamp(1.25rem, 3vw, 2rem)',
-                  textShadow: '0 2px 4px rgba(0,0,0,0.6)',
-                  lineHeight: '1.4',
-                }}
-                useThemeColor={false}
-              >
-                American Contemporary Christian Music & Afro-Gospel Artist
-              </SemiBoldText>
-            </motion.div>
+              ClaudyGod
+            </ExtraBoldText>
           </motion.div>
-        </LayoutTemplate>
 
-        {/* Biography Content */}
-        <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-          {/* Section Header */}
-          <header className="mb-12 md:mb-16 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-opacity-10 mb-6"
-              style={{ backgroundColor: `${colorScheme.primary}20` }}
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="w-20 sm:w-24 md:w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-4 sm:mb-6 md:mb-8 mx-auto"
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="max-w-3xl mx-auto"
+          >
+            <SemiBoldText
+              style={{
+                color: '#ffffff',
+                fontSize: 'clamp(1.125rem, 4vw, 1.75rem)',
+                textShadow: '0 2px 8px rgba(0,0,0,0.7)',
+                lineHeight: '1.4',
+              }}
+              useThemeColor={false}
             >
-              <FontAwesomeIcon
-                icon={faMicrophoneAlt}
-                style={{ color: colorScheme.primary }}
-              />
-              <LightText
-                style={{
-                  color: colorScheme.primary,
-                  fontSize: '0.875rem',
-                  letterSpacing: '0.05em',
-                }}
-                useThemeColor={false}
-              >
-                ARTIST BIOGRAPHY
-              </LightText>
-            </motion.div>
+              American Contemporary Christian Music & Afro-Gospel Artist
+            </SemiBoldText>
+          </motion.div>
+        </motion.div>
+      </LayoutTemplate>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <ExtraBoldText
-                style={{
-                  color: colorScheme.primary,
-                  fontSize: 'clamp(2rem, 4vw, 3rem)',
-                  lineHeight: '1.2',
-                  marginBottom: '1rem',
-                }}
-                useThemeColor={false}
-              >
-                The Journey of Faith & Music
-              </ExtraBoldText>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="max-w-4xl mx-auto"
-            >
-              <SemiBoldText
-                style={{
-                  color: colorScheme.accent,
-                  fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
-                  lineHeight: '1.6',
-                }}
-                useThemeColor={false}
-              >
-                ClaudyGod: American Contemporary Christian music and Afro-Gospel
-                Artist
-              </SemiBoldText>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="w-24 h-1 mx-auto mt-6 rounded-full"
-              style={{ backgroundColor: colorScheme.accent }}
+      {/* Biography Content */}
+      <article className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+        {/* Section Header */}
+        <header className="mb-8 sm:mb-12 md:mb-16 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
+            style={{ backgroundColor: `${colorScheme.primary}20` }}
+          >
+            <FontAwesomeIcon
+              icon={faMicrophoneAlt}
+              style={{ color: colorScheme.primary }}
+              className="text-sm sm:text-base"
             />
-          </header>
+            <LightText
+              style={{
+                color: colorScheme.primary,
+                fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
+                letterSpacing: '0.05em',
+              }}
+              useThemeColor={false}
+            >
+              ARTIST BIOGRAPHY
+            </LightText>
+          </motion.div>
 
-          {/* Biography Sections */}
-          <section className="space-y-12 md:space-y-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <ExtraBoldText
+              style={{
+                color: colorScheme.primary,
+                fontSize: 'clamp(1.75rem, 6vw, 3rem)',
+                lineHeight: '1.1',
+                marginBottom: '0.75rem',
+              }}
+              useThemeColor={false}
+            >
+              The Journey of Faith & Music
+            </ExtraBoldText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-4xl mx-auto"
+          >
+            <SemiBoldText
+              style={{
+                color: colorScheme.accent,
+                fontSize: 'clamp(1rem, 3vw, 1.375rem)',
+                lineHeight: '1.5',
+              }}
+              useThemeColor={false}
+            >
+              ClaudyGod: American Contemporary Christian music and Afro-Gospel
+              Artist
+            </SemiBoldText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
+            style={{ backgroundColor: colorScheme.accent }}
+          />
+        </header>
+
+        {/* Biography Sections */}
+        <section className="space-y-12 sm:space-y-16 md:space-y-20">
+          {/* First Bio Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6 }}
+          >
             <BioSection
               imageSrc={About2}
               altText="ClaudyGod portrait"
               texts={firstSectionTexts}
             />
+          </motion.div>
 
-            {/* Quote Section */}
-            <motion.blockquote
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative my-12 md:my-16 p-6 md:p-8 rounded-2xl"
+          {/* Quote Section */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mb-12 sm:mb-16 md:mb-20"
+          >
+            <blockquote
+              className="relative p-6 sm:p-8 rounded-2xl"
               style={{
-                background: `linear-gradient(135deg, ${colorScheme.gray[900]}, ${colorScheme.gray[800]})`, // darker gradient
+                background: `linear-gradient(135deg, ${colorScheme.gray[900]}, ${colorScheme.gray[800]})`,
                 border: `1px solid ${colorScheme.gray[700]}`,
               }}
             >
               <div
-                className="absolute top-4 right-4 text-xl md:text-2xl opacity-90"
+                className="absolute top-4 right-4 text-2xl sm:text-3xl opacity-90"
                 style={{ color: colorScheme.accent }}
               >
                 <FontAwesomeIcon icon={faQuoteRight} />
@@ -233,12 +249,12 @@ export const Biography: React.FC = () => {
                 <div className="flex items-start">
                   <FontAwesomeIcon
                     icon={faHandsPraying}
-                    className="mt-1 mr-4 text-lg"
+                    className="mt-1 mr-3 sm:mr-4 text-base sm:text-lg"
                     style={{ color: colorScheme.accent }}
                   />
                   <LightText
                     style={{
-                      color: 'white', // force white text for visibility
+                      color: 'white',
                       fontSize: 'clamp(1.025rem, 2vw, 1.375rem)',
                       lineHeight: '1.6',
                       fontStyle: 'italic',
@@ -261,8 +277,16 @@ export const Biography: React.FC = () => {
                   - ClaudyGod
                 </SemiBoldText>
               </div>
-            </motion.blockquote>
+            </blockquote>
+          </motion.section>
 
+          {/* Second Bio Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             <BioSection
               imageSrc={About2}
               altText="ClaudyGod performing"
@@ -270,32 +294,41 @@ export const Biography: React.FC = () => {
               reverse
               hideOnSmall
             />
-          </section>
-        </article>
-
-        {/* Donation Section */}
-        <section className="my-12 md:my-16">
-          <DonationCallToAction
-            title="Partner with Our Ministry"
-            subtitle="Your Support Makes a Difference"
-            description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
-            goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
-            donateUrl="/donate"
-          />
+          </motion.div>
         </section>
+      </article>
 
-        {/* Newsletter Section */}
-        <section
-          className="py-12 md:py-16"
-          style={{
-            background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
-          }}
-        >
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <NewsletterForm />
-          </div>
-        </section>
-      </main>
-    </>
+      {/* Donation Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+        className="mb-12 sm:mb-16 md:mb-20"
+      >
+        <DonationCallToAction
+          title="Partner with Our Ministry"
+          subtitle="Your Support Makes a Difference"
+          description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+          goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+          donateUrl="/donate"
+        />
+      </motion.section>
+
+      {/* Newsletter Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.6, delay: 0.6 }}
+        style={{
+          borderRadius: colorScheme.borderRadius.xlarge,
+          background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
+        }}
+        className="p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl shadow-sm max-w-4xl mx-auto"
+      >
+        <NewsletterForm />
+      </motion.section>
+    </main>
   );
 };

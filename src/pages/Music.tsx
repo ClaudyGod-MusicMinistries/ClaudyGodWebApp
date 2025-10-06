@@ -110,14 +110,20 @@ export const MusicData = () => {
       <motion.a
         href={sanitizedUrl}
         onClick={e => handleLinkClick(platform.url, e)}
-        className={`flex items-center px-6 py-4 rounded-xl shadow-md transition-all ${platform.bgColor} ${platform.textColor} ${
+        className={`flex items-center px-4 sm:px-6 py-3 sm:py-4 rounded-lg sm:rounded-xl shadow-md transition-all ${platform.bgColor} ${platform.textColor} ${
           isTrusted ? 'ring-2 ring-white/30' : 'opacity-80'
         }`}
-        whileHover={{ scale: 1.05, y: -4 }}
+        whileHover={{ scale: 1.02, y: -2 }}
         whileTap={{ scale: 0.98 }}
       >
-        <FontAwesomeIcon icon={platform.icon} className="mr-3 text-xl" />
-        <BoldText style={{ color: colorScheme.buttonText }}>
+        <FontAwesomeIcon
+          icon={platform.icon}
+          className="mr-2 sm:mr-3 text-lg sm:text-xl"
+        />
+        <BoldText
+          style={{ color: colorScheme.buttonText }}
+          className="text-sm sm:text-base"
+        >
           {platform.name}
           {!isTrusted && (
             <LightText className="text-xs ml-1">(unverified)</LightText>
@@ -160,16 +166,16 @@ export const MusicData = () => {
         redirectUrl={redirectUrl || ''}
       />
 
-      {/* Hero Section */}
+      {/* Hero Section - Enhanced Responsiveness */}
       <LayoutTemplate
         backgroundImage={Tour3}
         overlayColor="rgba(0,0,0,0.55)"
         backgroundPosition="center center"
-        className="h-[100vh] md:h-[100vh]"
+        className="h-[70vh] sm:h-[80vh] md:h-[90vh] lg:h-[100vh] min-h-[500px]"
         title={''}
       >
         <motion.div
-          className="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full h-full"
+          className="relative z-20 flex flex-col items-center justify-center text-center w-full h-full px-4 sm:px-6 lg:px-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -178,14 +184,14 @@ export const MusicData = () => {
             initial={{ y: -20 }}
             animate={{ y: 0 }}
             transition={{ delay: 0.2, duration: 0.7 }}
-            className="mb-6"
+            className="mb-4 sm:mb-6 md:mb-8"
           >
             <AbrilFatFaceText
               style={{
                 color: '#ffffff',
-                fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                fontSize: 'clamp(2rem, 8vw, 4.5rem)',
                 lineHeight: '1.1',
-                textShadow: '0 4px 8px rgba(0,0,0,0.6)',
+                textShadow: '0 4px 12px rgba(0,0,0,0.8)',
                 letterSpacing: '0.02em',
               }}
               useThemeColor={false}
@@ -198,20 +204,20 @@ export const MusicData = () => {
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-5 mx-auto"
+            className="w-20 sm:w-24 md:w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-4 sm:mb-6 md:mb-8 mx-auto"
           />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="max-w-3xl"
+            className="max-w-3xl mx-auto"
           >
             <SemiBoldText
               style={{
                 color: '#ffffff',
-                fontSize: 'clamp(1.25rem, 3vw, 2rem)',
-                textShadow: '0 2px 4px rgba(0,0,0,0.6)',
+                fontSize: 'clamp(1.125rem, 4vw, 1.75rem)',
+                textShadow: '0 2px 8px rgba(0,0,0,0.7)',
                 lineHeight: '1.4',
                 letterSpacing: '0.01em',
               }}
@@ -221,31 +227,52 @@ export const MusicData = () => {
               and Afro-Gospel
             </SemiBoldText>
           </motion.div>
+
+          {/* Scroll Indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2"
+          >
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="w-5 h-8 border-2 border-white rounded-full flex justify-center"
+            >
+              <motion.div
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-1 h-2 bg-white rounded-full mt-2"
+              />
+            </motion.div>
+          </motion.div>
         </motion.div>
       </LayoutTemplate>
 
       {/* Music Content */}
       <article className="w-full">
         {/* Section Header */}
-        <section className="w-full py-12 md:py-16">
+        <section className="w-full py-8 sm:py-12 md:py-16">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <header className="mb-12 md:mb-16 text-center">
+            <header className="mb-8 sm:mb-12 md:mb-16 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.6 }}
-                className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-opacity-10 mb-8"
+                className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-6 sm:mb-8"
                 style={{ backgroundColor: `${colorScheme.primary}20` }}
               >
                 <FontAwesomeIcon
                   icon={faMusic}
                   style={{ color: colorScheme.primary }}
+                  className="text-sm sm:text-base"
                 />
                 <LightText
                   style={{
                     color: colorScheme.primary,
-                    fontSize: '0.875rem',
+                    fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
                     letterSpacing: '0.05em',
                   }}
                   useThemeColor={false}
@@ -258,17 +285,17 @@ export const MusicData = () => {
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.7, delay: 0.1 }}
-                className="mb-8"
+                className="mb-6 sm:mb-8"
               >
                 <div className="flex flex-col items-center">
                   <AbrilFatFaceText
                     style={{
                       color: colorScheme.primary,
-                      fontSize: 'clamp(2rem, 4vw, 3rem)',
+                      fontSize: 'clamp(1.75rem, 6vw, 3rem)',
                       lineHeight: '1.1',
-                      marginBottom: '0.5rem',
+                      marginBottom: '0.25rem',
                       letterSpacing: '0.02em',
                     }}
                     useThemeColor={false}
@@ -278,7 +305,7 @@ export const MusicData = () => {
                   <ShadowsText
                     style={{
                       color: colorScheme.accent,
-                      fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)',
+                      fontSize: 'clamp(1.875rem, 6.5vw, 3.5rem)',
                       lineHeight: '1',
                       letterSpacing: '0.03em',
                     }}
@@ -292,15 +319,15 @@ export const MusicData = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="max-w-4xl mx-auto"
               >
                 <SemiBoldText
                   style={{
                     color: colorScheme.accent,
-                    fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
-                    lineHeight: '1.6',
+                    fontSize: 'clamp(1rem, 3vw, 1.375rem)',
+                    lineHeight: '1.5',
                     letterSpacing: '0.01em',
                   }}
                   useThemeColor={false}
@@ -313,9 +340,9 @@ export const MusicData = () => {
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="w-24 h-1 mx-auto mt-6 rounded-full"
+                className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
                 style={{ backgroundColor: colorScheme.accent }}
               />
             </header>
@@ -323,20 +350,20 @@ export const MusicData = () => {
         </section>
 
         {/* Streaming Platforms */}
-        <section className="w-full pt-2 md:pt-4 pb-6 md:pb-12">
+        <section className="w-full pt-2 md:pt-4 pb-4 sm:pb-6 md:pb-12">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6 }}
-              className="text-center mb-12"
+              className="text-center mb-8 sm:mb-12"
             >
               <div className="flex flex-col items-center">
                 <UltraText
                   style={{
                     color: colorScheme.primary,
-                    fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)',
+                    fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
                     lineHeight: '1.1',
                     marginBottom: '0.25rem',
                     letterSpacing: '0.02em',
@@ -348,7 +375,7 @@ export const MusicData = () => {
                 <BricolageText
                   style={{
                     color: colorScheme.accent,
-                    fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)',
+                    fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
                     lineHeight: '1',
                     letterSpacing: '0.01em',
                   }}
@@ -362,9 +389,9 @@ export const MusicData = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 w-full"
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6 w-full"
             >
               {securedMusicPlatforms.map(platform => (
                 <SecuredLink key={platform.name} platform={platform} />
@@ -374,12 +401,12 @@ export const MusicData = () => {
             <motion.footer
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-10 flex justify-center"
+              className="mt-8 sm:mt-10 flex justify-center"
             >
               <div
-                className="inline-flex items-center px-5 py-3 rounded-full border"
+                className="inline-flex items-center px-4 sm:px-5 py-2 sm:py-3 rounded-full border"
                 style={{
                   backgroundColor: colorScheme.gray[100],
                   borderColor: colorScheme.gray[200],
@@ -387,10 +414,13 @@ export const MusicData = () => {
               >
                 <FontAwesomeIcon
                   icon={faInfoCircle}
-                  className="mr-3 text-lg"
+                  className="mr-2 sm:mr-3 text-base sm:text-lg"
                   style={{ color: colorScheme.primary }}
                 />
-                <LightText style={{ color: colorScheme.primary }}>
+                <LightText
+                  style={{ color: colorScheme.primary }}
+                  className="text-xs sm:text-sm"
+                >
                   We verify all external links for your security
                 </LightText>
               </div>
@@ -400,22 +430,22 @@ export const MusicData = () => {
 
         {/* Latest Release - PROFESSIONAL FULL WIDTH */}
         <section
-          className="w-full py-12 md:py-16"
+          className="w-full py-8 sm:py-12 md:py-16"
           style={{ backgroundColor: colorScheme.background }}
         >
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.header
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6 }}
-              className="text-center mb-12 md:mb-16"
+              className="text-center mb-8 sm:mb-12 md:mb-16"
             >
               <div className="flex flex-col items-center">
                 <AbrilFatFaceText
                   style={{
                     color: colorScheme.textSecondary,
-                    fontSize: 'clamp(1.5rem, 3vw, 2.2rem)',
+                    fontSize: 'clamp(1.375rem, 3.5vw, 2.2rem)',
                     lineHeight: '1.2',
                     marginBottom: '0.5rem',
                     opacity: 0.9,
@@ -428,7 +458,7 @@ export const MusicData = () => {
                 <ShadowsText
                   style={{
                     color: colorScheme.primary,
-                    fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
+                    fontSize: 'clamp(1.75rem, 5vw, 3.5rem)',
                     lineHeight: '1',
                     letterSpacing: '0.02em',
                   }}
@@ -439,10 +469,10 @@ export const MusicData = () => {
               </div>
               <motion.div
                 initial={{ opacity: 0, width: 0 }}
-                whileInView={{ opacity: 1, width: '6rem' }}
-                viewport={{ once: true }}
+                whileInView={{ opacity: 1, width: '4rem sm:5rem md:6rem' }}
+                viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className="h-1 mx-auto mt-6 rounded-full"
+                className="h-1 mx-auto mt-4 sm:mt-6 rounded-full"
                 style={{ backgroundColor: colorScheme.accent }}
               />
             </motion.header>
@@ -453,16 +483,16 @@ export const MusicData = () => {
                   key={album.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true, margin: '-50px' }}
                   transition={{ duration: 0.6 }}
-                  className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 w-full"
+                  className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 items-start rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 w-full"
                   style={{ backgroundColor: colorScheme.surface }}
                 >
                   {/* Album Cover */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.3 }}
-                    className="overflow-hidden rounded-xl shadow-xl w-full"
+                    className="overflow-hidden rounded-lg sm:rounded-xl shadow-xl w-full"
                   >
                     <img
                       src={album.image}
@@ -472,16 +502,16 @@ export const MusicData = () => {
                   </motion.div>
 
                   {/* Album Info */}
-                  <div className="md:col-span-2 flex flex-col justify-between space-y-4 md:space-y-6 w-full">
+                  <div className="lg:col-span-2 flex flex-col justify-between space-y-4 sm:space-y-6 w-full">
                     <header>
                       <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, margin: '-50px' }}
                         transition={{ duration: 0.6 }}
                       >
                         <UltraText
-                          className="text-xl sm:text-2xl md:text-3xl mb-2"
+                          className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-2"
                           style={{
                             color: colorScheme.text,
                             letterSpacing: '0.02em',
@@ -491,7 +521,7 @@ export const MusicData = () => {
                           {album.title}
                         </UltraText>
                         <LightText
-                          className="mb-4 text-sm sm:text-base"
+                          className="mb-3 sm:mb-4 text-sm sm:text-base"
                           style={{
                             color: colorScheme.textSecondary,
                             letterSpacing: '0.05em',
@@ -512,23 +542,23 @@ export const MusicData = () => {
                     <motion.div
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
-                      viewport={{ once: true }}
+                      viewport={{ once: true, margin: '-50px' }}
                       transition={{ duration: 0.6, delay: 0.3 }}
-                      className="text-center my-4 md:my-6"
+                      className="text-center my-3 sm:my-4 md:my-6"
                     >
                       <LightText
-                        className="italic mb-4 text-sm sm:text-base md:text-lg"
+                        className="italic mb-3 sm:mb-4 text-sm sm:text-base md:text-lg"
                         style={{ color: colorScheme.text }}
                       >
                         Now available on all major streaming platforms
                       </LightText>
                       <motion.div
-                        animate={{ y: [0, -10, 0] }}
+                        animate={{ y: [0, -8, 0] }}
                         transition={{ repeat: Infinity, duration: 1.5 }}
                       >
                         <FontAwesomeIcon
                           icon={faArrowDown}
-                          className="text-xl sm:text-2xl"
+                          className="text-lg sm:text-xl md:text-2xl"
                           style={{ color: colorScheme.primary }}
                         />
                       </motion.div>
@@ -538,9 +568,9 @@ export const MusicData = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
+                      viewport={{ once: true, margin: '-50px' }}
                       transition={{ duration: 0.6, delay: 0.4 }}
-                      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 w-full"
+                      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3 md:gap-4 w-full"
                     >
                       {securedMusicPlatforms.map(platform => {
                         const sanitizedUrl = SecurityUtils.sanitizeUrl(
@@ -559,7 +589,7 @@ export const MusicData = () => {
                               setRedirectUrl(sanitizedUrl);
                               setIsModalOpen(true);
                             }}
-                            className={`flex items-center justify-between w-full gap-3 px-4 py-3 rounded-xl shadow-lg transition-all font-semibold ${platform.bgColor} ${platform.textColor} opacity-90 hover:opacity-100 hover:shadow-xl active:scale-95`}
+                            className={`flex items-center justify-between w-full gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl shadow-lg transition-all font-semibold ${platform.bgColor} ${platform.textColor} opacity-90 hover:opacity-100 hover:shadow-xl active:scale-95`}
                             whileHover={{
                               scale: 1.02,
                               y: -2,
@@ -568,12 +598,12 @@ export const MusicData = () => {
                             whileTap={{ scale: 0.98 }}
                           >
                             {/* Left side - Platform icon and name */}
-                            <div className="flex items-center gap-3 flex-1 min-w-0">
+                            <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                               <FontAwesomeIcon
                                 icon={platform.icon}
-                                className="text-base sm:text-lg md:text-xl flex-shrink-0"
+                                className="text-sm sm:text-base md:text-lg flex-shrink-0"
                               />
-                              <BoldText className="truncate text-left text-sm sm:text-base md:text-lg font-bold">
+                              <BoldText className="truncate text-left text-xs sm:text-sm md:text-base font-bold">
                                 {platform.name}
                               </BoldText>
                             </div>
@@ -603,7 +633,7 @@ export const MusicData = () => {
       <DownloadSection />
 
       {/* Donation Section */}
-      <section className="w-full my-12 md:my-16">
+      <section className="w-full my-8 sm:my-12 md:my-16">
         <DonationCallToAction
           title="Partner with Our Ministry"
           subtitle="Your Support Makes a Difference"
@@ -615,7 +645,7 @@ export const MusicData = () => {
 
       {/* Newsletter Section */}
       <section
-        className="w-full py-12 md:py-16"
+        className="w-full py-8 sm:py-12 md:py-16"
         style={{
           background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
         }}

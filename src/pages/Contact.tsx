@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { LayoutTemplate } from '../components/util/hero';
-import { About1, bgresize, Log, Tour2 } from '../assets/';
+import { Tour2 } from '../assets/';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ContactForm from '../components/contact/ContactForm';
 import ContactInfo from '../components/contact/ContactInfo';
@@ -10,10 +10,6 @@ import { NewsletterForm } from '../components/util/Newsletter';
 import { DonationCallToAction } from '../components/util/DonationSupport';
 import { motion } from 'framer-motion';
 import {
-  // faFacebookF,
-  // faXTwitter,
-  // faInstagram,
-  // faYoutube,
   faEnvelope,
   faPhone,
   faComments,
@@ -23,7 +19,6 @@ import {
   BoldText,
   LightText,
   ExtraBoldText,
-  RegularText,
 } from '../components/ui/fonts/typography';
 import { SEO } from '../components/util/SEO';
 import {
@@ -32,7 +27,6 @@ import {
   faInstagram,
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
-import { icon } from '@fortawesome/fontawesome-svg-core';
 
 export const ContactData: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,7 +50,7 @@ export const ContactData: React.FC = () => {
     <main
       className="relative overflow-hidden"
       style={{
-        backgroundColor: colorScheme.background,
+        backgroundColor: colorScheme.text,
       }}
     >
       <SEO
@@ -89,11 +83,11 @@ export const ContactData: React.FC = () => {
         backgroundImage={Tour2}
         overlayColor="rgba(0,0,0,0.55)"
         backgroundPosition="center center"
-        className="h-[100vh] md:h-[100vh]"
+        className="h-[70vh] sm:h-[80vh] md:h-[90vh] lg:h-[100vh] min-h-[500px]"
         title={''}
       >
         <motion.div
-          className="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full h-full"
+          className="relative z-20 flex flex-col items-center justify-center text-center w-full h-full px-4 sm:px-6 lg:px-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -102,15 +96,15 @@ export const ContactData: React.FC = () => {
             initial={{ y: -20 }}
             animate={{ y: 0 }}
             transition={{ delay: 0.2, duration: 0.7 }}
-            className="mb-6"
+            className="mb-4 sm:mb-6 md:mb-8"
           >
             <ExtraBoldText
               style={{
                 color: '#ffffff',
-                fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                fontSize: 'clamp(2rem, 8vw, 4.5rem)',
                 lineHeight: '1.1',
-                textShadow: '0 4px 8px rgba(0,0,0,0.6)',
-                marginBottom: '1rem',
+                textShadow: '0 4px 12px rgba(0,0,0,0.8)',
+                marginBottom: '0.5rem',
               }}
               useThemeColor={false}
             >
@@ -122,20 +116,20 @@ export const ContactData: React.FC = () => {
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-8 mx-auto"
+            className="w-20 sm:w-24 md:w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-4 sm:mb-6 md:mb-8 mx-auto"
           />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="max-w-3xl"
+            className="max-w-3xl mx-auto"
           >
             <SemiBoldText
               style={{
                 color: '#ffffff',
-                fontSize: 'clamp(1.25rem, 3vw, 2rem)',
-                textShadow: '0 2px 4px rgba(0,0,0,0.6)',
+                fontSize: 'clamp(1.125rem, 4vw, 1.75rem)',
+                textShadow: '0 2px 8px rgba(0,0,0,0.7)',
                 lineHeight: '1.4',
               }}
               useThemeColor={false}
@@ -147,25 +141,26 @@ export const ContactData: React.FC = () => {
       </LayoutTemplate>
 
       {/* Contact Content */}
-      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <article className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
         {/* Section Header */}
-        <header className="mb-12 md:mb-16 text-center">
+        <header className="mb-8 sm:mb-12 md:mb-16 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-opacity-10 mb-6"
+            className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
             style={{ backgroundColor: `${colorScheme.primary}20` }}
           >
             <FontAwesomeIcon
               icon={faComments}
               style={{ color: colorScheme.primary }}
+              className="text-sm sm:text-base"
             />
             <LightText
               style={{
                 color: colorScheme.primary,
-                fontSize: '0.875rem',
+                fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
                 letterSpacing: '0.05em',
               }}
               useThemeColor={false}
@@ -177,15 +172,15 @@ export const ContactData: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             <ExtraBoldText
               style={{
                 color: colorScheme.primary,
-                fontSize: 'clamp(2rem, 4vw, 3rem)',
-                lineHeight: '1.2',
-                marginBottom: '1rem',
+                fontSize: 'clamp(1.75rem, 6vw, 3rem)',
+                lineHeight: '1.1',
+                marginBottom: '0.75rem',
               }}
               useThemeColor={false}
             >
@@ -196,15 +191,15 @@ export const ContactData: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="max-w-4xl mx-auto"
           >
             <SemiBoldText
               style={{
                 color: colorScheme.accent,
-                fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
-                lineHeight: '1.6',
+                fontSize: 'clamp(1rem, 3vw, 1.375rem)',
+                lineHeight: '1.5',
               }}
               useThemeColor={false}
             >
@@ -216,46 +211,48 @@ export const ContactData: React.FC = () => {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="w-24 h-1 mx-auto mt-6 rounded-full"
+            className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
             style={{ backgroundColor: colorScheme.accent }}
           />
         </header>
 
         {/* Contact Form & Info Grid */}
-        <section className="mb-20">
+        <section className="mb-12 sm:mb-16 md:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12"
           >
             {/* Contact Form */}
             <motion.article
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-white rounded-2xl shadow-xl p-6 md:p-8"
               style={{
-                borderRadius: colorScheme.borderRadius.large,
+                backgroundColor: colorScheme.white,
+                borderRadius: colorScheme.borderRadius.xlarge,
               }}
+              className="p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl shadow-sm"
             >
-              <div className="mb-6">
+              <div className="mb-4 sm:mb-6">
                 <div
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4"
+                  className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full mb-3 sm:mb-4"
                   style={{ backgroundColor: `${colorScheme.primary}10` }}
                 >
                   <FontAwesomeIcon
                     icon={faEnvelope}
                     style={{ color: colorScheme.primary }}
+                    className="text-sm"
                   />
                   <LightText
                     style={{
                       color: colorScheme.primary,
-                      fontSize: '0.875rem',
+                      fontSize: 'clamp(0.75rem, 2vw, 0.875rem)',
                     }}
                     useThemeColor={false}
                   >
@@ -263,8 +260,8 @@ export const ContactData: React.FC = () => {
                   </LightText>
                 </div>
                 <SemiBoldText
-                  style={{ color: colorScheme.text }}
-                  fontSize="1.5rem"
+                  style={{ color: colorScheme.primary }}
+                  fontSize="clamp(1.25rem, 3vw, 1.5rem)"
                 >
                   Contact Form
                 </SemiBoldText>
@@ -276,27 +273,28 @@ export const ContactData: React.FC = () => {
             <motion.article
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="rounded-2xl shadow-xl p-6 md:p-8"
               style={{
-                borderRadius: colorScheme.borderRadius.large,
+                borderRadius: colorScheme.borderRadius.xlarge,
                 background: `linear-gradient(135deg, ${colorScheme.primary}, ${colorScheme.secondary})`,
               }}
+              className="p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl shadow-sm"
             >
-              <div className="mb-6">
+              <div className="mb-4 sm:mb-6">
                 <div
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4"
+                  className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full mb-3 sm:mb-4"
                   style={{ backgroundColor: `${colorScheme.white}20` }}
                 >
                   <FontAwesomeIcon
                     icon={faPhone}
                     style={{ color: colorScheme.white }}
+                    className="text-sm"
                   />
                   <LightText
                     style={{
                       color: colorScheme.white,
-                      fontSize: '0.875rem',
+                      fontSize: 'clamp(0.75rem, 2vw, 0.875rem)',
                     }}
                     useThemeColor={false}
                   >
@@ -305,7 +303,7 @@ export const ContactData: React.FC = () => {
                 </div>
                 <SemiBoldText
                   style={{ color: colorScheme.white }}
-                  fontSize="1.5rem"
+                  fontSize="clamp(1.25rem, 3vw, 1.5rem)"
                 >
                   Get In Touch
                 </SemiBoldText>
@@ -319,9 +317,9 @@ export const ContactData: React.FC = () => {
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mb-20"
+          className="mb-12 sm:mb-16 md:mb-20"
         >
           <DonationCallToAction
             title="Partner with Our Ministry"
@@ -336,13 +334,13 @@ export const ContactData: React.FC = () => {
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="rounded-2xl shadow-lg p-6 md:p-8 max-w-4xl mx-auto"
           style={{
-            borderRadius: colorScheme.borderRadius.large,
+            borderRadius: colorScheme.borderRadius.xlarge,
             background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
           }}
+          className="p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl shadow-sm max-w-4xl mx-auto"
         >
           <NewsletterForm />
         </motion.section>
@@ -367,52 +365,58 @@ export const ContactData: React.FC = () => {
           ></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
           <div className="text-center">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5 }}
             >
               <BoldText
-                className="text-3xl md:text-4xl mb-6"
-                style={{ color: colorScheme.white }}
+                style={{
+                  color: colorScheme.white,
+                  fontSize: 'clamp(1.5rem, 4vw, 2.25rem)',
+                }}
+                className="mb-4 sm:mb-6"
               >
                 ClaudyGod Music & Ministries
               </BoldText>
             </motion.div>
 
             <motion.div
-              className="w-24 h-1 rounded-full mx-auto my-6"
+              className="w-16 sm:w-20 md:w-24 h-1 rounded-full mx-auto my-4 sm:my-6"
               style={{
                 background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.highlight})`,
               }}
               initial={{ width: 0 }}
               whileInView={{ width: '6rem' }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ delay: 0.2, duration: 0.5 }}
             />
 
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ delay: 0.3 }}
             >
               <LightText
-                className="text-lg mb-8 max-w-2xl mx-auto"
-                style={{ color: colorScheme.white }}
+                style={{
+                  color: colorScheme.white,
+                  fontSize: 'clamp(0.875rem, 2vw, 1.125rem)',
+                }}
+                className="mb-6 sm:mb-8 max-w-2xl mx-auto"
               >
                 Connect With Us On Various Social Platforms
               </LightText>
             </motion.div>
 
             <motion.nav
-              className="flex justify-center space-x-4 sm:space-x-6"
+              className="flex justify-center space-x-3 sm:space-x-4 md:space-x-6"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ delay: 0.4, staggerChildren: 0.1 }}
             >
               {[
@@ -442,7 +446,7 @@ export const ContactData: React.FC = () => {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border"
+                  className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border"
                   style={{
                     backgroundColor: `${colorScheme.white}10`,
                     backdropFilter: 'blur(10px)',
@@ -453,12 +457,12 @@ export const ContactData: React.FC = () => {
                   whileTap={{ scale: 0.9 }}
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true, margin: '-50px' }}
                   transition={{ delay: 0.5 + index * 0.1 }}
                 >
                   <FontAwesomeIcon
                     icon={social.icon}
-                    className="text-xl"
+                    className="text-base sm:text-lg md:text-xl"
                     style={{ color: colorScheme.white }}
                   />
                 </motion.a>

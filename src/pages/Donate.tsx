@@ -93,30 +93,30 @@ const DonationGuide = () => {
     <motion.aside
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5 }}
       style={{
         backgroundColor: colorScheme.gray[50],
         borderLeftColor: colorScheme.accent,
         borderRadius: colorScheme.borderRadius.large,
       }}
-      className="border-l-4 rounded-lg p-4 sm:p-5 mb-8 sm:mb-10 shadow-sm"
+      className="border-l-4 rounded-lg p-4 sm:p-5 mb-6 sm:mb-8 md:mb-10 shadow-sm"
     >
       <div className="flex items-start">
         <FontAwesomeIcon
           icon={faInfoCircle}
           style={{ color: colorScheme.accent }}
-          className="text-xl mt-1 mr-3 flex-shrink-0"
+          className="text-lg sm:text-xl mt-0.5 sm:mt-1 mr-3 flex-shrink-0"
         />
         <div>
           <SemiBoldText
             style={{ color: colorScheme.primary }}
-            fontSize="18px"
+            fontSize="clamp(1rem, 2vw, 1.125rem)"
             className="mb-2"
           >
             How to Donate
           </SemiBoldText>
-          <ul className="list-disc pl-5 space-y-2 text-sm sm:text-base">
+          <ul className="list-disc pl-4 sm:pl-5 space-y-1 sm:space-y-2 text-xs sm:text-sm md:text-base">
             <li>
               <LightText style={{ color: colorScheme.primary }}>
                 <span
@@ -181,34 +181,34 @@ const FeatureCard = ({
 
   return (
     <motion.article
-      whileHover={{ y: -5 }}
+      whileHover={{ y: -4 }}
       style={{
         backgroundColor: colorScheme.white,
         borderRadius: colorScheme.borderRadius.large,
         borderColor: colorScheme.gray[100],
       }}
-      className="p-4 sm:p-6 rounded-xl shadow-sm border hover:shadow-md transition-shadow h-full flex flex-col"
+      className="p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl shadow-sm border hover:shadow-md transition-shadow h-full flex flex-col"
     >
       <div
         style={{ backgroundColor: colorScheme.gray[100] }}
-        className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-3 sm:mb-4"
+        className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center mb-3 sm:mb-4"
       >
         <FontAwesomeIcon
           icon={icon}
           style={{ color: colorScheme.accent }}
-          className="text-lg sm:text-xl"
+          className="text-base sm:text-lg md:text-xl"
         />
       </div>
       <SemiBoldText
         style={{ color: colorScheme.background }}
-        fontSize="18px"
+        fontSize="clamp(0.9rem, 2vw, 1.125rem)"
         className="mb-2"
       >
         {title}
       </SemiBoldText>
       <LightText
         style={{ color: colorScheme.background }}
-        fontSize="14px"
+        fontSize="clamp(0.75rem, 1.5vw, 0.875rem)"
         className="flex-grow"
       >
         {description}
@@ -314,16 +314,16 @@ export const DonateData: React.FC = () => {
         }}
       />
 
-      {/* Hero Section */}
+      {/* Hero Section - Enhanced Responsiveness */}
       <LayoutTemplate
         backgroundImage={Donate1}
         overlayColor="rgba(0,0,0,0.55)"
         backgroundPosition="center center"
-        className="h-[100vh] md:h-[100vh]"
+        className="h-[70vh] sm:h-[80vh] md:h-[90vh] lg:h-[100vh] min-h-[500px]"
         title={''}
       >
         <motion.div
-          className="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full h-full"
+          className="relative z-20 flex flex-col items-center justify-center text-center w-full h-full px-4 sm:px-6 lg:px-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -332,15 +332,15 @@ export const DonateData: React.FC = () => {
             initial={{ y: -20 }}
             animate={{ y: 0 }}
             transition={{ delay: 0.2, duration: 0.7 }}
-            className="mb-6"
+            className="mb-4 sm:mb-6 md:mb-8"
           >
             <ExtraBoldText
               style={{
                 color: '#ffffff',
-                fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                fontSize: 'clamp(2rem, 8vw, 4.5rem)',
                 lineHeight: '1.1',
-                textShadow: '0 4px 8px rgba(0,0,0,0.6)',
-                marginBottom: '1rem',
+                textShadow: '0 4px 12px rgba(0,0,0,0.8)',
+                marginBottom: '0.5rem',
               }}
               useThemeColor={false}
             >
@@ -352,20 +352,20 @@ export const DonateData: React.FC = () => {
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-8 mx-auto"
+            className="w-20 sm:w-24 md:w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-4 sm:mb-6 md:mb-8 mx-auto"
           />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="max-w-3xl"
+            className="max-w-3xl mx-auto"
           >
             <SemiBoldText
               style={{
                 color: '#ffffff',
-                fontSize: 'clamp(1.25rem, 3vw, 2rem)',
-                textShadow: '0 2px 4px rgba(0,0,0,0.6)',
+                fontSize: 'clamp(1.125rem, 4vw, 1.75rem)',
+                textShadow: '0 2px 8px rgba(0,0,0,0.7)',
                 lineHeight: '1.4',
               }}
               useThemeColor={false}
@@ -373,12 +373,32 @@ export const DonateData: React.FC = () => {
               Partner with us to spread the gospel through music
             </SemiBoldText>
           </motion.div>
+
+          {/* Scroll Indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2"
+          >
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="w-5 h-8 border-2 border-white rounded-full flex justify-center"
+            >
+              <motion.div
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-1 h-2 bg-white rounded-full mt-2"
+              />
+            </motion.div>
+          </motion.div>
         </motion.div>
       </LayoutTemplate>
 
       {isCheckout ? (
         <section
-          className={`max-w-7xl mx-auto px-4 py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75' : ''}`}
+          className={`max-w-7xl mx-auto px-4 py-6 sm:py-8 md:py-12 ${isNavOpen ? 'filter blur-sm opacity-75' : ''}`}
         >
           {currency === 'NGN' ? (
             <div className="max-w-2xl mx-auto">
@@ -400,25 +420,26 @@ export const DonateData: React.FC = () => {
         </section>
       ) : (
         /* Donation Content */
-        <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <article className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
           {/* Section Header */}
-          <header className="mb-12 md:mb-16 text-center">
+          <header className="mb-8 sm:mb-12 md:mb-16 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-opacity-10 mb-6"
+              className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
               style={{ backgroundColor: `${colorScheme.primary}20` }}
             >
               <FontAwesomeIcon
                 icon={faDonate}
                 style={{ color: colorScheme.primary }}
+                className="text-sm sm:text-base"
               />
               <LightText
                 style={{
                   color: colorScheme.primary,
-                  fontSize: '0.875rem',
+                  fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
                   letterSpacing: '0.05em',
                 }}
                 useThemeColor={false}
@@ -430,15 +451,15 @@ export const DonateData: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
               <ExtraBoldText
                 style={{
                   color: colorScheme.primary,
-                  fontSize: 'clamp(2rem, 4vw, 3rem)',
-                  lineHeight: '1.2',
-                  marginBottom: '1rem',
+                  fontSize: 'clamp(1.75rem, 6vw, 3rem)',
+                  lineHeight: '1.1',
+                  marginBottom: '0.75rem',
                 }}
                 useThemeColor={false}
               >
@@ -449,15 +470,15 @@ export const DonateData: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="max-w-4xl mx-auto"
             >
               <SemiBoldText
                 style={{
                   color: colorScheme.accent,
-                  fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
-                  lineHeight: '1.6',
+                  fontSize: 'clamp(1rem, 3vw, 1.375rem)',
+                  lineHeight: '1.5',
                 }}
                 useThemeColor={false}
               >
@@ -470,9 +491,9 @@ export const DonateData: React.FC = () => {
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="w-24 h-1 mx-auto mt-6 rounded-full"
+              className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
               style={{ backgroundColor: colorScheme.accent }}
             />
           </header>
@@ -481,25 +502,25 @@ export const DonateData: React.FC = () => {
           <motion.blockquote
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6 }}
-            className="relative my-12 md:my-16 p-6 md:p-8 rounded-2xl text-center"
+            className="relative my-8 sm:my-12 md:my-16 p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl text-center"
             style={{
               background: `linear-gradient(135deg, ${colorScheme.gray[900]}, ${colorScheme.gray[800]})`,
               border: `1px solid ${colorScheme.gray[700]}`,
             }}
           >
             <div className="max-w-4xl mx-auto">
-              <div className="flex items-center justify-center mb-4">
+              <div className="flex items-center justify-center mb-3 sm:mb-4">
                 <FontAwesomeIcon
                   icon={faPrayingHands}
-                  className="mr-3 text-lg"
+                  className="mr-2 sm:mr-3 text-base sm:text-lg"
                   style={{ color: colorScheme.accent }}
                 />
                 <LightText
                   style={{
                     color: 'white',
-                    fontSize: 'clamp(1.025rem, 2vw, 1.375rem)',
+                    fontSize: 'clamp(0.9rem, 2.5vw, 1.375rem)',
                     lineHeight: '1.6',
                     fontStyle: 'italic',
                   }}
@@ -512,7 +533,7 @@ export const DonateData: React.FC = () => {
               <RegularText
                 style={{
                   color: colorScheme.primary,
-                  fontSize: '1rem',
+                  fontSize: 'clamp(0.875rem, 2vw, 1rem)',
                 }}
                 useThemeColor={false}
               >
@@ -523,13 +544,13 @@ export const DonateData: React.FC = () => {
           </motion.blockquote>
 
           {/* Feature Cards */}
-          <section className="mb-12 md:mb-16">
+          <section className="mb-8 sm:mb-12 md:mb-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-6"
+              className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6"
             >
               <FeatureCard
                 icon={faGlobe}
@@ -550,29 +571,29 @@ export const DonateData: React.FC = () => {
           </section>
 
           {/* Donation Form */}
-          <section className="mb-20">
+          <section className="mb-12 sm:mb-16 md:mb-20">
             <motion.article
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5 }}
               style={{
                 backgroundColor: colorScheme.white,
                 borderRadius: colorScheme.borderRadius.xlarge,
               }}
-              className="max-w-4xl mx-auto px-4 py-6 sm:py-8 rounded-xl shadow-sm"
+              className="max-w-4xl mx-auto px-4 py-4 sm:py-6 md:py-8 rounded-lg sm:rounded-xl shadow-sm"
             >
-              <header className="text-center mb-8 md:mb-10">
+              <header className="text-center mb-6 sm:mb-8 md:mb-10">
                 <ExtraBoldText
                   style={{ color: colorScheme.primary }}
-                  fontSize="28px"
-                  className="mb-3 md:mb-4"
+                  fontSize="clamp(1.5rem, 4vw, 1.75rem)"
+                  className="mb-2 sm:mb-3 md:mb-4"
                 >
                   Make a Donation
                 </ExtraBoldText>
                 <LightText
                   style={{ color: colorScheme.primary }}
-                  fontSize="14px"
+                  fontSize="clamp(0.75rem, 2vw, 0.875rem)"
                   className="max-w-xl mx-auto"
                 >
                   Select your currency and amount to support our gospel music
@@ -588,12 +609,12 @@ export const DonateData: React.FC = () => {
                   backgroundColor: colorScheme.gray[50],
                   borderRadius: colorScheme.borderRadius.large,
                 }}
-                className="p-4 sm:p-6 md:p-8 rounded-lg"
+                className="p-4 sm:p-5 md:p-6 lg:p-8 rounded-lg"
               >
-                <div className="mb-4 sm:mb-6">
+                <div className="mb-3 sm:mb-4 md:mb-6">
                   <SemiBoldText
                     style={{ color: colorScheme.primary }}
-                    fontSize="16px"
+                    fontSize="clamp(0.875rem, 2vw, 1rem)"
                     className="mb-2"
                   >
                     Your Name
@@ -609,22 +630,22 @@ export const DonateData: React.FC = () => {
                       color: colorScheme.primary,
                       backgroundColor: colorScheme.white,
                     }}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border focus:outline-none focus:ring-2 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border focus:outline-none focus:ring-2 focus:border-transparent text-sm sm:text-base"
                     placeholder="Enter your name"
                     required
                   />
                 </div>
 
-                <div className="mb-6 sm:mb-8">
+                <div className="mb-4 sm:mb-6 md:mb-8">
                   <SemiBoldText
                     style={{ color: colorScheme.primary }}
-                    fontSize="16px"
+                    fontSize="clamp(0.875rem, 2vw, 1rem)"
                     className="mb-2"
                   >
                     Select Amount ({currency})
                   </SemiBoldText>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3 mb-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3 mb-3 sm:mb-4">
                     {suggestedAmounts.map(amt => (
                       <motion.button
                         key={amt}
@@ -646,7 +667,7 @@ export const DonateData: React.FC = () => {
                               ? colorScheme.white
                               : colorScheme.primary,
                         }}
-                        className="py-2 sm:py-3 px-2 rounded-lg border transition-all text-sm sm:text-base"
+                        className="py-2 sm:py-3 px-2 rounded-lg border transition-all text-xs sm:text-sm md:text-base"
                       >
                         {currencySymbol}
                         {amt}
@@ -654,10 +675,10 @@ export const DonateData: React.FC = () => {
                     ))}
                   </div>
 
-                  <div className="mb-4 sm:mb-6">
+                  <div className="mb-3 sm:mb-4 md:mb-6">
                     <LightText
                       style={{ color: colorScheme.primary }}
-                      fontSize="14px"
+                      fontSize="clamp(0.75rem, 1.5vw, 0.875rem)"
                       className="mb-2"
                     >
                       Or enter a custom amount
@@ -680,7 +701,7 @@ export const DonateData: React.FC = () => {
                           color: colorScheme.primary,
                           backgroundColor: colorScheme.white,
                         }}
-                        className="flex-1 w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-r-lg focus:outline-none focus:ring-2 focus:border-transparent"
+                        className="flex-1 w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-r-lg focus:outline-none focus:ring-2 focus:border-transparent text-sm sm:text-base"
                         placeholder="Enter amount"
                         min="1"
                         step="0.01"
@@ -695,16 +716,16 @@ export const DonateData: React.FC = () => {
                   variant="primary"
                   size="lg"
                   icon={<FontAwesomeIcon icon={faHandHoldingUsd} />}
-                  className="w-full shadow-md hover:shadow-lg"
+                  className="w-full shadow-md hover:shadow-lg text-sm sm:text-base"
                 >
                   <BoldText>Donate Now</BoldText>
                 </CustomButton>
               </form>
 
-              <footer className="mt-6 sm:mt-8 text-center">
+              <footer className="mt-4 sm:mt-6 md:mt-8 text-center">
                 <ExtraLightText
                   style={{ color: colorScheme.gray[500] }}
-                  fontSize="12px"
+                  fontSize="clamp(0.625rem, 1.5vw, 0.75rem)"
                 >
                   Your donation is securely processed. All major cards and
                   payment methods accepted.
@@ -715,20 +736,20 @@ export const DonateData: React.FC = () => {
             <motion.footer
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6 }}
-              className="mt-12 sm:mt-16 text-center"
+              className="mt-8 sm:mt-12 md:mt-16 text-center"
             >
               <SemiBoldText
                 style={{ color: colorScheme.primary }}
-                fontSize="18px"
-                className="mb-3 sm:mb-4"
+                fontSize="clamp(0.9rem, 2vw, 1.125rem)"
+                className="mb-2 sm:mb-3 md:mb-4"
               >
                 Have questions about donating?
               </SemiBoldText>
               <LightText
                 style={{ color: colorScheme.primary }}
-                fontSize="14px"
+                fontSize="clamp(0.75rem, 1.5vw, 0.875rem)"
                 className="max-w-2xl mx-auto"
               >
                 Contact us at{' '}
@@ -749,7 +770,7 @@ export const DonateData: React.FC = () => {
 
       {/* Newsletter Section */}
       <section
-        className="py-12 md:py-16"
+        className="py-8 sm:py-12 md:py-16"
         style={{
           background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
         }}

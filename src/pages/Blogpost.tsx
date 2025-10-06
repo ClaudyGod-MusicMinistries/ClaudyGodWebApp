@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
   useState,
   useEffect,
@@ -8,6 +7,15 @@ import React, {
   useMemo,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTheme } from '../contexts/ThemeContext';
+import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faBookOpen,
+  faNewspaper,
+  faQuoteRight,
+} from '@fortawesome/free-solid-svg-icons';
+
 import { Heroblog } from '../components/blog/blogHero';
 import { blogPosts } from '../components/blog/blogsData';
 import Interview from '../components/blog/Interview';
@@ -21,16 +29,8 @@ import {
   SemiBoldText,
   LightText,
 } from '../components/ui/fonts/typography';
-import { useTheme } from '../contexts/ThemeContext';
 import { LayoutTemplate } from '../components/util/hero';
 import { SEO } from '../components/util/SEO';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faBookOpen,
-  faNewspaper,
-  faQuoteRight,
-} from '@fortawesome/free-solid-svg-icons';
-import { motion } from 'framer-motion';
 import { blog } from '../assets';
 
 const LazyBlogWelcome = lazy(() => import('../components/blog/blogWelcome'));
@@ -154,19 +154,12 @@ export const Blog: React.FC = () => {
     dispatch(closeArticle());
   }, [dispatch]);
 
-  // Enhanced animation classes
-  const fadeInClass =
-    'transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]';
-  const fadeInUpClass = `${fadeInClass} translate-y-10 opacity-0 ${
-    isMounted ? '!translate-y-0 !opacity-100' : ''
-  }`;
-  const staggerClass = (index: number) =>
-    `${fadeInClass} translate-y-8 opacity-0 ${isMounted ? `!translate-y-0 !opacity-100 delay-[${index * 75}ms]` : ''}`;
-
   return (
     <main
-      className="min-h-screen relative overflow-x-hidden"
-      style={{ backgroundColor: colorScheme.background }}
+      className="relative overflow-hidden"
+      style={{
+        backgroundColor: colorScheme.text,
+      }}
     >
       <SEO
         title="ClaudyGod Blog - Ministry Insights & Spiritual Teachings"
@@ -208,209 +201,220 @@ export const Blog: React.FC = () => {
         <div className="absolute bottom-1/4 -right-20 w-96 h-96 rounded-full bg-gradient-to-r from-sky-100/20 to-blue-200/20 blur-3xl animate-float2" />
       </div>
 
-      {/* Main Content */}
-      <div className="relative">
-        {/* Article Detail Overlay - now full viewport */}
-        {currentArticle && (
-          <section className="fixed inset-0 z-50 overflow-y-auto bg-white/95 backdrop-blur-lg">
+      {/* Article Detail Overlay */}
+      {currentArticle && (
+        <section className="fixed inset-0 z-50 overflow-y-auto bg-white/95 backdrop-blur-lg">
+          <Suspense
+            fallback={
+              <div className="w-full h-full flex items-center justify-center">
+                <RegularText>Loading article...</RegularText>
+              </div>
+            }
+          >
+            <LazyArticleDetail
+              post={currentArticle}
+              onClose={handleCloseArticle}
+            />
+          </Suspense>
+        </section>
+      )}
+
+      {/* Hero Section */}
+      <LayoutTemplate
+        backgroundImage={blog}
+        overlayColor="rgba(0,0,0,0.55)"
+        backgroundPosition="center center"
+        className="h-[70vh] sm:h-[80vh] md:h-[90vh] lg:h-[100vh] min-h-[500px]"
+        title={''}
+      >
+        <motion.div
+          className="relative z-20 flex flex-col items-center justify-center text-center w-full h-full px-4 sm:px-6 lg:px-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div
+            initial={{ y: -20 }}
+            animate={{ y: 0 }}
+            transition={{ delay: 0.2, duration: 0.7 }}
+            className="mb-4 sm:mb-6 md:mb-8"
+          >
+            <ExtraBoldText
+              style={{
+                color: '#ffffff',
+                fontSize: 'clamp(2rem, 8vw, 4.5rem)',
+                lineHeight: '1.1',
+                textShadow: '0 4px 12px rgba(0,0,0,0.8)',
+                marginBottom: '0.5rem',
+              }}
+              useThemeColor={false}
+            >
+              Ministry Blog
+            </ExtraBoldText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="w-20 sm:w-24 md:w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-4 sm:mb-6 md:mb-8 mx-auto"
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="max-w-3xl mx-auto"
+          >
+            <SemiBoldText
+              style={{
+                color: '#ffffff',
+                fontSize: 'clamp(1.125rem, 4vw, 1.75rem)',
+                textShadow: '0 2px 8px rgba(0,0,0,0.7)',
+                lineHeight: '1.4',
+              }}
+              useThemeColor={false}
+            >
+              Insights, teachings, and updates from ClaudyGod Ministries
+            </SemiBoldText>
+          </motion.div>
+        </motion.div>
+      </LayoutTemplate>
+
+      {/* Blog Content */}
+      <article className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+        {/* Section Header */}
+        <header className="mb-8 sm:mb-12 md:mb-16 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
+            style={{ backgroundColor: `${colorScheme.primary}20` }}
+          >
+            <FontAwesomeIcon
+              icon={faBookOpen}
+              style={{ color: colorScheme.primary }}
+              className="text-sm sm:text-base"
+            />
+            <LightText
+              style={{
+                color: colorScheme.primary,
+                fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
+                letterSpacing: '0.05em',
+              }}
+              useThemeColor={false}
+            >
+              MINISTRY INSIGHTS
+            </LightText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <ExtraBoldText
+              style={{
+                color: colorScheme.primary,
+                fontSize: 'clamp(1.75rem, 6vw, 3rem)',
+                lineHeight: '1.1',
+                marginBottom: '0.75rem',
+              }}
+              useThemeColor={false}
+            >
+              Spiritual Insights & Ministry Updates
+            </ExtraBoldText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-4xl mx-auto"
+          >
+            <SemiBoldText
+              style={{
+                color: colorScheme.accent,
+                fontSize: 'clamp(1rem, 3vw, 1.375rem)',
+                lineHeight: '1.5',
+              }}
+              useThemeColor={false}
+            >
+              Explore our collection of blog posts, interviews, and spiritual
+              teachings that inspire faith and growth in your journey with
+              Christ.
+            </SemiBoldText>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
+            style={{ backgroundColor: colorScheme.accent }}
+          />
+        </header>
+
+        {/* Welcome Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6 }}
+          className="mb-12 sm:mb-16 md:mb-20"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
             <Suspense
               fallback={
-                <div className="w-full h-full flex items-center justify-center">
-                  <RegularText>Loading article...</RegularText>
+                <div className="border-2 border-dashed rounded-2xl w-full h-80 md:h-96 animate-pulse bg-white/50" />
+              }
+            >
+              <motion.figure
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="rounded-3xl overflow-hidden shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700 bg-white/80 backdrop-blur-lg border border-white/20"
+              >
+                <LazyWelcomeImage />
+              </motion.figure>
+            </Suspense>
+
+            <Suspense
+              fallback={
+                <div className="h-80 flex items-center justify-center bg-white/50 rounded-xl">
+                  <RegularText>Loading welcome message...</RegularText>
                 </div>
               }
             >
-              <LazyArticleDetail
-                post={currentArticle}
-                onClose={handleCloseArticle}
-              />
+              <motion.article
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="bg-white/80 backdrop-blur-lg p-6 sm:p-8 rounded-3xl shadow-2xl border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700"
+              >
+                <LazyBlogWelcome />
+              </motion.article>
             </Suspense>
-          </section>
-        )}
+          </div>
+        </motion.section>
 
-        {/* Hero Section */}
-        <LayoutTemplate
-          backgroundImage={blog}
-          overlayColor="rgba(0,0,0,0.55)"
-          backgroundPosition="center center"
-          className="h-[100vh] md:h-[100vh]"
-          title={''}
+        {/* Quote Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mb-12 sm:mb-16 md:mb-20"
         >
-          <motion.div
-            className="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full h-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.div
-              initial={{ y: -20 }}
-              animate={{ y: 0 }}
-              transition={{ delay: 0.2, duration: 0.7 }}
-              className="mb-6"
-            >
-              <ExtraBoldText
-                style={{
-                  color: '#ffffff',
-                  fontSize: 'clamp(2.5rem, 6vw, 5rem)',
-                  lineHeight: '1.1',
-                  textShadow: '0 4px 8px rgba(0,0,0,0.6)',
-                  marginBottom: '1rem',
-                }}
-                useThemeColor={false}
-              >
-                Ministry Blog
-              </ExtraBoldText>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scaleX: 0 }}
-              animate={{ opacity: 1, scaleX: 1 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-8 mx-auto"
-            />
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="max-w-3xl"
-            >
-              <SemiBoldText
-                style={{
-                  color: '#ffffff',
-                  fontSize: 'clamp(1.25rem, 3vw, 2rem)',
-                  textShadow: '0 2px 4px rgba(0,0,0,0.6)',
-                  lineHeight: '1.4',
-                }}
-                useThemeColor={false}
-              >
-                Insights, teachings, and updates from ClaudyGod Ministries
-              </SemiBoldText>
-            </motion.div>
-          </motion.div>
-        </LayoutTemplate>
-
-        {/* Blog Content */}
-        <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-          {/* Section Header */}
-          <header className="mb-12 md:mb-16 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-opacity-10 mb-6"
-              style={{ backgroundColor: `${colorScheme.primary}20` }}
-            >
-              <FontAwesomeIcon
-                icon={faBookOpen}
-                style={{ color: colorScheme.primary }}
-              />
-              <LightText
-                style={{
-                  color: colorScheme.primary,
-                  fontSize: '0.875rem',
-                  letterSpacing: '0.05em',
-                }}
-                useThemeColor={false}
-              >
-                MINISTRY INSIGHTS
-              </LightText>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <ExtraBoldText
-                style={{
-                  color: colorScheme.primary,
-                  fontSize: 'clamp(2rem, 4vw, 3rem)',
-                  lineHeight: '1.2',
-                  marginBottom: '1rem',
-                }}
-                useThemeColor={false}
-              >
-                Spiritual Insights & Ministry Updates
-              </ExtraBoldText>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="max-w-4xl mx-auto"
-            >
-              <SemiBoldText
-                style={{
-                  color: colorScheme.accent,
-                  fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
-                  lineHeight: '1.6',
-                }}
-                useThemeColor={false}
-              >
-                Explore our collection of blog posts, interviews, and spiritual
-                teachings that inspire faith and growth in your journey with
-                Christ.
-              </SemiBoldText>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="w-24 h-1 mx-auto mt-6 rounded-full"
-              style={{ backgroundColor: colorScheme.accent }}
-            />
-          </header>
-
-          {/* Welcome Section */}
-          <section className="mb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
-            >
-              <Suspense
-                fallback={
-                  <div className="border-2 border-dashed rounded-2xl w-full h-80 md:h-96 animate-pulse bg-white/50" />
-                }
-              >
-                <figure
-                  className={`${fadeInUpClass} transition-delay-100 rounded-3xl overflow-hidden shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700 bg-white/80 backdrop-blur-lg border border-white/20`}
-                >
-                  <LazyWelcomeImage />
-                </figure>
-              </Suspense>
-              <Suspense
-                fallback={
-                  <div className="h-80 flex items-center justify-center bg-white/50 rounded-xl">
-                    <RegularText>Loading welcome message...</RegularText>
-                  </div>
-                }
-              >
-                <article
-                  className={`${fadeInUpClass} bg-white/80 backdrop-blur-lg p-8 rounded-3xl shadow-2xl border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700`}
-                >
-                  <LazyBlogWelcome />
-                </article>
-              </Suspense>
-            </motion.div>
-          </section>
-
-          {/* Quote Section */}
-          <motion.blockquote
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative my-12 md:my-16 p-6 md:p-8 rounded-2xl text-center"
+          <blockquote
+            className="relative p-6 sm:p-8 rounded-2xl text-center"
             style={{
               background: `linear-gradient(135deg, ${colorScheme.gray[900]}, ${colorScheme.gray[800]})`,
               border: `1px solid ${colorScheme.gray[700]}`,
@@ -418,7 +422,7 @@ export const Blog: React.FC = () => {
           >
             <div className="max-w-4xl mx-auto">
               <div
-                className="absolute top-4 right-4 text-3xl md:text-4xl opacity-20"
+                className="absolute top-4 right-4 text-3xl sm:text-4xl opacity-20"
                 style={{ color: colorScheme.accent }}
               >
                 <FontAwesomeIcon icon={faQuoteRight} />
@@ -454,141 +458,145 @@ export const Blog: React.FC = () => {
                 - Minister ClaudyGod
               </SemiBoldText>
             </div>
-          </motion.blockquote>
+          </blockquote>
+        </motion.section>
 
-          {/* Interview Section */}
-          <section className="mb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <Suspense
-                fallback={
-                  <div className="h-96 rounded-3xl animate-pulse bg-white/50" />
-                }
-              >
-                <article className="bg-white/80 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500">
-                  <Interview />
-                </article>
-              </Suspense>
-            </motion.div>
-          </section>
-        </article>
+        {/* Interview Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mb-12 sm:mb-16 md:mb-20"
+        >
+          <Suspense
+            fallback={
+              <div className="h-96 rounded-3xl animate-pulse bg-white/50" />
+            }
+          >
+            <article className="bg-white/80 backdrop-blur-lg rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500">
+              <Interview />
+            </article>
+          </Suspense>
+        </motion.section>
 
         {/* Donation Section */}
-        <section className="my-12 md:my-16">
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mb-12 sm:mb-16 md:mb-20"
+        >
           <DonationCallToAction
             title="Partner with Our Ministry"
             subtitle="Your Support Makes a Difference"
             description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
             goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
             donateUrl="/donate"
-            className={`${fadeInClass} ${isMounted ? 'opacity-100 delay-400' : 'opacity-0'}`}
           />
-        </section>
+        </motion.section>
 
         {/* Newsletter Section */}
-        <section
-          className="py-12 md:py-16"
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, delay: 0.6 }}
           style={{
+            borderRadius: colorScheme.borderRadius.xlarge,
             background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
           }}
-        >
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <Suspense
-                fallback={
-                  <div className="h-60 rounded-3xl animate-pulse bg-white/50" />
-                }
-              >
-                <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500">
-                  <NewsletterForm
-                    className="rounded-2xl"
-                    title="Join Our Knowledge Community"
-                    description="Get exclusive insights and early access to our latest research and articles"
-                  />
-                </div>
-              </Suspense>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Chatbot */}
-        <aside
-          className={`fixed bottom-8 right-8 z-50 ${fadeInClass} ${isMounted ? 'opacity-100 delay-700' : 'opacity-0'}`}
+          className="p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl shadow-sm max-w-4xl mx-auto"
         >
           <Suspense
             fallback={
-              <div className="w-16 h-16 rounded-full animate-pulse bg-white/70" />
+              <div className="h-60 rounded-3xl animate-pulse bg-white/50" />
             }
           >
-            <LazyChatbot className="transform transition-all hover:scale-105 hover:shadow-lg" />
+            <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-6 sm:p-8 border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500">
+              <NewsletterForm
+                className="rounded-2xl"
+                title="Join Our Knowledge Community"
+                description="Get exclusive insights and early access to our latest research and articles"
+              />
+            </div>
           </Suspense>
-        </aside>
-      </div>
+        </motion.section>
+      </article>
+
+      {/* Chatbot */}
+      <motion.aside
+        initial={{ opacity: 0, scale: 0 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.6, delay: 0.7 }}
+        className="fixed bottom-8 right-8 z-50"
+      >
+        <Suspense
+          fallback={
+            <div className="w-16 h-16 rounded-full animate-pulse bg-white/70" />
+          }
+        >
+          <LazyChatbot className="transform transition-all hover:scale-105 hover:shadow-lg" />
+        </Suspense>
+      </motion.aside>
 
       <style>{`
-  @keyframes sandyMove {
-    0% {
-      background-position: 0% 0%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 100%;
-    }
-  }
+        @keyframes sandyMove {
+          0% {
+            background-position: 0% 0%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 100%;
+          }
+        }
 
-  @keyframes float1 {
-    0%, 100% {
-      transform: translate(0, 0) rotate(0deg);
-    }
-    50% {
-      transform: translate(20px, -30px) rotate(5deg);
-    }
-  }
+        @keyframes float1 {
+          0%, 100% {
+            transform: translate(0, 0) rotate(0deg);
+          }
+          50% {
+            transform: translate(20px, -30px) rotate(5deg);
+          }
+        }
 
-  @keyframes float2 {
-    0%, 100% {
-      transform: translate(0, 0) rotate(0deg);
-    }
-    50% {
-      transform: translate(-20px, 30px) rotate(-5deg);
-    }
-  }
+        @keyframes float2 {
+          0%, 100% {
+            transform: translate(0, 0) rotate(0deg);
+          }
+          50% {
+            transform: translate(-20px, 30px) rotate(-5deg);
+          }
+        }
 
-  .animate-float1 {
-    animation: float1 12s ease-in-out infinite;
-  }
+        .animate-float1 {
+          animation: float1 12s ease-in-out infinite;
+        }
 
-  .animate-float2 {
-    animation: float2 15s ease-in-out infinite;
-  }
+        .animate-float2 {
+          animation: float2 15s ease-in-out infinite;
+        }
 
-  /* Modern scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.3);
-  }
-`}</style>
+        /* Modern scrollbar */
+        ::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+          background: rgba(0, 0, 0, 0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+          background: rgba(0, 0, 0, 0.2);
+          border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: rgba(0, 0, 0, 0.3);
+        }
+      `}</style>
     </main>
   );
 };

@@ -38,9 +38,9 @@ const VideoCard = ({
 
   return (
     <motion.div
-      className="relative cursor-pointer group overflow-hidden rounded-xl shadow-lg flex flex-col h-full"
+      className="relative cursor-pointer group overflow-hidden rounded-lg sm:rounded-xl shadow-lg flex flex-col h-full"
       onClick={onClick}
-      whileHover={{ y: -5 }}
+      whileHover={{ y: -4 }}
       transition={{ duration: 0.3 }}
     >
       {/* Thumbnail */}
@@ -52,7 +52,7 @@ const VideoCard = ({
         />
         <div className="absolute inset-0 flex items-center justify-center">
           <div
-            className="w-14 h-14 rounded-full flex items-center justify-center border-2"
+            className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center border-2"
             style={{
               backgroundColor: `${colorScheme.textSecondary}20`,
               backdropFilter: 'blur(8px)',
@@ -61,7 +61,7 @@ const VideoCard = ({
           >
             <FontAwesomeIcon
               icon={faPlay}
-              className="text-lg pl-1"
+              className="text-sm sm:text-base md:text-lg pl-0.5 sm:pl-1"
               style={{ color: colorScheme.text }}
             />
           </div>
@@ -70,16 +70,15 @@ const VideoCard = ({
 
       {/* Content */}
       <div
-        className="flex flex-col justify-between flex-1 p-4"
+        className="flex flex-col justify-between flex-1 p-3 sm:p-4"
         style={{ backgroundColor: colorScheme.surface }}
       >
         {/* Top row */}
         <div className="flex items-center justify-between mb-2">
           <LightText
-            className="px-2 py-0.5 rounded-full truncate max-w-[50%]"
+            className="px-2 py-0.5 rounded-full truncate max-w-[50%] text-xs"
             style={{
               color: colorScheme.text,
-              fontSize: '0.75rem',
               backgroundColor: `${colorScheme.primary}20`,
             }}
           >
@@ -87,8 +86,8 @@ const VideoCard = ({
           </LightText>
 
           <LightText
-            className="truncate max-w-[45%]"
-            style={{ color: colorScheme.gray[300], fontSize: '0.75rem' }}
+            className="truncate max-w-[45%] text-xs"
+            style={{ color: colorScheme.gray[300] }}
           >
             {content.date}
           </LightText>
@@ -96,7 +95,7 @@ const VideoCard = ({
 
         {/* Title */}
         <BoldText
-          className="text-sm font-semibold line-clamp-2 mb-1"
+          className="text-sm sm:text-base font-semibold line-clamp-2 mb-1"
           style={{ color: colorScheme.text }}
         >
           {content.title}
@@ -104,7 +103,7 @@ const VideoCard = ({
 
         {/* Teacher */}
         <LightText
-          className="text-xs truncate"
+          className="text-xs sm:text-sm truncate"
           style={{ color: colorScheme.accent }}
         >
           {content.teacher}
@@ -128,7 +127,7 @@ const VideoModal = ({
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4"
         style={{
           backgroundColor: `${colorScheme.background}90`,
           backdropFilter: 'blur(8px)',
@@ -139,7 +138,7 @@ const VideoModal = ({
         onClick={onClose}
       >
         <motion.div
-          className="relative w-full max-w-4xl"
+          className="relative w-full max-w-2xl sm:max-w-3xl lg:max-w-4xl"
           initial={{ scale: 0.9, y: 20 }}
           animate={{ scale: 1, y: 0 }}
           transition={{ type: 'spring', damping: 25 }}
@@ -149,13 +148,13 @@ const VideoModal = ({
             onClick={onClose}
             variant="icon"
             size="sm"
-            className="absolute -top-12 right-0 z-10"
+            className="absolute -top-8 sm:-top-10 md:-top-12 right-0 z-10"
           >
-            <FontAwesomeIcon icon={faTimes} size="lg" />
+            <FontAwesomeIcon icon={faTimes} className="text-sm sm:text-base" />
           </CustomButton>
 
           <div
-            className="aspect-video w-full rounded-xl overflow-hidden shadow-2xl"
+            className="aspect-video w-full rounded-lg sm:rounded-xl overflow-hidden shadow-2xl"
             style={{ border: `1px solid ${colorScheme.primary}50` }}
           >
             <iframe
@@ -267,16 +266,16 @@ export const MinistryData = () => {
         onClose={() => setSelectedVideo(null)}
       />
 
-      {/* Hero Section */}
+      {/* Hero Section - Enhanced Responsiveness */}
       <LayoutTemplate
         backgroundImage={About1}
         overlayColor="rgba(0,0,0,0.55)"
         backgroundPosition="center center"
-        className="h-[100vh] md:h-[100vh]"
+        className="h-[70vh] sm:h-[80vh] md:h-[90vh] lg:h-[100vh] min-h-[500px]"
         title={''}
       >
         <motion.div
-          className="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full h-full"
+          className="relative z-20 flex flex-col items-center justify-center text-center w-full h-full px-4 sm:px-6 lg:px-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -285,15 +284,15 @@ export const MinistryData = () => {
             initial={{ y: -20 }}
             animate={{ y: 0 }}
             transition={{ delay: 0.2, duration: 0.7 }}
-            className="mb-6"
+            className="mb-4 sm:mb-6 md:mb-8"
           >
             <ExtraBoldText
               style={{
                 color: '#ffffff',
-                fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                fontSize: 'clamp(2rem, 8vw, 4.5rem)',
                 lineHeight: '1.1',
-                textShadow: '0 4px 8px rgba(0,0,0,0.6)',
-                marginBottom: '1rem',
+                textShadow: '0 4px 12px rgba(0,0,0,0.8)',
+                marginBottom: '0.5rem',
               }}
               useThemeColor={false}
             >
@@ -305,20 +304,20 @@ export const MinistryData = () => {
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-8 mx-auto"
+            className="w-20 sm:w-24 md:w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-4 sm:mb-6 md:mb-8 mx-auto"
           />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="max-w-3xl"
+            className="max-w-3xl mx-auto"
           >
             <SemiBoldText
               style={{
                 color: '#ffffff',
-                fontSize: 'clamp(1.25rem, 3vw, 2rem)',
-                textShadow: '0 2px 4px rgba(0,0,0,0.6)',
+                fontSize: 'clamp(1.125rem, 4vw, 1.75rem)',
+                textShadow: '0 2px 8px rgba(0,0,0,0.7)',
                 lineHeight: '1.4',
               }}
               useThemeColor={false}
@@ -326,29 +325,50 @@ export const MinistryData = () => {
               Spiritual teachings and podcasts from Min. ClaudyGod
             </SemiBoldText>
           </motion.div>
+
+          {/* Scroll Indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2"
+          >
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="w-5 h-8 border-2 border-white rounded-full flex justify-center"
+            >
+              <motion.div
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-1 h-2 bg-white rounded-full mt-2"
+              />
+            </motion.div>
+          </motion.div>
         </motion.div>
       </LayoutTemplate>
 
       {/* Ministry Content */}
-      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <article className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
         {/* Section Header */}
-        <header className="mb-12 md:mb-16 text-center">
+        <header className="mb-8 sm:mb-12 md:mb-16 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-opacity-10 mb-6"
+            className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
             style={{ backgroundColor: `${colorScheme.primary}20` }}
           >
             <FontAwesomeIcon
               icon={faBookBible}
               style={{ color: colorScheme.primary }}
+              className="text-sm sm:text-base"
             />
             <LightText
               style={{
                 color: colorScheme.primary,
-                fontSize: '0.875rem',
+                fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
                 letterSpacing: '0.05em',
               }}
               useThemeColor={false}
@@ -360,15 +380,15 @@ export const MinistryData = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             <ExtraBoldText
               style={{
                 color: colorScheme.primary,
-                fontSize: 'clamp(2rem, 4vw, 3rem)',
-                lineHeight: '1.2',
-                marginBottom: '1rem',
+                fontSize: 'clamp(1.75rem, 6vw, 3rem)',
+                lineHeight: '1.1',
+                marginBottom: '0.75rem',
               }}
               useThemeColor={false}
             >
@@ -379,15 +399,15 @@ export const MinistryData = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="max-w-4xl mx-auto"
           >
             <SemiBoldText
               style={{
                 color: colorScheme.accent,
-                fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
-                lineHeight: '1.6',
+                fontSize: 'clamp(1rem, 3vw, 1.375rem)',
+                lineHeight: '1.5',
               }}
               useThemeColor={false}
             >
@@ -401,9 +421,9 @@ export const MinistryData = () => {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="w-24 h-1 mx-auto mt-6 rounded-full"
+            className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
             style={{ backgroundColor: colorScheme.accent }}
           />
         </header>
@@ -412,16 +432,16 @@ export const MinistryData = () => {
         <motion.blockquote
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6 }}
-          className="relative my-12 md:my-16 p-6 md:p-8 rounded-2xl"
+          className="relative my-8 sm:my-12 md:my-16 p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl"
           style={{
             background: `linear-gradient(135deg, ${colorScheme.gray[900]}, ${colorScheme.gray[800]})`,
             border: `1px solid ${colorScheme.gray[700]}`,
           }}
         >
           <div
-            className="absolute top-4 right-4 text-3xl md:text-4xl opacity-20"
+            className="absolute top-3 sm:top-4 right-3 sm:right-4 text-2xl sm:text-3xl md:text-4xl opacity-20"
             style={{ color: colorScheme.accent }}
           >
             <FontAwesomeIcon icon={faQuoteRight} />
@@ -430,13 +450,13 @@ export const MinistryData = () => {
             <div className="flex items-start">
               <FontAwesomeIcon
                 icon={faHeadphones}
-                className="mt-1 mr-4 text-lg"
+                className="mt-0.5 sm:mt-1 mr-3 sm:mr-4 text-base sm:text-lg"
                 style={{ color: colorScheme.accent }}
               />
               <LightText
                 style={{
                   color: 'white',
-                  fontSize: 'clamp(1.025rem, 2vw, 1.375rem)',
+                  fontSize: 'clamp(0.9rem, 2.5vw, 1.375rem)',
                   lineHeight: '1.6',
                   fontStyle: 'italic',
                 }}
@@ -450,9 +470,9 @@ export const MinistryData = () => {
             <SemiBoldText
               style={{
                 textAlign: 'right',
-                marginTop: '1rem',
+                marginTop: '0.75rem sm:1rem',
                 color: colorScheme.primary,
-                fontSize: '1rem',
+                fontSize: '0.875rem sm:1rem',
               }}
               useThemeColor={false}
             >
@@ -462,13 +482,13 @@ export const MinistryData = () => {
         </motion.blockquote>
 
         {/* Video Grid Section */}
-        <section className="mb-20">
+        <section className="mb-12 sm:mb-16 md:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
           >
             {visibleItems.map(content => (
               <VideoCard
@@ -483,15 +503,15 @@ export const MinistryData = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex justify-center mt-12"
+              className="flex justify-center mt-8 sm:mt-12"
             >
-              <div className="flex items-center space-x-4 sm:space-x-6">
+              <div className="flex items-center space-x-3 sm:space-x-4 md:space-x-6">
                 <CustomButton
                   onClick={prevSlide}
                   variant="icon"
-                  size="lg"
+                  size="sm md:lg"
                   disabled={currentSlide === 0}
                   style={{
                     backgroundColor: colorScheme.surface,
@@ -501,7 +521,10 @@ export const MinistryData = () => {
                         : colorScheme.primary,
                   }}
                 >
-                  <FontAwesomeIcon icon={faChevronLeft} />
+                  <FontAwesomeIcon
+                    icon={faChevronLeft}
+                    className="text-sm sm:text-base"
+                  />
                 </CustomButton>
 
                 <PaginationDots
@@ -514,7 +537,7 @@ export const MinistryData = () => {
                 <CustomButton
                   onClick={nextSlide}
                   variant="icon"
-                  size="lg"
+                  size="sm md:lg"
                   disabled={currentSlide === totalSlides - 1}
                   style={{
                     backgroundColor: colorScheme.surface,
@@ -524,7 +547,10 @@ export const MinistryData = () => {
                         : colorScheme.primary,
                   }}
                 >
-                  <FontAwesomeIcon icon={faChevronRight} />
+                  <FontAwesomeIcon
+                    icon={faChevronRight}
+                    className="text-sm sm:text-base"
+                  />
                 </CustomButton>
               </div>
             </motion.div>
@@ -533,7 +559,7 @@ export const MinistryData = () => {
       </article>
 
       {/* Donation Section */}
-      <section className="my-12 md:my-16">
+      <section className="my-8 sm:my-12 md:my-16">
         <DonationCallToAction
           title="Partner with Our Ministry"
           subtitle="Your Support Makes a Difference"
@@ -545,7 +571,7 @@ export const MinistryData = () => {
 
       {/* Newsletter Section */}
       <section
-        className="py-12 md:py-16"
+        className="py-8 sm:py-12 md:py-16"
         style={{
           background: `linear-gradient(to right, ${colorScheme.primary}, ${colorScheme.accent})`,
         }}
@@ -554,21 +580,20 @@ export const MinistryData = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6 }}
           >
             <ExtraBoldText
-              fontSize="2rem"
-              mdFontSize="2.5rem"
+              fontSize="clamp(1.5rem, 4vw, 2.5rem)"
               style={{ color: colorScheme.text }}
-              className="mb-6"
+              className="mb-4 sm:mb-6"
             >
               Stay Connected With Our Ministry
             </ExtraBoldText>
             <RegularText
-              fontSize="1.125rem"
+              fontSize="clamp(0.9rem, 2vw, 1.125rem)"
               style={{ color: colorScheme.textSecondary }}
-              className="mb-8 max-w-2xl mx-auto"
+              className="mb-6 sm:mb-8 max-w-2xl mx-auto"
             >
               Subscribe to receive updates on new teachings, podcasts, and
               ministry events
