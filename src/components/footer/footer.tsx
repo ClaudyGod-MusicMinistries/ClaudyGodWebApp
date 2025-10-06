@@ -297,7 +297,7 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Social & Legal Column */}
+          {/* Social Column */}
           <div className="lg:col-span-1">
             <SemiBoldText
               fontSize="16px"
@@ -318,25 +318,6 @@ export const Footer: React.FC = () => {
             {/* Social Media */}
             <div className="mb-6">
               <Social />
-            </div>
-
-            {/* Legal Links */}
-            <div className="space-y-2">
-              {legalLinks.map(link => (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  className="block transition-all duration-300 py-1 hover:text-purple-400"
-                  style={{ color: colorScheme.gray[400] }}
-                >
-                  <LightText
-                    fontSize="13px"
-                    className="transition-colors duration-300"
-                  >
-                    {link.name}
-                  </LightText>
-                </Link>
-              ))}
             </div>
           </div>
         </div>
@@ -406,19 +387,46 @@ export const Footer: React.FC = () => {
         ></div>
 
         <div className="flex flex-col lg:flex-row justify-between items-center space-y-3 lg:space-y-0">
-          <div className="flex items-center">
-            <FontAwesomeIcon
-              icon={faCopyright}
-              className="mr-2 text-xs"
-              style={{ color: colorScheme.gray[500] }}
-            />
-            <LightText
-              fontSize="12px"
-              style={{ color: colorScheme.gray[500] }}
-              className="hover:text-purple-400 transition-colors duration-300"
-            >
-              {currentYear} ClaudyGod Music & Ministries. All rights reserved.
-            </LightText>
+          <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 text-center sm:text-left">
+            {/* Copyright */}
+            <div className="flex items-center">
+              <FontAwesomeIcon
+                icon={faCopyright}
+                className="mr-2 text-xs"
+                style={{ color: colorScheme.text }}
+              />
+              <LightText
+                fontSize="12px"
+                style={{ color: colorScheme.text }}
+                className="hover:text-purple-400 transition-colors duration-300"
+              >
+                {currentYear} ClaudyGod Music & Ministries. All rights reserved.
+              </LightText>
+            </div>
+
+            {/* Legal Links with dots */}
+            <div className="flex flex-wrap justify-center items-center space-x-3">
+              {legalLinks.map((link, index) => (
+                <div key={link.name} className="flex items-center">
+                  {/* Dot separator (not for first item) */}
+                  {index > 0 && (
+                    <span
+                      className="mx-2 text-xs"
+                      style={{ color: colorScheme.text }}
+                    >
+                      •
+                    </span>
+                  )}
+                  <Link
+                    to={link.path}
+                    className="transition-colors duration-300 hover:text-purple-400"
+                    style={{ color: colorScheme.text }}
+                  >
+                    <LightText fontSize="12px">{link.name}</LightText>
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Back to Top Button */}
@@ -427,7 +435,7 @@ export const Footer: React.FC = () => {
             className="flex items-center space-x-2 px-3 py-1.5 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-purple-600 hover:text-white group"
             style={{
               backgroundColor: colorScheme.gray[800],
-              color: colorScheme.gray[300],
+              color: colorScheme.text,
             }}
           >
             <FontAwesomeIcon
