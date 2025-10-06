@@ -47,7 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
 
   // Detect scroll
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -62,35 +62,62 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? 'bg-gray-900 shadow-lg py-2' : 'bg-gray-900 py-3 shadow-md'
+          scrolled ? 'bg-gray-900 shadow-lg py-2' : 'bg-transparent py-6'
         }`}
+        style={{
+          marginTop: scrolled ? '0' : '1.5rem',
+        }}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
-          {/* Logo */}
+          {/* Logo - Moved more to the left */}
           <Link
             to="/"
             onClick={closeNav}
-            className="flex items-center flex-shrink-0 hover:opacity-80 transition-opacity"
+            className="flex items-center flex-shrink-0 hover:opacity-80 transition-opacity -ml-2"
           >
-            <div className="h-10 w-10 flex items-center justify-center bg-white rounded-full p-1">
-              <img src={Log} alt="Logo" className="h-7 w-7 rounded-full" />
+            <div
+              className={`flex items-center justify-center bg-white rounded-full p-1 transition-all duration-300 ${
+                scrolled ? 'h-10 w-10' : 'h-12 w-12'
+              }`}
+            >
+              <img
+                src={Log}
+                alt="Logo"
+                className={`rounded-full transition-all duration-300 ${
+                  scrolled ? 'h-7 w-7' : 'h-8 w-8'
+                }`}
+              />
             </div>
 
-            <div className="h-8 w-px bg-white/30 mx-3" />
+            <div
+              className={`h-8 w-px bg-white/30 mx-3 transition-all duration-300 ${
+                scrolled ? 'opacity-70' : 'opacity-100'
+              }`}
+            />
 
             <div>
-              <BoldText className="text-white text-base leading-snug">
+              <BoldText
+                className={`text-white transition-all duration-300 leading-snug ${
+                  scrolled ? 'text-base' : 'text-lg'
+                }`}
+              >
                 ClaudyGod
               </BoldText>
-              <LightText className="text-[11px] text-gray-300 leading-snug">
+              <LightText
+                className={`transition-all duration-300 leading-snug ${
+                  scrolled
+                    ? 'text-gray-300 text-[11px]'
+                    : 'text-white/90 text-xs'
+                }`}
+              >
                 Music & Ministry
               </LightText>
             </div>
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center justify-center flex-1">
-            <div className="flex items-center space-x-3">
+          {/* Desktop Nav - More centered */}
+          <nav className="hidden lg:flex items-center justify-center flex-1 mx-12">
+            <div className="flex items-center space-x-1">
               {navigationItems.map(link => (
                 <NavLink
                   key={link.to}
@@ -98,25 +125,31 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
                   end={link.to === '/'}
                   onClick={() => location.pathname === link.to && scrollToTop()}
                   className={({ isActive }) =>
-                    `flex items-center text-sm px-3 py-2 rounded-md transition-all duration-300 ${
+                    `flex items-center text-sm px-2 py-2 rounded-md transition-all duration-300 ${
                       isActive
                         ? 'bg-purple-600 text-white font-semibold shadow-sm'
-                        : 'text-gray-200 hover:text-white hover:bg-purple-700/40'
+                        : scrolled
+                          ? 'text-gray-200 hover:text-white hover:bg-purple-700/40'
+                          : 'text-white hover:text-white hover:bg-white/20'
                     }`
                   }
                 >
-                  <FontAwesomeIcon icon={link.icon} className="mr-2 text-xs" />
+                  <FontAwesomeIcon icon={link.icon} className="mr-1 text-xs" />
                   {link.name}
                 </NavLink>
               ))}
             </div>
           </nav>
 
-          {/* Right Section */}
-          <div className="hidden lg:flex items-center justify-end flex-shrink-0">
+          {/* Right Section - Moved more to the right */}
+          <div className="hidden lg:flex items-center justify-end flex-shrink-0 -mr-2">
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-4 py-2 bg-purple-600 text-white rounded-full shadow-md hover:bg-purple-700 transition-all"
+              className={`px-4 py-2 rounded-full shadow-md transition-all duration-300 flex items-center ${
+                scrolled
+                  ? 'bg-purple-600 text-white hover:bg-purple-700'
+                  : 'bg-white/20 text-white backdrop-blur-sm hover:bg-white/30 border border-white/30'
+              }`}
             >
               <FontAwesomeIcon icon={faHeadset} className="mr-2 text-xs" />
               <LightText className="text-sm font-medium">Listen Now</LightText>
@@ -127,7 +160,11 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
           <div className="flex lg:hidden items-center">
             <button
               onClick={toggleNav}
-              className="p-3 rounded-lg bg-purple-700 text-white hover:bg-purple-800 transition-all"
+              className={`p-3 rounded-lg transition-all duration-300 ${
+                scrolled
+                  ? 'bg-purple-700 text-white hover:bg-purple-800'
+                  : 'bg-white/20 text-white backdrop-blur-sm hover:bg-white/30 border border-white/30'
+              }`}
             >
               <FontAwesomeIcon
                 icon={isNavOpen ? faTimes : faBars}
@@ -137,7 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - ALWAYS SOLID BACKGROUND */}
         <div
           className={`lg:hidden fixed inset-0 z-40 transition-all duration-500 ${
             isNavOpen
@@ -153,7 +190,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
             onClick={toggleNav}
           />
 
-          {/* Drawer */}
+          {/* Drawer - ALWAYS SOLID */}
           <div
             className={`absolute right-0 top-0 h-full w-80 bg-gray-900 shadow-2xl transform transition-transform duration-500 ease-out ${
               isNavOpen ? 'translate-x-0' : 'translate-x-full'
@@ -184,7 +221,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isInsideHero = false }) => {
             </div>
 
             <nav className="p-6">
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 {navigationItems.map(link => (
                   <li key={link.to}>
                     <button
