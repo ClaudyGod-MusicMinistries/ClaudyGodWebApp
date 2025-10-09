@@ -72,7 +72,7 @@ export const Biography: React.FC = () => {
         backgroundImage={About2}
         overlayColor="rgba(0,0,0,0.55)"
         backgroundPosition="center center"
-        className="h-[70vh] sm:h-[80vh] md:h-[90vh] lg:h-[100vh] min-h-[500px]"
+        className="h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[90vh] xl:h-[100vh] min-h-[400px] sm:min-h-[500px]"
         title={''}
       >
         <motion.div
@@ -105,8 +105,7 @@ export const Biography: React.FC = () => {
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="w-20 sm:w-24 md:w-32 h-1 bg-gradient-to-r
-             from-purple-400 to-pink-400 mb-4 sm:mb-6 md:mb-8 mx-auto"
+            className="w-20 sm:w-24 md:w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-4 sm:mb-6 md:mb-8 mx-auto"
           />
 
           <motion.div
@@ -131,7 +130,7 @@ export const Biography: React.FC = () => {
       </LayoutTemplate>
 
       {/* Biography Content */}
-      <article className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+      <article className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 lg:py-20">
         {/* Section Header */}
         <header className="mb-8 sm:mb-12 md:mb-16 text-center">
           <motion.div
@@ -139,7 +138,7 @@ export const Biography: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
+            className="inline-flex items-center gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
             style={{ backgroundColor: `${colorScheme.primary}20` }}
           >
             <FontAwesomeIcon
@@ -209,7 +208,7 @@ export const Biography: React.FC = () => {
         </header>
 
         {/* Biography Sections */}
-        <section className="space-y-12 sm:space-y-16 md:space-y-20">
+        <section className="space-y-12 md:space-y-16 lg:space-y-20">
           {/* First Bio Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -221,6 +220,8 @@ export const Biography: React.FC = () => {
               imageSrc={About2}
               altText="ClaudyGod portrait"
               texts={firstSectionTexts}
+              imagePosition="left"
+              imageSize="medium"
             />
           </motion.div>
 
@@ -230,7 +231,7 @@ export const Biography: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-12 sm:mb-16 md:mb-20"
+            className="mb-12 md:mb-16 lg:mb-20"
           >
             <blockquote
               className="relative p-6 sm:p-8 rounded-2xl"
@@ -250,13 +251,13 @@ export const Biography: React.FC = () => {
                 <div className="flex items-start">
                   <FontAwesomeIcon
                     icon={faHandsPraying}
-                    className="mt-1 mr-3 sm:mr-4 text-base sm:text-lg"
+                    className="mt-1 mr-4 text-lg"
                     style={{ color: colorScheme.accent }}
                   />
                   <LightText
                     style={{
                       color: 'white',
-                      fontSize: 'clamp(1.025rem, 2vw, 1.375rem)',
+                      fontSize: 'clamp(1.125rem, 2.5vw, 1.375rem)',
                       lineHeight: '1.6',
                       fontStyle: 'italic',
                     }}
@@ -292,8 +293,8 @@ export const Biography: React.FC = () => {
               imageSrc={About2}
               altText="ClaudyGod performing"
               texts={secondSectionTexts}
-              reverse
-              hideOnSmall
+              imagePosition="right"
+              imageSize="medium"
             />
           </motion.div>
         </section>
@@ -305,7 +306,7 @@ export const Biography: React.FC = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-50px' }}
         transition={{ duration: 0.6, delay: 0.5 }}
-        className="mb-12 sm:mb-16 md:mb-20"
+        className="mb-12 md:mb-16 lg:mb-20"
       >
         <DonationCallToAction
           title="Partner with Our Ministry"
@@ -326,7 +327,7 @@ export const Biography: React.FC = () => {
           borderRadius: colorScheme.borderRadius.xlarge,
           background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
         }}
-        className="p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl shadow-sm max-w-4xl mx-auto"
+        className="p-6 sm:p-8 rounded-xl shadow-sm max-w-4xl mx-auto"
       >
         <NewsletterForm />
       </motion.section>
