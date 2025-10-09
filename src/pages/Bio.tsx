@@ -105,7 +105,8 @@ export const Biography: React.FC = () => {
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="w-20 sm:w-24 md:w-32 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-4 sm:mb-6 md:mb-8 mx-auto"
+            className="w-20 sm:w-24 md:w-32 h-1 bg-gradient-to-r
+             from-purple-400 to-pink-400 mb-4 sm:mb-6 md:mb-8 mx-auto"
           />
 
           <motion.div

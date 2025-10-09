@@ -1,3 +1,4 @@
+// QuoteSlide.tsx - Optimized
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
@@ -18,25 +19,23 @@ export const QuoteSlide: React.FC<QuoteSlideProps> = ({ slide }) => {
   return (
     <>
       {/* MOBILE VERSION */}
-      <div className="md:hidden flex flex-col justify-center items-start w-full px-4 sm:px-6 min-h-[70vh]">
-        {/* Main Quote - Mobile with Ultra Font */}
+      <div className="md:hidden flex flex-col justify-center items-start w-full px-4 min-h-[60vh]">
+        {/* Main Quote - Mobile */}
         <motion.div
           variants={textVariants}
           initial="hidden"
           animate="visible"
-          className="relative w-full mb-6 sm:mb-8"
+          className="relative w-full mb-4"
         >
           <UltraText
-            fontSize="1.1rem"
-            smFontSize="1.3rem"
+            fontSize="0.95rem"
+            smFontSize="1.1rem"
             className="text-left"
             style={{
               color: colorScheme.text,
-              textShadow: '0 3px 12px rgba(0,0,0,0.95)',
-              lineHeight: '1.45', // Optimal mobile line height
-              letterSpacing: '0.015em', // Subtle letter spacing
-              wordSpacing: '0.06em', // Professional word spacing
-              fontWeight: '400',
+              textShadow: '0 2px 8px rgba(0,0,0,0.9)',
+              lineHeight: '1.4',
+              letterSpacing: '0.01em',
             }}
           >
             {slide.content?.quote}
@@ -48,18 +47,17 @@ export const QuoteSlide: React.FC<QuoteSlideProps> = ({ slide }) => {
           variants={textVariants}
           initial="hidden"
           animate="visible"
-          className="mb-6 sm:mb-8"
+          className="mb-4"
         >
           <BoldText
-            fontSize="0.85rem"
-            smFontSize="1rem"
+            fontSize="0.75rem"
+            smFontSize="0.85rem"
             className="text-left italic uppercase"
             style={{
               color: colorScheme.accent,
-              textShadow: '0 2px 6px rgba(0,0,0,0.85)',
-              letterSpacing: '0.09em', // Elegant letter spacing
-              lineHeight: '1.5', // Perfect reference line height
-              wordSpacing: '0.12em', // Clear word separation
+              textShadow: '0 1px 4px rgba(0,0,0,0.8)',
+              letterSpacing: '0.06em',
+              lineHeight: '1.4',
             }}
           >
             {slide.content?.reference}
@@ -72,47 +70,37 @@ export const QuoteSlide: React.FC<QuoteSlideProps> = ({ slide }) => {
             variants={textVariants}
             initial="hidden"
             animate="visible"
-            className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-7 w-full"
+            className="flex flex-col items-start gap-4 w-full"
           >
             {/* Play Button - Mobile */}
             <motion.div
-              whileHover={{
-                scale: 1.08,
-                transition: { type: 'spring', stiffness: 400, damping: 10 },
-              }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="relative group"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/25 to-pink-500/25 blur-lg rounded-full group-hover:blur-xl transition-all duration-500" />
-
               <CustomButton
                 variant="icon"
-                size="lg"
+                size="md"
                 aria-label="Play video"
-                className="rounded-2xl backdrop-blur-md shadow-xl p-4 sm:p-5 relative z-10 border border-white/25 group-hover:border-white/45 transition-all duration-300 group-hover:shadow-2xl"
+                className="rounded-xl backdrop-blur-md shadow-lg p-3 relative z-10 border border-white/20"
                 style={{
                   background:
                     'linear-gradient(135deg, rgba(147, 51, 234, 0.9) 0%, rgba(99, 102, 241, 0.9) 100%)',
-                  boxShadow:
-                    '0 10px 30px rgba(147, 51, 234, 0.5), 0 0 0 1px rgba(255,255,255,0.2)',
                 }}
               >
-                <div className="flex items-center justify-center">
-                  <FontAwesomeIcon
-                    icon={faPlay}
-                    className="text-xl sm:text-2xl ml-0.5"
-                    style={{ color: 'white' }}
-                  />
-                  <span className="sr-only">Play Video</span>
-                </div>
+                <FontAwesomeIcon
+                  icon={faPlay}
+                  className="text-lg ml-0.5"
+                  style={{ color: 'white' }}
+                />
               </CustomButton>
             </motion.div>
 
             {/* Call-to-Action Text - Mobile */}
-            <div className="flex flex-col gap-2 sm:gap-2.5">
+            <div className="flex flex-col gap-1">
               <UltraText
-                fontSize="1.15rem"
-                smFontSize="1.35rem"
+                fontSize="1rem"
+                smFontSize="1.1rem"
                 className="uppercase"
                 style={{
                   background:
@@ -120,24 +108,18 @@ export const QuoteSlide: React.FC<QuoteSlideProps> = ({ slide }) => {
                   backgroundClip: 'text',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                  textShadow: '0 2px 10px rgba(0,0,0,0.9)',
-                  letterSpacing: '0.035em', // Professional letter spacing
-                  lineHeight: '1.35', // Optimal CTA line height
-                  wordSpacing: '0.07em', // Clear word separation
+                  textShadow: '0 1px 6px rgba(0,0,0,0.8)',
                 }}
               >
                 Play Now
               </UltraText>
 
               <RegularText
-                fontSize="0.75rem"
-                smFontSize="0.9rem"
+                fontSize="0.7rem"
+                smFontSize="0.8rem"
                 className="text-gray-200 opacity-90"
                 style={{
-                  textShadow: '0 1px 5px rgba(0,0,0,0.75)',
-                  letterSpacing: '0.035em', // Consistent letter spacing
-                  lineHeight: '1.45', // Perfect subtitle line height
-                  wordSpacing: '0.04em', // Subtle word spacing
+                  textShadow: '0 1px 3px rgba(0,0,0,0.7)',
                 }}
               >
                 Experience the Divine Presence
@@ -148,26 +130,23 @@ export const QuoteSlide: React.FC<QuoteSlideProps> = ({ slide }) => {
       </div>
 
       {/* DESKTOP VERSION */}
-      <div className="hidden md:flex flex-col justify-center items-start w-full px-8 lg:px-12 xl:px-20 min-h-[70vh]">
+      <div className="hidden md:flex flex-col justify-center items-start w-full px-8 lg:px-12 min-h-[70vh]">
         {/* Main Quote - Desktop */}
         <motion.div
           variants={textVariants}
           initial="hidden"
           animate="visible"
-          className="relative w-full mb-10 lg:mb-14 xl:mb-18"
+          className="relative w-full mb-6 lg:mb-8"
         >
           <UltraText
-            fontSize="2.2rem"
-            lgFontSize="2.8rem"
-            xlFontSize="3.5rem"
+            fontSize="1.8rem"
+            lgFontSize="2.2rem"
+            xlFontSize="2.8rem"
             className="text-left"
             style={{
               color: colorScheme.text,
-              textShadow:
-                '0 5px 30px rgba(0,0,0,0.95), 0 0 60px rgba(0,0,0,0.6)',
-              lineHeight: '1.1', // Tight line height for headlines
-              letterSpacing: '0.005em', // Minimal letter spacing for large text
-              wordSpacing: '0.03em', // Professional word spacing
+              textShadow: '0 4px 20px rgba(0,0,0,0.9)',
+              lineHeight: '1.2',
             }}
           >
             {slide.content?.quote}
@@ -179,19 +158,17 @@ export const QuoteSlide: React.FC<QuoteSlideProps> = ({ slide }) => {
           variants={textVariants}
           initial="hidden"
           animate="visible"
-          className="mb-10 lg:mb-14 xl:mb-16"
+          className="mb-6 lg:mb-8"
         >
           <BoldText
-            fontSize="1.6rem"
-            lgFontSize="2.1rem"
-            xlFontSize="2.6rem"
+            fontSize="1.2rem"
+            lgFontSize="1.5rem"
+            xlFontSize="1.8rem"
             className="text-left italic uppercase"
             style={{
               color: colorScheme.accent,
-              textShadow: '0 3px 15px rgba(0,0,0,0.85)',
-              letterSpacing: '0.12em', // Elegant wide spacing
-              lineHeight: '1.35', // Perfect reference line height
-              wordSpacing: '0.1em', // Clear word separation
+              textShadow: '0 2px 10px rgba(0,0,0,0.8)',
+              letterSpacing: '0.08em',
             }}
           >
             {slide.content?.reference}
@@ -204,50 +181,38 @@ export const QuoteSlide: React.FC<QuoteSlideProps> = ({ slide }) => {
             variants={textVariants}
             initial="hidden"
             animate="visible"
-            className="flex flex-row items-center gap-10 lg:gap-12 xl:gap-14 w-full"
+            className="flex flex-row items-center gap-6 lg:gap-8 w-full"
           >
             {/* Play Button - Desktop */}
             <motion.div
-              whileHover={{
-                scale: 1.1,
-                transition: { type: 'spring', stiffness: 400, damping: 10 },
-              }}
+              whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
               className="relative group"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/40 to-pink-500/40 blur-2xl rounded-full group-hover:blur-3xl transition-all duration-500" />
-
               <CustomButton
                 variant="icon"
                 size="lg"
                 aria-label="Play video"
-                className="rounded-2xl backdrop-blur-md shadow-2xl p-7 lg:p-9 xl:p-11 relative z-10 border-2 border-white/30 group-hover:border-white/50 transition-all duration-500 group-hover:shadow-3xl"
+                className="rounded-xl backdrop-blur-md shadow-xl p-5 lg:p-6 relative z-10 border border-white/25"
                 style={{
                   background:
                     'linear-gradient(135deg, rgba(147, 51, 234, 0.9) 0%, rgba(99, 102, 241, 0.9) 100%)',
-                  boxShadow:
-                    '0 30px 60px rgba(147, 51, 234, 0.5), 0 0 0 2px rgba(255,255,255,0.3), inset 0 2px 0 rgba(255,255,255,0.3)',
                 }}
               >
-                <div className="flex items-center justify-center">
-                  <FontAwesomeIcon
-                    icon={faPlay}
-                    className="text-5xl lg:text-6xl xl:text-7xl ml-1"
-                    style={{ color: 'white' }}
-                  />
-                  <span className="sr-only">Play Video</span>
-                </div>
+                <FontAwesomeIcon
+                  icon={faPlay}
+                  className="text-3xl lg:text-4xl ml-1"
+                  style={{ color: 'white' }}
+                />
               </CustomButton>
-
-              <div className="absolute inset-0 border-4 border-purple-300/50 rounded-2xl animate-ping opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </motion.div>
 
             {/* Call-to-Action Text - Desktop */}
-            <div className="flex flex-col gap-3 lg:gap-4 xl:gap-5">
+            <div className="flex flex-col gap-2">
               <UltraText
-                fontSize="2.6rem"
-                lgFontSize="3.2rem"
-                xlFontSize="3.8rem"
+                fontSize="1.8rem"
+                lgFontSize="2.2rem"
+                xlFontSize="2.6rem"
                 className="uppercase"
                 style={{
                   background:
@@ -255,27 +220,16 @@ export const QuoteSlide: React.FC<QuoteSlideProps> = ({ slide }) => {
                   backgroundClip: 'text',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                  textShadow:
-                    '0 5px 25px rgba(0,0,0,0.95), 0 0 40px rgba(0,0,0,0.7)',
-                  letterSpacing: '0.045em', // Professional letter spacing
-                  lineHeight: '1.15', // Tight line height for impact
-                  wordSpacing: '0.06em', // Clear word separation
                 }}
               >
                 PLAY NOW
               </UltraText>
 
               <RegularText
-                fontSize="1.3rem"
-                lgFontSize="1.6rem"
-                xlFontSize="1.9rem"
+                fontSize="1rem"
+                lgFontSize="1.2rem"
+                xlFontSize="1.4rem"
                 className="text-gray-200 opacity-90"
-                style={{
-                  textShadow: '0 2px 10px rgba(0,0,0,0.8)',
-                  letterSpacing: '0.045em', // Consistent letter spacing
-                  lineHeight: '1.4', // Perfect subtitle line height
-                  wordSpacing: '0.05em', // Professional word spacing
-                }}
               >
                 Experience the Divine Presence
               </RegularText>

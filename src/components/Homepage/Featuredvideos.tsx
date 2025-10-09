@@ -228,7 +228,7 @@ export const FeaturedVideos: React.FC = () => {
 
   return (
     <section
-      className="relative py-16 md:py-24 min-h-screen flex items-center overflow-hidden"
+      className="relative py-12 md:py-20 lg:py-24 min-h-screen flex items-center overflow-hidden"
       style={{ backgroundColor: colorScheme.black }}
     >
       {/* Background with parallax effect */}
@@ -286,30 +286,30 @@ export const FeaturedVideos: React.FC = () => {
       </div>
 
       <div className="container mx-auto relative z-10 px-4 sm:px-6">
-        {/* Header section */}
-        <div className="flex flex-col md:flex-row md:items-baseline md:justify-between w-full">
-          {/* Heading & Subheading */}
-          <div className="flex flex-col text-center md:text-left mt-12 md:mt-0">
+        {/* Header section - Improved spacing for mobile */}
+        <div className="flex flex-col md:flex-row md:items-baseline md:justify-between w-full mb-8 md:mb-12 lg:mb-16">
+          {/* Heading & Subheading - FIXED: Smaller mobile, larger desktop */}
+          <div className="flex flex-col text-center md:text-left mt-8 md:mt-0 mb-6 md:mb-0">
             <ExtraBoldText
-              fontSize="48px"
-              className="leading-[1.1] text-[24px] sm:text-[32px] md:text-[48px]"
+              fontSize="24px md:text-5xl lg:text-6xl xl:text-7xl"
+              className="leading-tight md:leading-[1.1]"
               style={{ color: colorScheme.white }}
             >
               Featured <span style={{ color: colorScheme.accent }}>Videos</span>
             </ExtraBoldText>
 
-            <RegularText
-              fontSize="18px"
-              className="mt-3 text-[14px] sm:text-[16px] md:text-[18px]"
+            <SemiBoldText
+              fontSize="12px md:text-lg lg:text-xl"
+              className="mt-3 md:mt-4 max-w-2xl mx-auto md:mx-0"
               style={{ color: colorScheme.accent }}
             >
               Experience our latest worship sessions and musical performances
-            </RegularText>
+            </SemiBoldText>
           </div>
 
-          {/* Buttons */}
+          {/* Buttons - Improved mobile layout */}
           <motion.div
-            className="flex flex-row flex-wrap gap-4 mt-6 md:mt-0 justify-center md:justify-end items-center"
+            className="flex flex-row flex-wrap gap-3 md:gap-4 justify-center md:justify-end items-center"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -318,11 +318,13 @@ export const FeaturedVideos: React.FC = () => {
               <CustomButton
                 variant="primary"
                 size="sm"
-                className="flex items-center justify-center p-2 sm:p-3 group"
+                className="flex items-center justify-center px-4 py-2 md:px-6 md:py-3 group"
                 icon={<FontAwesomeIcon icon={faPlay} />}
                 iconPosition="right"
               >
-                <SemiBoldText>Latest Release</SemiBoldText>
+                <SemiBoldText className="text-sm md:text-base">
+                  Latest Release
+                </SemiBoldText>
               </CustomButton>
             </Link>
 
@@ -330,14 +332,17 @@ export const FeaturedVideos: React.FC = () => {
               <CustomButton
                 variant="outline"
                 size="sm"
-                className="flex items-center justify-center p-2 sm:p-3"
+                className="flex items-center justify-center px-4 py-2 md:px-6 md:py-3"
                 style={{
                   borderColor: colorScheme.primary,
                   color: colorScheme.background,
                 }}
                 hoverStyle={{ backgroundColor: colorScheme.accent + '20' }}
               >
-                <RegularText style={{ color: colorScheme.background }}>
+                <RegularText
+                  className="text-sm md:text-base"
+                  style={{ color: colorScheme.background }}
+                >
                   View All
                 </RegularText>
               </CustomButton>
@@ -347,7 +352,7 @@ export const FeaturedVideos: React.FC = () => {
 
         {/* Video Slider */}
         <motion.div
-          className="relative overflow-hidden py-8 rounded-2xl"
+          className="relative overflow-hidden py-6 md:py-8 lg:py-10 rounded-xl md:rounded-2xl"
           style={{
             backgroundColor: colorScheme.black + '80',
             backdropFilter: 'blur(16px)',
@@ -360,10 +365,10 @@ export const FeaturedVideos: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          {/* Navigation Arrows */}
+          {/* Navigation Arrows - Smaller on mobile */}
           <motion.button
             onClick={handlePrev}
-            className="absolute left-6 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full shadow-lg"
+            className="absolute left-2 md:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-20 p-2 md:p-3 rounded-full shadow-lg"
             style={{
               backgroundColor: colorScheme.black + '80',
               backdropFilter: 'blur(4px)',
@@ -379,14 +384,14 @@ export const FeaturedVideos: React.FC = () => {
           >
             <FontAwesomeIcon
               icon={faChevronLeft}
-              className="w-5 h-5"
+              className="w-4 h-4 md:w-5 md:h-5"
               style={{ color: colorScheme.white }}
             />
           </motion.button>
 
           <motion.button
             onClick={handleNext}
-            className="absolute right-6 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full shadow-lg"
+            className="absolute right-2 md:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-20 p-2 md:p-3 rounded-full shadow-lg"
             style={{
               backgroundColor: colorScheme.black + '80',
               backdropFilter: 'blur(4px)',
@@ -402,7 +407,7 @@ export const FeaturedVideos: React.FC = () => {
           >
             <FontAwesomeIcon
               icon={faChevronRight}
-              className="w-5 h-5"
+              className="w-4 h-4 md:w-5 md:h-5"
               style={{ color: colorScheme.white }}
             />
           </motion.button>
@@ -418,10 +423,10 @@ export const FeaturedVideos: React.FC = () => {
                 duration: SLIDE_TRANSITION_DURATION,
                 ease: SLIDE_EASE,
               }}
-              className="px-4 sm:px-6 lg:px-8"
+              className="px-3 sm:px-4 md:px-6 lg:px-8"
             >
               <div
-                className={`grid gap-4 sm:gap-6 mx-auto ${
+                className={`grid gap-3 md:gap-4 lg:gap-6 mx-auto ${
                   itemsPerSlide === 4
                     ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
                     : itemsPerSlide === 3
@@ -441,7 +446,7 @@ export const FeaturedVideos: React.FC = () => {
 
         {/* Enhanced Pagination */}
         <motion.div
-          className="flex justify-center mt-10 gap-2"
+          className="flex justify-center mt-8 md:mt-10 gap-2"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
@@ -461,8 +466,9 @@ export const FeaturedVideos: React.FC = () => {
                   i === activeIndex
                     ? colorScheme.accent
                     : colorScheme.gray[600],
-                width: i === activeIndex ? '1.5rem' : '0.75rem',
-                height: '0.75rem',
+                width:
+                  i === activeIndex ? '1.25rem md:1.5rem' : '0.5rem md:0.75rem',
+                height: '0.5rem md:0.75rem',
               }}
               whileHover={{ scale: 1.2 }}
               aria-label={`Go to slide ${i + 1}`}

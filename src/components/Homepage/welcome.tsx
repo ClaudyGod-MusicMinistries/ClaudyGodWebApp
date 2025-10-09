@@ -25,7 +25,7 @@ export const Welcome = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="min-h-[70vh] overflow-hidden"
+      className="min-h-[60vh] md:min-h-[70vh] overflow-hidden"
     >
       <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-0 max-w-7xl mx-auto">
         {/* Left Column - Ministry Focus */}
@@ -38,16 +38,16 @@ export const Welcome = () => {
             damping: 20,
             duration: 0.8,
           }}
-          className="relative bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 text-white p-10 md:p-12 lg:p-16 xl:p-20 flex flex-col justify-center"
+          className="relative bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 text-white p-6 sm:p-8 md:p-12 lg:p-16 xl:p-20 flex flex-col justify-center"
         >
           {/* Decorative elements */}
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-indigo-400"></div>
           <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-          <div className="absolute top-10 right-10 text-purple-200/10 text-8xl">
+          <div className="absolute top-6 right-6 sm:top-8 sm:right-8 md:top-10 md:right-10 text-purple-200/10 text-6xl sm:text-7xl md:text-8xl">
             <FontAwesomeIcon icon={faHandsPraying} />
           </div>
 
-          <div className="relative z-10 max-w-2xl mx-auto w-full space-y-8">
+          <div className="relative z-10 max-w-2xl mx-auto w-full space-y-6 md:space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -58,15 +58,15 @@ export const Welcome = () => {
                 duration: 0.7,
                 delay: 0.2,
               }}
-              className="inline-flex items-center gap-3 bg-white/10 px-5 py-2.5 rounded-full backdrop-blur-sm"
+              className="inline-flex items-center gap-2 sm:gap-3 bg-white/10 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full backdrop-blur-sm"
             >
-              <div className="w-2 h-2 bg-purple-300 rounded-full animate-pulse"></div>
-              <LightText className="text-sm tracking-wider">
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-300 rounded-full animate-pulse"></div>
+              <LightText className="text-xs sm:text-sm tracking-wider">
                 MINISTRY FOCUS
               </LightText>
             </motion.div>
 
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -78,7 +78,7 @@ export const Welcome = () => {
                   delay: 0.4,
                 }}
               >
-                <SemiBoldText fontSize="30px">
+                <SemiBoldText fontSize="24px sm:text-2xl md:text-3xl lg:text-[30px]">
                   Intimacy Through Sacred Praise
                 </SemiBoldText>
               </motion.div>
@@ -93,10 +93,10 @@ export const Welcome = () => {
                   duration: 0.7,
                   delay: 0.6,
                 }}
-                className="relative pl-8 py-5 border-l-2 border-purple-500/30"
+                className="relative pl-6 md:pl-8 py-4 md:py-5 border-l-2 border-purple-500/30"
               >
                 <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-purple-500 to-purple-700"></div>
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -109,11 +109,11 @@ export const Welcome = () => {
                     }}
                   >
                     <ExtraLightText
-                      fontSize="20px"
-                      className="md:text-2xl italic leading-relaxed"
+                      fontSize="16px sm:text-lg md:text-xl lg:text-2xl"
+                      className="italic leading-relaxed"
                     >
                       "From the rising of the sun to its going down,
-                      <br />
+                      <br className="hidden sm:block" />
                       The Lord's name is to be praised."
                     </ExtraLightText>
                   </motion.div>
@@ -129,7 +129,7 @@ export const Welcome = () => {
                       delay: 1.0,
                     }}
                   >
-                    <SemiBoldText className="text-lg text-purple-200">
+                    <SemiBoldText className="text-base sm:text-lg text-purple-200">
                       — Psalm 113:3
                     </SemiBoldText>
                   </motion.div>
@@ -154,14 +154,14 @@ export const Welcome = () => {
             background: colorScheme.gray[200],
             borderRadius: colorScheme.borderRadius.large,
           }}
-          className="relative p-10 md:p-12 lg:p-16 xl:p-20 flex flex-col justify-center overflow-hidden"
+          className="relative p-6 sm:p-8 md:p-12 lg:p-16 xl:p-20 flex flex-col justify-center overflow-hidden"
         >
           <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-gray-300 to-white"></div>
-          <div className="absolute bottom-10 left-10 text-gray-100 text-8xl">
+          <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 md:bottom-10 md:right-10 text-gray-100 text-6xl sm:text-7xl md:text-8xl">
             <FontAwesomeIcon icon={faMicrophoneAlt} />
           </div>
 
-          <div className="relative z-10 max-w-2xl mx-auto w-full space-y-8">
+          <div className="relative z-10 max-w-2xl mx-auto w-full space-y-6 md:space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -173,18 +173,19 @@ export const Welcome = () => {
                 delay: 0.4,
               }}
               style={{ borderRadius: colorScheme.borderRadius.medium }}
-              className="inline-flex items-center gap-3 bg-purple-300 px-5 py-2.5 rounded-full backdrop-blur-sm"
+              className="inline-flex items-center gap-2 sm:gap-3 bg-purple-300 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full backdrop-blur-sm"
             >
-              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full"></div>
               <LightText
                 style={{ color: colorScheme.primary }}
                 useThemeColor={false}
+                className="text-xs sm:text-sm"
               >
                 ARTIST BIOGRAPHY
               </LightText>
             </motion.div>
 
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -199,10 +200,10 @@ export const Welcome = () => {
                 <SemiBoldText
                   style={{
                     color: colorScheme.primary,
-                    fontSize: '30px',
-                    lineHeight: '1.6',
+                    lineHeight: '1.4',
                   }}
                   useThemeColor={false}
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-[30px]"
                 >
                   The Spiritual Journey of <br className="hidden md:block" />
                   <span style={{ color: colorScheme.accent }}>ClaudyGod</span>
@@ -223,10 +224,10 @@ export const Welcome = () => {
                 <LightText
                   style={{
                     color: colorScheme.primary,
-                    fontSize: '15px',
                     lineHeight: '1.6',
                   }}
                   useThemeColor={false}
+                  className="text-sm sm:text-base md:text-[15px]"
                 >
                   ClaudyGod is a California-based Christian & Gospel artist of
                   Nigerian and Sierra Leonean heritage. Her musical journey
@@ -252,12 +253,14 @@ export const Welcome = () => {
                 <CustomButton
                   onClick={() => navigate('/biography')}
                   variant="primary"
-                  size="lg"
+                  size="md sm:lg"
                   icon={<FontAwesomeIcon icon={faArrowRight} />}
                   iconPosition="right"
-                  className="mt-4 group shadow-lg hover:shadow-xl"
+                  className="mt-3 md:mt-4 group shadow-lg hover:shadow-xl"
                 >
-                  <BoldText className="tracking-wide">Read More</BoldText>
+                  <BoldText className="tracking-wide text-sm sm:text-base">
+                    Read More
+                  </BoldText>
                 </CustomButton>
               </motion.div>
             </div>

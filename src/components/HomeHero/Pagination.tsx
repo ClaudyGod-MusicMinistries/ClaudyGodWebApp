@@ -1,3 +1,4 @@
+// PaginationDots.tsx
 import { motion } from 'framer-motion';
 
 export const PaginationDots = ({
@@ -11,9 +12,7 @@ export const PaginationDots = ({
   goToSlide: (index: number) => void;
   className?: string;
 }) => (
-  <div
-    className={`absolute bottom-4 md:bottom-8 left-1/2 z-30 flex -translate-x-1/2 items-center gap-1 md:gap-2 ${className}`}
-  >
+  <div className={`flex items-center gap-2 md:gap-3 ${className}`}>
     {Array.from({ length: totalSlides }).map((_, i) => (
       <motion.div
         key={i}
@@ -23,7 +22,7 @@ export const PaginationDots = ({
         animate={{ opacity: 1 }}
       >
         <motion.div
-          className="h-1 rounded-full"
+          className="h-1.5 md:h-2 rounded-full"
           animate={{
             width: i === currentSlide ? '1.5rem' : '0.75rem',
             backgroundColor:
