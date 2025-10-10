@@ -19,13 +19,13 @@ export const QuoteSlide: React.FC<QuoteSlideProps> = ({ slide }) => {
   return (
     <>
       {/* MOBILE VERSION */}
-      <div className="md:hidden flex flex-col justify-center items-start w-full px-4 min-h-[60vh]">
+      <div className="md:hidden flex flex-col justify-end items-start w-full px-4 pb-16 min-h-[60vh]">
         {/* Main Quote - Mobile */}
         <motion.div
           variants={textVariants}
           initial="hidden"
           animate="visible"
-          className="relative w-full mb-4"
+          className="relative w-full mb-6"
         >
           <UltraText
             fontSize="0.95rem"
@@ -47,7 +47,7 @@ export const QuoteSlide: React.FC<QuoteSlideProps> = ({ slide }) => {
           variants={textVariants}
           initial="hidden"
           animate="visible"
-          className="mb-4"
+          className="mb-6"
         >
           <BoldText
             fontSize="0.75rem"

@@ -1,4 +1,4 @@
-// MusicSlide.tsx - Optimized
+// MusicSlide.tsx - Mobile/Tablet Optimized
 import { motion } from 'framer-motion';
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,14 +20,15 @@ export const MusicSlide = ({
   const { colorScheme } = useTheme();
 
   return (
-    <div className="space-y-6 sm:space-y-8 md:space-y-10 w-full px-4 sm:px-6 lg:px-12">
-      {/* Title Section */}
-      <motion.div className="flex flex-col items-start gap-1 md:gap-2">
+    <div className="space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-10 w-full px-4 sm:px-6 lg:px-12">
+      {/* Title Section - Moved up 50px more on mobile */}
+      <motion.div className="flex flex-col items-start md:gap-2 -mt-12 sm:-mt-8 md:mt-0 lg:mt-0">
         <UltraText
-          fontSize="2rem"
+          fontSize="1.5rem"
           smFontSize="1.8rem"
-          mdFontSize="3rem"
-          lgFontSize="4rem"
+          mdFontSize="2.2rem"
+          lgFontSize="3rem"
+          xlFontSize="4rem"
           style={{ color: colorScheme.heading }}
           className="text-left leading-tight"
         >
@@ -35,27 +36,22 @@ export const MusicSlide = ({
         </UltraText>
       </motion.div>
 
-      {/* Mobile View */}
-      <div className="md:hidden space-y-4 mt-2">
-        <motion.div
-          style={{ background: colorScheme.heading }}
-          className="w-16 h-1 rounded-full"
-        />
-
+      {/* Mobile View - Content pushed down more */}
+      <div className="md:hidden space-y-5 mt-16">
         <motion.div>
           <RegularText
-            fontSize="0.9rem"
+            fontSize="0.85rem"
             style={{ color: colorScheme.textSecondary }}
-            className="leading-relaxed max-w-md text-left"
+            className="leading-relaxed text-left max-w-sm"
           >
             Spiritual worship through sacred melodies.
           </RegularText>
         </motion.div>
 
-        <motion.div className="pt-2">
+        <motion.div className="pt-3">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="py-3 text-base w-full rounded-lg font-bold"
+            className="py-2 text-xs w-3/4 mx-auto rounded-md font-semibold px-6"
             style={{
               backgroundColor: colorScheme.primary,
               color: colorScheme.buttonText || '#fff',
@@ -67,22 +63,85 @@ export const MusicSlide = ({
 
         <motion.div className="pt-2">
           <LightText
-            fontSize="0.8rem"
+            fontSize="0.7rem"
             style={{ color: colorScheme.textSecondary }}
-            className="leading-relaxed italic"
+            className="italic text-center"
           >
             Available on major platforms
           </LightText>
         </motion.div>
       </div>
 
-      {/* Desktop/Tablet View */}
-      <div className="hidden md:block">
+      {/* Tablet View */}
+      <div className="hidden md:block lg:hidden">
+        <div className="flex flex-col gap-6 items-start text-left">
+          <motion.div className="space-y-3 max-w-2xl">
+            <RegularText
+              fontSize="1.1rem"
+              mdFontSize="1.3rem"
+              style={{ color: colorScheme.accent }}
+              className="leading-relaxed italic"
+            >
+              Experience the Divine Melody
+            </RegularText>
+
+            <LightText
+              fontSize="1rem"
+              mdFontSize="1.1rem"
+              style={{ color: colorScheme.textSecondary }}
+              className="leading-relaxed"
+            >
+              Spiritual worship through sacred melodies.
+            </LightText>
+          </motion.div>
+
+          <motion.div className="flex flex-col items-start gap-4 mt-1">
+            <div
+              className="w-16 h-1 rounded-full"
+              style={{ backgroundColor: colorScheme.heading }}
+            />
+
+            <motion.div className="relative group">
+              <motion.button
+                onClick={() => setIsModalOpen(true)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative bg-transparent border-none cursor-pointer"
+              >
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center"
+                  style={{
+                    backgroundColor: `${colorScheme.primary}30`,
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faPlayCircle}
+                    className="text-3xl pl-1"
+                    style={{ color: colorScheme.primary }}
+                  />
+                </div>
+              </motion.button>
+            </motion.div>
+
+            <UltraText
+              fontSize="1.1rem"
+              mdFontSize="1.3rem"
+              style={{ color: colorScheme.text }}
+              className="tracking-wide"
+            >
+              Play Latest Album
+            </UltraText>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Desktop View */}
+      <div className="hidden lg:block">
         <div className="flex flex-col gap-8 items-start text-left">
           <motion.div className="space-y-4 max-w-3xl ml-0">
             <RegularText
               fontSize="1.3rem"
-              mdFontSize="1.5rem"
+              lgFontSize="1.5rem"
               style={{ color: colorScheme.accent }}
               className="leading-relaxed italic"
             >
@@ -91,7 +150,7 @@ export const MusicSlide = ({
 
             <LightText
               fontSize="1.1rem"
-              mdFontSize="1.3rem"
+              lgFontSize="1.3rem"
               style={{ color: colorScheme.textSecondary }}
               className="leading-relaxed"
             >
@@ -116,7 +175,6 @@ export const MusicSlide = ({
                   className="w-20 h-20 rounded-full flex items-center justify-center"
                   style={{
                     backgroundColor: `${colorScheme.primary}30`,
-                    border: `2px solid ${colorScheme.primary}50`,
                   }}
                 >
                   <FontAwesomeIcon
@@ -130,7 +188,7 @@ export const MusicSlide = ({
 
             <UltraText
               fontSize="1.2rem"
-              mdFontSize="1.4rem"
+              lgFontSize="1.4rem"
               style={{ color: colorScheme.text }}
               className="tracking-wide"
             >
@@ -142,7 +200,7 @@ export const MusicSlide = ({
             <div className="space-y-3">
               <BoldText
                 fontSize="1rem"
-                mdFontSize="1.2rem"
+                lgFontSize="1.2rem"
                 style={{ color: colorScheme.accent }}
                 className="tracking-wide uppercase"
               >
