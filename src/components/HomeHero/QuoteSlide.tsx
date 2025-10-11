@@ -1,4 +1,4 @@
-// QuoteSlide.tsx - Optimized
+// QuoteSlide.tsx - Fixed spacing
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
@@ -19,13 +19,13 @@ export const QuoteSlide: React.FC<QuoteSlideProps> = ({ slide }) => {
   return (
     <>
       {/* MOBILE VERSION */}
-      <div className="md:hidden flex flex-col justify-end items-start w-full px-4 pb-16 min-h-[60vh]">
+      <div className="md:hidden flex flex-col justify-end items-start w-full px-4 pb-32 min-h-[80vh]">
         {/* Main Quote - Mobile */}
         <motion.div
           variants={textVariants}
           initial="hidden"
           animate="visible"
-          className="relative w-full mb-6"
+          className="relative w-full top-4" // Pushes down 3rem (48px)
         >
           <UltraText
             fontSize="0.95rem"
@@ -47,7 +47,7 @@ export const QuoteSlide: React.FC<QuoteSlideProps> = ({ slide }) => {
           variants={textVariants}
           initial="hidden"
           animate="visible"
-          className="mb-6"
+          className="relative top-9" // Pushes down 3rem (48px)
         >
           <BoldText
             fontSize="0.75rem"
@@ -70,7 +70,7 @@ export const QuoteSlide: React.FC<QuoteSlideProps> = ({ slide }) => {
             variants={textVariants}
             initial="hidden"
             animate="visible"
-            className="flex flex-col items-start gap-4 w-full"
+            className="flex flex-col items-start gap-5 w-full relative top-16"
           >
             {/* Play Button - Mobile */}
             <motion.div
