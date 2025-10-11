@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // src/pages/Donate.tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo, lazy, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,18 +11,16 @@ import {
   faCreditCard,
   faHandHoldingUsd,
   faShieldAlt,
-  faHeart,
   faPrayingHands,
   faDonate,
 } from '@fortawesome/free-solid-svg-icons';
-import { Donate1, Donate2 } from '../assets/';
+import { Donate1 } from '../assets/';
 import { useNavContext } from '../contexts/NavContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { SEO } from '../components/util/SEO';
 import { PaymentPlatforms } from '../components/donate/payment';
 import { NigerianBankTransfer } from '../components/donate/NigeriaAcct';
 import { LayoutTemplate } from '../components/util/hero';
-import { DonationCallToAction } from '../components/util/DonationSupport';
 import { NewsletterForm } from '../components/util/Newsletter';
 import {
   SemiBoldText,
@@ -32,61 +32,82 @@ import {
 } from '../components/ui/fonts/typography';
 import CustomButton from '../components/ui/fonts/buttons/CustomButton';
 
-// Currency selector component
-const CurrencySelector = ({
-  currency,
-  setCurrency,
-}: {
-  currency: string;
-  setCurrency: React.Dispatch<React.SetStateAction<string>>;
-}) => {
-  const { colorScheme } = useTheme();
-  const currencies = [
-    { code: 'USD', symbol: '$', name: 'US Dollar' },
-    { code: 'EUR', symbol: '€', name: 'Euro' },
-    { code: 'GBP', symbol: '£', name: 'British Pound' },
-    { code: 'NGN', symbol: '₦', name: 'Naira' },
-  ];
+// Lazy load heavier components
+const LazyDonationCallToAction = lazy(() =>
+  import('../components/util/DonationSupport').then(
+    module =>
+      ({
+        default: module.DonationCallToAction,
+      }) as { default: React.ComponentType<any> }
+  )
+);
 
-  return (
-    <div className="relative flex-shrink-0 w-full sm:w-auto">
-      <select
-        value={currency}
-        onChange={e => setCurrency(e.target.value)}
-        style={{
-          backgroundColor: colorScheme.gray[100],
-          borderColor: colorScheme.gray[300],
-          borderRadius: colorScheme.borderRadius.medium,
-          color: colorScheme.primary,
-        }}
-        className="appearance-none w-full h-full px-3 py-2 text-sm bg-gray-100 border border-r-0 rounded-l-md focus:outline-none focus:ring-2 cursor-pointer shadow-sm"
-      >
-        {currencies.map(curr => (
-          <option key={curr.code} value={curr.code}>
-            {curr.symbol} {curr.code} - {curr.name}
-          </option>
-        ))}
-      </select>
-      <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-        <svg
-          className="w-4 h-4 text-gray-700"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+// Skeleton loaders
+const DonationCallToActionSkeleton = () => (
+  <div className="h-60 bg-gray-200 rounded-xl animate-pulse mb-12" />
+);
+
+// Memoized components
+const CurrencySelector = memo(
+  ({
+    currency,
+    setCurrency,
+  }: {
+    currency: string;
+    setCurrency: React.Dispatch<React.SetStateAction<string>>;
+  }) => {
+    const { colorScheme } = useTheme();
+
+    const currencies = useMemo(
+      () => [
+        { code: 'USD', symbol: '$', name: 'US Dollar' },
+        { code: 'EUR', symbol: '€', name: 'Euro' },
+        { code: 'GBP', symbol: '£', name: 'British Pound' },
+        { code: 'NGN', symbol: '₦', name: 'Naira' },
+      ],
+      []
+    );
+
+    return (
+      <div className="relative flex-shrink-0 w-full sm:w-auto">
+        <select
+          value={currency}
+          onChange={e => setCurrency(e.target.value)}
+          style={{
+            backgroundColor: colorScheme.gray[100],
+            borderColor: colorScheme.gray[300],
+            borderRadius: colorScheme.borderRadius.medium,
+            color: colorScheme.primary,
+          }}
+          className="appearance-none w-full h-full px-3 py-2 text-sm bg-gray-100 border border-r-0 rounded-l-md focus:outline-none focus:ring-2 cursor-pointer shadow-sm"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
+          {currencies.map(curr => (
+            <option key={curr.code} value={curr.code}>
+              {curr.symbol} {curr.code} - {curr.name}
+            </option>
+          ))}
+        </select>
+        <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+          <svg
+            className="w-4 h-4 text-gray-700"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
-const DonationGuide = () => {
+const DonationGuide = memo(() => {
   const { colorScheme } = useTheme();
 
   return (
@@ -166,57 +187,231 @@ const DonationGuide = () => {
       </div>
     </motion.aside>
   );
-};
+});
 
-const FeatureCard = ({
-  icon,
-  title,
-  description,
-}: {
-  icon: any;
-  title: string;
-  description: string;
-}) => {
-  const { colorScheme } = useTheme();
+const FeatureCard = memo(
+  ({
+    icon,
+    title,
+    description,
+  }: {
+    icon: any;
+    title: string;
+    description: string;
+  }) => {
+    const { colorScheme } = useTheme();
+
+    return (
+      <motion.article
+        whileHover={{ y: -4 }}
+        style={{
+          backgroundColor: colorScheme.white,
+          borderRadius: colorScheme.borderRadius.large,
+          borderColor: colorScheme.gray[100],
+        }}
+        className="p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl shadow-sm border hover:shadow-md transition-shadow h-full flex flex-col"
+      >
+        <div
+          style={{ backgroundColor: colorScheme.gray[100] }}
+          className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center mb-3 sm:mb-4"
+        >
+          <FontAwesomeIcon
+            icon={icon}
+            style={{ color: colorScheme.accent }}
+            className="text-base sm:text-lg md:text-xl"
+          />
+        </div>
+        <SemiBoldText
+          style={{ color: colorScheme.background }}
+          fontSize="clamp(0.9rem, 2vw, 1.125rem)"
+          className="mb-2"
+        >
+          {title}
+        </SemiBoldText>
+        <LightText
+          style={{ color: colorScheme.background }}
+          fontSize="clamp(0.75rem, 1.5vw, 0.875rem)"
+          className="flex-grow"
+        >
+          {description}
+        </LightText>
+      </motion.article>
+    );
+  }
+);
+
+const DonationHeader = memo(({ colorScheme }: { colorScheme: any }) => (
+  <header className="mb-8 sm:mb-12 md:mb-16 text-center">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6 }}
+      className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
+      style={{ backgroundColor: `${colorScheme.primary}20` }}
+    >
+      <FontAwesomeIcon
+        icon={faDonate}
+        style={{ color: colorScheme.primary }}
+        className="text-sm sm:text-base"
+      />
+      <LightText
+        style={{
+          color: colorScheme.primary,
+          fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
+          letterSpacing: '0.05em',
+        }}
+        useThemeColor={false}
+      >
+        SUPPORT MINISTRY
+      </LightText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+    >
+      <ExtraBoldText
+        style={{
+          color: colorScheme.primary,
+          fontSize: 'clamp(1.75rem, 6vw, 3rem)',
+          lineHeight: '1.1',
+          marginBottom: '0.75rem',
+        }}
+        useThemeColor={false}
+      >
+        Support Our Ministry
+      </ExtraBoldText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      className="max-w-4xl mx-auto"
+    >
+      <SemiBoldText
+        style={{
+          color: colorScheme.accent,
+          fontSize: 'clamp(1rem, 3vw, 1.375rem)',
+          lineHeight: '1.5',
+        }}
+        useThemeColor={false}
+      >
+        "Each of you should give what you have decided in your heart to give,
+        not reluctantly or under compulsion, for God loves a cheerful giver." (2
+        Corinthians 9:7)
+      </SemiBoldText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.3 }}
+      className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
+      style={{ backgroundColor: colorScheme.accent }}
+    />
+  </header>
+));
+
+const ScriptureQuote = memo(({ colorScheme }: { colorScheme: any }) => (
+  <motion.blockquote
+    initial={{ opacity: 0 }}
+    whileInView={{ opacity: 1 }}
+    viewport={{ once: true, margin: '-50px' }}
+    transition={{ duration: 0.6 }}
+    className="relative my-8 sm:my-12 md:my-16 p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl text-center"
+    style={{
+      background: `linear-gradient(135deg, ${colorScheme.gray[900]}, ${colorScheme.gray[800]})`,
+      border: `1px solid ${colorScheme.gray[700]}`,
+    }}
+  >
+    <div className="max-w-4xl mx-auto">
+      <div className="flex items-center justify-center mb-3 sm:mb-4">
+        <FontAwesomeIcon
+          icon={faPrayingHands}
+          className="mr-2 sm:mr-3 text-base sm:text-lg"
+          style={{ color: colorScheme.accent }}
+        />
+        <LightText
+          style={{
+            color: 'white',
+            fontSize: 'clamp(0.9rem, 2.5vw, 1.375rem)',
+            lineHeight: '1.6',
+            fontStyle: 'italic',
+          }}
+          useThemeColor={false}
+        >
+          "And my God will meet all your needs according to the riches of His
+          glory in Christ Jesus." (Philippians 4:19)
+        </LightText>
+      </div>
+      <RegularText
+        style={{
+          color: colorScheme.primary,
+          fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+        }}
+        useThemeColor={false}
+      >
+        We appreciate your support and donations towards the ministry. You
+        partner with us to advance the gospel through music.
+      </RegularText>
+    </div>
+  </motion.blockquote>
+));
+
+const FeatureCardsSection = memo(({ colorScheme }: { colorScheme: any }) => {
+  const features = useMemo(
+    () => [
+      {
+        icon: faGlobe,
+        title: 'Global Support',
+        description:
+          'Your donation helps us reach audiences worldwide with gospel music and messages of hope.',
+      },
+      {
+        icon: faCreditCard,
+        title: 'Secure Payments',
+        description:
+          'All transactions are encrypted and processed through trusted payment gateways for your security.',
+      },
+      {
+        icon: faShieldAlt,
+        title: 'Trusted Ministry',
+        description:
+          'We are accountable for every donation and provide regular ministry updates to our supporters.',
+      },
+    ],
+    []
+  );
 
   return (
-    <motion.article
-      whileHover={{ y: -4 }}
-      style={{
-        backgroundColor: colorScheme.white,
-        borderRadius: colorScheme.borderRadius.large,
-        borderColor: colorScheme.gray[100],
-      }}
-      className="p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl shadow-sm border hover:shadow-md transition-shadow h-full flex flex-col"
-    >
-      <div
-        style={{ backgroundColor: colorScheme.gray[100] }}
-        className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center mb-3 sm:mb-4"
+    <section className="mb-8 sm:mb-12 md:mb-16">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.6 }}
+        className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6"
       >
-        <FontAwesomeIcon
-          icon={icon}
-          style={{ color: colorScheme.accent }}
-          className="text-base sm:text-lg md:text-xl"
-        />
-      </div>
-      <SemiBoldText
-        style={{ color: colorScheme.background }}
-        fontSize="clamp(0.9rem, 2vw, 1.125rem)"
-        className="mb-2"
-      >
-        {title}
-      </SemiBoldText>
-      <LightText
-        style={{ color: colorScheme.background }}
-        fontSize="clamp(0.75rem, 1.5vw, 0.875rem)"
-        className="flex-grow"
-      >
-        {description}
-      </LightText>
-    </motion.article>
+        {features.map((feature, index) => (
+          <FeatureCard
+            key={index}
+            icon={feature.icon}
+            title={feature.title}
+            description={feature.description}
+          />
+        ))}
+      </motion.div>
+    </section>
   );
-};
+});
 
+// Main DonateData Component
 export const DonateData: React.FC = () => {
   const { isNavOpen } = useNavContext();
   const { colorScheme } = useTheme();
@@ -231,32 +426,8 @@ export const DonateData: React.FC = () => {
     setAmount('');
   }, [currency]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!amount || parseFloat(amount) <= 0) {
-      alert('Please enter a valid donation amount');
-      return;
-    }
-
-    setIsCheckout(true);
-  };
-
-  const handlePaymentComplete = () => {
-    alert(
-      'Thank you for your donation! Your support helps spread the gospel through music.'
-    );
-    setAmount('');
-    setName('');
-    setIsCheckout(false);
-  };
-
-  const handlePaymentBack = () => {
-    setIsCheckout(false);
-  };
-
-  // Suggested donation amounts based on currency
-  const getSuggestedAmounts = () => {
+  // Memoize currency data
+  const getSuggestedAmounts = useCallback(() => {
     switch (currency) {
       case 'USD':
         return [10, 25, 50, 100, 250];
@@ -269,9 +440,9 @@ export const DonateData: React.FC = () => {
       default:
         return [10, 25, 50, 100, 250];
     }
-  };
+  }, [currency]);
 
-  const getCurrencySymbol = () => {
+  const getCurrencySymbol = useCallback(() => {
     switch (currency) {
       case 'USD':
         return '$';
@@ -284,10 +455,55 @@ export const DonateData: React.FC = () => {
       default:
         return '$';
     }
-  };
+  }, [currency]);
 
-  const suggestedAmounts = getSuggestedAmounts();
-  const currencySymbol = getCurrencySymbol();
+  const suggestedAmounts = useMemo(
+    () => getSuggestedAmounts(),
+    [getSuggestedAmounts]
+  );
+  const currencySymbol = useMemo(
+    () => getCurrencySymbol(),
+    [getCurrencySymbol]
+  );
+
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+
+      if (!amount || parseFloat(amount) <= 0) {
+        alert('Please enter a valid donation amount');
+        return;
+      }
+
+      setIsCheckout(true);
+    },
+    [amount]
+  );
+
+  const handlePaymentComplete = useCallback(() => {
+    alert(
+      'Thank you for your donation! Your support helps spread the gospel through music.'
+    );
+    setAmount('');
+    setName('');
+    setIsCheckout(false);
+  }, []);
+
+  const handlePaymentBack = useCallback(() => {
+    setIsCheckout(false);
+  }, []);
+
+  const handleAmountChange = useCallback((value: string) => {
+    setAmount(value);
+  }, []);
+
+  const handleNameChange = useCallback((value: string) => {
+    setName(value);
+  }, []);
+
+  const handleCurrencyChange = useCallback((value: string) => {
+    setCurrency(value);
+  }, []);
 
   return (
     <main
@@ -421,154 +637,11 @@ export const DonateData: React.FC = () => {
       ) : (
         /* Donation Content */
         <article className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
-          {/* Section Header */}
-          <header className="mb-8 sm:mb-12 md:mb-16 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
-              style={{ backgroundColor: `${colorScheme.primary}20` }}
-            >
-              <FontAwesomeIcon
-                icon={faDonate}
-                style={{ color: colorScheme.primary }}
-                className="text-sm sm:text-base"
-              />
-              <LightText
-                style={{
-                  color: colorScheme.primary,
-                  fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
-                  letterSpacing: '0.05em',
-                }}
-                useThemeColor={false}
-              >
-                SUPPORT MINISTRY
-              </LightText>
-            </motion.div>
+          <DonationHeader colorScheme={colorScheme} />
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <ExtraBoldText
-                style={{
-                  color: colorScheme.primary,
-                  fontSize: 'clamp(1.75rem, 6vw, 3rem)',
-                  lineHeight: '1.1',
-                  marginBottom: '0.75rem',
-                }}
-                useThemeColor={false}
-              >
-                Support Our Ministry
-              </ExtraBoldText>
-            </motion.div>
+          <ScriptureQuote colorScheme={colorScheme} />
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="max-w-4xl mx-auto"
-            >
-              <SemiBoldText
-                style={{
-                  color: colorScheme.accent,
-                  fontSize: 'clamp(1rem, 3vw, 1.375rem)',
-                  lineHeight: '1.5',
-                }}
-                useThemeColor={false}
-              >
-                "Each of you should give what you have decided in your heart to
-                give, not reluctantly or under compulsion, for God loves a
-                cheerful giver." (2 Corinthians 9:7)
-              </SemiBoldText>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
-              style={{ backgroundColor: colorScheme.accent }}
-            />
-          </header>
-
-          {/* Scripture Quote */}
-          <motion.blockquote
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6 }}
-            className="relative my-8 sm:my-12 md:my-16 p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl text-center"
-            style={{
-              background: `linear-gradient(135deg, ${colorScheme.gray[900]}, ${colorScheme.gray[800]})`,
-              border: `1px solid ${colorScheme.gray[700]}`,
-            }}
-          >
-            <div className="max-w-4xl mx-auto">
-              <div className="flex items-center justify-center mb-3 sm:mb-4">
-                <FontAwesomeIcon
-                  icon={faPrayingHands}
-                  className="mr-2 sm:mr-3 text-base sm:text-lg"
-                  style={{ color: colorScheme.accent }}
-                />
-                <LightText
-                  style={{
-                    color: 'white',
-                    fontSize: 'clamp(0.9rem, 2.5vw, 1.375rem)',
-                    lineHeight: '1.6',
-                    fontStyle: 'italic',
-                  }}
-                  useThemeColor={false}
-                >
-                  "And my God will meet all your needs according to the riches
-                  of His glory in Christ Jesus." (Philippians 4:19)
-                </LightText>
-              </div>
-              <RegularText
-                style={{
-                  color: colorScheme.primary,
-                  fontSize: 'clamp(0.875rem, 2vw, 1rem)',
-                }}
-                useThemeColor={false}
-              >
-                We appreciate your support and donations towards the ministry.
-                You partner with us to advance the gospel through music.
-              </RegularText>
-            </div>
-          </motion.blockquote>
-
-          {/* Feature Cards */}
-          <section className="mb-8 sm:mb-12 md:mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6"
-            >
-              <FeatureCard
-                icon={faGlobe}
-                title="Global Support"
-                description="Your donation helps us reach audiences worldwide with gospel music and messages of hope."
-              />
-              <FeatureCard
-                icon={faCreditCard}
-                title="Secure Payments"
-                description="All transactions are encrypted and processed through trusted payment gateways for your security."
-              />
-              <FeatureCard
-                icon={faShieldAlt}
-                title="Trusted Ministry"
-                description="We are accountable for every donation and provide regular ministry updates to our supporters."
-              />
-            </motion.div>
-          </section>
+          <FeatureCardsSection colorScheme={colorScheme} />
 
           {/* Donation Form */}
           <section className="mb-12 sm:mb-16 md:mb-20">
@@ -623,7 +696,7 @@ export const DonateData: React.FC = () => {
                     type="text"
                     id="name"
                     value={name}
-                    onChange={e => setName(e.target.value)}
+                    onChange={e => handleNameChange(e.target.value)}
                     style={{
                       borderColor: colorScheme.gray[300],
                       borderRadius: colorScheme.borderRadius.medium,
@@ -651,7 +724,7 @@ export const DonateData: React.FC = () => {
                         key={amt}
                         type="button"
                         whileTap={{ scale: 0.95 }}
-                        onClick={() => setAmount(amt.toString())}
+                        onClick={() => handleAmountChange(amt.toString())}
                         style={{
                           borderRadius: colorScheme.borderRadius.medium,
                           borderColor:
@@ -694,7 +767,7 @@ export const DonateData: React.FC = () => {
                         type="number"
                         id="amount"
                         value={amount}
-                        onChange={e => setAmount(e.target.value)}
+                        onChange={e => handleAmountChange(e.target.value)}
                         style={{
                           borderColor: colorScheme.gray[300],
                           borderRadius: colorScheme.borderRadius.medium,
@@ -782,3 +855,5 @@ export const DonateData: React.FC = () => {
     </main>
   );
 };
+
+export default memo(DonateData);

@@ -1,4 +1,13 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  lazy,
+  Suspense,
+  memo,
+  useMemo,
+} from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { LayoutTemplate } from '../components/util/hero';
 import { Tour2 } from '../assets/';
@@ -28,22 +37,361 @@ import {
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
 
+// Lazy load heavier components
+const LazyDonationCallToAction = lazy(() =>
+  import('../components/util/DonationSupport').then(
+    module =>
+      ({
+        default: module.DonationCallToAction,
+      }) as { default: React.ComponentType<any> }
+  )
+);
+
+// Skeleton loaders
+const DonationSectionSkeleton = () => (
+  <div className="h-60 bg-gray-200 rounded-xl animate-pulse mb-12 sm:mb-16 md:mb-20" />
+);
+
+// Memoized components
+const ContactHeader = memo(({ colorScheme }: { colorScheme: any }) => (
+  <header className="mb-8 sm:mb-12 md:mb-16 text-center">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6 }}
+      className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
+      style={{ backgroundColor: `${colorScheme.primary}20` }}
+    >
+      <FontAwesomeIcon
+        icon={faComments}
+        style={{ color: colorScheme.primary }}
+        className="text-sm sm:text-base"
+      />
+      <LightText
+        style={{
+          color: colorScheme.primary,
+          fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
+          letterSpacing: '0.05em',
+        }}
+        useThemeColor={false}
+      >
+        GET IN TOUCH
+      </LightText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+    >
+      <ExtraBoldText
+        style={{
+          color: colorScheme.primary,
+          fontSize: 'clamp(1.75rem, 6vw, 3rem)',
+          lineHeight: '1.1',
+          marginBottom: '0.75rem',
+        }}
+        useThemeColor={false}
+      >
+        We Are Here For You
+      </ExtraBoldText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      className="max-w-4xl mx-auto"
+    >
+      <SemiBoldText
+        style={{
+          color: colorScheme.accent,
+          fontSize: 'clamp(1rem, 3vw, 1.375rem)',
+          lineHeight: '1.5',
+        }}
+        useThemeColor={false}
+      >
+        Please leave a prayer request, testimony or a comment. We're here to
+        support your spiritual journey and connect with you.
+      </SemiBoldText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.3 }}
+      className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
+      style={{ backgroundColor: colorScheme.accent }}
+    />
+  </header>
+));
+
+const ContactFormSection = memo(
+  ({ colorScheme, onSuccess }: { colorScheme: any; onSuccess: () => void }) => (
+    <motion.article
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      style={{
+        backgroundColor: colorScheme.white,
+        borderRadius: colorScheme.borderRadius.xlarge,
+      }}
+      className="p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl shadow-sm"
+    >
+      <div className="mb-4 sm:mb-6">
+        <div
+          className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full mb-3 sm:mb-4"
+          style={{ backgroundColor: `${colorScheme.primary}10` }}
+        >
+          <FontAwesomeIcon
+            icon={faEnvelope}
+            style={{ color: colorScheme.primary }}
+            className="text-sm"
+          />
+          <LightText
+            style={{
+              color: colorScheme.primary,
+              fontSize: 'clamp(0.75rem, 2vw, 0.875rem)',
+            }}
+            useThemeColor={false}
+          >
+            SEND US A MESSAGE
+          </LightText>
+        </div>
+        <SemiBoldText
+          style={{ color: colorScheme.primary }}
+          fontSize="clamp(1.25rem, 3vw, 1.5rem)"
+        >
+          Contact Form
+        </SemiBoldText>
+      </div>
+      <ContactForm onSuccess={onSuccess} />
+    </motion.article>
+  )
+);
+
+const ContactInfoSection = memo(({ colorScheme }: { colorScheme: any }) => (
+  <motion.article
+    initial={{ opacity: 0, x: 20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    viewport={{ once: true, margin: '-50px' }}
+    transition={{ duration: 0.6, delay: 0.3 }}
+    style={{
+      borderRadius: colorScheme.borderRadius.xlarge,
+      background: `linear-gradient(135deg, ${colorScheme.primary}, ${colorScheme.secondary})`,
+    }}
+    className="p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl shadow-sm"
+  >
+    <div className="mb-4 sm:mb-6">
+      <div
+        className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full mb-3 sm:mb-4"
+        style={{ backgroundColor: `${colorScheme.white}20` }}
+      >
+        <FontAwesomeIcon
+          icon={faPhone}
+          style={{ color: colorScheme.white }}
+          className="text-sm"
+        />
+        <LightText
+          style={{
+            color: colorScheme.white,
+            fontSize: 'clamp(0.75rem, 2vw, 0.875rem)',
+          }}
+          useThemeColor={false}
+        >
+          CONTACT INFORMATION
+        </LightText>
+      </div>
+      <SemiBoldText
+        style={{ color: colorScheme.white }}
+        fontSize="clamp(1.25rem, 3vw, 1.5rem)"
+      >
+        Get In Touch
+      </SemiBoldText>
+    </div>
+    <ContactInfo />
+  </motion.article>
+));
+
+const FooterSection = memo(({ colorScheme }: { colorScheme: any }) => {
+  const socialLinks = useMemo(
+    () => [
+      {
+        icon: faFacebookF,
+        url: 'https://www.facebook.com/yourpage',
+        label: 'Facebook',
+      },
+      {
+        icon: faXTwitter,
+        url: 'https://x.com/yourhandle',
+        label: 'X (Twitter)',
+      },
+      {
+        icon: faInstagram,
+        url: 'https://www.instagram.com/yourprofile',
+        label: 'Instagram',
+      },
+      {
+        icon: faYoutube,
+        url: 'https://www.youtube.com/yourchannel',
+        label: 'YouTube',
+      },
+    ],
+    []
+  );
+
+  return (
+    <footer
+      className="relative overflow-hidden"
+      style={{
+        background: `linear-gradient(135deg, ${colorScheme.primary}, ${colorScheme.secondary})`,
+      }}
+    >
+      {/* Decorative elements */}
+      <div className="absolute inset-0 opacity-20">
+        <div
+          className="absolute top-0 left-0 w-64 h-64 rounded-full blur-3xl"
+          style={{ backgroundColor: colorScheme.accent }}
+        ></div>
+        <div
+          className="absolute bottom-0 right-0 w-80 h-80 rounded-full blur-3xl"
+          style={{ backgroundColor: colorScheme.secondary }}
+        ></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
+        <div className="text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.5 }}
+          >
+            <BoldText
+              style={{
+                color: colorScheme.white,
+                fontSize: 'clamp(1.5rem, 4vw, 2.25rem)',
+              }}
+              className="mb-4 sm:mb-6"
+            >
+              ClaudyGod Music & Ministries
+            </BoldText>
+          </motion.div>
+
+          <motion.div
+            className="w-16 sm:w-20 md:w-24 h-1 rounded-full mx-auto my-4 sm:my-6"
+            style={{
+              background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.highlight})`,
+            }}
+            initial={{ width: 0 }}
+            whileInView={{ width: '6rem' }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          />
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ delay: 0.3 }}
+          >
+            <LightText
+              style={{
+                color: colorScheme.white,
+                fontSize: 'clamp(0.875rem, 2vw, 1.125rem)',
+              }}
+              className="mb-6 sm:mb-8 max-w-2xl mx-auto"
+            >
+              Connect With Us On Various Social Platforms
+            </LightText>
+          </motion.div>
+
+          <motion.nav
+            className="flex justify-center space-x-3 sm:space-x-4 md:space-x-6"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ delay: 0.4, staggerChildren: 0.1 }}
+          >
+            {socialLinks.map((social, index) => (
+              <motion.a
+                key={index}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border"
+                style={{
+                  backgroundColor: `${colorScheme.white}10`,
+                  backdropFilter: 'blur(10px)',
+                  borderColor: `${colorScheme.white}20`,
+                }}
+                aria-label={`Follow us on ${social.label}`}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ delay: 0.5 + index * 0.1 }}
+              >
+                <FontAwesomeIcon
+                  icon={social.icon}
+                  className="text-base sm:text-lg md:text-xl"
+                  style={{ color: colorScheme.white }}
+                />
+              </motion.a>
+            ))}
+          </motion.nav>
+        </div>
+      </div>
+    </footer>
+  );
+});
+
+// Main ContactData Component
 export const ContactData: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { colorScheme } = useTheme();
 
+  const handleModalClose = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
+
+  const handleSuccess = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  // Optimize backend health check with cleanup
   useEffect(() => {
+    let isMounted = true;
+
     const checkBackendHealth = async () => {
       try {
         const res = await fetch(`${import.meta.env.VITE_API_BASE}/health`);
-        const data = await res.json();
-        console.log('Backend status:', data.status);
-        console.log('Environment:', data.environment);
+        if (isMounted && res.ok) {
+          const data = await res.json();
+          console.log('Backend status:', data.status);
+          console.log('Environment:', data.environment);
+        }
       } catch (error) {
-        console.error('Backend connection failed:', error);
+        if (isMounted) {
+          console.error('Backend connection failed:', error);
+        }
       }
     };
-    checkBackendHealth();
+
+    // Only check in development or if needed
+    if (import.meta.env.DEV) {
+      checkBackendHealth();
+    }
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
@@ -73,10 +421,7 @@ export const ContactData: React.FC = () => {
         }}
       />
 
-      <SuccessModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <SuccessModal isOpen={isModalOpen} onClose={handleModalClose} />
 
       {/* Hero Section */}
       <LayoutTemplate
@@ -142,81 +487,7 @@ export const ContactData: React.FC = () => {
 
       {/* Contact Content */}
       <article className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
-        {/* Section Header */}
-        <header className="mb-8 sm:mb-12 md:mb-16 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
-            style={{ backgroundColor: `${colorScheme.primary}20` }}
-          >
-            <FontAwesomeIcon
-              icon={faComments}
-              style={{ color: colorScheme.primary }}
-              className="text-sm sm:text-base"
-            />
-            <LightText
-              style={{
-                color: colorScheme.primary,
-                fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
-                letterSpacing: '0.05em',
-              }}
-              useThemeColor={false}
-            >
-              GET IN TOUCH
-            </LightText>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <ExtraBoldText
-              style={{
-                color: colorScheme.primary,
-                fontSize: 'clamp(1.75rem, 6vw, 3rem)',
-                lineHeight: '1.1',
-                marginBottom: '0.75rem',
-              }}
-              useThemeColor={false}
-            >
-              We Are Here For You
-            </ExtraBoldText>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="max-w-4xl mx-auto"
-          >
-            <SemiBoldText
-              style={{
-                color: colorScheme.accent,
-                fontSize: 'clamp(1rem, 3vw, 1.375rem)',
-                lineHeight: '1.5',
-              }}
-              useThemeColor={false}
-            >
-              Please leave a prayer request, testimony or a comment. We're here
-              to support your spiritual journey and connect with you.
-            </SemiBoldText>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
-            style={{ backgroundColor: colorScheme.accent }}
-          />
-        </header>
+        <ContactHeader colorScheme={colorScheme} />
 
         {/* Contact Form & Info Grid */}
         <section className="mb-12 sm:mb-16 md:mb-20">
@@ -227,89 +498,11 @@ export const ContactData: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12"
           >
-            {/* Contact Form */}
-            <motion.article
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              style={{
-                backgroundColor: colorScheme.white,
-                borderRadius: colorScheme.borderRadius.xlarge,
-              }}
-              className="p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl shadow-sm"
-            >
-              <div className="mb-4 sm:mb-6">
-                <div
-                  className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full mb-3 sm:mb-4"
-                  style={{ backgroundColor: `${colorScheme.primary}10` }}
-                >
-                  <FontAwesomeIcon
-                    icon={faEnvelope}
-                    style={{ color: colorScheme.primary }}
-                    className="text-sm"
-                  />
-                  <LightText
-                    style={{
-                      color: colorScheme.primary,
-                      fontSize: 'clamp(0.75rem, 2vw, 0.875rem)',
-                    }}
-                    useThemeColor={false}
-                  >
-                    SEND US A MESSAGE
-                  </LightText>
-                </div>
-                <SemiBoldText
-                  style={{ color: colorScheme.primary }}
-                  fontSize="clamp(1.25rem, 3vw, 1.5rem)"
-                >
-                  Contact Form
-                </SemiBoldText>
-              </div>
-              <ContactForm onSuccess={() => setIsModalOpen(true)} />
-            </motion.article>
-
-            {/* Contact Info */}
-            <motion.article
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              style={{
-                borderRadius: colorScheme.borderRadius.xlarge,
-                background: `linear-gradient(135deg, ${colorScheme.primary}, ${colorScheme.secondary})`,
-              }}
-              className="p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl shadow-sm"
-            >
-              <div className="mb-4 sm:mb-6">
-                <div
-                  className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full mb-3 sm:mb-4"
-                  style={{ backgroundColor: `${colorScheme.white}20` }}
-                >
-                  <FontAwesomeIcon
-                    icon={faPhone}
-                    style={{ color: colorScheme.white }}
-                    className="text-sm"
-                  />
-                  <LightText
-                    style={{
-                      color: colorScheme.white,
-                      fontSize: 'clamp(0.75rem, 2vw, 0.875rem)',
-                    }}
-                    useThemeColor={false}
-                  >
-                    CONTACT INFORMATION
-                  </LightText>
-                </div>
-                <SemiBoldText
-                  style={{ color: colorScheme.white }}
-                  fontSize="clamp(1.25rem, 3vw, 1.5rem)"
-                >
-                  Get In Touch
-                </SemiBoldText>
-              </div>
-              <ContactInfo />
-            </motion.article>
+            <ContactFormSection
+              colorScheme={colorScheme}
+              onSuccess={handleSuccess}
+            />
+            <ContactInfoSection colorScheme={colorScheme} />
           </motion.div>
         </section>
 
@@ -321,13 +514,15 @@ export const ContactData: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-12 sm:mb-16 md:mb-20"
         >
-          <DonationCallToAction
-            title="Partner with Our Ministry"
-            subtitle="Your Support Makes a Difference"
-            description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
-            goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
-            donateUrl="/donate"
-          />
+          <Suspense fallback={<DonationSectionSkeleton />}>
+            <LazyDonationCallToAction
+              title="Partner with Our Ministry"
+              subtitle="Your Support Makes a Difference"
+              description="Join us in spreading the gospel through music. Your generous donations help fund worship events, album productions, and global outreach efforts. Every contribution directly impacts lives and advances God's kingdom."
+              goFundMeUrl="https://www.gofundme.com/charity/claudygod-music-ministries/donate"
+              donateUrl="/donate"
+            />
+          </Suspense>
         </motion.section>
 
         {/* Newsletter Section */}
@@ -346,131 +541,9 @@ export const ContactData: React.FC = () => {
         </motion.section>
       </article>
 
-      {/* Footer */}
-      <footer
-        className="relative overflow-hidden"
-        style={{
-          background: `linear-gradient(135deg, ${colorScheme.primary}, ${colorScheme.secondary})`,
-        }}
-      >
-        {/* Decorative elements */}
-        <div className="absolute inset-0 opacity-20">
-          <div
-            className="absolute top-0 left-0 w-64 h-64 rounded-full blur-3xl"
-            style={{ backgroundColor: colorScheme.accent }}
-          ></div>
-          <div
-            className="absolute bottom-0 right-0 w-80 h-80 rounded-full blur-3xl"
-            style={{ backgroundColor: colorScheme.secondary }}
-          ></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
-          <div className="text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5 }}
-            >
-              <BoldText
-                style={{
-                  color: colorScheme.white,
-                  fontSize: 'clamp(1.5rem, 4vw, 2.25rem)',
-                }}
-                className="mb-4 sm:mb-6"
-              >
-                ClaudyGod Music & Ministries
-              </BoldText>
-            </motion.div>
-
-            <motion.div
-              className="w-16 sm:w-20 md:w-24 h-1 rounded-full mx-auto my-4 sm:my-6"
-              style={{
-                background: `linear-gradient(to right, ${colorScheme.accent}, ${colorScheme.highlight})`,
-              }}
-              initial={{ width: 0 }}
-              whileInView={{ width: '6rem' }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-            />
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ delay: 0.3 }}
-            >
-              <LightText
-                style={{
-                  color: colorScheme.white,
-                  fontSize: 'clamp(0.875rem, 2vw, 1.125rem)',
-                }}
-                className="mb-6 sm:mb-8 max-w-2xl mx-auto"
-              >
-                Connect With Us On Various Social Platforms
-              </LightText>
-            </motion.div>
-
-            <motion.nav
-              className="flex justify-center space-x-3 sm:space-x-4 md:space-x-6"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ delay: 0.4, staggerChildren: 0.1 }}
-            >
-              {[
-                {
-                  icon: faFacebookF,
-                  url: 'https://www.facebook.com/yourpage',
-                  label: 'Facebook',
-                },
-                {
-                  icon: faXTwitter,
-                  url: 'https://x.com/yourhandle',
-                  label: 'X (Twitter)',
-                },
-                {
-                  icon: faInstagram,
-                  url: 'https://www.instagram.com/yourprofile',
-                  label: 'Instagram',
-                },
-                {
-                  icon: faYoutube,
-                  url: 'https://www.youtube.com/yourchannel',
-                  label: 'YouTube',
-                },
-              ].map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border"
-                  style={{
-                    backgroundColor: `${colorScheme.white}10`,
-                    backdropFilter: 'blur(10px)',
-                    borderColor: `${colorScheme.white}20`,
-                  }}
-                  aria-label={`Follow us on ${social.label}`}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{ delay: 0.5 + index * 0.1 }}
-                >
-                  <FontAwesomeIcon
-                    icon={social.icon}
-                    className="text-base sm:text-lg md:text-xl"
-                    style={{ color: colorScheme.white }}
-                  />
-                </motion.a>
-              ))}
-            </motion.nav>
-          </div>
-        </div>
-      </footer>
+      <FooterSection colorScheme={colorScheme} />
     </main>
   );
 };
+
+export default memo(ContactData);

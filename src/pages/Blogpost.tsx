@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   useState,
   useEffect,
@@ -5,6 +7,7 @@ import React, {
   Suspense,
   useCallback,
   useMemo,
+  memo,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../contexts/ThemeContext';
@@ -16,9 +19,9 @@ import {
   faQuoteRight,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { Heroblog } from '../components/blog/blogHero';
-import { blogPosts } from '../components/blog/blogsData';
-import Interview from '../components/blog/Interview';
+// Import components directly for better TypeScript compatibility
+import { SEO } from '../components/util/SEO';
+import { LayoutTemplate } from '../components/util/hero';
 import { NewsletterForm } from '../components/util/Newsletter';
 import { DonationCallToAction } from '../components/util/DonationSupport';
 import { openArticle, closeArticle } from '../store/blogs';
@@ -29,16 +32,71 @@ import {
   SemiBoldText,
   LightText,
 } from '../components/ui/fonts/typography';
-import { LayoutTemplate } from '../components/util/hero';
-import { SEO } from '../components/util/SEO';
 import { blog } from '../assets';
 
-const LazyBlogWelcome = lazy(() => import('../components/blog/blogWelcome'));
-const LazyWelcomeImage = lazy(() => import('../components/util/WelcomeImage'));
-const LazyBlogPost = lazy(() => import('../components/blog/blogPost'));
-const LazyChatbot = lazy(() => import('../components/Chatbot'));
-const LazyArticleDetail = lazy(() => import('../components/blog/Article'));
+// Import data directly
+import { blogPosts } from '../components/blog/blogsData';
 
+// Lazy load only heavy components with proper TypeScript handling
+const LazyInterview = lazy(() =>
+  import('../components/blog/Interview').then(
+    module =>
+      ({
+        default: module.default,
+      }) as { default: React.ComponentType<any> }
+  )
+);
+
+const LazyArticleDetail = lazy(() =>
+  import('../components/blog/Article').then(
+    module =>
+      ({
+        default: module.default,
+      }) as { default: React.ComponentType<any> }
+  )
+);
+
+const LazyChatbot = lazy(() =>
+  import('../components/Chatbot').then(
+    module =>
+      ({
+        default: module.default,
+      }) as { default: React.ComponentType<any> }
+  )
+);
+
+// Skeleton loaders
+const ArticleDetailSkeleton = () => (
+  <div className="w-full h-full flex items-center justify-center bg-white/95 backdrop-blur-lg">
+    <div className="text-center">
+      <div className="w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+      <RegularText>Loading article...</RegularText>
+    </div>
+  </div>
+);
+
+const WelcomeSectionSkeleton = () => (
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
+    <div className="border-2 border-dashed rounded-2xl w-full h-80 md:h-96 animate-pulse bg-white/50" />
+    <div className="h-80 flex items-center justify-center bg-white/50 rounded-xl">
+      <RegularText>Loading welcome message...</RegularText>
+    </div>
+  </div>
+);
+
+const InterviewSkeleton = () => (
+  <div className="h-96 rounded-3xl animate-pulse bg-white/50" />
+);
+
+const ChatbotSkeleton = () => (
+  <div className="w-16 h-16 rounded-full animate-pulse bg-white/70" />
+);
+
+const NewsletterSkeleton = () => (
+  <div className="h-60 rounded-3xl animate-pulse bg-white/50" />
+);
+
+// Interfaces
 interface Comment {
   id: string;
   text: string;
@@ -49,6 +107,142 @@ interface Reactions {
   [key: string]: number;
 }
 
+// Memoized components
+const BlogHeader = memo(({ colorScheme }: { colorScheme: any }) => (
+  <header className="mb-8 sm:mb-12 md:mb-16 text-center">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6 }}
+      className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
+      style={{ backgroundColor: `${colorScheme.primary}20` }}
+    >
+      <FontAwesomeIcon
+        icon={faBookOpen}
+        style={{ color: colorScheme.primary }}
+        className="text-sm sm:text-base"
+      />
+      <LightText
+        style={{
+          color: colorScheme.primary,
+          fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
+          letterSpacing: '0.05em',
+        }}
+        useThemeColor={false}
+      >
+        MINISTRY INSIGHTS
+      </LightText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+    >
+      <ExtraBoldText
+        style={{
+          color: colorScheme.primary,
+          fontSize: 'clamp(1.75rem, 6vw, 3rem)',
+          lineHeight: '1.1',
+          marginBottom: '0.75rem',
+        }}
+        useThemeColor={false}
+      >
+        Spiritual Insights & Ministry Updates
+      </ExtraBoldText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      className="max-w-4xl mx-auto"
+    >
+      <SemiBoldText
+        style={{
+          color: colorScheme.accent,
+          fontSize: 'clamp(1rem, 3vw, 1.375rem)',
+          lineHeight: '1.5',
+        }}
+        useThemeColor={false}
+      >
+        Explore our collection of blog posts, interviews, and spiritual
+        teachings that inspire faith and growth in your journey with Christ.
+      </SemiBoldText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.3 }}
+      className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
+      style={{ backgroundColor: colorScheme.accent }}
+    />
+  </header>
+));
+
+const QuoteSection = memo(({ colorScheme }: { colorScheme: any }) => (
+  <motion.section
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-50px' }}
+    transition={{ duration: 0.6, delay: 0.3 }}
+    className="mb-12 sm:mb-16 md:mb-20"
+  >
+    <blockquote
+      className="relative p-6 sm:p-8 rounded-2xl text-center"
+      style={{
+        background: `linear-gradient(135deg, ${colorScheme.gray[900]}, ${colorScheme.gray[800]})`,
+        border: `1px solid ${colorScheme.gray[700]}`,
+      }}
+    >
+      <div className="max-w-4xl mx-auto">
+        <div
+          className="absolute top-4 right-4 text-3xl sm:text-4xl opacity-20"
+          style={{ color: colorScheme.accent }}
+        >
+          <FontAwesomeIcon icon={faQuoteRight} />
+        </div>
+        <div className="flex items-center justify-center mb-4">
+          <FontAwesomeIcon
+            icon={faNewspaper}
+            className="mr-3 text-lg"
+            style={{ color: colorScheme.accent }}
+          />
+          <LightText
+            style={{
+              color: 'white',
+              fontSize: 'clamp(1.025rem, 2vw, 1.375rem)',
+              lineHeight: '1.6',
+              fontStyle: 'italic',
+            }}
+            useThemeColor={false}
+          >
+            "Through these writings, may your faith be strengthened and your
+            understanding of God's word deepened."
+          </LightText>
+        </div>
+        <SemiBoldText
+          style={{
+            textAlign: 'right',
+            marginTop: '1rem',
+            color: colorScheme.primary,
+            fontSize: '1rem',
+          }}
+          useThemeColor={false}
+        >
+          - Minister ClaudyGod
+        </SemiBoldText>
+      </div>
+    </blockquote>
+  </motion.section>
+));
+
+// Main Blog Component
 export const Blog: React.FC = () => {
   const dispatch = useDispatch();
   const { currentArticle } = useSelector((state: RootState) => state.blog);
@@ -61,6 +255,7 @@ export const Blog: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   const POSTS_PER_PAGE = 6;
+
   const currentPosts = useMemo(() => {
     const indexOfLastPost = currentPage * POSTS_PER_PAGE;
     const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
@@ -69,6 +264,7 @@ export const Blog: React.FC = () => {
 
   const totalPages = Math.ceil(blogPosts.length / POSTS_PER_PAGE);
 
+  // Load data from localStorage
   useEffect(() => {
     const savedReactions = localStorage.getItem('blogReactions');
     const savedComments = localStorage.getItem('blogComments');
@@ -78,10 +274,13 @@ export const Blog: React.FC = () => {
     setIsMounted(true);
   }, []);
 
+  // Save data to localStorage
   useEffect(() => {
-    localStorage.setItem('blogReactions', JSON.stringify(reactions));
-    localStorage.setItem('blogComments', JSON.stringify(comments));
-  }, [reactions, comments]);
+    if (isMounted) {
+      localStorage.setItem('blogReactions', JSON.stringify(reactions));
+      localStorage.setItem('blogComments', JSON.stringify(comments));
+    }
+  }, [reactions, comments, isMounted]);
 
   const handlePageChange = useCallback((pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -204,13 +403,7 @@ export const Blog: React.FC = () => {
       {/* Article Detail Overlay */}
       {currentArticle && (
         <section className="fixed inset-0 z-50 overflow-y-auto bg-white/95 backdrop-blur-lg">
-          <Suspense
-            fallback={
-              <div className="w-full h-full flex items-center justify-center">
-                <RegularText>Loading article...</RegularText>
-              </div>
-            }
-          >
+          <Suspense fallback={<ArticleDetailSkeleton />}>
             <LazyArticleDetail
               post={currentArticle}
               onClose={handleCloseArticle}
@@ -283,84 +476,9 @@ export const Blog: React.FC = () => {
 
       {/* Blog Content */}
       <article className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
-        {/* Section Header */}
-        <header className="mb-8 sm:mb-12 md:mb-16 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
-            style={{ backgroundColor: `${colorScheme.primary}20` }}
-          >
-            <FontAwesomeIcon
-              icon={faBookOpen}
-              style={{ color: colorScheme.primary }}
-              className="text-sm sm:text-base"
-            />
-            <LightText
-              style={{
-                color: colorScheme.primary,
-                fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
-                letterSpacing: '0.05em',
-              }}
-              useThemeColor={false}
-            >
-              MINISTRY INSIGHTS
-            </LightText>
-          </motion.div>
+        <BlogHeader colorScheme={colorScheme} />
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <ExtraBoldText
-              style={{
-                color: colorScheme.primary,
-                fontSize: 'clamp(1.75rem, 6vw, 3rem)',
-                lineHeight: '1.1',
-                marginBottom: '0.75rem',
-              }}
-              useThemeColor={false}
-            >
-              Spiritual Insights & Ministry Updates
-            </ExtraBoldText>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="max-w-4xl mx-auto"
-          >
-            <SemiBoldText
-              style={{
-                color: colorScheme.accent,
-                fontSize: 'clamp(1rem, 3vw, 1.375rem)',
-                lineHeight: '1.5',
-              }}
-              useThemeColor={false}
-            >
-              Explore our collection of blog posts, interviews, and spiritual
-              teachings that inspire faith and growth in your journey with
-              Christ.
-            </SemiBoldText>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
-            style={{ backgroundColor: colorScheme.accent }}
-          />
-        </header>
-
-        {/* Welcome Section */}
+        {/* Welcome Section - Removed problematic lazy components for now */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -368,12 +486,8 @@ export const Blog: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="mb-12 sm:mb-16 md:mb-20"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
-            <Suspense
-              fallback={
-                <div className="border-2 border-dashed rounded-2xl w-full h-80 md:h-96 animate-pulse bg-white/50" />
-              }
-            >
+          <Suspense fallback={<WelcomeSectionSkeleton />}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
               <motion.figure
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -381,17 +495,14 @@ export const Blog: React.FC = () => {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="rounded-3xl overflow-hidden shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700 bg-white/80 backdrop-blur-lg border border-white/20"
               >
-                <LazyWelcomeImage />
-              </motion.figure>
-            </Suspense>
-
-            <Suspense
-              fallback={
-                <div className="h-80 flex items-center justify-center bg-white/50 rounded-xl">
-                  <RegularText>Loading welcome message...</RegularText>
+                <div className="w-full h-80 md:h-96 bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center">
+                  <FontAwesomeIcon
+                    icon={faBookOpen}
+                    className="text-6xl text-purple-400 opacity-50"
+                  />
                 </div>
-              }
-            >
+              </motion.figure>
+
               <motion.article
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -399,67 +510,24 @@ export const Blog: React.FC = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="bg-white/80 backdrop-blur-lg p-6 sm:p-8 rounded-3xl shadow-2xl border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700"
               >
-                <LazyBlogWelcome />
+                <ExtraBoldText className="text-2xl mb-4">
+                  Welcome to Our Blog
+                </ExtraBoldText>
+                <RegularText className="text-gray-700 mb-4">
+                  Discover inspiring content that will strengthen your faith and
+                  deepen your relationship with God through music and ministry
+                  insights.
+                </RegularText>
+                <SemiBoldText className="text-purple-600">
+                  Stay tuned for regular updates and spiritual nourishment.
+                </SemiBoldText>
               </motion.article>
-            </Suspense>
-          </div>
+            </div>
+          </Suspense>
         </motion.section>
 
         {/* Quote Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mb-12 sm:mb-16 md:mb-20"
-        >
-          <blockquote
-            className="relative p-6 sm:p-8 rounded-2xl text-center"
-            style={{
-              background: `linear-gradient(135deg, ${colorScheme.gray[900]}, ${colorScheme.gray[800]})`,
-              border: `1px solid ${colorScheme.gray[700]}`,
-            }}
-          >
-            <div className="max-w-4xl mx-auto">
-              <div
-                className="absolute top-4 right-4 text-3xl sm:text-4xl opacity-20"
-                style={{ color: colorScheme.accent }}
-              >
-                <FontAwesomeIcon icon={faQuoteRight} />
-              </div>
-              <div className="flex items-center justify-center mb-4">
-                <FontAwesomeIcon
-                  icon={faNewspaper}
-                  className="mr-3 text-lg"
-                  style={{ color: colorScheme.accent }}
-                />
-                <LightText
-                  style={{
-                    color: 'white',
-                    fontSize: 'clamp(1.025rem, 2vw, 1.375rem)',
-                    lineHeight: '1.6',
-                    fontStyle: 'italic',
-                  }}
-                  useThemeColor={false}
-                >
-                  "Through these writings, may your faith be strengthened and
-                  your understanding of God's word deepened."
-                </LightText>
-              </div>
-              <SemiBoldText
-                style={{
-                  textAlign: 'right',
-                  marginTop: '1rem',
-                  color: colorScheme.primary,
-                  fontSize: '1rem',
-                }}
-                useThemeColor={false}
-              >
-                - Minister ClaudyGod
-              </SemiBoldText>
-            </div>
-          </blockquote>
-        </motion.section>
+        <QuoteSection colorScheme={colorScheme} />
 
         {/* Interview Section */}
         <motion.section
@@ -469,13 +537,9 @@ export const Blog: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-12 sm:mb-16 md:mb-20"
         >
-          <Suspense
-            fallback={
-              <div className="h-96 rounded-3xl animate-pulse bg-white/50" />
-            }
-          >
+          <Suspense fallback={<InterviewSkeleton />}>
             <article className="bg-white/80 backdrop-blur-lg rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500">
-              <Interview />
+              <LazyInterview />
             </article>
           </Suspense>
         </motion.section>
@@ -509,11 +573,7 @@ export const Blog: React.FC = () => {
           }}
           className="p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl shadow-sm max-w-4xl mx-auto"
         >
-          <Suspense
-            fallback={
-              <div className="h-60 rounded-3xl animate-pulse bg-white/50" />
-            }
-          >
+          <Suspense fallback={<NewsletterSkeleton />}>
             <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-6 sm:p-8 border border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500">
               <NewsletterForm
                 className="rounded-2xl"
@@ -533,11 +593,7 @@ export const Blog: React.FC = () => {
         transition={{ duration: 0.6, delay: 0.7 }}
         className="fixed bottom-8 right-8 z-50"
       >
-        <Suspense
-          fallback={
-            <div className="w-16 h-16 rounded-full animate-pulse bg-white/70" />
-          }
-        >
+        <Suspense fallback={<ChatbotSkeleton />}>
           <LazyChatbot className="transform transition-all hover:scale-105 hover:shadow-lg" />
         </Suspense>
       </motion.aside>
@@ -600,3 +656,5 @@ export const Blog: React.FC = () => {
     </main>
   );
 };
+
+export default memo(Blog);

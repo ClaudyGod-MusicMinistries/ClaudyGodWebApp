@@ -4,7 +4,7 @@ import {
   Routes,
   Route,
   useLocation,
-  HashRouter as Router,
+  BrowserRouter as Router,
 } from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout/Mainlayout';
@@ -32,7 +32,7 @@ import ZellePaymentWrapper from './components/store/paymentPlatforms/ZelleWrappe
 import { PaymentPending } from './components/store/status/PaymentPending';
 import OrderSuccess from './components/store/status/OrderSuccess';
 
-// Add these imports
+// Legal components
 import { PrivacyPolicy } from './components/Legal/PrivacyPolicy';
 import { TermsOfService } from './components/Legal/TermsOfService';
 import { CookiePolicy } from './components/Legal/CookiePolicy';
@@ -42,7 +42,8 @@ function AppRoutes() {
 
   return (
     <AnimatePresence mode="wait">
-      <Routes location={location} key={location.key}>
+      <Routes location={location} key={location.pathname}>
+        {/* Layout wrapper for main pages */}
         <Route path="/" element={<Layout />}>
           {/* Main pages */}
           <Route index element={<Home />} />
@@ -53,26 +54,28 @@ function AppRoutes() {
           <Route path="contact" element={<ContactData />} />
           <Route path="donate" element={<DonateData />} />
           <Route path="store" element={<StoreData />} />
-          <Route path="checkout" element={<Checkout />} />
           <Route path="blogs" element={<Blog />} />
           <Route path="ministry" element={<MinistryData />} />
           <Route path="news" element={<News />} />
           <Route path="cart" element={<CartPage />} />
           <Route path="donation-complete" element={<DonationComplete />} />
           <Route path="stream" element={<StreamingPlatforms />} />
-          <Route path="/tour/:city" element={<CityHighlightsLayout />} />
-          {/* Payment routes */}
-          <Route path="checkout/zelle" element={<ZellePaymentWrapper />} />
-          <Route path="payment-pending" element={<PaymentPending />} />
-          <Route path="order-success/:orderId" element={<OrderSuccess />} />
-          {/* Legal routes */}
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/cookie-policy" element={<CookiePolicy />} />
+          <Route path="tour/:city" element={<CityHighlightsLayout />} />
 
-          {/* Fallback */}
-          <Route path="*" element={<div>404 Not Found</div>} />
+          {/* Legal routes */}
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="terms-of-service" element={<TermsOfService />} />
+          <Route path="cookie-policy" element={<CookiePolicy />} />
         </Route>
+
+        {/* Standalone routes (without Layout) */}
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="checkout/zelle" element={<ZellePaymentWrapper />} />
+        <Route path="payment-pending" element={<PaymentPending />} />
+        <Route path="order-success/:orderId" element={<OrderSuccess />} />
+
+        {/* Fallback */}
+        <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
     </AnimatePresence>
   );

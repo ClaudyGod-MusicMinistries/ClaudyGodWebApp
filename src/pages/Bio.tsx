@@ -1,29 +1,255 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { lazy, Suspense, memo, useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faMicrophoneAlt,
-  faHandsPraying,
-  faQuoteRight,
-} from '@fortawesome/free-solid-svg-icons';
-
-import { SEO } from '../components/util/SEO';
-import { LayoutTemplate } from '../components/util/hero';
-import { About1, About2 } from '../assets';
-import { NewsletterForm } from '../components/util/Newsletter';
-import { BioSection } from '../components/Bio/BioSectio';
+import { About2 } from '../assets';
 import {
   firstSectionTexts,
   secondSectionTexts,
 } from '../components/data/Biography';
-import { DonationCallToAction } from '../components/util/DonationSupport';
 import {
   SemiBoldText,
   LightText,
   ExtraBoldText,
 } from '../components/ui/fonts/typography';
 
+// Import icons directly
+import {
+  faMicrophoneAlt,
+  faHandsPraying,
+  faQuoteRight,
+} from '@fortawesome/free-solid-svg-icons';
+
+// Import motion directly
+import { motion } from 'framer-motion';
+
+// Import FontAwesomeIcon directly (it's lightweight)
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+// Import components directly for better TypeScript compatibility
+import { SEO } from '../components/util/SEO';
+import { LayoutTemplate } from '../components/util/hero';
+import { DonationCallToAction } from '../components/util/DonationSupport';
+import { NewsletterForm } from '../components/util/Newsletter';
+
+// Only lazy load if absolutely necessary - use direct imports for better TypeScript support
+const LazyBioSection = lazy(() =>
+  import('../components/Bio/BioSectio').then(
+    module =>
+      ({
+        default: module.BioSection,
+      }) as { default: React.ComponentType<any> }
+  )
+);
+
+// Skeleton loaders
+
+const ContentSkeleton = () => (
+  <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 lg:py-20">
+    <div className="text-center mb-16">
+      <div className="h-8 bg-gray-300 rounded w-48 mx-auto mb-4"></div>
+      <div className="h-12 bg-gray-300 rounded w-96 mx-auto mb-6"></div>
+      <div className="h-6 bg-gray-300 rounded w-64 mx-auto"></div>
+    </div>
+    <div className="space-y-12">
+      <div className="h-80 bg-gray-200 rounded-xl animate-pulse"></div>
+      <div className="h-40 bg-gray-200 rounded-xl animate-pulse"></div>
+      <div className="h-80 bg-gray-200 rounded-xl animate-pulse"></div>
+    </div>
+  </div>
+);
+
+// Optimized Image Component
+interface OptimizedImageProps {
+  src: string;
+  alt: string;
+  className?: string;
+  placeholder?: string;
+  [key: string]: any;
+}
+
+const OptimizedImage = memo(
+  ({
+    src,
+    alt,
+    className = '',
+    placeholder = '/assets/placeholder-bio.jpg',
+    ...props
+  }: OptimizedImageProps) => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [hasError, setHasError] = useState(false);
+
+    return (
+      <div className={`relative overflow-hidden ${className}`}>
+        {isLoading && (
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse flex items-center justify-center">
+            <div className="w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
+          </div>
+        )}
+        <img
+          src={hasError ? placeholder : src}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          onLoad={() => setIsLoading(false)}
+          onError={() => {
+            setIsLoading(false);
+            setHasError(true);
+          }}
+          className={`w-full h-full object-cover transition-opacity duration-300 ${
+            isLoading ? 'opacity-0' : 'opacity-100'
+          }`}
+          {...props}
+        />
+      </div>
+    );
+  }
+);
+
+// Memoized components to prevent unnecessary re-renders
+interface BiographyHeaderProps {
+  colorScheme: any;
+}
+
+const BiographyHeader = memo(({ colorScheme }: BiographyHeaderProps) => (
+  <header className="mb-8 sm:mb-12 md:mb-16 text-center">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6 }}
+      className="inline-flex items-center gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
+      style={{ backgroundColor: `${colorScheme.primary}20` }}
+    >
+      <FontAwesomeIcon
+        icon={faMicrophoneAlt}
+        style={{ color: colorScheme.primary }}
+        className="text-sm sm:text-base"
+      />
+      <LightText
+        style={{
+          color: colorScheme.primary,
+          fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
+          letterSpacing: '0.05em',
+        }}
+        useThemeColor={false}
+      >
+        ARTIST BIOGRAPHY
+      </LightText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+    >
+      <ExtraBoldText
+        style={{
+          color: colorScheme.primary,
+          fontSize: 'clamp(1.75rem, 6vw, 3rem)',
+          lineHeight: '1.1',
+          marginBottom: '0.75rem',
+        }}
+        useThemeColor={false}
+      >
+        The Journey of Faith & Music
+      </ExtraBoldText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      className="max-w-4xl mx-auto"
+    >
+      <SemiBoldText
+        style={{
+          color: colorScheme.accent,
+          fontSize: 'clamp(1rem, 3vw, 1.375rem)',
+          lineHeight: '1.5',
+        }}
+        useThemeColor={false}
+      >
+        ClaudyGod: American Contemporary Christian music and Afro-Gospel Artist
+      </SemiBoldText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.3 }}
+      className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
+      style={{ backgroundColor: colorScheme.accent }}
+    />
+  </header>
+));
+
+interface QuoteSectionProps {
+  colorScheme: any;
+}
+
+const QuoteSection = memo(({ colorScheme }: QuoteSectionProps) => (
+  <motion.section
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-50px' }}
+    transition={{ duration: 0.6, delay: 0.2 }}
+    className="mb-12 md:mb-16 lg:mb-20"
+  >
+    <blockquote
+      className="relative p-6 sm:p-8 rounded-2xl"
+      style={{
+        background: `linear-gradient(135deg, ${colorScheme.gray[900]}, ${colorScheme.gray[800]})`,
+        border: `1px solid ${colorScheme.gray[700]}`,
+      }}
+    >
+      <div
+        className="absolute top-4 right-4 text-2xl sm:text-3xl opacity-90"
+        style={{ color: colorScheme.accent }}
+      >
+        <FontAwesomeIcon icon={faQuoteRight} />
+      </div>
+
+      <div className="max-w-4xl mx-auto">
+        <div className="flex items-start">
+          <FontAwesomeIcon
+            icon={faHandsPraying}
+            className="mt-1 mr-4 text-lg"
+            style={{ color: colorScheme.accent }}
+          />
+          <LightText
+            style={{
+              color: 'white',
+              fontSize: 'clamp(1.125rem, 2.5vw, 1.375rem)',
+              lineHeight: '1.6',
+              fontStyle: 'italic',
+            }}
+            useThemeColor={false}
+          >
+            I heard God say to me, 'I love your worship.' That moment defined my
+            calling and ministry.
+          </LightText>
+        </div>
+        <SemiBoldText
+          style={{
+            textAlign: 'right',
+            marginTop: '1rem',
+            color: colorScheme.primary,
+            fontSize: '1rem',
+          }}
+          useThemeColor={false}
+        >
+          - ClaudyGod
+        </SemiBoldText>
+      </div>
+    </blockquote>
+  </motion.section>
+));
+
+// Main Biography Component
 export const Biography: React.FC = () => {
   const { colorScheme } = useTheme();
 
@@ -34,6 +260,7 @@ export const Biography: React.FC = () => {
         backgroundColor: colorScheme.text,
       }}
     >
+      {/* SEO Component */}
       <SEO
         title="ClaudyGod Biography - American Gospel Artist & Ministry Leader"
         description="Discover ClaudyGod's journey from Nigeria to becoming a California-based gospel artist. Learn about her music ministry, albums, and family life."
@@ -131,83 +358,8 @@ export const Biography: React.FC = () => {
 
       {/* Biography Content */}
       <article className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 lg:py-20">
-        {/* Section Header */}
-        <header className="mb-8 sm:mb-12 md:mb-16 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
-            style={{ backgroundColor: `${colorScheme.primary}20` }}
-          >
-            <FontAwesomeIcon
-              icon={faMicrophoneAlt}
-              style={{ color: colorScheme.primary }}
-              className="text-sm sm:text-base"
-            />
-            <LightText
-              style={{
-                color: colorScheme.primary,
-                fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
-                letterSpacing: '0.05em',
-              }}
-              useThemeColor={false}
-            >
-              ARTIST BIOGRAPHY
-            </LightText>
-          </motion.div>
+        <BiographyHeader colorScheme={colorScheme} />
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <ExtraBoldText
-              style={{
-                color: colorScheme.primary,
-                fontSize: 'clamp(1.75rem, 6vw, 3rem)',
-                lineHeight: '1.1',
-                marginBottom: '0.75rem',
-              }}
-              useThemeColor={false}
-            >
-              The Journey of Faith & Music
-            </ExtraBoldText>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="max-w-4xl mx-auto"
-          >
-            <SemiBoldText
-              style={{
-                color: colorScheme.accent,
-                fontSize: 'clamp(1rem, 3vw, 1.375rem)',
-                lineHeight: '1.5',
-              }}
-              useThemeColor={false}
-            >
-              ClaudyGod: American Contemporary Christian music and Afro-Gospel
-              Artist
-            </SemiBoldText>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
-            style={{ backgroundColor: colorScheme.accent }}
-          />
-        </header>
-
-        {/* Biography Sections */}
         <section className="space-y-12 md:space-y-16 lg:space-y-20">
           {/* First Bio Section */}
           <motion.div
@@ -216,71 +368,23 @@ export const Biography: React.FC = () => {
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6 }}
           >
-            <BioSection
-              imageSrc={About2}
-              altText="ClaudyGod portrait"
-              texts={firstSectionTexts}
-              imagePosition="left"
-              imageSize="medium"
-            />
+            <Suspense
+              fallback={
+                <div className="h-96 bg-gray-200 rounded-xl animate-pulse" />
+              }
+            >
+              <LazyBioSection
+                imageSrc={About2}
+                altText="ClaudyGod portrait"
+                texts={firstSectionTexts}
+                imagePosition="left"
+                imageSize="medium"
+              />
+            </Suspense>
           </motion.div>
 
           {/* Quote Section */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-12 md:mb-16 lg:mb-20"
-          >
-            <blockquote
-              className="relative p-6 sm:p-8 rounded-2xl"
-              style={{
-                background: `linear-gradient(135deg, ${colorScheme.gray[900]}, ${colorScheme.gray[800]})`,
-                border: `1px solid ${colorScheme.gray[700]}`,
-              }}
-            >
-              <div
-                className="absolute top-4 right-4 text-2xl sm:text-3xl opacity-90"
-                style={{ color: colorScheme.accent }}
-              >
-                <FontAwesomeIcon icon={faQuoteRight} />
-              </div>
-
-              <div className="max-w-4xl mx-auto">
-                <div className="flex items-start">
-                  <FontAwesomeIcon
-                    icon={faHandsPraying}
-                    className="mt-1 mr-4 text-lg"
-                    style={{ color: colorScheme.accent }}
-                  />
-                  <LightText
-                    style={{
-                      color: 'white',
-                      fontSize: 'clamp(1.125rem, 2.5vw, 1.375rem)',
-                      lineHeight: '1.6',
-                      fontStyle: 'italic',
-                    }}
-                    useThemeColor={false}
-                  >
-                    I heard God say to me, 'I love your worship.' That moment
-                    defined my calling and ministry.
-                  </LightText>
-                </div>
-                <SemiBoldText
-                  style={{
-                    textAlign: 'right',
-                    marginTop: '1rem',
-                    color: colorScheme.primary,
-                    fontSize: '1rem',
-                  }}
-                  useThemeColor={false}
-                >
-                  - ClaudyGod
-                </SemiBoldText>
-              </div>
-            </blockquote>
-          </motion.section>
+          <QuoteSection colorScheme={colorScheme} />
 
           {/* Second Bio Section */}
           <motion.div
@@ -289,13 +393,19 @@ export const Biography: React.FC = () => {
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <BioSection
-              imageSrc={About2}
-              altText="ClaudyGod performing"
-              texts={secondSectionTexts}
-              imagePosition="right"
-              imageSize="medium"
-            />
+            <Suspense
+              fallback={
+                <div className="h-96 bg-gray-200 rounded-xl animate-pulse" />
+              }
+            >
+              <LazyBioSection
+                imageSrc={About2}
+                altText="ClaudyGod performing"
+                texts={secondSectionTexts}
+                imagePosition="right"
+                imageSize="medium"
+              />
+            </Suspense>
           </motion.div>
         </section>
       </article>
@@ -334,3 +444,5 @@ export const Biography: React.FC = () => {
     </main>
   );
 };
+
+export default memo(Biography);

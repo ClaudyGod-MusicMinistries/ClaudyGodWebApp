@@ -60,7 +60,7 @@ import VideoBanner1 from './VideoBackground1.webp';
 import VideoBanner2 from './VideoBanner2.webp';
 import VideoBanner3 from './VideoBanner3.webp';
 import VideoArt from './videoCoverArt.webp';
-import bgVideo from './mainBanner.webm';
+// import bgVideo from './mainBanner.webm';
 
 // Blog / News
 import newsBanner from './bannerMain.jpg';
@@ -133,7 +133,7 @@ export {
   blog,
   stepAside,
   aleluiaWorship,
-  bgVideo,
+  // bgVideo,
   Main,
   Resize_4,
   Resize4,

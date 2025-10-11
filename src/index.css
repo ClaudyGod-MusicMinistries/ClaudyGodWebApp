@@ -160,3 +160,15 @@ body {
   white-space: nowrap;
   border: 0;
 }
+@keyframes rotate {
+  from {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateX(-50%) rotate(360deg);
+  }
+}
+
+.animate-rotate {
+  animation: rotate 3s linear infinite;
+}

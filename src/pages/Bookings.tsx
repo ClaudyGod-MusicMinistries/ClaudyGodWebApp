@@ -1,4 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  lazy,
+  Suspense,
+  memo,
+} from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,6 +45,225 @@ import { DownloadSection } from '../components/util/Download';
 import { SEO } from '../components/util/SEO';
 import { CountryCode } from '@/components/types/booking';
 
+// Lazy load heavier components
+const LazyDownloadSection = lazy(() =>
+  import('../components/util/Download').then(
+    module =>
+      ({
+        default: module.DownloadSection,
+      }) as { default: React.ComponentType<any> }
+  )
+);
+
+// Skeleton loaders
+const DownloadSectionSkeleton = () => (
+  <div className="h-40 bg-gray-200 rounded-xl animate-pulse flex items-center justify-center">
+    <RegularText>Loading download section...</RegularText>
+  </div>
+);
+
+// Memoized components
+const ProcessStep = memo(
+  ({
+    step,
+    icon,
+    title,
+    desc,
+    colorScheme,
+  }: {
+    step: number;
+    icon: any;
+    title: string;
+    desc: string;
+    colorScheme: any;
+  }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: step * 0.1 }}
+      className="p-6 rounded-xl shadow-md border text-center"
+      style={{
+        backgroundColor: colorScheme.surface,
+        borderColor: colorScheme.border,
+      }}
+    >
+      <div
+        className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mx-auto mb-4"
+        style={{ backgroundColor: colorScheme.secondary }}
+      >
+        <FontAwesomeIcon
+          icon={icon}
+          className="text-lg sm:text-xl"
+          style={{ color: colorScheme.white }}
+        />
+      </div>
+      <SemiBoldText as="h3" className="text-base sm:text-lg mb-2">
+        {title}
+      </SemiBoldText>
+      <RegularText
+        style={{ color: colorScheme.textSecondary }}
+        className="text-sm sm:text-base"
+      >
+        {desc}
+      </RegularText>
+    </motion.div>
+  )
+);
+
+const BookingHeader = memo(({ colorScheme }: { colorScheme: any }) => (
+  <header className="mb-8 sm:mb-12 md:mb-16 text-center">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6 }}
+      className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
+      style={{ backgroundColor: `${colorScheme.primary}20` }}
+    >
+      <FontAwesomeIcon
+        icon={faCalendarAlt}
+        style={{ color: colorScheme.primary }}
+        className="text-sm sm:text-base"
+      />
+      <LightText
+        style={{
+          color: colorScheme.primary,
+          fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
+          letterSpacing: '0.05em',
+        }}
+        useThemeColor={false}
+      >
+        EVENT BOOKING
+      </LightText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+    >
+      <ExtraBoldText
+        style={{
+          color: colorScheme.primary,
+          fontSize: 'clamp(1.75rem, 6vw, 3rem)',
+          lineHeight: '1.1',
+          marginBottom: '0.75rem',
+        }}
+        useThemeColor={false}
+      >
+        Booking Request Form
+      </ExtraBoldText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      className="max-w-4xl mx-auto"
+    >
+      <SemiBoldText
+        style={{
+          color: colorScheme.accent,
+          fontSize: 'clamp(1rem, 3vw, 1.375rem)',
+          lineHeight: '1.5',
+        }}
+        useThemeColor={false}
+      >
+        Please fill out all required fields below. Our team will review your
+        request within 48 hours.
+      </SemiBoldText>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.3 }}
+      className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
+      style={{ backgroundColor: colorScheme.accent }}
+    />
+  </header>
+));
+
+const ProcessSection = memo(({ colorScheme }: { colorScheme: any }) => {
+  const processSteps = useMemo(
+    () => [
+      {
+        step: 1,
+        icon: faClock,
+        title: 'Confirmation Email',
+        desc: "You'll receive an immediate confirmation that we've received your request",
+      },
+      {
+        step: 2,
+        icon: faCalendarAlt,
+        title: 'Review Process',
+        desc: 'Our team will review your request within 48 business hours',
+      },
+      {
+        step: 3,
+        icon: faUserCheck,
+        title: 'Personal Contact',
+        desc: 'A team member will contact you to discuss details and availability',
+      },
+    ],
+    []
+  );
+
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: 0.4 }}
+      className="mb-12 sm:mb-16 md:mb-20"
+    >
+      <motion.header
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-8 sm:mb-12"
+      >
+        <ExtraBoldText
+          style={{
+            color: colorScheme.primary,
+            fontSize: 'clamp(1.75rem, 6vw, 3rem)',
+            lineHeight: '1.1',
+            marginBottom: '0.75rem',
+          }}
+          useThemeColor={false}
+        >
+          What to Expect After Submitting
+        </ExtraBoldText>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
+          style={{ backgroundColor: colorScheme.accent }}
+        />
+      </motion.header>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+        {processSteps.map(stepData => (
+          <ProcessStep
+            key={stepData.step}
+            {...stepData}
+            colorScheme={colorScheme}
+          />
+        ))}
+      </div>
+    </motion.section>
+  );
+});
+
+// Main Bookings Component
 export const Bookings: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
@@ -72,66 +299,113 @@ export const Bookings: React.FC = () => {
   const country = watch('address.country');
   const state = watch('address.state');
 
+  // Memoize country and state dependencies
+  const countryMemo = useMemo(() => country, [country]);
+  const stateMemo = useMemo(() => state, [state]);
+
+  // Optimize state updates with useCallback
+  const updateStates = useCallback(
+    (countryValue: string) => {
+      if (
+        countryValue &&
+        COUNTRY_STATE_CITY_DATA[countryValue as CountryCode]
+      ) {
+        const keys = Object.keys(
+          COUNTRY_STATE_CITY_DATA[countryValue as CountryCode].states
+        );
+        setStates(keys);
+        setValue('address.state', '');
+        setValue('address.city', '');
+      } else {
+        setStates([]);
+        setCities([]);
+      }
+    },
+    [setValue]
+  );
+
+  const updateCities = useCallback(
+    (countryValue: string, stateValue: string) => {
+      if (
+        countryValue &&
+        stateValue &&
+        COUNTRY_STATE_CITY_DATA[countryValue as CountryCode]
+      ) {
+        const list =
+          COUNTRY_STATE_CITY_DATA[countryValue as CountryCode].states[
+            stateValue
+          ] || [];
+        setCities(list);
+        setValue('address.city', '');
+      } else {
+        setCities([]);
+      }
+    },
+    [setValue]
+  );
+
+  // Debounced effects for better performance
   useEffect(() => {
-    if (country && COUNTRY_STATE_CITY_DATA[country as CountryCode]) {
-      const keys = Object.keys(
-        COUNTRY_STATE_CITY_DATA[country as CountryCode].states
-      );
-      setStates(keys);
-      setValue('address.state', '');
-      setValue('address.city', '');
-    } else {
-      setStates([]);
-      setCities([]);
-    }
-  }, [country, setValue]);
+    const timeoutId = setTimeout(() => {
+      updateStates(countryMemo);
+    }, 150);
+
+    return () => clearTimeout(timeoutId);
+  }, [countryMemo, updateStates]);
 
   useEffect(() => {
-    if (country && state && COUNTRY_STATE_CITY_DATA[country as CountryCode]) {
-      const list =
-        COUNTRY_STATE_CITY_DATA[country as CountryCode].states[state] || [];
-      setCities(list);
-      setValue('address.city', '');
-    } else {
-      setCities([]);
-    }
-  }, [country, state, setValue]);
+    const timeoutId = setTimeout(() => {
+      updateCities(countryMemo, stateMemo);
+    }, 150);
 
-  const isBlank = (value: unknown) =>
-    typeof value === 'string' ? !value.trim() : value == null;
+    return () => clearTimeout(timeoutId);
+  }, [countryMemo, stateMemo, updateCities]);
 
-  const onSubmit = async (data: any) => {
-    const requiredTop = [
-      'firstName',
-      'lastName',
-      'email',
-      'phone',
-      'eventType',
-    ];
-    const requiredAddr = ['country', 'state', 'city', 'address1'];
+  const isBlank = useCallback(
+    (value: unknown) =>
+      typeof value === 'string' ? !value.trim() : value == null,
+    []
+  );
 
-    const missing = [
-      ...requiredTop.filter(k => isBlank(data[k])),
-      ...requiredAddr.filter(k => isBlank(data.address[k])),
-    ];
+  const onSubmit = useCallback(
+    async (data: any) => {
+      const requiredTop = [
+        'firstName',
+        'lastName',
+        'email',
+        'phone',
+        'eventType',
+      ];
+      const requiredAddr = ['country', 'state', 'city', 'address1'];
 
-    if (missing.length) {
-      toast.error('Please fill in all required fields.');
-      return;
-    }
+      const missing = [
+        ...requiredTop.filter(k => isBlank(data[k])),
+        ...requiredAddr.filter(k => isBlank(data.address[k])),
+      ];
 
-    try {
-      setLoading(true);
-      await submitBooking(data);
-      toast.success(`'Booking submitted! We'll be in touch shortly.'`);
-      reset();
-      setShowThankYouModal(true);
-    } catch (error: any) {
-      toast.error(error?.message || 'Failed to submit booking');
-    } finally {
-      setLoading(false);
-    }
-  };
+      if (missing.length) {
+        toast.error('Please fill in all required fields.');
+        return;
+      }
+
+      try {
+        setLoading(true);
+        await submitBooking(data);
+        toast.success("Booking submitted! We'll be in touch shortly.");
+        reset();
+        setShowThankYouModal(true);
+      } catch (error: any) {
+        toast.error(error?.message || 'Failed to submit booking');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [isBlank, reset]
+  );
+
+  const handleCloseModal = useCallback(() => {
+    setShowThankYouModal(false);
+  }, []);
 
   return (
     <main
@@ -163,7 +437,7 @@ export const Bookings: React.FC = () => {
 
       <Modal
         isOpen={showThankYouModal}
-        onClose={() => setShowThankYouModal(false)}
+        onClose={handleCloseModal}
         title="Thank You!"
       >
         <RegularText className="mb-4">
@@ -171,11 +445,7 @@ export const Bookings: React.FC = () => {
           touch shortly.
         </RegularText>
         <div className="flex justify-end">
-          <CustomButton
-            onClick={() => setShowThankYouModal(false)}
-            variant="primary"
-            size="md"
-          >
+          <CustomButton onClick={handleCloseModal} variant="primary" size="md">
             Close
           </CustomButton>
         </div>
@@ -246,81 +516,7 @@ export const Bookings: React.FC = () => {
 
       {/* Booking Content */}
       <article className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
-        {/* Section Header */}
-        <header className="mb-8 sm:mb-12 md:mb-16 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full bg-opacity-10 mb-4 sm:mb-6"
-            style={{ backgroundColor: `${colorScheme.primary}20` }}
-          >
-            <FontAwesomeIcon
-              icon={faCalendarAlt}
-              style={{ color: colorScheme.primary }}
-              className="text-sm sm:text-base"
-            />
-            <LightText
-              style={{
-                color: colorScheme.primary,
-                fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
-                letterSpacing: '0.05em',
-              }}
-              useThemeColor={false}
-            >
-              EVENT BOOKING
-            </LightText>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <ExtraBoldText
-              style={{
-                color: colorScheme.primary,
-                fontSize: 'clamp(1.75rem, 6vw, 3rem)',
-                lineHeight: '1.1',
-                marginBottom: '0.75rem',
-              }}
-              useThemeColor={false}
-            >
-              Booking Request Form
-            </ExtraBoldText>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="max-w-4xl mx-auto"
-          >
-            <SemiBoldText
-              style={{
-                color: colorScheme.accent,
-                fontSize: 'clamp(1rem, 3vw, 1.375rem)',
-                lineHeight: '1.5',
-              }}
-              useThemeColor={false}
-            >
-              Please fill out all required fields below. Our team will review
-              your request within 48 hours.
-            </SemiBoldText>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
-            style={{ backgroundColor: colorScheme.accent }}
-          />
-        </header>
+        <BookingHeader colorScheme={colorScheme} />
 
         {/* Booking Form */}
         <motion.section
@@ -448,98 +644,7 @@ export const Bookings: React.FC = () => {
         </motion.section>
 
         {/* Process Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mb-12 sm:mb-16 md:mb-20"
-        >
-          <motion.header
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-8 sm:mb-12"
-          >
-            <ExtraBoldText
-              style={{
-                color: colorScheme.primary,
-                fontSize: 'clamp(1.75rem, 6vw, 3rem)',
-                lineHeight: '1.1',
-                marginBottom: '0.75rem',
-              }}
-              useThemeColor={false}
-            >
-              What to Expect After Submitting
-            </ExtraBoldText>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="w-16 sm:w-20 md:w-24 h-1 mx-auto mt-4 sm:mt-6 rounded-full"
-              style={{ backgroundColor: colorScheme.accent }}
-            />
-          </motion.header>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            {[
-              {
-                step: 1, // Changed from '1' to 1 (number instead of string)
-                icon: faClock,
-                title: 'Confirmation Email',
-                desc: "You'll receive an immediate confirmation that we've received your request",
-              },
-              {
-                step: 2, // Changed from '2' to 2 (number instead of string)
-                icon: faCalendarAlt,
-                title: 'Review Process',
-                desc: 'Our team will review your request within 48 business hours',
-              },
-              {
-                step: 3, // Changed from '3' to 3 (number instead of string)
-                icon: faUserCheck,
-                title: 'Personal Contact',
-                desc: 'A team member will contact you to discuss details and availability',
-              },
-            ].map(({ step, icon, title, desc }) => (
-              <motion.div
-                key={step}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.6, delay: step * 0.1 }}
-                className="p-6 rounded-xl shadow-md border text-center"
-                style={{
-                  backgroundColor: colorScheme.surface,
-                  borderColor: colorScheme.border,
-                }}
-              >
-                <div
-                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mx-auto mb-4"
-                  style={{ backgroundColor: colorScheme.secondary }}
-                >
-                  <FontAwesomeIcon
-                    icon={icon}
-                    className="text-lg sm:text-xl"
-                    style={{ color: colorScheme.white }}
-                  />
-                </div>
-                <SemiBoldText as="h3" className="text-base sm:text-lg mb-2">
-                  {title}
-                </SemiBoldText>
-                <RegularText
-                  style={{ color: colorScheme.textSecondary }}
-                  className="text-sm sm:text-base"
-                >
-                  {desc}
-                </RegularText>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
+        <ProcessSection colorScheme={colorScheme} />
 
         {/* Download Section */}
         <motion.section
@@ -549,7 +654,9 @@ export const Bookings: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-12 sm:mb-16 md:mb-20"
         >
-          <DownloadSection />
+          <Suspense fallback={<DownloadSectionSkeleton />}>
+            <LazyDownloadSection />
+          </Suspense>
         </motion.section>
 
         {/* Newsletter Section */}
@@ -570,3 +677,5 @@ export const Bookings: React.FC = () => {
     </main>
   );
 };
+
+export default memo(Bookings);
