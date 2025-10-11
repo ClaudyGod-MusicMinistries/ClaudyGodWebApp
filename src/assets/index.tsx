@@ -1,35 +1,30 @@
 /* eslint-disable react-refresh/only-export-components */
+
+// Logos
 import Log from './ClaudyGoLogo.webp';
+
+// Backgrounds
 import Back1 from './Bg_1.webp';
 import Back2 from './bg_2.jpg';
 import Back3 from './Bg_13.webp';
 import Back4 from './Bg_4.webp';
+import DesktopBg from './desktopBg.jpg';
+import Main from './manBack.jpg';
+import backUp from './abt_bck.webp';
+import bgresize from './bgResize.webp';
+
+// About Section
 import About1 from './aboutUs.webp';
 import About2 from './abt_2.webp';
-import Cover from './CoverArt.webp';
-import Shop1 from './Product1.webp';
-import Shop2 from './Product2.webp';
-import Shop3 from './Product3.webp';
-import Shop4 from './Product4.webp';
-import VideoBanner1 from './VideoBackground1.webp';
-import VideoBanner2 from './VideoBanner2.webp';
-import VideoBanner3 from './VideoBanner3.webp';
-import StoreBanner from './StoreBanner.webp';
-import Donate1 from './Donate1.jpg';
-import Donate2 from './Donate2.jpg';
-import Main from './manBack.jpg';
-import DesktopBg from './desktopBg.jpg';
-import landing_1 from './landing1.jpg';
-import landing_2 from './Landing2.jpg';
-import landing_3 from './landing3.jpg';
-import landing_4 from './landing4.jpg';
-import Isr from './Israel.webp';
 import Resize1 from './resize_abt.webp';
 import Resize2 from './resize_bg1.webp';
 import Resize3 from './resize_bg3.webp';
 import Resize4 from './resize_abt2.webp';
 import Resize_4 from './resize_bg4.webp';
 import Resize5 from './resize_bg2.webp';
+
+// Music Section
+import Cover from './CoverArt.webp';
 import AudioMack from './audioLogo.webp';
 import musicCover1 from './musicCoverArt1.webp';
 import musicCover2 from './musicCoverArt2.webp';
@@ -48,83 +43,111 @@ import music6 from './music4.webp';
 import music7 from './music5.webp';
 import music8 from './stepAside.webp';
 import music9 from './music9.webp';
-import newsBanner from './bannerMain.jpg';
 
-import backUp from './abt_bck.webp';
-import bgresize from './bgResize.webp';
+// Shop / Store
+import Shop1 from './Product1.webp';
+import Shop2 from './Product2.webp';
+import Shop3 from './Product3.webp';
+import Shop4 from './Product4.webp';
+import StoreBanner from './StoreBanner.webp';
 
+// Donation
+import Donate1 from './Donate1.jpg';
+import Donate2 from './Donate2.jpg';
+
+// Video / Media
+import VideoBanner1 from './VideoBackground1.webp';
+import VideoBanner2 from './VideoBanner2.webp';
+import VideoBanner3 from './VideoBanner3.webp';
 import VideoArt from './videoCoverArt.webp';
-import newsBan from './bannerMain.jpg';
+import bgVideo from './mainBanner.webm';
+
+// Blog / News
+import newsBanner from './bannerMain.jpg';
 import newbanner from './newsBanner.webp';
 import blog from './blogBanner.webp';
+
+// Landing / Intro
+import landing_1 from './landing1.jpg';
+import landing_2 from './landing2.jpg';
+import landing_3 from './landing3.jpg';
+import landing_4 from './landing4.jpg';
+
+// Tour
 import Tour1 from './tour_1.jpg';
 import Tour2 from './tour_2.jpg';
 import Tour3 from './tour_3.jpg';
-import veryGlorious from './veryGlorious.jpg';
-
-// tour
 import Aba1 from './aba1.jpg';
 import Aba2 from './aba2.jpg';
 import owerri1 from './news_imsu.jpg';
 import ph from './news_ph.jpg';
+import veryGlorious from './veryGlorious.jpg';
 
-// downloadBtn
+// Misc
+import Isr from './Israel.webp';
 import apple from './app_store.png';
 import google from './play_store.png';
-
-// video
-import bgVideo from '/mainBanner.webm';
 import mummy from './mummy.jpg';
 
+// Tour-Ph-Pictures
+import ph1 from './Tour_Ph_1.webp';
+import ph2 from './Tour_Ph_2.webp';
+import ph3 from './Tour_Ph_3.webp';
+import ph4 from './Tour_ph_4.webp';
+import ph5 from './Tour_Ph_5.webp';
+import ph6 from './Tour_ph_6.webp';
+import ph7 from './Tour_Ph_7.webp';
+import ph8 from './Tour_Ph_8.webp';
+import ph9 from './Tour_Ph_9.webp';
+import ph10 from './Tour_Ph_10.webp';
+import ph11 from './Tour_Ph_11.webp';
+import ph12 from './Tour_Ph_12.webp';
+import ph13 from './Tour_Ph_13.webp';
+import ph14 from './Tour_Ph_14.webp';
+import ph15 from './Tour_Ph_15.webp';
+
+// ✅ Clean, consistent export block
 export {
   Log,
   Back1,
-  Isr,
   Back2,
   Back3,
   Back4,
   About1,
-  blog,
-  owerri1,
-  ph,
-  Tour1,
   About2,
   Cover,
   Shop1,
   Shop2,
   Shop3,
+  Shop4,
   Donate1,
   Donate2,
   veryGlorious,
   DesktopBg,
-  Shop4,
-  bgresize,
   VideoBanner1,
   VideoBanner2,
-  newsBanner,
-  musicCover6,
-  newbanner,
   VideoBanner3,
   StoreBanner,
-  newsBan,
-  musicCover2,
-  musicCover3,
-  musicCover4,
+  newsBanner,
+  newbanner,
+  blog,
   stepAside,
   aleluiaWorship,
   bgVideo,
   Main,
-  musicCover5,
   Resize_4,
   Resize4,
   Resize5,
   Resize1,
   Resize2,
-  AudioMack,
-  Aba1,
-  Aba2,
-  musicCover1,
   Resize3,
+  AudioMack,
+  musicCover1,
+  musicCover2,
+  musicCover3,
+  musicCover4,
+  musicCover5,
+  musicCover6,
   music1,
   music2,
   music3,
@@ -135,14 +158,36 @@ export {
   music8,
   music9,
   backUp,
+  bgresize,
   VideoArt,
   apple,
   google,
+  Tour1,
   Tour2,
   Tour3,
   landing_1,
   landing_2,
   landing_3,
   landing_4,
+  Aba1,
+  Aba2,
+  owerri1,
+  ph,
+  Isr,
   mummy,
+  ph1,
+  ph2,
+  ph3,
+  ph4,
+  ph5,
+  ph6,
+  ph7,
+  ph8,
+  ph9,
+  ph10,
+  ph11,
+  ph12,
+  ph13,
+  ph14,
+  ph15,
 };
