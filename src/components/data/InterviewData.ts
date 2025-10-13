@@ -1,5 +1,9 @@
 // Define type for video objects
 export interface VideoItem {
+  [x: string]: ReactNode;
+  [x: string]: any;
+  category: string;
+  category: string;
   id: string;
   title: string;
   description: string;

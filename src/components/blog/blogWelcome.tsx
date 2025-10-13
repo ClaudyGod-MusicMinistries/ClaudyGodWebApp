@@ -10,12 +10,24 @@ const BlogWelcome: React.FC = () => {
   const { colorScheme } = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    // Re-enable body scroll when modal is closed
+    document.body.style.overflow = 'unset';
+  };
+
   return (
     <div className="space-y-6">
       <RegularText
         fontSize="clamp(1.5rem, 3vw, 2.75rem)"
         lineHeight="1.1"
-        className="tracking-tight text-center md:text-left"
+        className="tracking-tight text-left"
         color={colorScheme.background}
       >
         Welcome to{' '}
@@ -23,9 +35,9 @@ const BlogWelcome: React.FC = () => {
       </RegularText>
 
       <LightText
-        fontSize="1rem"
+        fontSize="clamp(0.875rem, 1.5vw, 1rem)"
         lineHeight="1.75"
-        className="text-center md:text-left"
+        className="text-left leading-relaxed"
         color={colorScheme.background}
       >
         This is a vibrant and uplifting community where we come together in
@@ -58,7 +70,7 @@ const BlogWelcome: React.FC = () => {
             </div>
             <RegularText
               fontSize="0.875rem"
-              className="ml-3"
+              className="ml-3 text-left"
               color={colorScheme.primary}
             >
               {item}
@@ -67,22 +79,22 @@ const BlogWelcome: React.FC = () => {
         ))}
       </div>
 
-      <div className="flex justify-center md:justify-start">
+      <div className="flex justify-start">
         <CustomButton
           variant="primary"
-          className="mt-6 px-6 py-3 transform hover:-translate-y-1 transition duration-300"
+          className="mt-6 px-8 py-4 transform hover:-translate-y-1 transition duration-300 hover:shadow-lg"
           style={{
-            fontSize: '1.125rem',
+            fontSize: 'clamp(1rem, 1.5vw, 1.125rem)',
             lineHeight: '1.75rem',
           }}
-          onClick={() => setIsModalOpen(true)}
+          onClick={handleOpenModal}
         >
           <SemiBoldText>Be Part of Our Community</SemiBoldText>
         </CustomButton>
       </div>
 
-      {/* Modal */}
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {/* Modal - This should be a full-screen modal */}
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 };
