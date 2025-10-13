@@ -1,5 +1,5 @@
 // components/news/AlbumsSection.tsx
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSpotify,
@@ -7,10 +7,16 @@ import {
   faApple,
   faDeezer,
 } from '@fortawesome/free-brands-svg-icons';
+import {
+  faChevronLeft,
+  faChevronRight,
+  faPlay,
+} from '@fortawesome/free-solid-svg-icons';
 import { ExtraBoldText, RegularText } from '../ui/fonts/typography';
 import CustomButton from '../ui/fonts/buttons/CustomButton';
 import { useTheme } from '../../contexts/ThemeContext';
 import { albums } from '../data/newsData';
+import { useState, useEffect } from 'react';
 
 interface AlbumsSectionProps {
   openVideoModal: (url: string, album: string) => void;
@@ -18,10 +24,46 @@ interface AlbumsSectionProps {
 
 export const AlbumsSection = ({ openVideoModal }: AlbumsSectionProps) => {
   const { colorScheme } = useTheme();
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentSlide(prev => (prev + 1) % albums.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide(prev => (prev - 1 + albums.length) % albums.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
+  // Auto-advance slides on mobile with better timing
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 8000); // Increased to 8 seconds for better readability
+
+    return () => clearInterval(interval);
+  }, [isMobile, currentSlide]);
 
   return (
     <section
-      className="w-full py-8 lg:py-12 px-4 sm:px-6 lg:px-8"
+      className="w-full py-6 lg:py-10 px-4 sm:px-6 lg:px-8"
       style={{ color: colorScheme.text }}
     >
       <div className="w-full">
@@ -30,24 +72,25 @@ export const AlbumsSection = ({ openVideoModal }: AlbumsSectionProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col items-center text-center mb-8 lg:mb-12"
+          className="flex flex-col items-center text-center mb-6 lg:mb-10"
         >
           <ExtraBoldText
-            fontSize="2rem"
-            lgFontSize="3rem"
+            fontSize="1.75rem"
+            lgFontSize="2.5rem"
             style={{ color: colorScheme.primary }}
           >
             Latest Albums
           </ExtraBoldText>
           <motion.div
             initial={{ width: 0 }}
-            animate={{ width: '5rem' }}
+            animate={{ width: '4rem' }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="h-1 my-4 lg:my-6"
+            className="h-1 my-3 lg:my-5"
             style={{ backgroundColor: colorScheme.secondary }}
           />
           <RegularText
-            fontSize="1rem"
+            fontSize="0.9rem"
+            lgFontSize="1rem"
             style={{ color: colorScheme.background }}
             className="max-w-3xl"
           >
@@ -56,8 +99,8 @@ export const AlbumsSection = ({ openVideoModal }: AlbumsSectionProps) => {
           </RegularText>
         </motion.div>
 
-        {/* Albums Grid */}
-        <div className="flex flex-col md:flex-row flex-wrap justify-center gap-4 lg:gap-6 w-full mb-12 lg:mb-16">
+        {/* Desktop Grid View */}
+        <div className="hidden md:flex flex-col md:flex-row flex-wrap justify-center gap-4 lg:gap-6 w-full mb-10 lg:mb-14">
           {albums.map((album, index) => (
             <motion.div
               key={album.title}
@@ -92,8 +135,8 @@ export const AlbumsSection = ({ openVideoModal }: AlbumsSectionProps) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-center">
                   <CustomButton
                     variant="icon"
-                    size="lg"
-                    mdSize="xl"
+                    size="sm"
+                    mdSize="md"
                     onClick={() =>
                       openVideoModal(album.links.youtube, album.title)
                     }
@@ -104,110 +147,293 @@ export const AlbumsSection = ({ openVideoModal }: AlbumsSectionProps) => {
                       backdropFilter: 'blur(8px)',
                     }}
                   >
-                    <svg
-                      className="w-6 h-6 lg:w-8 lg:h-8"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
+                    <FontAwesomeIcon
+                      icon={faPlay}
                       style={{ color: colorScheme.text }}
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                      className="w-4 h-4 lg:w-5 lg:h-5"
+                    />
                   </CustomButton>
                 </div>
               </div>
 
               {/* Platform Buttons */}
-              <div className="grid grid-cols-2 gap-3 md:gap-4 mt-auto">
-                {/* Spotify */}
+              <div className="grid grid-cols-2 gap-2 md:gap-3 mt-auto">
                 <CustomButton
                   href={album.links.spotify}
                   target="_blank"
                   rel="noopener noreferrer"
                   variant="secondary"
-                  size="sm"
-                  mdSize="lg"
-                  className="px-4 py-2 text-xs md:text-base w-full"
+                  size="xs"
+                  mdSize="sm"
+                  className="px-2 py-1.5 text-xs w-full"
                   style={{ backgroundColor: '#1DB954' }}
                   aria-label={`Listen to ${album.title} on Spotify`}
                 >
-                  <div className="flex items-center gap-3 md:gap-4 w-full">
-                    <FontAwesomeIcon
-                      icon={faSpotify}
-                      className="text-sm md:text-lg"
-                    />
-                    <span className="text-left">Spotify</span>
+                  <div className="flex items-center gap-2 w-full justify-center">
+                    <FontAwesomeIcon icon={faSpotify} className="text-xs" />
+                    <span className="text-left truncate">Spotify</span>
                   </div>
                 </CustomButton>
 
-                {/* YouTube */}
                 <CustomButton
                   onClick={() =>
                     openVideoModal(album.links.youtube, album.title)
                   }
                   variant="secondary"
-                  size="sm"
-                  mdSize="lg"
-                  className="px-4 py-2 text-xs md:text-base w-full"
+                  size="xs"
+                  mdSize="sm"
+                  className="px-2 py-1.5 text-xs w-full"
                   style={{ backgroundColor: '#FF0000' }}
                   aria-label={`Watch ${album.title} on YouTube`}
                 >
-                  <div className="flex items-center gap-3 md:gap-4 w-full">
-                    <FontAwesomeIcon
-                      icon={faYoutube}
-                      className="text-sm md:text-lg"
-                    />
-                    <span className="text-left">YouTube</span>
+                  <div className="flex items-center gap-2 w-full justify-center">
+                    <FontAwesomeIcon icon={faYoutube} className="text-xs" />
+                    <span className="text-left truncate">YouTube</span>
                   </div>
                 </CustomButton>
 
-                {/* Apple Music */}
                 <CustomButton
                   href={album.links.apple}
                   target="_blank"
                   rel="noopener noreferrer"
                   variant="secondary"
-                  size="sm"
-                  mdSize="lg"
-                  className="px-4 py-2 text-xs md:text-base w-full"
+                  size="xs"
+                  mdSize="sm"
+                  className="px-2 py-1.5 text-xs w-full"
                   style={{ backgroundColor: '#000000' }}
                   aria-label={`Listen to ${album.title} on Apple Music`}
                 >
-                  <div className="flex items-center gap-3 md:gap-4 w-full">
-                    <FontAwesomeIcon
-                      icon={faApple}
-                      className="text-sm md:text-lg"
-                    />
-                    <span className="text-left">Apple</span>
+                  <div className="flex items-center gap-2 w-full justify-center">
+                    <FontAwesomeIcon icon={faApple} className="text-xs" />
+                    <span className="text-left truncate">Apple</span>
                   </div>
                 </CustomButton>
 
-                {/* Deezer */}
                 <CustomButton
                   href={album.links.deezer}
                   target="_blank"
                   rel="noopener noreferrer"
                   variant="secondary"
-                  size="sm"
-                  mdSize="lg"
-                  className="px-4 py-2 text-xs md:text-base w-full"
+                  size="xs"
+                  mdSize="sm"
+                  className="px-2 py-1.5 text-xs w-full"
                   style={{ backgroundColor: '#FEAA2D' }}
                   aria-label={`Listen to ${album.title} on Deezer`}
                 >
-                  <div className="flex items-center gap-3 md:gap-4 w-full">
-                    <FontAwesomeIcon
-                      icon={faDeezer}
-                      className="text-sm md:text-lg"
-                    />
-                    <span className="text-left">Deezer</span>
+                  <div className="flex items-center gap-2 w-full justify-center">
+                    <FontAwesomeIcon icon={faDeezer} className="text-xs" />
+                    <span className="text-left truncate">Deezer</span>
                   </div>
                 </CustomButton>
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* Mobile Slider View */}
+        <div className="md:hidden w-full">
+          <div className="relative overflow-hidden rounded-2xl">
+            {/* Slider Container */}
+            <div className="relative h-full">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -100 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex flex-col rounded-2xl p-4 shadow-xl w-full relative"
+                  style={{
+                    backgroundColor: colorScheme.surface,
+                  }}
+                >
+                  {/* Navigation Arrows - Positioned inside the card container */}
+                  {/* <CustomButton
+                    onClick={prevSlide}
+                    variant="icon"
+                    size="sm"
+                    className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 shadow-lg"
+                    style={{
+                      backgroundColor: `${colorScheme.primary}80`,
+                      backdropFilter: 'blur(8px)',
+                    }}
+                    aria-label="Previous album"
+                  >
+                    <FontAwesomeIcon 
+                      icon={faChevronLeft} 
+                      style={{ color: colorScheme.text }}
+                      className="text-sm" 
+                    />
+                  </CustomButton>
+
+                  <CustomButton
+                    onClick={nextSlide}
+                    variant="icon"
+                    size="sm"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 shadow-lg"
+                    style={{
+                      backgroundColor: `${colorScheme.primary}80`,
+                      backdropFilter: 'blur(8px)',
+                    }}
+                    aria-label="Next album"
+                  >
+                    <FontAwesomeIcon 
+                      icon={faChevronRight} 
+                      style={{ color: colorScheme.text }}
+                      className="text-sm" 
+                    />
+                  </CustomButton> */}
+
+                  {/* Album Title */}
+                  <ExtraBoldText
+                    fontSize="1rem"
+                    style={{ color: colorScheme.text }}
+                    className="mb-3 text-center"
+                  >
+                    Album: {albums[currentSlide].title}
+                  </ExtraBoldText>
+
+                  {/* Album Cover */}
+                  <div className="relative aspect-video rounded-xl overflow-hidden mb-3 flex-shrink-0">
+                    <img
+                      src={albums[currentSlide].image}
+                      alt={`Album cover for ${albums[currentSlide].title}`}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-center">
+                      <CustomButton
+                        variant="icon"
+                        size="sm"
+                        onClick={() =>
+                          openVideoModal(
+                            albums[currentSlide].links.youtube,
+                            albums[currentSlide].title
+                          )
+                        }
+                        className="hover:scale-105 transition-transform"
+                        aria-label={`Play ${albums[currentSlide].title}`}
+                        style={{
+                          backgroundColor: `${colorScheme.primary}30`,
+                          backdropFilter: 'blur(8px)',
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          icon={faPlay}
+                          style={{ color: colorScheme.text }}
+                          className="w-4 h-4"
+                        />
+                      </CustomButton>
+                    </div>
+                  </div>
+
+                  {/* Platform Buttons */}
+                  <div className="grid grid-cols-2 gap-2 mt-auto">
+                    <CustomButton
+                      href={albums[currentSlide].links.spotify}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="secondary"
+                      size="xs"
+                      mdSize="sm"
+                      className="px-2 py-1.5 text-xs w-full"
+                      style={{ backgroundColor: '#1DB954' }}
+                      aria-label={`Listen to ${albums[currentSlide].title} on Spotify`}
+                    >
+                      <div className="flex items-center gap-2 w-full justify-center">
+                        <FontAwesomeIcon icon={faSpotify} className="text-xs" />
+                        <span className="text-left truncate">Spotify</span>
+                      </div>
+                    </CustomButton>
+
+                    <CustomButton
+                      onClick={() =>
+                        openVideoModal(
+                          albums[currentSlide].links.youtube,
+                          albums[currentSlide].title
+                        )
+                      }
+                      variant="secondary"
+                      size="xs"
+                      mdSize="sm"
+                      className="px-2 py-1.5 text-xs w-full"
+                      style={{ backgroundColor: '#FF0000' }}
+                      aria-label={`Watch ${albums[currentSlide].title} on YouTube`}
+                    >
+                      <div className="flex items-center gap-2 w-full justify-center">
+                        <FontAwesomeIcon icon={faYoutube} className="text-xs" />
+                        <span className="text-left truncate">YouTube</span>
+                      </div>
+                    </CustomButton>
+
+                    <CustomButton
+                      href={albums[currentSlide].links.apple}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="secondary"
+                      size="xs"
+                      mdSize="sm"
+                      className="px-2 py-1.5 text-xs w-full"
+                      style={{ backgroundColor: '#000000' }}
+                      aria-label={`Listen to ${albums[currentSlide].title} on Apple Music`}
+                    >
+                      <div className="flex items-center gap-2 w-full justify-center">
+                        <FontAwesomeIcon icon={faApple} className="text-xs" />
+                        <span className="text-left truncate">Apple</span>
+                      </div>
+                    </CustomButton>
+
+                    <CustomButton
+                      href={albums[currentSlide].links.deezer}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="secondary"
+                      size="xs"
+                      mdSize="sm"
+                      className="px-2 py-1.5 text-xs w-full"
+                      style={{ backgroundColor: '#FEAA2D' }}
+                      aria-label={`Listen to ${albums[currentSlide].title} on Deezer`}
+                    >
+                      <div className="flex items-center gap-2 w-full justify-center">
+                        <FontAwesomeIcon icon={faDeezer} className="text-xs" />
+                        <span className="text-left truncate">Deezer</span>
+                      </div>
+                    </CustomButton>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Slide Indicators */}
+            <div className="flex justify-center mt-4 space-x-2">
+              {albums.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === currentSlide ? 'scale-125' : ''
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                  style={{
+                    backgroundColor:
+                      index === currentSlide
+                        ? colorScheme.primary
+                        : `${colorScheme.primary}30`,
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Slide Counter */}
+            <div className="text-center mt-2">
+              <RegularText
+                fontSize="0.75rem"
+                style={{ color: colorScheme.background }}
+              >
+                {currentSlide + 1} / {albums.length}
+              </RegularText>
+            </div>
+          </div>
         </div>
       </div>
     </section>

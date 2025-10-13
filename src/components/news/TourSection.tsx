@@ -92,7 +92,7 @@ export const TourSection = ({}: { onCitySelect: (city: string) => void }) => {
               size="md"
               mdSize="lg"
               className="mx-auto w-fit px-6"
-              ariaLabel="Read more about the tour"
+              aria-label="Read more about the tour"
             >
               <div className="flex items-center justify-between gap-3 w-full">
                 {/* Left side: Text */}

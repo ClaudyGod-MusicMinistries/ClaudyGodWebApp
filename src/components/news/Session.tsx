@@ -134,7 +134,7 @@ export const LiveSessionsSection: React.FC<LiveSessionsSectionProps> = ({
           </div>
           <div
             className="p-4 rounded-b-xl"
-            style={{ backgroundColor: colorScheme.cardBackground }}
+            style={{ backgroundColor: colorScheme.background }}
           >
             <h3
               className="font-semibold text-lg mb-2"
@@ -197,7 +197,10 @@ export const LiveSessionsSection: React.FC<LiveSessionsSectionProps> = ({
                     : 'opacity-70 hover:opacity-100'
                 } rounded-lg overflow-hidden`}
                 style={{
-                  ringColor: colorScheme.primary,
+                  border:
+                    selectedVideo.id === video.id
+                      ? `4px solid ${colorScheme.primary}`
+                      : 'none',
                 }}
                 onClick={() => {
                   setSelectedVideo(video);
@@ -220,7 +223,7 @@ export const LiveSessionsSection: React.FC<LiveSessionsSectionProps> = ({
                 </div>
                 <div
                   className="p-3 rounded-b-lg"
-                  style={{ backgroundColor: colorScheme.cardBackground }}
+                  style={{ backgroundColor: colorScheme.background }}
                 >
                   <h3
                     className="font-semibold text-sm mb-1 line-clamp-1"
