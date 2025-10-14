@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   useState,
@@ -24,27 +23,9 @@ import { useNavigate } from 'react-router-dom';
 import { Tour1 } from '../assets/';
 
 // Lazy loaded components
-const LazyHeroSlider = lazy(() =>
-  import('../components/news/Slider').then(module => ({
-    default: module.HeroSlider,
-  }))
-);
-
 const LazyArtistQuote = lazy(() =>
   import('../components/news/ArtistQuote').then(module => ({
     default: module.ArtistQuote,
-  }))
-);
-
-const LazyTourSection = lazy(() =>
-  import('../components/news/TourSection').then(module => ({
-    default: module.TourSection,
-  }))
-);
-
-const LazyVolunteerForm = lazy(() =>
-  import('../components/news/VolunteerForm').then(module => ({
-    default: module.VolunteerForm,
   }))
 );
 
@@ -85,7 +66,6 @@ import {
   SemiBoldText,
   LightText,
   AbrilFatFaceText,
-  ShadowsText,
 } from '../components/ui/fonts/typography';
 import CustomButton from '../components/ui/fonts/buttons/CustomButton';
 import { useTheme } from '../contexts/ThemeContext';
@@ -93,23 +73,14 @@ import { LayoutTemplate } from '../components/util/hero';
 
 // Import video data
 import { videos, VideoType } from '../components/data/videosData';
-// import { videos, VideoType } from '../data/videosData';
 
 // Skeleton loaders
-const HeroSliderSkeleton = () => (
-  <div className="h-32 bg-gray-200 animate-pulse rounded-lg mb-4" />
-);
-
 const ArtistQuoteSkeleton = () => (
   <div className="h-24 bg-gray-200 animate-pulse rounded-lg mb-4" />
 );
 
 const AlbumsSectionSkeleton = () => (
   <div className="h-48 bg-gray-200 animate-pulse rounded-lg mb-4" />
-);
-
-const TourSectionSkeleton = () => (
-  <div className="h-32 bg-gray-200 animate-pulse rounded-lg mb-4" />
 );
 
 const NewsletterSkeleton = () => (
@@ -132,7 +103,6 @@ const LiveSessionsSection: React.FC<{
 }) => {
   const { colorScheme } = useTheme();
 
-  // Filter only Live Sessions videos
   const liveSessionVideos = videos.filter(
     video => video.category === 'Live Sessions'
   );
@@ -141,6 +111,7 @@ const LiveSessionsSection: React.FC<{
     liveSessionVideos[0]
   );
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
@@ -170,7 +141,6 @@ const LiveSessionsSection: React.FC<{
       container.addEventListener('scroll', checkScrollPosition);
       window.addEventListener('resize', checkScrollPosition);
       checkScrollPosition();
-
       return () => {
         container.removeEventListener('scroll', checkScrollPosition);
         window.removeEventListener('resize', checkScrollPosition);
@@ -178,7 +148,6 @@ const LiveSessionsSection: React.FC<{
     }
   }, []);
 
-  // Generate YouTube thumbnail URL
   const getThumbnailUrl = (
     youtubeId: string,
     quality: 'default' | 'hq' | 'mq' | 'sd' | 'maxres' = 'hq'
@@ -193,9 +162,19 @@ const LiveSessionsSection: React.FC<{
     return `https://img.youtube.com/vi/${youtubeId}/${qualities[quality]}`;
   };
 
+  const handleVideoSelect = (video: VideoType) => {
+    setIsLoading(true);
+    setSelectedVideo(video);
+    setIsPlaying(true);
+  };
+
+  const handleIframeLoad = () => {
+    setIsLoading(false);
+  };
+
   return (
     <section
-      className={`w-full py-6 lg:py-10 ${className}`}
+      className={`w-full py-8 lg:py-12 ${className}`}
       style={{ backgroundColor: colorScheme.background }}
     >
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
@@ -203,64 +182,68 @@ const LiveSessionsSection: React.FC<{
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col items-center text-center mb-6 lg:mb-8"
+          className="flex flex-col items-center text-center mb-8 lg:mb-12"
         >
           <ExtraBoldText
-            fontSize="1.5rem"
-            smFontSize="1.75rem"
-            lgFontSize="2rem"
+            fontSize="1.75rem"
+            lgFontSize="2.25rem"
             style={{ color: colorScheme.text }}
-            className="mb-3"
+            className="mb-4"
           >
             {title}
           </ExtraBoldText>
           <motion.div
             initial={{ width: 0 }}
-            animate={{ width: '3rem' }}
+            animate={{ width: '4rem' }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="h-1 my-3 lg:my-4"
+            className="h-1 my-4 lg:my-6"
             style={{ backgroundColor: colorScheme.primary }}
           />
           <RegularText
-            fontSize="0.8rem"
-            smFontSize="0.875rem"
-            lgFontSize="0.9rem"
+            fontSize="1rem"
             style={{ color: colorScheme.textSecondary }}
-            className="max-w-3xl mb-4 lg:mb-6 px-2"
+            className="max-w-3xl mb-6 lg:mb-8"
           >
             {description}
           </RegularText>
         </motion.div>
 
         {/* Main YouTube Video Player */}
-        <div className="mb-6 lg:mb-8 rounded-xl overflow-hidden shadow-lg">
+        <div className="mb-8 lg:mb-12 rounded-xl overflow-hidden shadow-lg">
           <div className="relative aspect-video bg-black">
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+              </div>
+            )}
             <iframe
-              src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=${isPlaying ? 1 : 0}`}
+              src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=${isPlaying ? 1 : 0}&rel=0&modestbranding=1`}
               title={selectedVideo.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="w-full h-full"
               frameBorder="0"
+              onLoad={handleIframeLoad}
+              loading="eager"
             />
           </div>
           <div
-            className="p-3 sm:p-4 rounded-b-xl"
+            className="p-4 sm:p-6 rounded-b-xl"
             style={{ backgroundColor: colorScheme.background }}
           >
             <h3
-              className="font-semibold text-base sm:text-lg mb-1 sm:mb-2"
+              className="font-semibold text-lg mb-2"
               style={{ color: colorScheme.text }}
             >
               {selectedVideo.title}
             </h3>
             <p
-              className="text-xs sm:text-sm mb-1 sm:mb-2"
+              className="text-sm mb-2"
               style={{ color: colorScheme.textSecondary }}
             >
               {selectedVideo.description}
             </p>
-            <div className="text-xs opacity-75">
+            <div className="text-sm opacity-75">
               <span style={{ color: colorScheme.textSecondary }}>
                 {selectedVideo.date}
               </span>
@@ -297,7 +280,7 @@ const LiveSessionsSection: React.FC<{
 
           <div
             ref={scrollContainerRef}
-            className="flex overflow-x-auto scrollbar-hide gap-3 pb-3 -mx-4 px-4"
+            className="flex overflow-x-auto scrollbar-hide gap-4 pb-4 -mx-4 px-4"
             onScroll={checkScrollPosition}
           >
             {liveSessionVideos.map((video, index) => (
@@ -306,7 +289,7 @@ const LiveSessionsSection: React.FC<{
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                className={`flex-shrink-0 w-56 sm:w-64 md:w-72 cursor-pointer transition-all duration-300 ${
+                className={`flex-shrink-0 w-64 sm:w-72 md:w-80 cursor-pointer transition-all duration-300 ${
                   selectedVideo.id === video.id
                     ? 'ring-2 scale-[1.02]'
                     : 'opacity-80 hover:opacity-100'
@@ -317,13 +300,9 @@ const LiveSessionsSection: React.FC<{
                       ? `2px solid ${colorScheme.primary}`
                       : 'none',
                 }}
-                onClick={() => {
-                  setSelectedVideo(video);
-                  setIsPlaying(true);
-                }}
+                onClick={() => handleVideoSelect(video)}
               >
                 <div className="relative aspect-video bg-gray-700 rounded-t-lg overflow-hidden">
-                  {/* YouTube Thumbnail */}
                   <img
                     src={getThumbnailUrl(video.youtubeId, 'hq')}
                     alt={video.title}
@@ -331,26 +310,26 @@ const LiveSessionsSection: React.FC<{
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center bg-white/20 backdrop-blur-sm">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white/20 backdrop-blur-sm">
                       <FontAwesomeIcon
                         icon={faPlay}
-                        className="text-white text-xs ml-0.5"
+                        className="text-white text-sm ml-0.5"
                       />
                     </div>
                   </div>
                 </div>
                 <div
-                  className="p-2 sm:p-3 rounded-b-lg"
+                  className="p-4 rounded-b-lg"
                   style={{ backgroundColor: colorScheme.background }}
                 >
                   <h3
-                    className="font-semibold text-xs sm:text-sm mb-1 line-clamp-1"
+                    className="font-semibold text-sm mb-2 line-clamp-1"
                     style={{ color: colorScheme.text }}
                   >
                     {video.title}
                   </h3>
                   <p
-                    className="text-xs mb-1 sm:mb-2 line-clamp-2"
+                    className="text-xs mb-2 line-clamp-2"
                     style={{ color: colorScheme.textSecondary }}
                   >
                     {video.description}
@@ -372,24 +351,24 @@ const LiveSessionsSection: React.FC<{
 
 // Memoized components
 const NewsHeader = memo(({ colorScheme }: { colorScheme: any }) => (
-  <header className="mb-4 sm:mb-6 text-center">
+  <header className="mb-8 sm:mb-12 text-center">
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6 }}
-      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-opacity-10 mb-1"
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-opacity-10 mb-4"
       style={{ backgroundColor: `${colorScheme.primary}20` }}
     >
       <FontAwesomeIcon
         icon={faNewspaper}
         style={{ color: colorScheme.primary }}
-        className="text-xs"
+        className="text-sm"
       />
       <LightText
         style={{
           color: colorScheme.primary,
-          fontSize: '0.65rem',
+          fontSize: '0.75rem',
           letterSpacing: '0.05em',
         }}
         useThemeColor={false}
@@ -404,31 +383,17 @@ const NewsHeader = memo(({ colorScheme }: { colorScheme: any }) => (
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6, delay: 0.1 }}
     >
-      <div className="flex flex-col items-center">
-        <AbrilFatFaceText
-          style={{
-            color: colorScheme.primary,
-            fontSize: 'clamp(1.1rem, 3vw, 1.5rem)',
-            lineHeight: '1.1',
-            marginBottom: '0.125rem',
-            letterSpacing: '0.02em',
-          }}
-          useThemeColor={false}
-        >
-          Ministry News
-        </AbrilFatFaceText>
-        <ShadowsText
-          style={{
-            color: colorScheme.accent,
-            fontSize: 'clamp(1.1rem, 3vw, 1.5rem)',
-            lineHeight: '1',
-            letterSpacing: '0.02em',
-          }}
-          useThemeColor={false}
-        >
-          & Events
-        </ShadowsText>
-      </div>
+      <AbrilFatFaceText
+        style={{
+          color: colorScheme.text,
+          fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
+          lineHeight: '1.1',
+          marginBottom: '0.5rem',
+        }}
+        useThemeColor={false}
+      >
+        Ministry News & Events
+      </AbrilFatFaceText>
     </motion.div>
 
     <motion.div
@@ -436,14 +401,20 @@ const NewsHeader = memo(({ colorScheme }: { colorScheme: any }) => (
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6, delay: 0.2 }}
-      className="max-w-2xl mx-auto mt-1"
+      className="max-w-2xl mx-auto mt-4"
     >
+      <SemiBoldText
+        fontSize="1.5rem"
+        lgFontSize="1.75rem"
+        style={{ color: colorScheme.primary }}
+      >
+        Transformative Worship Experiences
+      </SemiBoldText>
       <RegularText
         style={{
-          color: colorScheme.accent,
-          fontSize: 'clamp(0.7rem, 1.2vw, 0.8rem)',
-          lineHeight: '1.4',
-          letterSpacing: '0.01em',
+          color: colorScheme.background,
+          fontSize: 'clamp(0.875rem, 2vw, 1.125rem)',
+          lineHeight: '1.6',
         }}
         useThemeColor={false}
       >
@@ -457,8 +428,8 @@ const NewsHeader = memo(({ colorScheme }: { colorScheme: any }) => (
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6, delay: 0.3 }}
-      className="w-8 h-0.5 mx-auto mt-1 rounded-full"
-      style={{ backgroundColor: colorScheme.accent }}
+      className="w-16 h-1 mx-auto mt-6 rounded-full"
+      style={{ backgroundColor: colorScheme.primary }}
     />
   </header>
 ));
@@ -471,20 +442,21 @@ const MusicTourIntro = memo(
     colorScheme: any;
     onShowHighlights: () => void;
   }) => (
-    <section className="mb-6 sm:mb-8">
+    <section className="mb-12 sm:mb-16">
       <motion.article
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-50px' }}
         transition={{ duration: 0.6 }}
-        className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 items-center"
+        className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
       >
+        {/* Image Section */}
         <motion.figure
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6 }}
-          className="relative rounded-lg overflow-hidden aspect-video lg:aspect-square order-2 lg:order-1"
+          className="relative rounded-xl overflow-hidden aspect-video lg:aspect-square order-2 lg:order-1"
         >
           <img
             src={Tour1}
@@ -492,97 +464,116 @@ const MusicTourIntro = memo(
             className="w-full h-full object-cover"
             loading="eager"
           />
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `linear-gradient(to top, ${colorScheme.background} 0%, transparent 30%)`,
-            }}
-          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+
+          <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">
+            <div className="text-center lg:text-left">
+              <div
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-3 w-fit mx-auto lg:mx-0"
+                style={{ backgroundColor: `${colorScheme.primary}20` }}
+              >
+                <FontAwesomeIcon
+                  icon={faMusic}
+                  style={{ color: colorScheme.primary }}
+                  className="text-sm"
+                />
+                <LightText
+                  style={{ color: colorScheme.primary, fontSize: '0.75rem' }}
+                  useThemeColor={false}
+                >
+                  MUSIC TOUR 2024
+                </LightText>
+              </div>
+
+              <SemiBoldText fontSize="1.25rem" className="mb-2 text-white">
+                Experience Worship Beyond Walls
+              </SemiBoldText>
+
+              <RegularText
+                style={{ color: '#ffffff' }}
+                className="text-sm leading-relaxed opacity-90"
+              >
+                Join us for transformative worship experiences
+              </RegularText>
+            </div>
+          </div>
         </motion.figure>
 
+        {/* Content Section */}
         <motion.section
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="order-1 lg:order-2 flex flex-col"
+          className="order-1 lg:order-2 flex flex-col space-y-6"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full mb-1 w-fit"
-            style={{ backgroundColor: `${colorScheme.primary}10` }}
-          >
-            <FontAwesomeIcon
-              icon={faMusic}
-              style={{ color: colorScheme.primary }}
-              className="text-xs"
-            />
-            <LightText
-              style={{
-                color: colorScheme.primary,
-                fontSize: '0.65rem',
-              }}
-              useThemeColor={false}
+          <div className="space-y-4">
+            <RegularText
+              style={{ color: colorScheme.subtleText }}
+              className="text-base leading-relaxed"
             >
-              MUSIC TOUR
-            </LightText>
-          </motion.div>
+              My mission is to create spaces where people can encounter God's
+              presence through authentic worship. This isn't just about
+              music—it's about creating moments of divine connection that
+              transform lives and communities.
+            </RegularText>
 
-          <SemiBoldText
-            fontSize="clamp(0.9rem, 2vw, 1.1rem)"
-            className="mb-1"
-            style={{ color: colorScheme.text }}
-          >
-            What to Expect - Music Tour
-          </SemiBoldText>
+            <RegularText
+              style={{ color: colorScheme.subtleText }}
+              className="text-base leading-relaxed"
+            >
+              Through powerful worship sessions, intimate acoustic moments, and
+              community outreach, we're taking the gospel beyond traditional
+              church walls to reach hearts that hunger for spiritual truth.
+            </RegularText>
+          </div>
 
-          <RegularText
-            style={{ color: colorScheme.text }}
-            className="mb-1 text-xs leading-relaxed"
-          >
-            "My mission is to create spaces where people can encounter God
-            through worship..."
-          </RegularText>
+          <div className="flex flex-wrap gap-3">
+            {['Live Worship', 'Community Outreach', 'Spiritual Mentorship'].map(
+              feature => (
+                <div
+                  key={feature}
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg"
+                  style={{ backgroundColor: `${colorScheme.background}10` }}
+                >
+                  <div
+                    className="w-2 h-2 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: colorScheme.primary }}
+                  />
+                  <LightText
+                    style={{ color: colorScheme.background }}
+                    className="text-sm"
+                    useThemeColor={false}
+                  >
+                    {feature}
+                  </LightText>
+                </div>
+              )
+            )}
+          </div>
 
-          <RegularText
-            style={{ color: colorScheme.background }}
-            className="mb-2 text-xs leading-relaxed"
-          >
-            Join me on this journey as we take worship beyond church walls and
-            into communities that hunger for spiritual connection.
-          </RegularText>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex"
-          >
+          <div className="flex justify-center lg:justify-start pt-4">
             <CustomButton
               style={{
                 backgroundColor: colorScheme.primary,
                 color: colorScheme.onPrimary,
-                display: 'flex',
-                alignItems: 'center',
-                padding: '0.3rem 0.6rem',
-                fontSize: '0.7rem',
               }}
               aria-label="View tour highlights"
               onClick={onShowHighlights}
-              className="hover:scale-105 transition-transform duration-200"
+              className="px-6 py-3 text-base font-semibold hover:scale-105 transition-transform duration-200 shadow-lg"
             >
-              <span>Tour Highlights</span>
-              <FontAwesomeIcon
-                icon={faArrowRight}
-                style={{ marginLeft: '0.3rem', fontSize: '0.65rem' }}
-                aria-hidden="true"
-              />
+              <div className="flex items-center gap-3">
+                <LightText
+                  style={{ color: colorScheme.onPrimary }}
+                  useThemeColor={false}
+                  className="whitespace-nowrap"
+                >
+                  Explore Tour Highlights
+                </LightText>
+                <FontAwesomeIcon icon={faArrowRight} className="text-current" />
+              </div>
             </CustomButton>
-          </motion.div>
+          </div>
         </motion.section>
       </motion.article>
     </section>
@@ -594,12 +585,12 @@ const HighlightsModal = memo(
     isOpen,
     onClose,
     colorScheme,
-    navigate,
+    onSelectState,
   }: {
     isOpen: boolean;
     onClose: () => void;
     colorScheme: any;
-    navigate: (path: string) => void;
+    onSelectState: (state: string) => void;
   }) => (
     <AnimatePresence>
       {isOpen && (
@@ -607,7 +598,7 @@ const HighlightsModal = memo(
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-3"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
           style={{
             backgroundColor: `${colorScheme.surface}90`,
             backdropFilter: 'blur(8px)',
@@ -618,7 +609,7 @@ const HighlightsModal = memo(
             initial={{ scale: 0.9, y: 20 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, y: 20 }}
-            className="rounded-lg w-full max-w-xs sm:max-w-sm relative flex flex-col p-3"
+            className="rounded-xl w-full max-w-sm sm:max-w-md relative flex flex-col p-6"
             style={{
               backgroundColor: colorScheme.surface,
               border: `1px solid ${colorScheme.primary}`,
@@ -627,59 +618,54 @@ const HighlightsModal = memo(
             }}
             onClick={e => e.stopPropagation()}
           >
-            <div className="absolute top-1 right-1">
+            <div className="absolute top-3 right-3">
               <CustomButton
                 onClick={onClose}
                 variant="icon"
-                size="xs"
-                className="hover:bg-gray-100 transition-colors p-1"
+                size="sm"
+                className="hover:bg-gray-100 transition-colors"
               >
-                <FontAwesomeIcon icon={faTimes} className="text-xs" />
+                <FontAwesomeIcon icon={faTimes} />
               </CustomButton>
             </div>
 
-            <header className="text-center mb-3 pr-5">
+            <header className="text-center mb-6 pr-8">
               <SemiBoldText
-                fontSize="0.9rem"
+                fontSize="1.125rem"
                 style={{ color: colorScheme.primary }}
-                className="mb-1"
+                className="mb-2"
               >
-                Catch up on ClaudyGod Music Tour Highlight in Nigeria
+                Music Tour Highlights in Nigeria
               </SemiBoldText>
               <RegularText
                 style={{ color: colorScheme.textSecondary }}
-                className="text-xs"
+                className="text-sm"
               >
-                Select the tour city
+                Select a state to explore
               </RegularText>
             </header>
 
-            <section className="grid grid-cols-2 sm:grid-cols-3 gap-1 mt-2">
-              {['Lagos', 'Abuja', 'Imo', 'Port Harcourt', 'Aba'].map(city => (
+            <section className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {['Lagos', 'Abuja', 'Imo', 'Port Harcourt', 'Aba'].map(state => (
                 <motion.div
-                  key={city}
+                  key={state}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="cursor-pointer rounded-md p-2 text-center font-medium flex items-center justify-center transition-all duration-200 hover:shadow-sm"
+                  className="cursor-pointer rounded-lg p-4 text-center font-medium flex items-center justify-center transition-all duration-200 hover:shadow-md"
                   style={{
                     backgroundColor: colorScheme.surfaceVariant,
                     color: colorScheme.text,
                     border: `1px solid ${colorScheme.primary}`,
-                    minHeight: '45px',
+                    minHeight: '60px',
                   }}
-                  onClick={() => {
-                    navigate(
-                      `/tour/${city.toLowerCase().replace(/\s+/g, '-')}`
-                    );
-                    onClose();
-                  }}
+                  onClick={() => onSelectState(state)}
                 >
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-2">
                     <FontAwesomeIcon
                       icon={faMapMarkerAlt}
-                      className="text-xs"
+                      className="text-sm"
                     />
-                    <span className="text-xs">{city}</span>
+                    <span className="text-sm">{state}</span>
                   </div>
                 </motion.div>
               ))}
@@ -693,7 +679,7 @@ const HighlightsModal = memo(
 
 const NewsletterSection = memo(({ colorScheme }: { colorScheme: any }) => (
   <section
-    className="py-3 sm:py-4"
+    className="py-8 sm:py-12"
     style={{
       background: `linear-gradient(135deg, ${colorScheme.gray[50]}, ${colorScheme.gray[100]})`,
     }}
@@ -707,7 +693,7 @@ const NewsletterSection = memo(({ colorScheme }: { colorScheme: any }) => (
 ));
 
 const DonationSection = memo(() => (
-  <section className="my-3 sm:my-4">
+  <section className="my-8 sm:my-12">
     <Suspense fallback={<DonationSkeleton />}>
       <LazyDonationCallToAction
         title="Partner with Our Ministry"
@@ -723,62 +709,38 @@ const DonationSection = memo(() => (
 // Main News Component
 export const News = memo(() => {
   const { colorScheme } = useTheme();
-  const [showTourModal, setShowTourModal] = useState(false);
-  const [selectedTourCity, setSelectedTourCity] = useState<string | null>(null);
-  const [showVideoModal, setShowVideoModal] = useState(false);
-  const [currentVideoUrl, setCurrentVideoUrl] = useState('');
-  const [currentAlbum, setCurrentAlbum] = useState('');
-  const [isMobile, setIsMobile] = useState(false);
-  const [showHighlightsModal, setShowHighlightsModal] = useState(false);
   const navigate = useNavigate();
 
-  // Enhanced responsive handling
-  useEffect(() => {
-    const checkIsMobile = () => {
-      const width = window.innerWidth;
-      setIsMobile(width < 768);
-    };
-
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    return () => window.removeEventListener('resize', checkIsMobile);
-  }, []);
-
-  const openVideoModal = useCallback((url: string, album: string) => {
-    setCurrentVideoUrl(url);
-    setCurrentAlbum(album);
-    setShowVideoModal(true);
-  }, []);
-
-  const closeVideoModal = useCallback(() => {
-    setShowVideoModal(false);
-    setCurrentVideoUrl('');
-    setCurrentAlbum('');
-  }, []);
+  // Simple local state for modal
+  const [isHighlightsModalOpen, setIsHighlightsModalOpen] = useState(false);
 
   const handleShowHighlights = useCallback(() => {
-    setShowHighlightsModal(true);
+    setIsHighlightsModalOpen(true);
   }, []);
 
   const handleCloseHighlights = useCallback(() => {
-    setShowHighlightsModal(false);
+    setIsHighlightsModalOpen(false);
   }, []);
+
+  const handleSelectState = useCallback(
+    (state: string) => {
+      setIsHighlightsModalOpen(false);
+      // Navigate directly to the tour page for the selected state
+      navigate(`/tour/${state.toLowerCase().replace(/\s+/g, '-')}`);
+    },
+    [navigate]
+  );
 
   const seoStructuredData = useMemo(
     () => ({
       '@context': 'https://schema.org',
       '@type': 'NewsArticle',
-      headline: 'ClaudyGod News & Updates',
-      description: 'Latest news and updates from ClaudyGod Ministries',
+      headline: 'ClaudyGod News & Updates - Music Tours & Ministry Events',
+      description:
+        'Stay updated with the latest news from ClaudyGod Ministries. Music tours, worship events, album releases, and ministry updates.',
       datePublished: new Date().toISOString(),
-      author: {
-        '@type': 'Person',
-        name: 'ClaudyGod',
-      },
-      publisher: {
-        '@type': 'Organization',
-        name: 'ClaudyGod Ministries',
-      },
+      author: { '@type': 'Person', name: 'ClaudyGod' },
+      publisher: { '@type': 'Organization', name: 'ClaudyGod Ministries' },
     }),
     []
   );
@@ -796,12 +758,12 @@ export const News = memo(() => {
         />
       </Suspense>
 
-      {/* ===== Hero Section ===== */}
+      {/* Hero Section */}
       <LayoutTemplate
         backgroundImage={Tour1}
         overlayColor="rgba(0,0,0,0.55)"
         backgroundPosition="center center"
-        className="h-[35vh] sm:h-[40vh] md:h-[50vh] min-h-[300px]"
+        className="h-[50vh] sm:h-[60vh] md:h-[70vh] min-h-[400px]"
         title={''}
       >
         <motion.div
@@ -814,16 +776,15 @@ export const News = memo(() => {
             initial={{ y: -20 }}
             animate={{ y: 0 }}
             transition={{ delay: 0.2, duration: 0.7 }}
-            className="mb-1 sm:mb-2"
+            className="mb-4"
           >
             <AbrilFatFaceText
               style={{
                 color: '#ffffff',
-                fontSize: 'clamp(1.3rem, 4vw, 2rem)',
+                fontSize: 'clamp(2rem, 6vw, 3.5rem)',
                 lineHeight: '1.1',
                 textShadow: '0 4px 12px rgba(0,0,0,0.8)',
-                marginBottom: '0.25rem',
-                letterSpacing: '0.02em',
+                marginBottom: '1rem',
               }}
               useThemeColor={false}
             >
@@ -835,7 +796,7 @@ export const News = memo(() => {
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="w-12 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 mb-1 sm:mb-2 mx-auto"
+            className="w-20 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-4 mx-auto"
           />
 
           <motion.div
@@ -847,42 +808,21 @@ export const News = memo(() => {
             <RegularText
               style={{
                 color: '#ffffff',
-                fontSize: 'clamp(0.7rem, 2vw, 0.9rem)',
+                fontSize: 'clamp(1rem, 3vw, 1.25rem)',
                 textShadow: '0 2px 8px rgba(0,0,0,0.7)',
-                lineHeight: '1.4',
-                letterSpacing: '0.01em',
+                lineHeight: '1.6',
               }}
               useThemeColor={false}
             >
               Stay updated with the latest from ClaudyGod Ministries
             </RegularText>
           </motion.div>
-
-          {/* Scroll Indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
-            className="absolute bottom-2 left-1/2 transform -translate-x-1/2"
-          >
-            <motion.div
-              animate={{ y: [0, 4, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-3 h-4 border-2 border-white rounded-full flex justify-center"
-            >
-              <motion.div
-                animate={{ y: [0, 6, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="w-0.5 h-1 bg-white rounded-full mt-1"
-              />
-            </motion.div>
-          </motion.div>
         </motion.div>
       </LayoutTemplate>
 
-      {/* ===== Main Content ===== */}
+      {/* Main Content */}
       <main className="flex-grow flex flex-col w-full">
-        <article className="max-w-7xl mx-auto w-full px-3 sm:px-4 py-3 sm:py-4 md:py-6">
+        <article className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
           <NewsHeader colorScheme={colorScheme} />
 
           <MusicTourIntro
@@ -891,19 +831,19 @@ export const News = memo(() => {
           />
 
           {/* Albums Section */}
-          <section className="mb-6 sm:mb-8">
+          <section className="mb-12 sm:mb-16">
             <Suspense fallback={<AlbumsSectionSkeleton />}>
-              <LazyAlbumsSection openVideoModal={openVideoModal} />
+              <LazyAlbumsSection openVideoModal={() => {}} />
             </Suspense>
           </section>
 
           {/* Live Sessions Section */}
-          <section className="mb-6 sm:mb-8">
+          <section className="mb-12 sm:mb-16">
             <LiveSessionsSection />
           </section>
 
           {/* Other Content Sections */}
-          <section className="space-y-6 sm:space-y-8">
+          <section className="space-y-12 sm:space-y-16">
             <Suspense fallback={<div>Loading Follow Us...</div>}>
               <LazyFollowUs />
             </Suspense>
@@ -915,14 +855,14 @@ export const News = memo(() => {
         </article>
 
         <HighlightsModal
-          isOpen={showHighlightsModal}
+          isOpen={isHighlightsModalOpen}
           onClose={handleCloseHighlights}
           colorScheme={colorScheme}
-          navigate={navigate}
+          onSelectState={handleSelectState}
         />
       </main>
 
-      {/* ===== Footer ===== */}
+      {/* Footer */}
       <footer className="flex-shrink-0 w-full flex flex-col">
         <DonationSection />
         <NewsletterSection colorScheme={colorScheme} />

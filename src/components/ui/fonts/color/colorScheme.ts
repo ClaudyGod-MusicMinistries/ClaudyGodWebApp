@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/components/ui/fonts/colors.ts
 
 // Base color interfaces
@@ -185,6 +186,7 @@ export const darkShades: ColorScheme = {
   onPrimary: '#FFFFFF',
   onSecondary: '#FFFFFF',
   outline: '#4B5563',
+  black: undefined,
 };
 
 export const lightShades: ColorScheme = {
@@ -246,6 +248,7 @@ export const lightShades: ColorScheme = {
   onPrimary: '#FFFFFF',
   onSecondary: '#FFFFFF',
   outline: '#D1D5DB',
+  black: undefined,
 };
 
 // Utility types for theme usage
