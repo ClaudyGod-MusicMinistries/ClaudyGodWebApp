@@ -1,129 +1,215 @@
-// src/pages/CityHighlightsLayout.tsx
-import { useParams } from 'react-router-dom';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// src/components/tour/CityTourLayout.tsx
+import React from 'react';
 import { motion } from 'framer-motion';
-import { ExtraBoldText, RegularText } from '../ui/fonts/typography';
-import CustomButton from '../ui/fonts/buttons/CustomButton';
 import { useTheme } from '../../contexts/ThemeContext';
+import {
+  ExtraBoldText,
+  RegularText,
+  SemiBoldText,
+} from '../ui/fonts/typography';
 
-// Sample Data (replace with API later)
-const cityData: Record<string, { description: string; highlights: string[] }> =
-  {
-    lagos: {
-      description:
-        'Lagos is the heartbeat of worship with powerful gatherings.',
-      highlights: [
-        'Eko Worship Night',
-        'Lekki Youth Revival',
-        'Island Praise Concert',
-      ],
-    },
-    abuja: {
-      description:
-        'Abuja experienced a divine atmosphere of prayer and praise.',
-      highlights: [
-        'Unity Worship Abuja',
-        'Central Park Praise',
-        'City-wide Outreach',
-      ],
-    },
-    imo: {
-      description:
-        'Imo witnessed a revival of hearts and strong community worship.',
-      highlights: ['Owerri Revival Night', 'Imo Choir Fest'],
-    },
-    'port-harcourt': {
-      description:
-        'Port Harcourt overflowed with joy and thanksgiving in worship.',
-      highlights: ['Rivers State Worship Festival', 'Garden City Praise'],
-    },
-    aba: {
-      description:
-        'Aba saw incredible testimonies of healing and transformation.',
-      highlights: ['Aba Praise Explosion', 'Eastern Worship Gathering'],
-    },
-  };
+interface CityTourLayoutProps {
+  city: string;
+  heroImage: string;
+  description: string;
+  children: React.ReactNode;
+  highlights: string[];
+  testimonies?: string[];
+  upcomingEvents?: string[];
+  worshipVenues?: string[];
+  featuredVideo?: string;
+}
 
-export const CityHighlightsLayout = () => {
-  const { city } = useParams<{ city: string }>();
+export const CityTourLayout: React.FC<CityTourLayoutProps> = ({
+  city,
+  heroImage,
+  description,
+  children,
+  highlights,
+  testimonies = [],
+  upcomingEvents = [],
+  worshipVenues = [],
+  featuredVideo,
+}) => {
   const { colorScheme } = useTheme();
-
-  const cityInfo = cityData[city?.toLowerCase() || ''];
-
-  if (!cityInfo) {
-    return (
-      <main className="flex flex-col items-center justify-center min-h-screen">
-        <header className="text-center space-y-4">
-          <ExtraBoldText fontSize="2rem" style={{ color: colorScheme.primary }}>
-            City Not Found
-          </ExtraBoldText>
-          <RegularText style={{ color: colorScheme.textSecondary }}>
-            Please go back and select a valid city.
-          </RegularText>
-        </header>
-      </main>
-    );
-  }
 
   return (
     <main
-      className="min-h-screen w-full flex flex-col items-center"
-      style={{ background: colorScheme.surface }}
+      className="min-h-screen w-full"
+      style={{ background: colorScheme.background }}
     >
-      <section className="flex flex-col flex-1 w-full max-w-6xl px-6 py-12">
-        {/* Header */}
-        <header className="flex flex-col items-center mb-12 text-center">
+      {/* Hero Section */}
+      <section className="relative h-80 sm:h-96 lg:h-[500px] overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-50" />
+        <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col items-center max-w-3xl"
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl"
           >
             <ExtraBoldText
-              fontSize="2rem"
-              style={{ color: colorScheme.primary }}
+              fontSize="2.5rem"
+              lgFontSize="3.5rem"
+              style={{ color: '#ffffff' }}
               className="mb-4"
             >
-              {city?.toUpperCase()} Worship Highlights
+              {city.toUpperCase()} WORSHIP TOUR
             </ExtraBoldText>
-
-            <RegularText style={{ color: colorScheme.textSecondary }}>
-              {cityInfo.description}
+            <RegularText
+              style={{ color: '#ffffff' }}
+              className="text-lg lg:text-xl max-w-2xl mx-auto"
+            >
+              {description}
             </RegularText>
           </motion.div>
-        </header>
+        </div>
+      </section>
 
-        {/* Highlights Grid */}
-        <section className="flex-1">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {cityInfo.highlights.map((highlight, index) => (
-              <motion.article
-                key={index}
-                whileHover={{ scale: 1.05 }}
-                className="rounded-xl p-6 shadow-lg flex items-center justify-center text-center"
-                style={{
-                  backgroundColor: colorScheme.surfaceVariant,
-                  border: `1px solid ${colorScheme.primary}`,
-                  color: colorScheme.text,
-                }}
+      {/* Main Content */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+          {/* Main Content Column */}
+          <div className="lg:col-span-2 space-y-12">{children}</div>
+
+          {/* Sidebar */}
+          <div className="space-y-8">
+            {/* Highlights */}
+            <motion.section
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="rounded-2xl p-6 shadow-lg"
+              style={{ backgroundColor: colorScheme.surface }}
+            >
+              <SemiBoldText
+                fontSize="1.5rem"
+                style={{ color: colorScheme.primary }}
+                className="mb-4"
               >
-                {highlight}
-              </motion.article>
-            ))}
-          </div>
-        </section>
+                Tour Highlights
+              </SemiBoldText>
+              <ul className="space-y-3">
+                {highlights.map((highlight, index) => (
+                  <li
+                    key={index}
+                    className="flex items-start"
+                    style={{ color: colorScheme.text }}
+                  >
+                    <span
+                      className="mr-3 mt-1 flex-shrink-0 w-2 h-2 rounded-full"
+                      style={{ backgroundColor: colorScheme.primary }}
+                    />
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+            </motion.section>
 
-        {/* Footer Action */}
-        <footer className="flex justify-center mt-12">
-          <CustomButton
-            style={{
-              backgroundColor: colorScheme.primary,
-              color: colorScheme.onPrimary,
-            }}
-            onClick={() => window.history.back()}
+            {/* Upcoming Events */}
+            {upcomingEvents.length > 0 && (
+              <motion.section
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+                className="rounded-2xl p-6 shadow-lg"
+                style={{ backgroundColor: colorScheme.surface }}
+              >
+                <SemiBoldText
+                  fontSize="1.5rem"
+                  style={{ color: colorScheme.primary }}
+                  className="mb-4"
+                >
+                  Upcoming Events
+                </SemiBoldText>
+                <ul className="space-y-3">
+                  {upcomingEvents.map((event, index) => (
+                    <li
+                      key={index}
+                      className="p-3 rounded-lg"
+                      style={{
+                        backgroundColor: colorScheme.surfaceVariant,
+                        color: colorScheme.text,
+                      }}
+                    >
+                      {event}
+                    </li>
+                  ))}
+                </ul>
+              </motion.section>
+            )}
+
+            {/* Worship Venues */}
+            {worshipVenues.length > 0 && (
+              <motion.section
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
+                className="rounded-2xl p-6 shadow-lg"
+                style={{ backgroundColor: colorScheme.surface }}
+              >
+                <SemiBoldText
+                  fontSize="1.5rem"
+                  style={{ color: colorScheme.primary }}
+                  className="mb-4"
+                >
+                  Worship Venues
+                </SemiBoldText>
+                <ul className="space-y-2">
+                  {worshipVenues.map((venue, index) => (
+                    <li
+                      key={index}
+                      style={{ color: colorScheme.textSecondary }}
+                      className="text-sm"
+                    >
+                      • {venue}
+                    </li>
+                  ))}
+                </ul>
+              </motion.section>
+            )}
+          </div>
+        </div>
+
+        {/* Testimonies Section */}
+        {testimonies.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="mt-16"
           >
-            Back to Tour Cities
-          </CustomButton>
-        </footer>
+            <SemiBoldText
+              fontSize="2rem"
+              style={{ color: colorScheme.primary }}
+              className="text-center mb-8"
+            >
+              Testimonies from {city}
+            </SemiBoldText>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {testimonies.map((testimony, index) => (
+                <motion.div
+                  key={index}
+                  whileHover={{ scale: 1.02 }}
+                  className="rounded-xl p-6 text-center"
+                  style={{
+                    backgroundColor: colorScheme.surface,
+                    border: `2px solid ${colorScheme.primary}`,
+                  }}
+                >
+                  <RegularText style={{ color: colorScheme.text }}>
+                    "{testimony}"
+                  </RegularText>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        )}
       </section>
     </main>
   );

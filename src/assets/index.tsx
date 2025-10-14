@@ -104,7 +104,8 @@ import ph11 from './Tour_Ph_11.webp';
 import ph12 from './Tour_Ph_12.webp';
 import ph13 from './Tour_Ph_13.webp';
 import ph14 from './Tour_Ph_14.webp';
-import ph15 from './Tour_Ph_15.webp';
+
+import Glorious_ph from './news_ph.jpg';
 
 // ✅ Clean, consistent export block
 export {
@@ -189,5 +190,5 @@ export {
   ph12,
   ph13,
   ph14,
-  ph15,
+  Glorious_ph,
 };

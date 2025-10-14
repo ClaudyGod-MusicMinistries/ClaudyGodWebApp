@@ -725,8 +725,20 @@ export const News = memo(() => {
   const handleSelectState = useCallback(
     (state: string) => {
       setIsHighlightsModalOpen(false);
-      // Navigate directly to the tour page for the selected state
-      navigate(`/tour/${state.toLowerCase().replace(/\s+/g, '-')}`);
+
+      // Map state names to route paths
+      const routeMap: Record<string, string> = {
+        Lagos: '/tour/lagos',
+        Abuja: '/tour/abuja',
+        Imo: '/tour/imo',
+        'Port Harcourt': '/tour/port-harcourt',
+        Aba: '/tour/aba',
+      };
+
+      const route = routeMap[state];
+      if (route) {
+        navigate(route);
+      }
     },
     [navigate]
   );
@@ -761,10 +773,10 @@ export const News = memo(() => {
       {/* Hero Section */}
       <LayoutTemplate
         backgroundImage={Tour1}
-        overlayColor="rgba(0,0,0,0.55)"
+        overlayColor="rgba(0,0,0,0.45)" // slightly lighter, more balanced overlay
         backgroundPosition="center center"
-        className="h-[50vh] sm:h-[60vh] md:h-[70vh] min-h-[400px]"
-        title={''}
+        className="h-[55vh] min-h-[450px] sm:h-[65vh] sm:min-h-[550px] md:h-[75vh] bg-cover bg-no-repeat bg-center"
+        title=""
       >
         <motion.div
           className="relative z-20 flex flex-col items-center justify-center text-center w-full h-full px-4 sm:px-6"

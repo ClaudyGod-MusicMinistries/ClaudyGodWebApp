@@ -16,14 +16,14 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    // Your custom paths
-    "baseUrl": "src",
+    // ✅ FIXED baseUrl and paths
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@types/*": ["types/*"],
-      "@data/*": ["data/*"],
-      "@components/*": ["components/*"],
-      "@assets/*": ["assets/*"]
+      "@/*": ["src/*"],
+      "@types/*": ["src/types/*"],
+      "@data/*": ["src/data/*"],
+      "@components/*": ["src/components/*"],
+      "@assets/*": ["src/assets/*"]
     }
   },
   "include": ["src", "types.d.ts", "vite.config.ts"]

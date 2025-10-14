@@ -1,11 +1,17 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import path from 'path';
 
 export default defineConfig({
   base: '/',
   publicDir: 'public',
   plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
   server: {
     port: 1005,
     proxy: {
@@ -20,17 +26,16 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: false, // Disable sourcemaps for production
-    minify: 'terser', // Use terser for better minification
+    sourcemap: false,
+    minify: 'terser',
     terserOptions: {
       compress: {
-        drop_console: true, // Remove console logs in production
+        drop_console: true,
       },
     },
     rollupOptions: {
       output: {
         manualChunks: {
-          // Split vendor chunks for better caching
           'react-vendor': ['react', 'react-dom'],
           'animation-vendor': ['framer-motion'],
           'icons-vendor': [
@@ -43,6 +48,6 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['react', 'react-dom'], // Pre-bundle these dependencies
+    include: ['react', 'react-dom'],
   },
 });

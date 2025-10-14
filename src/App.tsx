@@ -23,7 +23,7 @@ import { MinistryData } from './pages/Ministry';
 import { News } from './pages/News';
 import DonationComplete from './components/donate/DonationSuccess';
 import StreamingPlatforms from './components/Homepage/Streaming';
-import { CityHighlightsLayout } from './components/news/cityHighlight';
+import { CityTourLayout } from './components/news/cityHighlight';
 
 // Store components
 import { Checkout } from './components/store/Checkout';
@@ -36,6 +36,18 @@ import OrderSuccess from './components/store/status/OrderSuccess';
 import { PrivacyPolicy } from './components/Legal/PrivacyPolicy';
 import { TermsOfService } from './components/Legal/TermsOfService';
 import { CookiePolicy } from './components/Legal/CookiePolicy';
+
+// Tour State
+
+import { PortHarcourtTour } from './components/news/State_Tour/Ph';
+import { AbaTour } from './components/news/State_Tour/Aba';
+// import { OwerriTour } from './components/news/State_Tour/owerri';
+import { LagosTour } from './components/news/State_Tour/Lagos';
+import { ImoTour } from './components/news/State_Tour/imo';
+// import { LagosTour } from './src/pages/tour/LagosTour';
+// import { AbujaTour } from './src/pages/tour/AbujaTour';
+// import { ImoTour } from './src/pages/tour/ImoTour';
+// import { AbaTour } from './src/pages/tour/AbaTour';
 
 function AppRoutes() {
   const location = useLocation();
@@ -60,7 +72,18 @@ function AppRoutes() {
           <Route path="cart" element={<CartPage />} />
           <Route path="donation-complete" element={<DonationComplete />} />
           <Route path="stream" element={<StreamingPlatforms />} />
-          <Route path="tour/:city" element={<CityHighlightsLayout />} />
+          <Route
+            path="tour/:city"
+            element={
+              <CityTourLayout
+                city={''}
+                heroImage={''}
+                description={''}
+                children={undefined}
+                highlights={[]}
+              />
+            }
+          />
 
           {/* Legal routes */}
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
@@ -73,6 +96,18 @@ function AppRoutes() {
         <Route path="checkout/zelle" element={<ZellePaymentWrapper />} />
         <Route path="payment-pending" element={<PaymentPending />} />
         <Route path="order-success/:orderId" element={<OrderSuccess />} />
+
+        {/* TourState */}
+        <Route path="/tour/port-harcourt" element={<PortHarcourtTour />} />
+        <Route path="/tour/Aba" element={<AbaTour />} />
+        {/* <Route path="/tour/Owerri" element={<OwerriTour />} /> */}
+        <Route path="/tour/lagos" element={<LagosTour />} />
+        <Route path="/tour/imo" element={<ImoTour />} />
+
+        {/* <Route path="/tour/lagos" element={<LagosTour />} />
+<Route path="/tour/abuja" element={<AbujaTour />} />
+<Route path="/tour/imo" element={<ImoTour />} />
+<Route path="/tour/aba" element={<AbaTour />} /> */}
 
         {/* Fallback */}
         <Route path="*" element={<div>404 Not Found</div>} />
