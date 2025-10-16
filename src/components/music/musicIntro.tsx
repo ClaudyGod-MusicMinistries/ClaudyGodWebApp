@@ -16,7 +16,7 @@ export const MusicIntro = ({ title, description }: MusicIntroProps) => {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-4xl md:text-5xl roboto-condensed mb-6">
-            {title}
+            {title}.
           </h1>
           <div className="w-20 h-1 bg-white mb-8"></div>
           <p className="text-sm max-w-2xl work-sans">{description}</p>
