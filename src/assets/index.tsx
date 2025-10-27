@@ -12,6 +12,7 @@ import DesktopBg from './desktopBg.jpg';
 import Main from './manBack.jpg';
 import backUp from './abt_bck.webp';
 import bgresize from './bgResize.webp';
+import Claudy_banner from './claudy_banner.jfif';
 
 // About Section
 import About1 from './aboutUs.webp';
@@ -191,4 +192,5 @@ export {
   ph13,
   ph14,
   Glorious_ph,
+  Claudy_banner,
 };

@@ -12,13 +12,8 @@ import {
 import {
   DesktopBg,
   Back3,
-  Tour1,
-  Resize4,
-  landing_1,
   landing_2,
-  landing_3,
-  landing_4,
-  Back2,
+  Claudy_banner,
   About2,
 } from '../../assets';
 import { Transition, Variants } from 'framer-motion';
@@ -120,7 +115,7 @@ export const modalVariants: Variants = {
 export const heroSlides: HeroSlide[] = [
   {
     id: 1,
-    imageUrlMobile: Back2,
+    imageUrlMobile: Claudy_banner,
     imageUrlDesktop: DesktopBg,
     type: 'quote',
     content: {
