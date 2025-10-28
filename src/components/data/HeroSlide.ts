@@ -115,7 +115,7 @@ export const modalVariants: Variants = {
 export const heroSlides: HeroSlide[] = [
   {
     id: 1,
-    imageUrlMobile: Claudy_banner,
+    imageUrlMobile: DesktopBg,
     imageUrlDesktop: DesktopBg,
     type: 'quote',
     content: {

@@ -19,113 +19,164 @@ export const QuoteSlide: React.FC<QuoteSlideProps> = ({ slide }) => {
   return (
     <>
       {/* MOBILE VERSION */}
-      <div className="md:hidden flex flex-col justify-end items-start w-full px-4 pb-32 min-h-[80vh]">
-        {/* Main Quote - Mobile */}
-        <motion.div
-          variants={textVariants}
-          initial="hidden"
-          animate="visible"
-          className="relative w-full top-4" // Pushes down 3rem (48px)
-        >
-          <UltraText
-            fontSize="0.95rem"
-            smFontSize="1.1rem"
-            className="text-left"
-            style={{
-              color: colorScheme.text,
-              textShadow: '0 2px 8px rgba(0,0,0,0.9)',
-              lineHeight: '1.4',
-              letterSpacing: '0.01em',
-            }}
-          >
-            {slide.content?.quote}
-          </UltraText>
-        </motion.div>
-
-        {/* Reference - Mobile */}
-        <motion.div
-          variants={textVariants}
-          initial="hidden"
-          animate="visible"
-          className="relative top-9" // Pushes down 3rem (48px)
-        >
-          <BoldText
-            fontSize="0.75rem"
-            smFontSize="0.85rem"
-            className="text-left italic uppercase"
-            style={{
-              color: colorScheme.accent,
-              textShadow: '0 1px 4px rgba(0,0,0,0.8)',
-              letterSpacing: '0.06em',
-              lineHeight: '1.4',
-            }}
-          >
-            {slide.content?.reference}
-          </BoldText>
-        </motion.div>
-
-        {/* Play Section - Mobile */}
-        {slide.id === 1 && (
+      <div className="md:hidden flex flex-col justify-end items-start w-full px-4 pb-20 min-h-[80vh]">
+        {/* Conditional: Background blur only for first slider */}
+        {slide.id === 1 ? (
+          // First Slider - With Background Blur
           <motion.div
             variants={textVariants}
             initial="hidden"
             animate="visible"
-            className="flex flex-col items-start gap-5 w-full relative top-16"
+            className="relative w-full p-4 bg-black/30 backdrop-blur-md rounded-2xl border border-white/10"
           >
-            {/* Play Button - Mobile */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative group"
-            >
-              <CustomButton
-                variant="icon"
-                size="md"
-                aria-label="Play video"
-                className="rounded-xl backdrop-blur-md shadow-lg p-3 relative z-10 border border-white/20"
-                style={{
-                  background:
-                    'linear-gradient(135deg, rgba(147, 51, 234, 0.9) 0%, rgba(99, 102, 241, 0.9) 100%)',
-                }}
-              >
-                <FontAwesomeIcon
-                  icon={faPlay}
-                  className="text-lg ml-0.5"
-                  style={{ color: 'white' }}
-                />
-              </CustomButton>
-            </motion.div>
-
-            {/* Call-to-Action Text - Mobile */}
-            <div className="flex flex-col gap-1">
+            {/* Main Quote - Mobile */}
+            <div className="mb-3">
               <UltraText
-                fontSize="1rem"
-                smFontSize="1.1rem"
-                className="uppercase"
-                style={{
-                  background:
-                    'linear-gradient(135deg, #FFFFFF 0%, #F3F4F6 100%)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  textShadow: '0 1px 6px rgba(0,0,0,0.8)',
-                }}
-              >
-                Play Now
-              </UltraText>
-
-              <RegularText
                 fontSize="0.7rem"
-                smFontSize="0.8rem"
-                className="text-gray-200 opacity-90"
+                smFontSize="0.98rem"
+                className="text-left"
                 style={{
-                  textShadow: '0 1px 3px rgba(0,0,0,0.7)',
+                  color: colorScheme.text,
+                  textShadow: '0 2px 8px rgba(0,0,0,0.9)',
+                  lineHeight: '1.3',
+                  letterSpacing: '0.005em',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
                 }}
               >
-                Experience the Divine Presence
-              </RegularText>
+                {slide.content?.quote}
+              </UltraText>
+            </div>
+
+            {/* Reference - Mobile */}
+            <div className="mb-4">
+              <BoldText
+                fontSize="0.55rem"
+                smFontSize="0.65rem"
+                className="text-left italic uppercase"
+                style={{
+                  color: colorScheme.accent,
+                  textShadow: '0 1px 4px rgba(0,0,0,0.8)',
+                  letterSpacing: '0.04em',
+                  lineHeight: '1.3',
+                }}
+              >
+                {slide.content?.reference}
+              </BoldText>
+            </div>
+
+            {/* Play Section - Mobile */}
+            <div className="flex items-center gap-3 pt-3 border-t border-white/20">
+              {/* Play Button - Mobile */}
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative group"
+              >
+                <CustomButton
+                  variant="icon"
+                  size="sm"
+                  aria-label="Play video"
+                  className="rounded-lg backdrop-blur-md shadow-md p-2 relative z-10 border border-white/20"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, rgba(147, 51, 234, 0.9) 0%, rgba(99, 102, 241, 0.9) 100%)',
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faPlay}
+                    className="text-sm ml-0.5"
+                    style={{ color: 'white' }}
+                  />
+                </CustomButton>
+              </motion.div>
+
+              {/* Call-to-Action Text - Mobile */}
+              <div className="flex flex-col gap-0.5">
+                <UltraText
+                  fontSize="0.8rem"
+                  smFontSize="0.90rem"
+                  className="uppercase"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, #FFFFFF 0%, #F3F4F6 100%)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    textShadow: '0 1px 4px rgba(0,0,0,0.8)',
+                    lineHeight: '1.25',
+                  }}
+                >
+                  Play Now
+                </UltraText>
+
+                <RegularText
+                  fontSize="0.5rem"
+                  smFontSize="0.6rem"
+                  className="text-gray-200 opacity-90"
+                  style={{
+                    textShadow: '0 1px 2px rgba(0,0,0,0.6)',
+                    lineHeight: '1.25',
+                  }}
+                >
+                  Experience the Divine Presence
+                </RegularText>
+              </div>
             </div>
           </motion.div>
+        ) : (
+          // Other Sliders - No Background Blur
+          <>
+            {/* Main Quote - Mobile */}
+            <motion.div
+              variants={textVariants}
+              initial="hidden"
+              animate="visible"
+              className="relative w-full mb-2"
+            >
+              <UltraText
+                fontSize="0.7rem"
+                smFontSize="0.98rem"
+                className="text-left"
+                style={{
+                  color: colorScheme.text,
+                  textShadow: '0 2px 8px rgba(0,0,0,0.9)',
+                  lineHeight: '1.3',
+                  letterSpacing: '0.005em',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                }}
+              >
+                {slide.content?.quote}
+              </UltraText>
+            </motion.div>
+
+            {/* Reference - Mobile */}
+            <motion.div
+              variants={textVariants}
+              initial="hidden"
+              animate="visible"
+              className="relative mb-3"
+            >
+              <BoldText
+                fontSize="0.55rem"
+                smFontSize="0.65rem"
+                className="text-left italic uppercase"
+                style={{
+                  color: colorScheme.accent,
+                  textShadow: '0 1px 4px rgba(0,0,0,0.8)',
+                  letterSpacing: '0.04em',
+                  lineHeight: '1.3',
+                }}
+              >
+                {slide.content?.reference}
+              </BoldText>
+            </motion.div>
+          </>
         )}
       </div>
 
