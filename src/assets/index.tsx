@@ -75,7 +75,7 @@ export const blog = createImageUrl('blogBanner.webp');
 
 // Landing / Intro
 export const landing_1 = createImageUrl('landing1.jpg');
-export const landing_2 = createImageUrl('landing2.jpg');
+export const landing_2 = createImageUrl('BannerLanding.webp'); // UPDATED: Correct filename
 export const landing_3 = createImageUrl('landing3.jpg');
 export const landing_4 = createImageUrl('landing4.jpg');
 

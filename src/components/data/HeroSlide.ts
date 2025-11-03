@@ -9,18 +9,10 @@ import {
   faPodcast,
 } from '@fortawesome/free-solid-svg-icons';
 
-import {
-  DesktopBg,
-  Back3,
-  landing_2,
-  Claudy_banner,
-  About2,
-} from '../../assets';
 import { Transition, Variants } from 'framer-motion';
 
 export interface HeroSlide {
   videoUrl: any;
-  // videoUrl: string | undefined;
   id: number;
   imageUrl?: string;
   imageUrlMobile?: string;
@@ -68,7 +60,7 @@ export const imageVariants: Variants = {
     scale: 1,
     opacity: 1,
     transition: {
-      duration: 3, // Increased to 3 seconds
+      duration: 3,
       ease: 'easeInOut',
     } as Transition,
   },
@@ -82,12 +74,12 @@ export const slideVariants: Variants = {
   center: {
     x: 0,
     opacity: 1,
-    transition: { duration: 2.5, ease: 'easeInOut' } as Transition, // Increased to 2.5 seconds
+    transition: { duration: 2.5, ease: 'easeInOut' } as Transition,
   },
   exit: (direction: number) => ({
     x: direction > 0 ? '-100%' : '100%',
     opacity: 0,
-    transition: { duration: 2.5, ease: 'easeInOut' } as Transition, // Increased to 2.5 seconds
+    transition: { duration: 2.5, ease: 'easeInOut' } as Transition,
   }),
 };
 
@@ -115,8 +107,10 @@ export const modalVariants: Variants = {
 export const heroSlides: HeroSlide[] = [
   {
     id: 1,
-    imageUrlMobile: DesktopBg,
-    imageUrlDesktop: DesktopBg,
+    imageUrlMobile:
+      'https://cdn.jsdelivr.net/gh/ClaudyGod-MusicMinistries/CGM-Assets@latest/desktopBg.jpg',
+    imageUrlDesktop:
+      'https://cdn.jsdelivr.net/gh/ClaudyGod-MusicMinistries/CGM-Assets@latest/desktopBg.jpg',
     type: 'quote',
     content: {
       quote:
@@ -127,14 +121,16 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     id: 2,
-    imageUrl: About2,
+    imageUrl:
+      'https://cdn.jsdelivr.net/gh/ClaudyGod-MusicMinistries/CGM-Assets@latest/abt_2.webp',
     type: 'cta',
     content: {},
     videoUrl: undefined,
   },
   {
     id: 3,
-    imageUrl: Back3,
+    imageUrl:
+      'https://cdn.jsdelivr.net/gh/ClaudyGod-MusicMinistries/CGM-Assets@latest/Bg_13.webp',
     type: 'music',
     content: {
       listenText: 'Experience the Divine Melody',
@@ -176,7 +172,9 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     id: 4,
-    imageUrl: landing_2,
+    // CORRECTED: Using the actual BannerLanding.webp file
+    imageUrl:
+      'https://cdn.jsdelivr.net/gh/ClaudyGod-MusicMinistries/CGM-Assets@latest/BannerLanding.webp',
     type: 'quote',
     content: {
       quote: 'Praise the Lord Most High',
