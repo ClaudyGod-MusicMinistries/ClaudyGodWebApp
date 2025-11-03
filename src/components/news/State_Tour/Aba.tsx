@@ -282,12 +282,12 @@ export const AbaTour: React.FC = () => {
                 style={{ color: colorScheme.borderLight }}
                 className="leading-relaxed"
               >
-                The Min. Claudy Music Tour in Abia was a divine encounter that
-                stirred hearts and rekindled faith. Hosted at Heritage House
-                Worship Center and El-Shaddai International Church, the
-                atmosphere was saturated with God's presence from start to
-                finish. Each moment of worship carried the fragrance of heaven,
-                touching lives and igniting a fresh hunger for God's glory.
+                The Min. Claudy Music Tour in Aba was a divine encounter that
+                stirred hearts and rekindled faith. Hosted across various
+                worship centers in the city, the atmosphere was saturated with
+                God's presence from start to finish. Each moment of worship
+                carried the fragrance of heaven, touching lives and igniting a
+                fresh hunger for God's glory.
               </RegularText>
 
               <RegularText
@@ -299,7 +299,7 @@ export const AbaTour: React.FC = () => {
               >
                 We give all the glory to God for the outpouring of His Spirit
                 and for using Min. Claudy and the entire team as vessels of
-                revival and transformation. Truly, Abia witnessed a mighty move
+                revival and transformation. Truly, Aba witnessed a mighty move
                 of God — a reminder that when Jesus is lifted high, lives are
                 forever changed.
               </RegularText>

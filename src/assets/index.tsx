@@ -106,6 +106,15 @@ import ph12 from './Tour_Ph_12.webp';
 import ph13 from './Tour_Ph_13.webp';
 import ph14 from './Tour_Ph_14.webp';
 
+// team
+import Team_ph_1 from './team_ph (1).webp';
+import Team_ph_2 from './team_ph (2).webp';
+import Team_ph_3 from './team_ph (3).webp';
+import Team_ph_4 from './team_ph (4).webp';
+import Team_ph_5 from './team_ph (5).webp';
+import Team_ph_6 from './team_ph (6).webp';
+import Team_ph_7 from './team_ph (7).webp';
+
 import Glorious_ph from './news_ph.jpg';
 
 // ✅ Clean, consistent export block
@@ -135,8 +144,7 @@ export {
   blog,
   stepAside,
   aleluiaWorship,
-  // bgVideo,
-  Main,
+  // bgVideo,Main,
   Resize_4,
   Resize4,
   Resize5,
@@ -156,7 +164,6 @@ export {
   music4,
   music5,
   music6,
-  music7,
   music8,
   music9,
   backUp,
@@ -167,6 +174,7 @@ export {
   Tour1,
   Tour2,
   Tour3,
+  music7,
   landing_1,
   landing_2,
   landing_3,
@@ -193,4 +201,11 @@ export {
   ph14,
   Glorious_ph,
   Claudy_banner,
+  Team_ph_1,
+  Team_ph_2,
+  Team_ph_3,
+  Team_ph_4,
+  Team_ph_5,
+  Team_ph_6,
+  Team_ph_7,
 };

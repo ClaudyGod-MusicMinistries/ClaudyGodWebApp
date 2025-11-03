@@ -8,6 +8,30 @@ import {
   faSpotify,
   faApple,
 } from '@fortawesome/free-brands-svg-icons';
+import {
+  ph1,
+  ph2,
+  ph3,
+  Tour1,
+  Glorious_ph,
+  Tour2,
+  Tour3,
+  ph10,
+  ph11,
+  ph12,
+  ph13,
+  ph14,
+  ph6,
+  ph8,
+  ph9,
+  Team_ph_1,
+  Team_ph_2,
+  Team_ph_3,
+  Team_ph_4,
+  Team_ph_5,
+  Team_ph_6,
+  Team_ph_7,
+} from '@/assets';
 export const albums = [
   {
     title: 'Lover of my Soul',
@@ -93,5 +117,102 @@ export const socialPlatforms = [
     color: '#FFFFFF',
     url: 'https://music.apple.com/artist/claudygod',
     handle: 'ClaudyGod',
+  },
+];
+
+// TourSection - PH
+
+export const galleryCategories = [
+  {
+    title: 'ClaudyGod with Students',
+    description:
+      'Engaging with the next generation of worshippers in universities and youth gatherings across Port Harcourt.',
+    images: [ph6, ph12, ph10],
+  },
+  {
+    title: 'Worship Moments',
+    description:
+      'Powerful moments of praise and worship that transformed lives and brought heaven to earth.',
+    images: [Tour2, Tour3],
+  },
+  {
+    title: 'Min. ClaudyGod With Guests',
+    description:
+      'Collaborative moments with ministry partners and guest worshippers who joined our gatherings.',
+    images: [ph14, ph13, ph1, ph3, ph11],
+  },
+  {
+    title: 'Community Impact',
+    description:
+      'Touching lives beyond the worship center through outreach and community transformation programs.',
+    images: [ph8, ph9],
+  },
+];
+
+// Team members data
+export const teamMembers = [
+  //   {
+  //     id: 1,
+  //     name: "Minister ClaudyGod - Music Team",
+  //     role: "Music Team",
+  // description: `"A dedicated team of passionate worshipers
+  //  committed to leading people into deep encounters with God through spirit-filled music,
+  //  excellence in sound, and heartfelt praise."`,
+
+  //     image: Team_ph_1
+  //   },
+  {
+    id: 2,
+    name: 'Minister ClaudyGod - Music Team',
+    role: 'Music Team',
+    description: `"A dedicated team of passionate worshipers
+ committed to leading people into deep encounters with God through spirit-filled music, 
+ excellence in sound, and heartfelt praise."`,
+    image: Team_ph_2,
+  },
+  {
+    id: 3,
+    name: 'Minister ClaudyGod - Music Team',
+    role: 'Music Team',
+    description: `"A dedicated team of passionate worshipers
+ committed to leading people into deep encounters with God through spirit-filled music, 
+ excellence in sound, and heartfelt praise."`,
+    image: Team_ph_3,
+  },
+  {
+    id: 4,
+    name: 'Minister ClaudyGod - Music Team',
+    role: 'Music Team',
+    description: `"A dedicated team of passionate worshipers
+ committed to leading people into deep encounters with God through spirit-filled music, 
+ excellence in sound, and heartfelt praise."`,
+    image: Team_ph_4,
+  },
+  {
+    id: 5,
+    name: 'Minister ClaudyGod - Music Team',
+    role: 'Music Team',
+    description: `"A dedicated team of passionate worshipers
+ committed to leading people into deep encounters with God through spirit-filled music, 
+ excellence in sound, and heartfelt praise."`,
+    image: Team_ph_5,
+  },
+  {
+    id: 6,
+    name: 'Minister ClaudyGod - Music Team',
+    role: 'Music Team',
+    description: `"A dedicated team of passionate worshipers
+ committed to leading people into deep encounters with God through spirit-filled music, 
+ excellence in sound, and heartfelt praise."`,
+    image: Team_ph_6,
+  },
+  {
+    id: 7,
+    name: 'Minister ClaudyGod - Music Team',
+    role: 'Music Team',
+    description: `"A dedicated team of passionate worshipers
+ committed to leading people into deep encounters with God through spirit-filled music, 
+ excellence in sound, and heartfelt praise."`,
+    image: Team_ph_7,
   },
 ];

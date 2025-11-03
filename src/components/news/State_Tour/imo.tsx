@@ -188,28 +188,32 @@ export const ImoTour: React.FC = () => {
             </ExtraBoldText>
 
             <RegularText
-              fontSize="0.9rem"
+              fontSize="0.875rem"
               smFontSize="1rem"
-              lgFontSize="1.1rem"
+              lgFontSize="1.125rem"
               style={{ color: colorScheme.borderLight }}
               className="leading-relaxed"
             >
-              The Min. Claudy Music Tour in Imo State was a spiritual awakening
-              that drew countless souls closer to God. Every moment of worship
-              and praise overflowed with His tangible presence. Truly, the power
-              of God swept through the atmosphere — hearts were healed, and
-              destinies were realigned to purpose.
+              The Min. Claudy Music Tour in Imo was a divine encounter that
+              stirred hearts and rekindled faith. Hosted across various worship
+              centers in the city, the atmosphere was saturated with God's
+              presence from start to finish. Each moment of worship carried the
+              fragrance of heaven, touching lives and igniting a fresh hunger
+              for God's glory.
             </RegularText>
 
             <RegularText
-              fontSize="0.9rem"
+              fontSize="0.875rem"
               smFontSize="1rem"
-              lgFontSize="1.1rem"
+              lgFontSize="1.125rem"
               style={{ color: colorScheme.borderLight }}
+              className="leading-relaxed"
             >
-              We return all glory to God Almighty for manifesting His power and
-              grace during this tour. It was a reminder that worship is more
-              than music — it’s an encounter with Heaven itself.
+              We give all the glory to God for the outpouring of His Spirit and
+              for using Min. Claudy and the entire team as vessels of revival
+              and transformation. Truly, Imo State witnessed a mighty move of
+              God — a reminder that when Jesus is lifted high, lives are forever
+              changed.
             </RegularText>
           </motion.div>
         </motion.section>
