@@ -1,211 +1,123 @@
 /* eslint-disable react-refresh/only-export-components */
+// ✅ Base URL for all images - USING YOUR ACTUAL REPOSITORY
+const CDN_BASE =
+  'https://cdn.jsdelivr.net/gh/ClaudyGod-MusicMinistries/CGM-Assets@latest';
+
+// ✅ Helper function to create full URLs
+const createImageUrl = (filename: string) => `${CDN_BASE}/${filename}`;
 
 // Logos
-import Log from './ClaudyGoLogo.webp';
+export const Log = createImageUrl('ClaudyGoLogo.webp');
 
 // Backgrounds
-import Back1 from './Bg_1.webp';
-import Back2 from './bg_2.jpg';
-import Back3 from './Bg_13.webp';
-import Back4 from './Bg_4.webp';
-import DesktopBg from './desktopBg.jpg';
-import Main from './manBack.jpg';
-import backUp from './abt_bck.webp';
-import bgresize from './bgResize.webp';
-import Claudy_banner from './claudy_banner.jfif';
+export const Back1 = createImageUrl('Bg_1.webp');
+export const Back2 = createImageUrl('bg_2.jpg');
+export const Back3 = createImageUrl('Bg_13.webp');
+export const Back4 = createImageUrl('Bg_4.webp');
+export const DesktopBg = createImageUrl('desktopBg.jpg');
+export const Main = createImageUrl('manBack.jpg');
+export const backUp = createImageUrl('abt_bck.webp');
+export const bgresize = createImageUrl('bgResize.webp');
+export const Claudy_banner = createImageUrl('claudy_banner.jfif');
 
 // About Section
-import About1 from './aboutUs.webp';
-import About2 from './abt_2.webp';
-import Resize1 from './resize_abt.webp';
-import Resize2 from './resize_bg1.webp';
-import Resize3 from './resize_bg3.webp';
-import Resize4 from './resize_abt2.webp';
-import Resize_4 from './resize_bg4.webp';
-import Resize5 from './resize_bg2.webp';
+export const About1 = createImageUrl('aboutUs.webp');
+export const About2 = createImageUrl('abt_2.webp');
+export const Resize1 = createImageUrl('resize_abt.webp');
+export const Resize2 = createImageUrl('resize_bg1.webp');
+export const Resize3 = createImageUrl('resize_bg3.webp');
+export const Resize4 = createImageUrl('resize_abt2.webp');
+export const Resize_4 = createImageUrl('resize_bg4.webp');
+export const Resize5 = createImageUrl('resize_bg2.webp');
 
 // Music Section
-import Cover from './CoverArt.webp';
-import AudioMack from './audioLogo.webp';
-import musicCover1 from './musicCoverArt1.webp';
-import musicCover2 from './musicCoverArt2.webp';
-import musicCover3 from './musicCoverArt3.webp';
-import musicCover4 from './musicCoverArt4.webp';
-import musicCover5 from './musicCoverArt5.webp';
-import musicCover6 from './musicCoverArt6.webp';
-import stepAside from './MusicBanner2.webp';
-import aleluiaWorship from './MusicBanner3.webp';
-import music1 from './joyfulA.webp';
-import music2 from './newDay.webp';
-import music3 from './mucic1.webp';
-import music4 from './music2.webp';
-import music5 from './music3.webp';
-import music6 from './music4.webp';
-import music7 from './music5.webp';
-import music8 from './stepAside.webp';
-import music9 from './music9.webp';
+export const Cover = createImageUrl('CoverArt.webp');
+export const AudioMack = createImageUrl('audioLogo.webp');
+export const musicCover1 = createImageUrl('musicCoverArt1.webp');
+export const musicCover2 = createImageUrl('musicCoverArt2.webp');
+export const musicCover3 = createImageUrl('musicCoverArt3.webp');
+export const musicCover4 = createImageUrl('musicCoverArt4.webp');
+export const musicCover5 = createImageUrl('musicCoverArt5.webp');
+export const musicCover6 = createImageUrl('musicCoverArt6.webp');
+export const stepAside = createImageUrl('MusicBanner2.webp');
+export const aleluiaWorship = createImageUrl('MusicBanner3.webp');
+export const music1 = createImageUrl('joyfulA.webp');
+export const music2 = createImageUrl('newDay.webp');
+export const music3 = createImageUrl('mucic1.webp');
+export const music4 = createImageUrl('music2.webp');
+export const music5 = createImageUrl('music3.webp');
+export const music6 = createImageUrl('music4.webp');
+export const music7 = createImageUrl('music5.webp');
+export const music8 = createImageUrl('stepAside.webp');
+export const music9 = createImageUrl('music9.webp');
 
 // Shop / Store
-import Shop1 from './Product1.webp';
-import Shop2 from './Product2.webp';
-import Shop3 from './Product3.webp';
-import Shop4 from './Product4.webp';
-import StoreBanner from './StoreBanner.webp';
+export const Shop1 = createImageUrl('Product1.webp');
+export const Shop2 = createImageUrl('Product2.webp');
+export const Shop3 = createImageUrl('Product3.webp');
+export const Shop4 = createImageUrl('Product4.webp');
+export const StoreBanner = createImageUrl('StoreBanner.webp');
 
 // Donation
-import Donate1 from './Donate1.jpg';
-import Donate2 from './Donate2.jpg';
+export const Donate1 = createImageUrl('Donate1.jpg');
+export const Donate2 = createImageUrl('Donate2.jpg');
 
 // Video / Media
-import VideoBanner1 from './VideoBackground1.webp';
-import VideoBanner2 from './VideoBanner2.webp';
-import VideoBanner3 from './VideoBanner3.webp';
-import VideoArt from './videoCoverArt.webp';
-// import bgVideo from './mainBanner.webm';
+export const VideoBanner1 = createImageUrl('VideoBackground1.webp');
+export const VideoBanner2 = createImageUrl('VideoBanner2.webp');
+export const VideoBanner3 = createImageUrl('VideoBanner3.webp');
+export const VideoArt = createImageUrl('videoCoverArt.webp');
 
 // Blog / News
-import newsBanner from './bannerMain.jpg';
-import newbanner from './newsBanner.webp';
-import blog from './blogBanner.webp';
+export const newsBanner = createImageUrl('bannerMain.jpg');
+export const newbanner = createImageUrl('newsBanner.webp');
+export const blog = createImageUrl('blogBanner.webp');
 
 // Landing / Intro
-import landing_1 from './landing1.jpg';
-import landing_2 from './landing2.jpg';
-import landing_3 from './landing3.jpg';
-import landing_4 from './landing4.jpg';
+export const landing_1 = createImageUrl('landing1.jpg');
+export const landing_2 = createImageUrl('landing2.jpg');
+export const landing_3 = createImageUrl('landing3.jpg');
+export const landing_4 = createImageUrl('landing4.jpg');
 
 // Tour
-import Tour1 from './tour_1.jpg';
-import Tour2 from './tour_2.jpg';
-import Tour3 from './tour_3.jpg';
-import Aba1 from './aba1.jpg';
-import Aba2 from './aba2.jpg';
-import owerri1 from './news_imsu.jpg';
-import ph from './news_ph.jpg';
-import veryGlorious from './veryGlorious.jpg';
+export const Tour1 = createImageUrl('tour_1.jpg');
+export const Tour2 = createImageUrl('tour_2.jpg');
+export const Tour3 = createImageUrl('tour_3.jpg');
+export const Aba1 = createImageUrl('aba1.jpg');
+export const Aba2 = createImageUrl('aba2.jpg');
+export const owerri1 = createImageUrl('news_imsu.jpg');
+export const ph = createImageUrl('news_ph.jpg');
+export const veryGlorious = createImageUrl('veryGlorious.jpg');
 
 // Misc
-import Isr from './Israel.webp';
-import apple from './app_store.png';
-import google from './play_store.png';
-import mummy from './mummy.jpg';
+export const Isr = createImageUrl('Israel.webp');
+export const apple = createImageUrl('app_store.png');
+export const google = createImageUrl('play_store.png');
+export const mummy = createImageUrl('mummy.jpg');
 
 // Tour-Ph-Pictures
-import ph1 from './Tour_Ph_1.webp';
-import ph2 from './Tour_Ph_2.webp';
-import ph3 from './Tour_Ph_3.webp';
-import ph4 from './Tour_ph_4.webp';
-import ph5 from './Tour_Ph_5.webp';
-import ph6 from './Tour_ph_6.webp';
-import ph7 from './Tour_Ph_7.webp';
-import ph8 from './Tour_Ph_8.webp';
-import ph9 from './Tour_Ph_9.webp';
-import ph10 from './Tour_Ph_10.webp';
-import ph11 from './Tour_Ph_11.webp';
-import ph12 from './Tour_Ph_12.webp';
-import ph13 from './Tour_Ph_13.webp';
-import ph14 from './Tour_Ph_14.webp';
+export const ph1 = createImageUrl('Tour_Ph_1.webp');
+export const ph2 = createImageUrl('Tour_Ph_2.webp');
+export const ph3 = createImageUrl('Tour_Ph_3.webp');
+export const ph4 = createImageUrl('Tour_ph_4.webp');
+export const ph5 = createImageUrl('Tour_Ph_5.webp');
+export const ph6 = createImageUrl('Tour_ph_6.webp');
+export const ph7 = createImageUrl('Tour_Ph_7.webp');
+export const ph8 = createImageUrl('Tour_Ph_8.webp');
+export const ph9 = createImageUrl('Tour_Ph_9.webp');
+export const ph10 = createImageUrl('Tour_Ph_10.webp');
+export const ph11 = createImageUrl('Tour_Ph_11.webp');
+export const ph12 = createImageUrl('Tour_Ph_12.webp');
+export const ph13 = createImageUrl('Tour_Ph_13.webp');
+export const ph14 = createImageUrl('Tour_Ph_14.webp');
 
-// team
-import Team_ph_1 from './team_ph (1).webp';
-import Team_ph_2 from './team_ph (2).webp';
-import Team_ph_3 from './team_ph (3).webp';
-import Team_ph_4 from './team_ph (4).webp';
-import Team_ph_5 from './team_ph (5).webp';
-import Team_ph_6 from './team_ph (6).webp';
-import Team_ph_7 from './team_ph (7).webp';
+// Team
+export const Team_ph_1 = createImageUrl('team_ph (1).webp');
+export const Team_ph_2 = createImageUrl('team_ph (2).webp');
+export const Team_ph_3 = createImageUrl('team_ph (3).webp');
+export const Team_ph_4 = createImageUrl('team_ph (4).webp');
+export const Team_ph_5 = createImageUrl('team_ph (5).webp');
+export const Team_ph_6 = createImageUrl('team_ph (6).webp');
+export const Team_ph_7 = createImageUrl('team_ph (7).webp');
 
-import Glorious_ph from './news_ph.jpg';
-
-// ✅ Clean, consistent export block
-export {
-  Log,
-  Back1,
-  Back2,
-  Back3,
-  Back4,
-  About1,
-  About2,
-  Cover,
-  Shop1,
-  Shop2,
-  Shop3,
-  Shop4,
-  Donate1,
-  Donate2,
-  veryGlorious,
-  DesktopBg,
-  VideoBanner1,
-  VideoBanner2,
-  VideoBanner3,
-  StoreBanner,
-  newsBanner,
-  newbanner,
-  blog,
-  stepAside,
-  aleluiaWorship,
-  // bgVideo,Main,
-  Resize_4,
-  Resize4,
-  Resize5,
-  Resize1,
-  Resize2,
-  Resize3,
-  AudioMack,
-  musicCover1,
-  musicCover2,
-  musicCover3,
-  musicCover4,
-  musicCover5,
-  musicCover6,
-  music1,
-  music2,
-  music3,
-  music4,
-  music5,
-  music6,
-  music8,
-  music9,
-  backUp,
-  bgresize,
-  VideoArt,
-  apple,
-  google,
-  Tour1,
-  Tour2,
-  Tour3,
-  music7,
-  landing_1,
-  landing_2,
-  landing_3,
-  landing_4,
-  Aba1,
-  Aba2,
-  owerri1,
-  ph,
-  Isr,
-  mummy,
-  ph1,
-  ph2,
-  ph3,
-  ph4,
-  ph5,
-  ph6,
-  ph7,
-  ph8,
-  ph9,
-  ph10,
-  ph11,
-  ph12,
-  ph13,
-  ph14,
-  Glorious_ph,
-  Claudy_banner,
-  Team_ph_1,
-  Team_ph_2,
-  Team_ph_3,
-  Team_ph_4,
-  Team_ph_5,
-  Team_ph_6,
-  Team_ph_7,
-};
+export const Glorious_ph = createImageUrl('news_ph.jpg');
