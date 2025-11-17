@@ -24,7 +24,7 @@ export const teachingsData: TeachingType[] = [
   {
     id: 2,
     title: 'ClaudyGod’s Very Glorious Event - Putting God 1st',
-    youtubeId: 'szLW2YQ7eHI',
+    youtubeId: 'Gc3_shVwtUw',
     scripture: 'Live Teachings',
     teacher: 'ClaudyGodTeachings',
     date: new Date().toLocaleDateString('en-US', {

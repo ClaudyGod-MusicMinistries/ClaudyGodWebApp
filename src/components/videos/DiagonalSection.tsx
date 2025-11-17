@@ -23,7 +23,7 @@ export type VideoType = {
   id: number;
   title: string;
   youtubeId: string;
-  category: 'Music Videos' | 'Visualizers' | 'Live Sessions';
+  category: 'Music Videos' | 'Visualizers' | 'Live Sessions' | 'Christmas';
   description: string;
   date: string;
 };
@@ -201,7 +201,7 @@ const ExploreButton = memo(
 const DiagonalSection: React.FC<{
   title: string;
   description: string;
-  category: 'Music Videos' | 'Visualizers' | 'Live Sessions';
+  category: 'Music Videos' | 'Visualizers' | 'Live Sessions' | 'Christmas';
   videos: VideoType[];
   reverse?: boolean;
   onExplore: () => void;

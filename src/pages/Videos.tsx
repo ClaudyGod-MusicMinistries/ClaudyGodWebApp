@@ -17,6 +17,8 @@ import {
   faVideo,
   faMusic,
   faMicrophoneAlt,
+  faSnowflake,
+  faGift,
 } from '@fortawesome/free-solid-svg-icons';
 
 // Lazy load heavier components
@@ -195,6 +197,7 @@ const categoryIcons = {
   'Music Videos': faMusic,
   Visualizers: faPlayCircle,
   'Live Sessions': faMicrophoneAlt,
+  Christmas: faSnowflake,
 };
 
 // Memoized components
@@ -313,50 +316,58 @@ const CategoryFilter = memo(
       transition={{ duration: 0.6 }}
       className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 md:mb-16"
     >
-      {(['All', 'Music Videos', 'Visualizers', 'Live Sessions'] as const).map(
-        category => (
-          <motion.div
-            key={category}
-            whileHover={{
-              scale: 1.05,
-              backgroundColor:
-                hoveredCategory === category
-                  ? colorScheme.primary
-                  : colorScheme.gray[100],
-              color:
-                hoveredCategory === category
-                  ? colorScheme.primary
-                  : colorScheme.primary,
-            }}
-            whileTap={{ scale: 0.95 }}
-            onMouseEnter={() => onHoverCategory(category)}
-            onMouseLeave={() => onHoverCategory(null)}
+      {(
+        [
+          'All',
+          'Music Videos',
+          'Visualizers',
+          'Live Sessions',
+          'Christmas',
+        ] as const
+      ).map(category => (
+        <motion.div
+          key={category}
+          whileHover={{
+            scale: 1.05,
+            backgroundColor:
+              hoveredCategory === category
+                ? colorScheme.primary
+                : colorScheme.gray[100],
+            color:
+              hoveredCategory === category
+                ? colorScheme.primary
+                : colorScheme.primary,
+          }}
+          whileTap={{ scale: 0.95 }}
+          onMouseEnter={() => onHoverCategory(category)}
+          onMouseLeave={() => onHoverCategory(null)}
+        >
+          <CustomButton
+            variant={activeCategory === category ? 'primary' : 'secondary'}
+            onClick={() => onCategoryChange(category)}
+            className="px-3 py-2 sm:px-4 sm:py-2.5 rounded-full flex items-center gap-2 text-xs sm:text-sm"
           >
-            <CustomButton
-              variant={activeCategory === category ? 'primary' : 'secondary'}
-              onClick={() => onCategoryChange(category)}
-              className="px-3 py-2 sm:px-4 sm:py-2.5 rounded-full flex items-center gap-2 text-xs sm:text-sm"
-            >
-              <BoldText className="flex items-center gap-1 sm:gap-2">
-                <FontAwesomeIcon
-                  icon={categoryIcons[category]}
-                  className="text-xs sm:text-sm"
-                />
-                <span className="hidden xs:inline">{category}</span>
-                <span className="xs:hidden">
-                  {category === 'All'
-                    ? 'All'
-                    : category === 'Music Videos'
-                      ? 'Music'
-                      : category === 'Visualizers'
-                        ? 'Visual'
+            <BoldText className="flex items-center gap-1 sm:gap-2">
+              <FontAwesomeIcon
+                icon={categoryIcons[category]}
+                className="text-xs sm:text-sm"
+              />
+              <span className="hidden xs:inline">{category}</span>
+              <span className="xs:hidden">
+                {category === 'All'
+                  ? 'All'
+                  : category === 'Music Videos'
+                    ? 'Music'
+                    : category === 'Visualizers'
+                      ? 'Visual'
+                      : category === 'Christmas'
+                        ? 'Xmas'
                         : 'Live'}
-                </span>
-              </BoldText>
-            </CustomButton>
-          </motion.div>
-        )
-      )}
+              </span>
+            </BoldText>
+          </CustomButton>
+        </motion.div>
+      ))}
     </motion.div>
   )
 );
@@ -470,11 +481,190 @@ const DividerSection = memo(({ colorScheme }: { colorScheme: any }) => (
   </div>
 ));
 
+// Christmas Section Component
+const ChristmasSection = memo(
+  ({
+    colorScheme,
+    onExploreChristmas,
+  }: {
+    colorScheme: any;
+    onExploreChristmas: () => void;
+  }) => (
+    <section className="w-full py-12 sm:py-16 md:py-20 relative overflow-hidden">
+      {/* Christmas-themed background with gradient */}
+      <div
+        className="absolute inset-0 opacity-10"
+        style={{
+          background: `linear-gradient(135deg, #1a936f 0%, #c72c41 50%, #1e3a8a 100%)`,
+        }}
+      />
+
+      {/* Snowflake decorations */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute text-white opacity-20"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              fontSize: `${Math.random() * 16 + 8}px`,
+            }}
+            animate={{
+              y: [0, 100],
+              rotate: [0, 360],
+              opacity: [0.2, 0.8, 0.2],
+            }}
+            transition={{
+              duration: Math.random() * 10 + 10,
+              repeat: Infinity,
+              delay: Math.random() * 5,
+            }}
+          >
+            <FontAwesomeIcon icon={faSnowflake} />
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-8 sm:mb-12"
+        >
+          {/* Christmas Badge */}
+          <motion.div
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, type: 'spring' }}
+            className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 rounded-full mb-6 sm:mb-8"
+            style={{
+              backgroundColor: '#c72c41',
+              boxShadow: '0 4px 20px rgba(199, 44, 65, 0.3)',
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faGift}
+              className="text-white text-sm sm:text-base"
+            />
+            <LightText
+              style={{
+                color: '#ffffff',
+                fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
+                letterSpacing: '0.05em',
+              }}
+              useThemeColor={false}
+            >
+              CHRISTMAS SPECIAL
+            </LightText>
+          </motion.div>
+
+          {/* Title */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="mb-6 sm:mb-8"
+          >
+            <AbrilFatFaceText
+              style={{
+                color: '#1e3a8a',
+                fontSize: 'clamp(2rem, 6vw, 3.5rem)',
+                lineHeight: '1.1',
+                marginBottom: '0.5rem',
+                letterSpacing: '0.02em',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.1)',
+              }}
+              useThemeColor={false}
+            >
+              Christmas Worship
+            </AbrilFatFaceText>
+            <ShadowsText
+              style={{
+                background: 'linear-gradient(135deg, #c72c41 0%, #1a936f 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                fontSize: 'clamp(1.875rem, 5.5vw, 3rem)',
+                lineHeight: '1',
+                letterSpacing: '0.03em',
+              }}
+              useThemeColor={false}
+            >
+              & Celebration
+            </ShadowsText>
+          </motion.div>
+
+          {/* Description */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="max-w-3xl mx-auto mb-8 sm:mb-10"
+          >
+            <SemiBoldText
+              style={{
+                color: '#374151',
+                fontSize: 'clamp(1rem, 3vw, 1.25rem)',
+                lineHeight: '1.6',
+                letterSpacing: '0.01em',
+              }}
+              useThemeColor={false}
+            >
+              Experience the joy and wonder of the Christmas season through
+              special worship videos.
+            </SemiBoldText>
+          </motion.div>
+
+          {/* CTA Button */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+          >
+            <CustomButton
+              onClick={onExploreChristmas}
+              className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base md:text-lg flex items-center mx-auto hover:scale-105 transition-all duration-300 shadow-lg"
+              style={{
+                background: 'linear-gradient(135deg, #c72c41 0%, #1e3a8a 100%)',
+                color: 'white',
+              }}
+            >
+              <BoldText className="flex items-center gap-2 sm:gap-3">
+                <FontAwesomeIcon icon={faSnowflake} />
+                Explore Christmas Videos
+                <FontAwesomeIcon icon={faArrowRight} />
+              </BoldText>
+            </CustomButton>
+          </motion.div>
+
+          {/* Decorative divider */}
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: '100px' }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="w-24 h-1 mx-auto mt-6 sm:mt-8 rounded-full"
+            style={{
+              background: 'linear-gradient(90deg, #c72c41, #1e3a8a)',
+            }}
+          />
+        </motion.div>
+      </div>
+    </section>
+  )
+);
+
 // Main Videos Component
 export const VideosData: React.FC = memo(() => {
   const { colorScheme } = useTheme();
   const [activeCategory, setActiveCategory] = useState<
-    'All' | 'Music Videos' | 'Visualizers' | 'Live Sessions'
+    'All' | 'Music Videos' | 'Visualizers' | 'Live Sessions' | 'Christmas'
   >('All');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
@@ -539,13 +729,19 @@ export const VideosData: React.FC = memo(() => {
     setCurrentPage(page);
   }, []);
 
+  const handleExploreChristmas = useCallback(() => {
+    setActiveCategory('Christmas');
+    scrollToVideoGrid();
+  }, [scrollToVideoGrid]);
+
   // SEO structured data
   const seoStructuredData = useMemo(
     () => ({
       '@context': 'https://schema.org',
       '@type': 'VideoGallery',
       name: 'ClaudyGod Video Collection',
-      description: 'Music videos, visualizers and live worship sessions',
+      description:
+        'Music videos, visualizers, live worship sessions and Christmas specials',
       url: 'https://claudygod.org/videos',
       publisher: {
         '@type': 'Person',
@@ -562,8 +758,8 @@ export const VideosData: React.FC = memo(() => {
     >
       <SEO
         title="ClaudyGod Videos - Music Videos, Visualizers & Live Sessions"
-        description="Watch ClaudyGod's music videos, visualizers, and live worship sessions. Experience the divine fusion of American Contemporary Christian Music and Afro-Gospel."
-        keywords="claudygod videos, gospel music videos, worship sessions, christian music visualizers, live performances"
+        description="Watch ClaudyGod's music videos, visualizers, live worship sessions and Christmas specials. Experience the divine fusion of American Contemporary Christian Music and Afro-Gospel."
+        keywords="claudygod videos, gospel music videos, worship sessions, christian music visualizers, live performances, christmas worship videos"
         canonical="https://claudygod.org/videos"
         image="https://claudygod.org/images/videos-og.jpg"
         structuredData={seoStructuredData}
@@ -689,6 +885,12 @@ export const VideosData: React.FC = memo(() => {
         <section className="w-full py-8 sm:py-12 md:py-16">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <VideoHeader colorScheme={colorScheme} />
+
+            {/* Christmas Section */}
+            <ChristmasSection
+              colorScheme={colorScheme}
+              onExploreChristmas={handleExploreChristmas}
+            />
 
             {/* Diagonal Sections */}
             <section className="space-y-8 sm:space-y-12 md:space-y-20">

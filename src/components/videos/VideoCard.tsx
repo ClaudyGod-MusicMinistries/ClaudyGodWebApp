@@ -2,7 +2,6 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import { VideoType } from '../types/video';
 import CustomButton from '../ui/fonts/buttons/CustomButton';
 import {
   ExtraBoldText,
@@ -10,6 +9,16 @@ import {
   SemiBoldText,
 } from '../ui/fonts/typography/';
 import { useTheme } from '../../contexts/ThemeContext';
+
+// Define VideoType locally to match your data structure
+export type VideoType = {
+  id: number;
+  title: string;
+  youtubeId: string;
+  category: 'Music Videos' | 'Visualizers' | 'Live Sessions' | 'Christmas';
+  description: string;
+  date: string;
+};
 
 // Memoized sub-components
 const DateBadge = memo(
