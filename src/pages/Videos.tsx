@@ -361,7 +361,7 @@ const CategoryFilter = memo(
                     : category === 'Visualizers'
                       ? 'Visual'
                       : category === 'Christmas'
-                        ? 'Xmas'
+                        ? 'Christmas'
                         : 'Live'}
               </span>
             </BoldText>
