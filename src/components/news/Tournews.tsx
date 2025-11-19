@@ -39,7 +39,7 @@ export const FollowUs: React.FC = () => {
               fontSize="2rem"
               mdFontSize="3rem"
               lgFontSize="3.5rem"
-              className="mb-4 md:mb-6"
+              className="mb-4 md:mb-6 px-4"
               style={{ color: colorScheme.background }}
             >
               Stay Connected with{' '}
@@ -64,7 +64,7 @@ export const FollowUs: React.FC = () => {
               fontSize="0.9rem"
               mdFontSize="1.1rem"
               lgFontSize="1.25rem"
-              className="max-w-3xl mx-auto mb-8 md:mb-10 px-2"
+              className="max-w-3xl mx-auto mb-8 md:mb-10 px-6"
               style={{ color: colorScheme.background }}
             >
               Never miss a beat! Follow ClaudyGod across all platforms for
@@ -74,8 +74,8 @@ export const FollowUs: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Social Media Grid - Responsive layout */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16 px-2">
+        {/* Social Media Grid - Fixed responsive layout */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 mb-12 md:mb-16 px-4 sm:px-6">
           {socialPlatforms.map((platform, index) => (
             <motion.div
               key={platform.name}
@@ -83,40 +83,44 @@ export const FollowUs: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -5, scale: 1.02 }}
-              className="group cursor-pointer"
+              className="group cursor-pointer flex"
               onClick={() => window.open(platform.url, '_blank')}
             >
               <div
-                className="rounded-xl md:rounded-2xl p-4 md:p-6 h-full transition-all duration-300"
+                className="rounded-xl md:rounded-2xl p-4 md:p-6 w-full transition-all duration-300 flex flex-col"
                 style={{
                   backgroundColor: colorScheme.surface,
                   border: `1px solid ${colorScheme.primary}20`,
                   boxShadow: `0 4px 12px ${colorScheme.primary}10`,
+                  minHeight: '140px',
                 }}
               >
-                <div className="text-center">
-                  <div
-                    className="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 transition-all duration-300 group-hover:scale-110"
-                    style={{ backgroundColor: `${platform.color}15` }}
-                  >
-                    <FontAwesomeIcon
-                      icon={platform.icon}
-                      className="text-lg md:text-2xl"
-                      style={{ color: platform.color }}
-                    />
+                <div className="text-center flex flex-col justify-between flex-1">
+                  <div className="mb-3 md:mb-4">
+                    <div
+                      className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3 transition-all duration-300 group-hover:scale-110"
+                      style={{ backgroundColor: `${platform.color}15` }}
+                    >
+                      <FontAwesomeIcon
+                        icon={platform.icon}
+                        className="text-base md:text-lg lg:text-xl"
+                        style={{ color: platform.color }}
+                      />
+                    </div>
+
+                    <ExtraBoldText
+                      fontSize="0.8rem"
+                      mdFontSize="0.9rem"
+                      lgFontSize="1rem"
+                      className="mb-1 line-clamp-1"
+                      style={{ color: colorScheme.text }}
+                    >
+                      {platform.name}
+                    </ExtraBoldText>
                   </div>
 
-                  <ExtraBoldText
-                    fontSize="0.9rem"
-                    mdFontSize="1.1rem"
-                    className="mb-1 md:mb-2"
-                    style={{ color: colorScheme.text }}
-                  >
-                    {platform.name}
-                  </ExtraBoldText>
-
                   <RegularText
-                    className="mb-2 text-xs md:text-sm"
+                    className="text-xs md:text-sm line-clamp-1 mt-auto"
                     style={{ color: platform.color }}
                   >
                     {platform.handle}
@@ -132,7 +136,7 @@ export const FollowUs: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center"
+          className="text-center px-4 sm:px-6"
         >
           <div
             className="rounded-xl md:rounded-2xl p-6 md:p-8 lg:p-12 mx-auto max-w-4xl"
@@ -145,27 +149,27 @@ export const FollowUs: React.FC = () => {
               fontSize="1.25rem"
               mdFontSize="1.5rem"
               lgFontSize="2rem"
-              className="mb-3 md:mb-4"
+              className="mb-3 md:mb-4 px-2"
               style={{ color: colorScheme.text }}
             >
               Join the ClaudyGod Family
             </ExtraBoldText>
 
             <RegularText
-              className="mb-6 md:mb-8 max-w-2xl mx-auto text-sm md:text-base"
+              className="mb-6 md:mb-8 max-w-2xl mx-auto text-sm md:text-base px-4"
               style={{ color: colorScheme.accent }}
             >
               Be the first to know about new music, exclusive events, and
               special announcements. Your support means everything!
             </RegularText>
 
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center px-4">
               <CustomButton
                 href="https://instagram.com/claudygod"
                 target="_blank"
                 variant="primary"
                 size="md"
-                className="min-w-[160px] md:min-w-[200px] text-sm md:text-base"
+                className="w-full sm:w-auto min-w-[160px] md:min-w-[180px] text-sm md:text-base"
               >
                 Follow on Instagram
               </CustomButton>
@@ -175,7 +179,7 @@ export const FollowUs: React.FC = () => {
                 target="_blank"
                 variant="secondary"
                 size="md"
-                className="min-w-[160px] md:min-w-[200px] text-sm md:text-base"
+                className="w-full sm:w-auto min-w-[160px] md:min-w-[180px] text-sm md:text-base"
               >
                 Subscribe on YouTube
               </CustomButton>
@@ -184,22 +188,22 @@ export const FollowUs: React.FC = () => {
         </motion.div>
 
         {/* Real-time stats */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 1 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-12 md:mt-16"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mt-12 md:mt-16 max-w-md mx-auto px-4"
         >
           {[
             { number: '24/7', label: 'Active Community' },
-            { number: '1M+', label: 'Monthly Reach' },
+            // { number: '1M+', label: 'Monthly Reach' },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
-              className="text-center p-3 md:p-4 rounded-lg"
+              className="text-center p-4 md:p-6 rounded-lg"
               style={{ backgroundColor: `${colorScheme.primary}10` }}
             >
               <ExtraBoldText
@@ -218,7 +222,7 @@ export const FollowUs: React.FC = () => {
               </RegularText>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div> */}
       </div>
 
       {/* Floating social icons - Hidden on mobile, shown on desktop */}
