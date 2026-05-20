@@ -1,34 +1,34 @@
+import type { LucideIcon } from 'lucide-react';
 import {
-  FaHouse,
-  FaUser,
-  FaMusic,
-  FaVideo,
-  FaCalendar,
-  FaBookOpen,
-  FaHandsPraying,
-  FaNewspaper,
-  FaStore,
-  FaEnvelope,
-  FaHandHoldingDollar,
-} from 'react-icons/fa6';
-import type { IconType } from 'react-icons';
+  Home,
+  User,
+  Music2,
+  Film,
+  CalendarDays,
+  BookOpen,
+  Heart,
+  Newspaper,
+  ShoppingBag,
+  Mail,
+  HandCoins,
+} from 'lucide-react';
 
 export interface NavItem {
-  to: string;
-  name: string;
-  icon: IconType;
+  href:  string;
+  label: string;
+  icon:  LucideIcon;
 }
 
 export const navigationItems: NavItem[] = [
-  { to: '/', name: 'Home', icon: FaHouse },
-  { to: '/about', name: 'About', icon: FaUser },
-  { to: '/music', name: 'Music', icon: FaMusic },
-  { to: '/videos', name: 'Videos', icon: FaVideo },
-  { to: '/bookings', name: 'Bookings', icon: FaCalendar },
-  { to: '/blog', name: 'Blog', icon: FaBookOpen },
-  { to: '/ministry', name: 'Ministry', icon: FaHandsPraying },
-  { to: '/news', name: 'News', icon: FaNewspaper },
-  { to: '/store', name: 'Store', icon: FaStore },
-  { to: '/contact', name: 'Contact', icon: FaEnvelope },
-  { to: '/donate', name: 'Donate', icon: FaHandHoldingDollar },
+  { href: '/',         label: 'Home',     icon: Home         },
+  { href: '/about',    label: 'About',    icon: User         },
+  { href: '/music',    label: 'Music',    icon: Music2       },
+  { href: '/videos',   label: 'Videos',   icon: Film         },
+  { href: '/bookings', label: 'Bookings', icon: CalendarDays },
+  { href: '/blog',     label: 'Blog',     icon: BookOpen     },
+  { href: '/ministry', label: 'Ministry', icon: Heart        },
+  { href: '/news',     label: 'News',     icon: Newspaper    },
+  { href: '/store',    label: 'Store',    icon: ShoppingBag  },
+  { href: '/contact',  label: 'Contact',  icon: Mail         },
+  { href: '/donate',   label: 'Donate',   icon: HandCoins    },
 ];

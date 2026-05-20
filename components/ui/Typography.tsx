@@ -1,21 +1,22 @@
 import { cva, type VariantProps } from 'class-variance-authority';
-import { forwardRef, type ElementType, type HTMLAttributes } from 'react';
+import { forwardRef, type HTMLAttributes } from 'react';
 import { cn } from '@/utils/cn';
 
 // ─── Display ───────────────────────────────────────────────────────────────
+// Abril Fatface — hero-level only. Kept tastefully compact.
 
 const displayVariants = cva('font-abril text-balance', {
   variants: {
     size: {
-      xl:  'text-6xl md:text-7xl lg:text-8xl leading-none',
-      lg:  'text-5xl md:text-6xl lg:text-7xl leading-none',
-      md:  'text-4xl md:text-5xl lg:text-6xl leading-tight',
-      sm:  'text-3xl md:text-4xl lg:text-5xl leading-tight',
+      xl: 'text-4xl md:text-5xl lg:text-6xl leading-none',
+      lg: 'text-3xl md:text-4xl lg:text-5xl leading-none',
+      md: 'text-2xl md:text-3xl lg:text-4xl leading-tight',
+      sm: 'text-xl  md:text-2xl lg:text-3xl leading-tight',
     },
     color: {
-      white:    'text-white',
-      gold:     'text-gradient-gold',
-      muted:    'text-neutral-300',
+      white: 'text-white',
+      gold:  'text-gradient-gold',
+      muted: 'text-neutral-300',
     },
   },
   defaultVariants: { size: 'md', color: 'white' },
@@ -36,16 +37,17 @@ export function Display({ as: Tag = 'h1', size, color, className, children, ...p
 }
 
 // ─── Heading ───────────────────────────────────────────────────────────────
+// Bricolage Grotesque — section and card headings.
 
 const headingVariants = cva('font-bricolage font-bold text-balance', {
   variants: {
     level: {
-      1: 'text-4xl md:text-5xl leading-tight',
-      2: 'text-3xl md:text-4xl leading-tight',
-      3: 'text-2xl md:text-3xl leading-snug',
-      4: 'text-xl  md:text-2xl leading-snug',
-      5: 'text-lg  md:text-xl  leading-normal',
-      6: 'text-base md:text-lg  leading-normal',
+      1: 'text-3xl md:text-4xl leading-tight',
+      2: 'text-2xl md:text-3xl leading-tight',
+      3: 'text-xl  md:text-2xl leading-snug',
+      4: 'text-lg  md:text-xl  leading-snug',
+      5: 'text-base md:text-lg  leading-normal',
+      6: 'text-sm  md:text-base leading-normal',
     },
     color: {
       white:   'text-white',
@@ -58,7 +60,7 @@ const headingVariants = cva('font-bricolage font-bold text-balance', {
 });
 
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
-const headingTags: Record<HeadingLevel, ElementType> = {
+const headingTags: Record<HeadingLevel, string> = {
   1: 'h1', 2: 'h2', 3: 'h3', 4: 'h4', 5: 'h5', 6: 'h6',
 };
 
@@ -82,16 +84,16 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
 Heading.displayName = 'Heading';
 
 // ─── Text ──────────────────────────────────────────────────────────────────
+// Body copy and UI text. Sizes are intentionally conservative.
 
 const textVariants = cva('font-bricolage', {
   variants: {
     size: {
-      '2xs': 'text-2xs',
+      '2xs': 'text-[0.625rem] leading-tight',
       xs:    'text-xs',
       sm:    'text-sm',
       base:  'text-base',
       lg:    'text-lg',
-      xl:    'text-xl',
     },
     weight: {
       light:    'font-light',
@@ -157,25 +159,23 @@ export const Text = forwardRef<HTMLElement, TextProps>(
 Text.displayName = 'Text';
 
 // ─── Label ─────────────────────────────────────────────────────────────────
+// WorkSans uppercase — eyebrows, form labels, tags.
 
-const labelVariants = cva(
-  'font-worksans uppercase tracking-widest',
-  {
-    variants: {
-      size: {
-        sm:   'text-2xs',
-        base: 'text-xs',
-        lg:   'text-sm',
-      },
-      color: {
-        gold:    'text-gold-500',
-        muted:   'text-neutral-400',
-        white:   'text-white',
-      },
+const labelVariants = cva('font-worksans uppercase tracking-widest', {
+  variants: {
+    size: {
+      sm:   'text-[0.625rem]',
+      base: 'text-xs',
+      lg:   'text-sm',
     },
-    defaultVariants: { size: 'base', color: 'gold' },
-  }
-);
+    color: {
+      gold:  'text-gold-500',
+      muted: 'text-neutral-400',
+      white: 'text-white',
+    },
+  },
+  defaultVariants: { size: 'base', color: 'gold' },
+});
 
 interface LabelProps
   extends Omit<HTMLAttributes<HTMLSpanElement>, 'color'>,
@@ -190,10 +190,11 @@ export function Label({ size, color, className, children, ...props }: LabelProps
 }
 
 // ─── Caption ───────────────────────────────────────────────────────────────
+// Micro text — timestamps, footnotes, helper copy.
 
 export function Caption({ className, children, ...props }: HTMLAttributes<HTMLSpanElement>) {
   return (
-    <span className={cn('text-xs text-neutral-500 font-worksans', className)} {...props}>
+    <span className={cn('text-xs text-neutral-500 font-worksans leading-snug', className)} {...props}>
       {children}
     </span>
   );
